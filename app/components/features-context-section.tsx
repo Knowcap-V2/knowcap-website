@@ -10,9 +10,9 @@ export default function FeaturesContextSection({ colors }: { colors: ThemeColors
   useEffect(() => { setMounted(true) }, [])
 
   const features = [
-    { icon: Radio, title: 'Capture with Context', description: 'Send Knowcap to any meeting or screen session. It listens, watches, and understands — automatically linking every spoken word and on-screen action to its source.', image: '/dashboard1.png' },
-    { icon: Search, title: 'Answer with Proof', description: 'Ask any question and get an instant answer with a direct link to the exact, verified moment in the recording.', image: '/dashboard2.png' },
-    { icon: FileCheck, title: 'Audit Any Deliverable', description: 'All generated PRDs, SOPs, and guides include timestamp citations and embedded clips, so every deliverable can be trusted and verified.', image: '/dashboard3.png' },
+    { icon: Radio, title: 'Capture with Context', description: 'Send Knowcap to any meeting or screen session. It listens, watches, and understands — automatically linking every spoken word and on-screen action to its source.', image: '/screenshot-inbox.png' },
+    { icon: Search, title: 'Answer with Proof', description: 'Ask any question and get an instant answer with a direct link to the exact, verified moment in the recording.', image: '/screenshot-dashboard.png' },
+    { icon: FileCheck, title: 'Audit Any Deliverable', description: 'All generated PRDs, SOPs, and guides include timestamp citations and embedded clips, so every deliverable can be trusted and verified.', image: '/screenshot-projects.png' },
   ]
 
   return (
