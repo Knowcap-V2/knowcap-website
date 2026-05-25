@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @tailwind base;
@@ -7,49 +6,26 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 216 24% 16%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 216 24% 16%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 216 24% 16%;
-
-    --primary: 0 0% 0%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 216 24% 16%;
-
-    --muted: 0 0% 96%;
-    --muted-foreground: 211 8% 32%;
-
-    --accent: 0 0% 96%;
-    --accent-foreground: 216 24% 16%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 84%;
-    --input: 0 0% 84%;
-    --ring: 0 0% 0%;
-
+    --background: 220 20% 4%;
+    --foreground: 210 40% 98%;
+    --card: 220 17% 7%;
+    --card-foreground: 210 40% 98%;
+    --popover: 220 17% 7%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 14% 16%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 220 14% 16%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 14% 16%;
+    --input: 220 14% 16%;
+    --ring: 212.7 26.8% 83.9%;
     --radius: 0.5rem;
-
-    /* KnowCap Design System Colors */
-    --brand-blue: #005EFF;
-    --brand-blue-accent: #443AFF;
-    --highlight-blue: rgba(0, 94, 255, 0.9);
-    --bg-light: white;
-    --bg-secondary-light: #F5F5F5;
-    --bg-dark: #0A0D12;
-    --bg-secondary-dark: #181D27;
-    --text-primary-light: #191F2E;
-    --text-secondary-light: #414651;
-    --text-tertiary-light: #535862;
-    --text-primary-dark: #E9EAEB;
-    --text-secondary-dark: #D5D7DA;
   }
 }
 
@@ -58,79 +34,13 @@
     @apply border-border;
   }
   body {
-    @apply bg-white text-foreground;
+    @apply bg-background text-foreground;
     font-family: Inter, system-ui, -apple-system, sans-serif;
   }
 }
 
-.hero-bg {
-  background: white;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-blur {
-  position: absolute;
-  width: 800px;
-  height: 800px;
-  background: #443AFF;
-  opacity: 0.15;
-  filter: blur(62.19px);
-  transform: rotate(-15deg);
-  top: -200px;
-  right: -200px;
-  pointer-events: none;
-  z-index: 0;
-}
-
 html {
   scroll-behavior: smooth;
-}
-
-/* Typography Classes */
-.hero-heading {
-  font-size: 60px;
-  font-weight: 600;
-  line-height: 72px;
-  color: var(--text-primary-light);
-}
-
-.section-heading {
-  font-size: 48px;
-  font-weight: 600;
-  line-height: 52.8px;
-  color: var(--text-primary-light);
-}
-
-.hero-subheading {
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 30px;
-  color: var(--text-secondary-light);
-}
-
-.section-subheading {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0.64px;
-  text-transform: uppercase;
-  color: var(--text-secondary-light);
-}
-
-.body-text {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: var(--text-secondary-light);
-}
-
-/* Button Shadows */
-.btn-shadow {
-  box-shadow: 0px 1px 2px rgba(10, 13, 18, 0.05);
-}
-
-.card-shadow {
-  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 /* Pitch Deck Styles for MVP Page */

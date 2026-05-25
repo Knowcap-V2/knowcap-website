@@ -1,92 +1,55 @@
-
 'use client'
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { X, MessageCircle, Star } from 'lucide-react'
-import BetaApplicationForm from '@/components/beta-application-form'
+import { X, ArrowRight } from 'lucide-react'
+
+const APP_URL = 'https://app.knowcap.ai'
 
 export default function FloatingCTA() {
   const [isVisible, setIsVisible] = useState(false)
-  const [isMinimized, setIsMinimized] = useState(false)
-  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isDismissed, setIsDismissed] = useState(false)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true)
-    }, 5000) // Show after 5 seconds
-
+    const timer = setTimeout(() => setIsVisible(true), 5000)
     return () => clearTimeout(timer)
   }, [])
 
-  const openApplication = () => {
-    setIsFormOpen(true)
-    setIsMinimized(true)
-  }
-
-  const openDemo = () => {
-    window.location.href = 'https://knowcap.ai/book'
-    setIsMinimized(true)
-  }
-
-  if (!isVisible) return null
-
-  if (isMinimized) {
-    return (
-      <>
-        <div className="fixed bottom-6 right-6 z-50">
-          <Button
-            onClick={() => setIsMinimized(false)}
-            className="bg-[#1a1d29] hover:bg-[#2a2d39] text-white rounded-full w-14 h-14 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
-          >
-            <MessageCircle className="w-6 h-6" />
-          </Button>
-        </div>
-        <BetaApplicationForm open={isFormOpen} onOpenChange={setIsFormOpen} />
-      </>
-    )
-  }
+  if (!isVisible || isDismissed) return null
 
   return (
-    <>
-      <div className="fixed bottom-6 right-6 z-50 bg-white border border-gray-200 rounded-lg shadow-2xl max-w-sm animate-in slide-in-from-bottom-4 duration-500">
-        <div className="relative p-6">
-          <button
-            onClick={() => setIsVisible(false)}
-            className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-          
-          <div className="mb-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Star className="w-5 h-5 text-yellow-400 fill-current" />
-              <span className="text-sm font-semibold text-blue-600">Limited Spots</span>
-            </div>
-            <h3 className="font-bold text-lg mb-1 text-[#1a1d29]">Ready to Transform?</h3>
-            <p className="text-sm text-gray-600">
-              Get early access + lifetime discounts + direct input on features as a founding partner.
-            </p>
-          </div>
+    <div className="fixed bottom-6 right-6 z-50 bg-[#18181B] border border-white/[0.08] rounded-xl shadow-2xl max-w-sm animate-in slide-in-from-bottom-4 duration-500">
+      <div className="relative p-5">
+        <button
+          onClick={() => setIsDismissed(true)}
+          className="absolute top-3 right-3 text-white/40 hover:text-white/70 transition-colors"
+        >
+          <X className="w-4 h-4" />
+        </button>
 
-          <div className="space-y-2">
-            <Button
-              onClick={openApplication}
-              className="w-full bg-[#1a1d29] hover:bg-[#2a2d39] text-white font-medium transition-all duration-300"
-            >
-              Apply Now
-            </Button>
-            <Button
-              variant="outline"
-              onClick={openDemo}
-              className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 transition-all duration-300"
-            >
-              Quick Demo
-            </Button>
-          </div>
+        <div className="mb-4">
+          <h3 className="font-bold text-[15px] text-white mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            Ready to try Knowcap?
+          </h3>
+          <p className="text-[13px] text-white/50" style={{ fontFamily: "'Inter', sans-serif" }}>
+            Free to start. No credit card required.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <Button asChild className="w-full bg-white hover:bg-white/90 text-[#0A0A0A] font-medium transition-all">
+            <a href={`${APP_URL}/register`}>
+              Get Started Free
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </a>
+          </Button>
+          <Button asChild variant="outline" className="w-full border-white/[0.12] text-white/70 hover:bg-white/[0.04] transition-all">
+            <a href={`${APP_URL}/login`}>
+              Log in
+            </a>
+          </Button>
         </div>
       </div>
-      <BetaApplicationForm open={isFormOpen} onOpenChange={setIsFormOpen} />
-    </>
+    </div>
   )
 }
