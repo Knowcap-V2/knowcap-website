@@ -2,39 +2,35 @@
 
 import { motion } from 'framer-motion'
 import { Shield, Lock, Users, FileCheck } from 'lucide-react'
+import type { ThemeColors } from '@/components/theme-switcher'
 
-const trustPillars = [
-  { icon: Shield, headline: 'Your Data is Yours', subtext: 'We never train our AI models on your private project data. All assets and artifacts are yours alone.' },
-  { icon: Lock, headline: 'Encrypted Everywhere', subtext: 'AES-256 encryption at rest, TLS in transit. Industry-standard protection for every file.' },
-  { icon: Users, headline: 'Granular Access Control', subtext: 'Role-based permissions. Manage who can see, edit, or share — from a single file to an entire project.' },
-  { icon: FileCheck, headline: 'Auditable Sharing', subtext: 'Permission-controlled links with full audit logs. See who accessed what, and when.' },
+const pillars = [
+  { icon: Shield, headline: 'Your Data is Yours', subtext: 'We never train AI models on your private data.' },
+  { icon: Lock, headline: 'Encrypted Everywhere', subtext: 'AES-256 at rest, TLS in transit.' },
+  { icon: Users, headline: 'Granular Access Control', subtext: 'Role-based permissions for every asset.' },
+  { icon: FileCheck, headline: 'Auditable Sharing', subtext: 'Permission-controlled links with audit logs.' },
 ]
 
-export default function TrustSection() {
+export default function TrustSection({ colors }: { colors: ThemeColors }) {
   return (
-    <section className="py-20 md:py-28 bg-[#F5F4F1]">
+    <section className="py-20 md:py-28 transition-colors duration-300" style={{ backgroundColor: colors.pageBg }}>
       <div className="max-w-[1100px] mx-auto px-6">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-14">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-[#1a1a1a]/[0.04] border border-[#1a1a1a]/[0.06] mb-4">
-            <span className="text-[12px] font-medium text-[#666] uppercase tracking-wider" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Security</span>
+          <div className="inline-flex items-center px-3 py-1 rounded-full mb-4" style={{ backgroundColor: colors.iconBg, border: `1px solid ${colors.cardBorder}` }}>
+            <span className="text-[12px] font-medium uppercase tracking-wider" style={{ color: colors.mutedColor, fontFamily: "'Space Grotesk', sans-serif" }}>Security</span>
           </div>
-          <h2 className="text-3xl md:text-4xl text-[#1a1a1a] mb-5" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em' }}>
-            Your projects, secured and governed
-          </h2>
-          <p className="text-[15px] text-[#666] max-w-[480px] mx-auto" style={{ lineHeight: 1.7 }}>
-            Security and control aren&apos;t features — they&apos;re our foundation.
-          </p>
+          <h2 className="text-3xl md:text-4xl mb-5" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em', color: colors.headingColor }}>Your projects, secured and governed</h2>
         </motion.div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {trustPillars.map((pillar, index) => (
-            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: index * 0.08 }} className="text-center">
-              <div className="bg-white border border-[#e5e5e5] rounded-xl p-6 h-full hover:shadow-md transition-shadow">
-                <div className="w-10 h-10 bg-[#F5F4F1] border border-[#e5e5e5] rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <pillar.icon className="w-5 h-5 text-[#666]" />
+          {pillars.map((p, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.08 }} className="text-center">
+              <div className="rounded-xl p-6 h-full hover:shadow-md transition-shadow" style={{ backgroundColor: colors.cardBg, border: `1px solid ${colors.cardBorder}` }}>
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: colors.iconBg, border: `1px solid ${colors.cardBorder}` }}>
+                  <p.icon className="w-5 h-5" style={{ color: colors.bodyColor }} />
                 </div>
-                <h3 className="text-[14px] font-semibold text-[#1a1a1a] mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{pillar.headline}</h3>
-                <p className="text-[12.5px] text-[#666] leading-relaxed">{pillar.subtext}</p>
+                <h3 className="text-[14px] font-semibold mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", color: colors.headingColor }}>{p.headline}</h3>
+                <p className="text-[12.5px] leading-relaxed" style={{ color: colors.bodyColor }}>{p.subtext}</p>
               </div>
             </motion.div>
           ))}
