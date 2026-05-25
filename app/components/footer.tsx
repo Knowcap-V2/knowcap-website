@@ -2,108 +2,88 @@
 
 import Link from 'next/link'
 
+const APP_URL = 'https://app.knowcap.ai'
+
 export default function Footer() {
   return (
-    <footer className="relative py-16 px-6" style={{ background: 'var(--dark-bg)', color: 'white' }}>
+    <footer className="relative py-16 px-6 bg-[#0A0A0A] border-t border-white/[0.06]">
       <div className="max-w-[1100px] mx-auto">
-        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* About Column */}
+          {/* Brand */}
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'white' }}>
-              Knowcap.ai
-            </h3>
-            <p className="text-gray-400" style={{ fontFamily: "'Inter', sans-serif", lineHeight: '1.6' }}>
-              AI-powered governance platform that turns meetings and screen work into verified project documentation.
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-7 h-7 bg-white text-[#0A0A0A] rounded-md grid place-items-center text-[12px] font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>K</span>
+              <span className="text-white font-bold text-[15px]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Knowcap</span>
+            </div>
+            <p className="text-[14px] text-white/40 max-w-[360px]" style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.7 }}>
+              The trust layer for AI agents. Every fact confirmed by a named human, with a full audit trail.
             </p>
           </div>
 
-          {/* Product Column */}
+          {/* Product */}
           <div>
-            <h4 className="text-lg font-semibold mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'white' }}>
+            <h4 className="text-[13px] font-semibold text-white/60 uppercase tracking-wider mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               Product
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link 
-                  href="/mvp" 
-                  className="text-gray-400 hover:text-white transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Knowcap MVP
-                </Link>
+                <a href={`${APP_URL}/register`} className="text-[14px] text-white/40 hover:text-white transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Get Started
+                </a>
               </li>
               <li>
-                <Link 
-                  href="/offer" 
-                  className="text-gray-400 hover:text-white transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Pilot Program
+                <a href={`${APP_URL}/login`} className="text-[14px] text-white/40 hover:text-white transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Log in
+                </a>
+              </li>
+              <li>
+                <Link href="/book" className="text-[14px] text-white/40 hover:text-white transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Book a Demo
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Company Column */}
+          {/* Company */}
           <div>
-            <h4 className="text-lg font-semibold mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'white' }}>
+            <h4 className="text-[13px] font-semibold text-white/60 uppercase tracking-wider mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               Company
             </h4>
             <ul className="space-y-3">
               <li>
-                <Link 
-                  href="/meet-us" 
-                  className="text-gray-400 hover:text-white transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Meet Us
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/careers" 
-                  className="text-gray-400 hover:text-white transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/contact-us" 
-                  className="text-gray-400 hover:text-white transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
+                <Link href="/contact-us" className="text-[14px] text-white/40 hover:text-white transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link 
-                  href="/policy" 
-                  className="text-gray-400 hover:text-white transition-colors"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
+                <Link href="/careers" className="text-[14px] text-white/40 hover:text-white transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link href="/policy" className="text-[14px] text-white/40 hover:text-white transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
                   Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-[14px] text-white/40 hover:text-white transition-colors" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Terms of Service
                 </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-gray-700 pt-8">
+        {/* Bottom bar */}
+        <div className="border-t border-white/[0.06] pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-gray-400" style={{ fontFamily: "'Inter', sans-serif" }}>
-              © 2025 Knowcap.ai • Built for Professional Teams
+            <p className="text-[12px] text-white/30" style={{ fontFamily: "'Inter', sans-serif" }}>
+              © {new Date().getFullYear()} Knowcap. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <Link href="/policy" className="text-sm text-gray-400 hover:text-white transition-colors">
-                Privacy
-              </Link>
-              <Link href="/contact-us" className="text-sm text-gray-400 hover:text-white transition-colors">
-                Contact
-              </Link>
+              <Link href="/policy" className="text-[12px] text-white/30 hover:text-white/60 transition-colors">Privacy</Link>
+              <Link href="/terms" className="text-[12px] text-white/30 hover:text-white/60 transition-colors">Terms</Link>
+              <Link href="/contact-us" className="text-[12px] text-white/30 hover:text-white/60 transition-colors">Contact</Link>
             </div>
           </div>
         </div>

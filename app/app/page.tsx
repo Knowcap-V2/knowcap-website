@@ -1,5 +1,4 @@
-
-
+import Navbar from '@/components/navbar'
 import HeroSectionGeneral from '@/components/hero-section-general'
 import FeaturesContextSection from '@/components/features-context-section'
 import HowItWorksSection from '@/components/how-it-works-section'
@@ -14,7 +13,8 @@ import Footer from '@/components/footer'
 
 export default function Home() {
   return (
-    <main className="min-h-screen" style={{ background: 'var(--bg-light-pitch)', fontFamily: "'Inter', sans-serif" }}>
+    <main className="min-h-screen bg-[#0A0A0A]" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <Navbar />
       <HeroSectionGeneral />
       <FeaturesContextSection />
       <HowItWorksSection />
@@ -29,4 +29,3 @@ export default function Home() {
     </main>
   )
 }
-

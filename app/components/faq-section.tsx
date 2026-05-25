@@ -1,4 +1,3 @@
-
 'use client'
 
 import { motion } from 'framer-motion'
@@ -12,56 +11,55 @@ import {
 const faqs = [
   {
     question: 'What is Knowcap?',
-    answer: 'Knowcap is an AI governance platform. It ingests all your project assets—meetings, screen recordings, documents, and websites—to create a single, verifiable, and searchable project memory.'
+    answer: 'Knowcap is the trust layer for AI agents. It ingests all your project assets — meetings, screen recordings, documents, and websites — to create a single, verifiable, and searchable project memory. Every fact is confirmed by a named human before agents can act on it.',
   },
   {
     question: 'Can Knowcap join confidential meetings?',
-    answer: 'Yes, and you have total control. You can invite Knowcap as a full participant (video + audio), as an audio-only bot, or even restrict it to transcript-only mode for maximum confidentiality. You set the rules.'
+    answer: 'Yes, and you have total control. You can invite Knowcap as a full participant (video + audio), as an audio-only bot, or restrict it to transcript-only mode. You set the rules.',
   },
   {
     question: 'What tools does Knowcap integrate with?',
-    answer: 'Knowcap is designed to be your central governance layer. Our direct, one-click integrations are partner-driven. We are currently in active development on our Odoo integration based on partner demand, with Jira, Asana, and ClickUp on our roadmap.'
+    answer: 'Knowcap includes an MCP server out of the box — wire Claude, Codex, Gemini, or any MCP-compatible agent directly. One-click integrations with Odoo are live, with Jira, Asana, and ClickUp on our roadmap.',
   },
   {
     question: 'Can I share projects with clients?',
-    answer: 'Yes. Knowcap is built for collaboration. You can share entire projects or specific assets (like AI Agents) with internal teams and external clients, all managed by your role-based permissions.'
-  }
+    answer: 'Yes. Share entire projects or specific assets with internal teams and external clients, all managed by role-based permissions with full audit logs.',
+  },
 ]
 
 export default function FAQSection() {
   return (
-    <section className="py-20 md:py-24 bg-[#F5F5F5]" style={{ padding: '7rem 2rem', background: 'var(--bg-light-pitch)' }}>
-      <div className="max-w-[1100px] mx-auto px-6">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+    <section className="py-20 md:py-28 bg-[#111114]">
+      <div className="max-w-[700px] mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
         >
-          <div className="slide-label mb-4">FAQ</div>
-          <h2 className="mb-6" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '2.5rem', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: '1.2', color: 'var(--dark-bg)' }}>
-            Frequently Asked Questions
+          <h2 className="text-3xl md:text-4xl text-white" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em' }}>
+            FAQ
           </h2>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <Accordion type="single" collapsible className="w-full space-y-3">
             {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
+              <AccordionItem
+                key={index}
                 value={`item-${index}`}
-                className="bg-white rounded-xl border border-[#D5D7DA] px-6 overflow-hidden"
+                className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 overflow-hidden"
               >
-                <AccordionTrigger className="text-left text-lg font-semibold text-[#191F2E] hover:no-underline py-6">
+                <AccordionTrigger className="text-left text-[15px] font-medium text-white hover:no-underline py-5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-base text-[#414651] pb-6">
+                <AccordionContent className="text-[13.5px] text-white/40 pb-5 leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

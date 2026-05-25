@@ -1,4 +1,3 @@
-
 'use client'
 
 import { motion } from 'framer-motion'
@@ -8,90 +7,69 @@ export default function ROISection() {
   const stats = [
     {
       icon: TrendingUp,
-      headline: 'Deliver 1.4x - 1.8x More Projects',
-      subtext: 'This isn\'t magic. It\'s what happens when onboarding is instant, docs are automated, and clients are self-sufficient. You get more velocity from the same team.',
-      color: 'blue'
+      metric: '1.4–1.8×',
+      headline: 'More Projects Delivered',
+      subtext: 'When onboarding is instant, docs are automated, and clients are self-sufficient — you get more velocity from the same team.',
     },
     {
       icon: FileText,
-      headline: 'Cut Documentation Time by 50%',
-      subtext: 'Stop writing, start governing. Instantly generate contracts, SOPs, and PRDs from your project memory, freeing up your experts to focus on delivery.',
-      color: 'green'
+      metric: '50%',
+      headline: 'Less Documentation Time',
+      subtext: 'Stop writing, start governing. Generate contracts, SOPs, and PRDs from your project memory. Experts focus on delivery.',
     },
     {
       icon: MessageSquareOff,
-      headline: 'Cut Client Support Tickets by 40%',
-      subtext: 'Why do our partners see a 40% drop? Our platform provides verifiable answers *before* clients can create a ticket. It\'s proactive governance, not reactive support.',
-      color: 'purple'
+      metric: '40%',
+      headline: 'Fewer Support Tickets',
+      subtext: 'Verifiable answers before clients create a ticket. Proactive governance, not reactive support.',
     },
     {
       icon: Users,
-      headline: 'Cut Onboarding Time by 70%',
-      subtext: 'Stop repeating yourself. Give new hires the entire project memory on day one. Our AI agents answer their questions with timestamped proof, so your senior team stays focused.',
-      color: 'orange'
-    }
+      metric: '70%',
+      headline: 'Faster Onboarding',
+      subtext: 'Give new hires the entire project memory on day one. AI agents answer their questions with timestamped proof.',
+    },
   ]
 
-  const getColorClasses = (color: string) => {
-    const colors = {
-      blue: 'bg-blue-50 border-blue-200',
-      green: 'bg-green-50 border-green-200',
-      purple: 'bg-purple-50 border-purple-200',
-      orange: 'bg-orange-50 border-orange-200'
-    }
-    return colors[color as keyof typeof colors] || colors.blue
-  }
-
-  const getIconColor = (color: string) => {
-    const colors = {
-      blue: 'text-blue-600',
-      green: 'text-green-600',
-      purple: 'text-purple-600',
-      orange: 'text-orange-600'
-    }
-    return colors[color as keyof typeof colors] || colors.blue
-  }
-
   return (
-    <section className="py-20 md:py-24 bg-white" style={{ padding: '7rem 2rem', background: 'var(--bg-light-pitch)' }}>
+    <section className="py-20 md:py-28 bg-[#0A0A0A]">
       <div className="max-w-[1100px] mx-auto px-6">
-        {/* Section Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="slide-label mb-4">ROI & Impact</div>
-          <h2 className="text-4xl md:text-5xl mb-6" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em', lineHeight: '1.2', color: 'var(--dark-bg)' }}>
-            The ROI of AI-Powered Governance
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] mb-4">
+            <span className="text-[12px] font-medium text-white/50 uppercase tracking-wider" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Impact</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl text-white mb-5" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em' }}>
+            Measurable results from day one
           </h2>
-          <p className="text-lg max-w-3xl mx-auto" style={{ fontFamily: "'Inter', sans-serif", color: 'var(--gray-text)' }}>
-            It's not just about memory—it's about measurable results. See how teams like yours are changing the way they deliver projects.
+          <p className="text-[15px] text-white/40 max-w-[520px] mx-auto" style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.7 }}>
+            See how teams are changing the way they deliver projects with AI-powered governance.
           </p>
         </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid sm:grid-cols-2 gap-4 max-w-[800px] mx-auto">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
             >
-              <div className={`${getColorClasses(stat.color)} border-2 rounded-2xl p-8 h-full hover:shadow-lg transition-shadow duration-300`}>
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="flex-shrink-0">
-                    <stat.icon className={`w-8 h-8 ${getIconColor(stat.color)}`} />
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#191F2E] leading-tight">
-                    {stat.headline}
-                  </h3>
+              <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 h-full hover:bg-white/[0.05] transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <stat.icon className="w-4 h-4 text-white/30" />
+                  <span className="text-[24px] font-bold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{stat.metric}</span>
                 </div>
-                <p className="text-[#535862] text-base leading-relaxed">
+                <h3 className="text-[15px] font-semibold text-white mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {stat.headline}
+                </h3>
+                <p className="text-[13px] text-white/40 leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
                   {stat.subtext}
                 </p>
               </div>

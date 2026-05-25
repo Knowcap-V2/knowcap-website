@@ -1,9 +1,9 @@
-
 'use client'
 
 import { Upload, Database, FileCheck, MessageSquare, ArrowRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
+
+const APP_URL = 'https://app.knowcap.ai'
 
 export default function HowItWorksSection() {
   const [mounted, setMounted] = useState(false)
@@ -18,133 +18,91 @@ export default function HowItWorksSection() {
       icon: Upload,
       headline: 'Ingest Every Project Asset',
       subtext: 'Connect Knowcap to your project. Upload PDFs, link websites, add YouTube videos, record your screen, or send a bot to your meetings. Every asset is ingested as a verifiable source.',
-      color: 'blue'
     },
     {
       number: 2,
       icon: Database,
       headline: 'Build Your Project Memory',
-      subtext: 'Knowcap automatically interlinks *all* these sources. Meetings, documents, videos, and workflows are connected into a persistent, searchable memory, with decisions cross-referenced instantly.',
-      color: 'purple'
+      subtext: 'Knowcap automatically interlinks all these sources. Meetings, documents, videos, and workflows are connected into a persistent, searchable memory, with decisions cross-referenced instantly.',
     },
     {
       number: 3,
       icon: FileCheck,
       headline: 'Generate & Govern with Proof',
-      subtext: 'Instantly create any project document—from critical contracts, quotations, and SOPs to in-depth technical PRDs and gap analyses—all backed by your verifiable project memory.',
-      color: 'green'
+      subtext: 'Instantly create any project document — from contracts and SOPs to PRDs and gap analyses — all backed by your verifiable project memory.',
     },
     {
       number: 4,
       icon: MessageSquare,
       headline: 'Ask & Share Instantly',
       subtext: 'Spin up client-facing Smart Agents trained on your complete project memory. Every answer comes backed by the exact clip, doc, or website source.',
-      color: 'orange'
-    }
+    },
   ]
 
-  const getColorClasses = (color: string) => {
-    const colors = {
-      blue: {
-        bg: 'bg-blue-50',
-        border: 'border-blue-200',
-        icon: 'bg-blue-500',
-        text: 'text-blue-600'
-      },
-      purple: {
-        bg: 'bg-purple-50',
-        border: 'border-purple-200',
-        icon: 'bg-purple-500',
-        text: 'text-purple-600'
-      },
-      green: {
-        bg: 'bg-green-50',
-        border: 'border-green-200',
-        icon: 'bg-green-500',
-        text: 'text-green-600'
-      },
-      orange: {
-        bg: 'bg-orange-50',
-        border: 'border-orange-200',
-        icon: 'bg-orange-500',
-        text: 'text-orange-600'
-      }
-    }
-    return colors[color as keyof typeof colors] || colors.blue
-  }
-
   return (
-    <section className="relative py-24 bg-white overflow-hidden" style={{ padding: '7rem 2rem' }}>
+    <section id="how-it-works" className="relative py-24 bg-[#111114] overflow-hidden">
       <div className="max-w-[1100px] mx-auto px-6 relative z-10">
-        {/* Section Header */}
+        {/* Header */}
         <div className="text-center mb-20">
-          <div className="slide-label mb-4">How It Works</div>
-          <h2 className="text-4xl md:text-5xl mb-6" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em', lineHeight: '1.2', color: 'var(--dark-bg)' }}>
-            How Knowcap Works
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] mb-4">
+            <span className="text-[12px] font-medium text-white/50 uppercase tracking-wider" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>How It Works</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl text-white mb-5" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em' }}>
+            From capture to proof
           </h2>
-          <p className="text-lg max-w-3xl mx-auto" style={{ fontFamily: "'Inter', sans-serif", color: 'var(--gray-text)' }}>
-            From capture to proof. A simple loop that turns all your project assets into a single, verifiable memory.
+          <p className="text-[15px] text-white/40 max-w-[560px] mx-auto" style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.7 }}>
+            A simple loop that turns all your project assets into a single, verifiable memory.
           </p>
         </div>
 
         {/* Steps */}
-        <div className="space-y-8 max-w-5xl mx-auto mb-16">
-          {steps.map((step, index) => {
-            const colors = getColorClasses(step.color)
-            return (
-              <div
-                key={step.number}
-                className={`transition-all duration-800 ${mounted ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className={`relative ${colors.bg} ${colors.border} border-2 rounded-2xl p-8`}>
-                  {/* Step Number Badge */}
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-[#191F2E] rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                    {step.number}
+        <div className="space-y-5 max-w-[700px] mx-auto mb-16">
+          {steps.map((step, index) => (
+            <div
+              key={step.number}
+              className={`relative transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 hover:bg-white/[0.05] transition-colors">
+                <div className="flex gap-5 items-start">
+                  <div className="w-10 h-10 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
+                    <step.icon className="w-5 h-5 text-white/40" />
                   </div>
-
-                  <div className="flex flex-col md:flex-row gap-6 items-start">
-                    {/* Icon */}
-                    <div className={`${colors.icon} w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0`}>
-                      <step.icon className="w-7 h-7 text-white" />
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-[#191F2E] mb-3">
-                        {step.number}. {step.headline}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-[11px] font-bold text-white/20 tabular-nums" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                        0{step.number}
+                      </span>
+                      <h3 className="text-[16px] font-semibold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                        {step.headline}
                       </h3>
-                      <p className="text-[#535862] text-lg leading-relaxed">
-                        {step.subtext}
-                      </p>
                     </div>
+                    <p className="text-[13.5px] text-white/40 leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      {step.subtext}
+                    </p>
                   </div>
-
-                  {/* Connecting Arrow (except for last step) */}
-                  {index < steps.length - 1 && (
-                    <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 z-10">
-                      <ArrowRight className="w-6 h-6 text-[#535862] rotate-90" />
-                    </div>
-                  )}
                 </div>
               </div>
-            )
-          })}
+
+              {index < steps.length - 1 && (
+                <div className="flex justify-center py-1">
+                  <div className="w-px h-4 bg-white/[0.06]" />
+                </div>
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* Micro CTA */}
-        <div className={`text-center transition-all duration-800 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '400ms' }}>
-          <p className="text-lg text-[#535862] mb-6">
-            See the loop in action
-          </p>
-          <Button 
-            size="lg" 
-            onClick={() => window.location.href = 'https://knowcap.ai/book'}
-            className="bg-[#005EFF] hover:bg-[#0052CC] text-white text-lg px-8 py-6 rounded-lg btn-shadow"
+        {/* CTA */}
+        <div className="text-center">
+          <a
+            href={`${APP_URL}/register`}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#0A0A0A] font-medium text-[14px] rounded-lg hover:bg-white/90 transition-colors"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            Book a Demo
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+            Try it free
+            <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </section>
