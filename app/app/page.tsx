@@ -1,3 +1,5 @@
+'use client'
+
 import Navbar from '@/components/navbar'
 import HeroSectionGeneral from '@/components/hero-section-general'
 import FeaturesContextSection from '@/components/features-context-section'
@@ -10,21 +12,24 @@ import FAQSection from '@/components/faq-section'
 import PersonalNoteSectionGeneral from '@/components/personal-note-section-general'
 import FloatingCTA from '@/components/floating-cta'
 import Footer from '@/components/footer'
+import { useThemeColors } from '@/components/theme-switcher'
 
 export default function Home() {
+  const [theme, colors, setTheme] = useThemeColors()
+
   return (
-    <main className="min-h-screen bg-[#F5F4F1]" style={{ fontFamily: "'Inter', sans-serif" }}>
-      <Navbar />
+    <main className="min-h-screen transition-colors duration-300" style={{ backgroundColor: colors.pageBg, fontFamily: "'Inter', sans-serif" }}>
+      <Navbar theme={theme} colors={colors} onThemeChange={setTheme} />
       <HeroSectionGeneral />
-      <FeaturesContextSection />
-      <HowItWorksSection />
-      <ROISection />
-      <BetaTestimonialsSection />
-      <BeyondObviousSection />
-      <TrustSection />
-      <FAQSection />
+      <FeaturesContextSection colors={colors} />
+      <HowItWorksSection colors={colors} />
+      <ROISection colors={colors} />
+      <BetaTestimonialsSection colors={colors} />
+      <BeyondObviousSection colors={colors} />
+      <TrustSection colors={colors} />
+      <FAQSection colors={colors} />
       <PersonalNoteSectionGeneral />
-      <FloatingCTA />
+      <FloatingCTA colors={colors} />
       <Footer />
     </main>
   )
