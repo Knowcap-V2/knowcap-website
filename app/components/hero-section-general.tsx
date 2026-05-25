@@ -86,7 +86,7 @@ export default function HeroSectionGeneral() {
         <div className={`max-w-[900px] mx-auto transition-all duration-700 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="rounded-xl overflow-hidden border border-white/[0.08] shadow-2xl">
             <Image
-              src="/dashboard1.png"
+              src="/screenshot-inbox.png"
               alt="Knowcap Dashboard — Project sources, AI chat, and artifacts"
               width={1920}
               height={1080}
