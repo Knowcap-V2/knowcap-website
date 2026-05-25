@@ -145,14 +145,14 @@ async function handleFunctionCall(functionName: string, args: any) {
         return {
           success: true,
           count: candidates.length,
-          candidates: candidates.map(c => ({
+          candidates: candidates.map((c: any) => ({
             ...c,
             strengths: c.strengths ? JSON.parse(c.strengths) : [],
             weaknesses: c.weaknesses ? JSON.parse(c.weaknesses) : [],
           })),
         }
       }
-      
+
       case 'get_candidate_details': {
         const { applicationId } = args
         const candidate = await prisma.recruitmentApplication.findUnique({
@@ -202,14 +202,14 @@ async function handleFunctionCall(functionName: string, args: any) {
         
         return {
           success: true,
-          candidates: candidates.map(c => ({
+          candidates: candidates.map((c: any) => ({
             ...c,
             strengths: c.strengths ? JSON.parse(c.strengths) : [],
             weaknesses: c.weaknesses ? JSON.parse(c.weaknesses) : [],
           })),
         }
       }
-      
+
       case 'send_email': {
         const { applicationId, subject, body } = args
         const candidate = await prisma.recruitmentApplication.findUnique({
@@ -301,7 +301,7 @@ CURRENT RECRUITMENT STATS:
 - Strong Candidates (80+): ${strongCandidates}
 
 ROLES & APPLICATIONS:
-${roleStats.map(r => `- ${r.role}: ${r._count.id} applications (avg score: ${Math.round(r._avg.aiScore || 0)})`).join('\n')}
+${roleStats.map((r: any) => `- ${r.role}: ${r._count.id} applications (avg score: ${Math.round(r._avg.aiScore || 0)})`).join('\n')}
 
 YOU CAN:
 1. Query and filter candidates by role, score, recommendation level
