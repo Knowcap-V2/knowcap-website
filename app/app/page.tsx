@@ -13,7 +13,7 @@ import Footer from '@/components/footer'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0A0A0A]" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <main className="min-h-screen bg-[#F5F4F1]" style={{ fontFamily: "'Inter', sans-serif" }}>
       <Navbar />
       <HeroSectionGeneral />
       <FeaturesContextSection />

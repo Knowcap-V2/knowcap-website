@@ -16,35 +16,35 @@ export default function FeaturesContextSection() {
       icon: Radio,
       title: 'Capture with Context',
       description: 'Send Knowcap to any meeting or screen session. It listens, watches, and understands — automatically linking every spoken word and on-screen action to its source.',
-      image: '/feature-capture.png',
+      image: '/dashboard1.png',
     },
     {
       icon: Search,
       title: 'Answer with Proof',
       description: 'Ask any question and get an instant answer with a direct link to the exact, verified moment in the recording.',
-      image: '/feature-search-new.png',
+      image: '/dashboard2.png',
     },
     {
       icon: FileCheck,
       title: 'Audit Any Deliverable',
       description: 'All generated PRDs, SOPs, and guides include timestamp citations and embedded clips, so every deliverable can be trusted and verified.',
-      image: '/feature-audit-new.png',
+      image: '/dashboard3.png',
     },
   ]
 
   return (
-    <section id="features" className="relative py-24 md:py-32 bg-[#0A0A0A] overflow-hidden">
-      <div className="max-w-[1100px] mx-auto px-6 relative z-10">
+    <section id="features" className="relative py-24 md:py-32 bg-white">
+      <div className="max-w-[1100px] mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] mb-4">
-            <span className="text-[12px] font-medium text-white/50 uppercase tracking-wider" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Features</span>
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-[#1a1a1a]/[0.04] border border-[#1a1a1a]/[0.06] mb-4">
+            <span className="text-[12px] font-medium text-[#666] uppercase tracking-wider" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Features</span>
           </div>
-          <h2 className="text-3xl md:text-4xl text-white mb-5" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em' }}>
+          <h2 className="text-3xl md:text-4xl text-[#1a1a1a] mb-5" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: '-0.02em' }}>
             Run projects on proof,{' '}
-            <span className="text-white/40">not memory</span>
+            <span className="text-[#999]">not memory</span>
           </h2>
-          <p className="text-[15px] text-white/40 max-w-[560px] mx-auto" style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.7 }}>
+          <p className="text-[15px] text-[#666] max-w-[560px] mx-auto" style={{ lineHeight: 1.7 }}>
             Every insight linked to its source. Validate, audit, and share with timestamped proof.
           </p>
         </div>
@@ -59,28 +59,16 @@ export default function FeaturesContextSection() {
             >
               {index % 2 === 0 ? (
                 <>
-                  <div className="relative rounded-xl overflow-hidden border border-white/[0.06]">
-                    <Image
-                      src={feature.image}
-                      alt={`${feature.title} Interface`}
-                      width={1312}
-                      height={736}
-                      className="w-full h-auto"
-                    />
+                  <div className="relative rounded-xl overflow-hidden border border-[#e5e5e5] shadow-lg">
+                    <Image src={feature.image} alt={`${feature.title} — Knowcap UI`} width={1920} height={1080} className="w-full h-auto" />
                   </div>
                   <FeatureContent icon={feature.icon} title={feature.title} description={feature.description} />
                 </>
               ) : (
                 <>
                   <FeatureContent icon={feature.icon} title={feature.title} description={feature.description} />
-                  <div className="relative rounded-xl overflow-hidden border border-white/[0.06]">
-                    <Image
-                      src={feature.image}
-                      alt={`${feature.title} Interface`}
-                      width={1312}
-                      height={736}
-                      className="w-full h-auto"
-                    />
+                  <div className="relative rounded-xl overflow-hidden border border-[#e5e5e5] shadow-lg">
+                    <Image src={feature.image} alt={`${feature.title} — Knowcap UI`} width={1920} height={1080} className="w-full h-auto" />
                   </div>
                 </>
               )}
@@ -96,14 +84,14 @@ function FeatureContent({ icon: Icon, title, description }: { icon: any; title: 
   return (
     <div>
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-9 h-9 bg-white/[0.06] rounded-lg flex items-center justify-center">
-          <Icon className="w-4.5 h-4.5 text-white/40" />
+        <div className="w-9 h-9 bg-[#F5F4F1] rounded-lg flex items-center justify-center border border-[#e5e5e5]">
+          <Icon className="w-4 h-4 text-[#666]" />
         </div>
-        <h3 className="text-[20px] font-bold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        <h3 className="text-[20px] font-bold text-[#1a1a1a]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
           {title}
         </h3>
       </div>
-      <p className="text-[14px] text-white/40 leading-relaxed" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <p className="text-[14px] text-[#666] leading-relaxed">
         {description}
       </p>
     </div>

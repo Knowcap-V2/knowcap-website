@@ -57,7 +57,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} bg-[#0A0A0A] text-white antialiased`}>
+      <body className={`${inter.className} bg-[#F5F4F1] text-[#1a1a1a] antialiased`}>
         {children}
         <Toaster />
         <Sonner />
