@@ -1,12 +1,15 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Inter, Space_Grotesk, JetBrains_Mono, EB_Garamond } from 'next/font/google'
 import { Toaster } from '@/components/ui/toaster'
 import { Toaster as Sonner } from 'sonner'
+import PostHogProvider from '@/components/posthog-provider'
 import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' })
+const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
+const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-serif' })
 
 export const metadata: Metadata = {
   title: 'Knowcap — The Trust Layer for AI Agents',
@@ -22,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${ebGaramond.variable}`}>
       <head>
         {/* Microsoft Clarity */}
         <Script
@@ -58,6 +61,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} bg-[#F5F4F1] text-[#1a1a1a] antialiased`}>
+        <PostHogProvider />
         {children}
         <Toaster />
         <Sonner />
