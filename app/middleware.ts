@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const VARIANTS = ['a', 'b', 'c', 'd', 'e'] as const
+// Live A/B rotation = the four copy variants only. The impeccable design at
+// /e is intentionally OUT of the random split so the copy test isn't confounded
+// by a design difference; /e stays directly reachable for review.
+const VARIANTS = ['a', 'b', 'c', 'd'] as const
 const THEMES = ['baseline', 'operator-dark', 'operator-light', 'library'] as const
 const VARIANT_COOKIE = 'kc-landing-variant'
 const THEME_COOKIE = 'kc-landing-theme'
