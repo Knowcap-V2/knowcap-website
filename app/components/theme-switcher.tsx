@@ -42,7 +42,7 @@ interface ThemeColors {
 const THEME_MAP: Record<ThemeKey, ThemeColors> = {
   baseline: {
     pageBg: '#FBFAF8', cardBg: '#FFFFFF', cardBorder: '#E7E4DD',
-    headingColor: '#18181B', bodyColor: '#4A4F5A', mutedColor: '#8A8F99',
+    headingColor: '#18181B', bodyColor: '#4A4F5A', mutedColor: '#6E737D',
     accentColor: '#1F6B3A', iconBg: '#F5F4F1',
     heroFrom: '#18181B', heroTo: '#0A0A0A',
     heroBadgeBg: 'rgba(255,255,255,0.06)', heroBadgeBorder: 'rgba(255,255,255,0.08)', heroBadgeText: 'rgba(255,255,255,0.6)',
@@ -57,7 +57,7 @@ const THEME_MAP: Record<ThemeKey, ThemeColors> = {
   },
   'operator-dark': {
     pageBg: '#0B0E14', cardBg: '#11151D', cardBorder: '#1F2530',
-    headingColor: '#C9D1D9', bodyColor: '#8B949E', mutedColor: '#484F58',
+    headingColor: '#C9D1D9', bodyColor: '#8B949E', mutedColor: '#767E8A',
     accentColor: '#58A6FF', iconBg: '#1F2530',
     heroFrom: '#060810', heroTo: '#0B0E14',
     heroBadgeBg: 'rgba(88,166,255,0.08)', heroBadgeBorder: 'rgba(88,166,255,0.15)', heroBadgeText: '#58A6FF',
@@ -72,7 +72,7 @@ const THEME_MAP: Record<ThemeKey, ThemeColors> = {
   },
   'operator-light': {
     pageBg: '#FAFAF7', cardBg: '#F2F0EA', cardBorder: '#DDD8CC',
-    headingColor: '#18181B', bodyColor: '#5B5B62', mutedColor: '#999999',
+    headingColor: '#18181B', bodyColor: '#5B5B62', mutedColor: '#6E6E73',
     accentColor: '#1F6B3A', iconBg: '#EAE7DF',
     heroFrom: '#18181B', heroTo: '#0A0A0A',
     heroBadgeBg: 'rgba(31,107,58,0.08)', heroBadgeBorder: 'rgba(31,107,58,0.2)', heroBadgeText: '#4ade80',
@@ -87,7 +87,7 @@ const THEME_MAP: Record<ThemeKey, ThemeColors> = {
   },
   library: {
     pageBg: '#F5EBDC', cardBg: '#FBF4E5', cardBorder: '#D9C9A8',
-    headingColor: '#2D1F18', bodyColor: '#6B584A', mutedColor: '#9A8A78',
+    headingColor: '#2D1F18', bodyColor: '#6B584A', mutedColor: '#7E6E59',
     accentColor: '#8B3E2F', iconBg: '#EFE3CF',
     heroFrom: '#2D1F18', heroTo: '#1A110D',
     heroBadgeBg: 'rgba(139,62,47,0.08)', heroBadgeBorder: 'rgba(139,62,47,0.2)', heroBadgeText: 'rgba(255,255,255,0.6)',
