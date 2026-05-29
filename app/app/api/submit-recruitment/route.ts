@@ -49,11 +49,8 @@ export async function POST(request: NextRequest) {
       cloud_storage_path = await uploadFile(buffer, resume.name, false)
       console.log('[RESUME UPLOAD] Successfully uploaded resume to S3:', cloud_storage_path)
     } catch (uploadError) {
-      console.error('[RESUME UPLOAD ERROR]', uploadError)
-      return NextResponse.json(
-        { message: 'Failed to upload resume' },
-        { status: 500 }
-      )
+      console.error('[RESUME UPLOAD ERROR] continuing without cloud storage:', uploadError)
+      cloud_storage_path = null
     }
 
     // Save to database with S3 path
