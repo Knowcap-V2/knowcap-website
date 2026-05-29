@@ -470,10 +470,10 @@ function Hero() {
         <motion.figure
           className="ve-hero-exhibit"
           style={{ margin: 0 }}
-          initial={reduce ? false : { opacity: 0, y: 40 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-8% 0px' }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+          initial={reduce ? false : { y: 32 }}
+          whileInView={reduce ? undefined : { y: 0 }}
+          viewport={{ once: true, margin: '0px 0px -8% 0px' }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
         >
           <div className="ve-exhibit">
             <div className="ve-exhibit-bar">
@@ -499,10 +499,10 @@ function SectionReveal({ children, className = '' }: { children: React.ReactNode
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 24 }}
-      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-12% 0px' }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      initial={reduce ? false : { y: 18 }}
+      whileInView={reduce ? undefined : { y: 0 }}
+      viewport={{ once: true, margin: '0px 0px -8% 0px' }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
