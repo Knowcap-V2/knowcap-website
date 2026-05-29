@@ -1,16 +1,16 @@
 'use client'
 
 /**
- * Version E — "The Record"
- * A landing variant whose copy and section order are identical to Version A
- * (app/app/page.tsx + its section components), but whose entire visual system
- * is designed from scratch with the impeccable skill. It does NOT use the
- * shared theme-switcher / cream + Space Grotesk system (versions A–D); the
- * point is to judge an independent design POV against the hand-built one.
+ * The A / control landing page — "The Record"
+ * Carries Version A's exact copy and section order, but its entire visual
+ * system is designed with the impeccable skill (it replaced the hand-built A
+ * page at `/`). It does NOT use the shared theme-switcher / cream + Space
+ * Grotesk system that versions B/C/D still use; this design is fixed by intent.
+ * Tracks as variant "a" in PostHog.
  *
  * Aesthetic: brass-and-midnight forensic dossier. Gold marks = "verified".
  * Type: Bricolage Grotesque (display) / Source Serif 4 (body) / Spline Sans Mono (meta).
- * Fonts are loaded on the /e route only (see app/app/e/page.tsx) and exposed
+ * Fonts are loaded on the `/` route (see app/app/page.tsx) and exposed
  * as the CSS vars --ve-display / --ve-body / --ve-mono.
  */
 
@@ -787,7 +787,7 @@ export default function VersionE({ fontVars = '' }: { fontVars?: string }) {
   return (
     <main className={`ve-root ${fontVars}`}>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <ABTracker variant="e" />
+      <ABTracker variant="a" />
       <Header />
       <Hero />
       <Features />
