@@ -25,9 +25,9 @@ export default function ABTracker({ variant }: { variant: string }) {
 
     try {
       if ((window as any).clarity && typeof (window as any).clarity === 'function') {
-        (window as any).clarity('set', 'landing_variant', variant)
-        (window as any).clarity('set', 'landing_theme', theme)
-        (window as any).clarity('set', 'landing_combo', combo)
+        ;(window as any).clarity('set', 'landing_variant', variant)
+        ;(window as any).clarity('set', 'landing_theme', theme)
+        ;(window as any).clarity('set', 'landing_combo', combo)
       }
     } catch (_) {}
   }, [variant])

@@ -36,7 +36,7 @@ const CSS = `
   --ink-prose:#E7E9EE; --ink-prose-dim:#A7ACB8;
   --brass:#C79A3A; --brass-bright:#E2B557; --brass-ink:#8A6516;
   --maxw:1120px; --gutter:clamp(20px,5vw,40px);
-  --fdisp:var(--ve-display,'Trebuchet MS',sans-serif);
+  --fdisp:var(--ve-display,system-ui,'Segoe UI',sans-serif);
   --fbody:var(--ve-body,Georgia,'Times New Roman',serif);
   --fmono:var(--ve-mono,ui-monospace,'SFMono-Regular',monospace);
   --ease:cubic-bezier(.16,1,.3,1);
@@ -99,6 +99,7 @@ const CSS = `
   color:var(--ink-prose-dim);text-decoration:none;transition:color .2s}
 .ve-header[data-scrolled="true"] .ve-navlink{color:var(--prose-dim)}
 .ve-navlink:hover{color:var(--brass)}
+.ve-header[data-scrolled="true"] .ve-navlink:hover{color:var(--brass-ink)}
 .ve-navauth{display:flex;align-items:center;gap:14px}
 .ve-navauth .ve-textlink{display:none}
 @media(min-width:900px){.ve-navlinks{display:flex}.ve-navauth .ve-textlink{display:inline}}
@@ -123,6 +124,7 @@ const CSS = `
   color:var(--ink-prose-dim);text-decoration:none;transition:color .2s}
 .ve-header[data-scrolled="true"] .ve-textlink{color:var(--prose-dim)}
 .ve-textlink:hover{color:var(--brass)}
+.ve-header[data-scrolled="true"] .ve-textlink:hover{color:var(--brass-ink)}
 
 /* focus */
 .ve-root a:focus-visible,.ve-root button:focus-visible,.ve-root summary:focus-visible{
@@ -262,9 +264,9 @@ const CSS = `
 .ve-foot-col a:hover{color:var(--brass)}
 .ve-foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center;
   margin-top:clamp(44px,6vw,68px);padding-top:28px;border-top:1px solid var(--line-dark)}
-.ve-foot-bottom p{margin:0;font-family:var(--fmono);font-size:.7rem;letter-spacing:.08em;color:#7C828F}
+.ve-foot-bottom p{margin:0;font-family:var(--fmono);font-size:.7rem;letter-spacing:.08em;color:#9298A4}
 .ve-foot-bottom nav{display:flex;gap:22px}
-.ve-foot-bottom a{color:#7C828F;text-decoration:none;font-family:var(--fmono);font-size:.7rem;letter-spacing:.08em;transition:color .2s}
+.ve-foot-bottom a{color:#9298A4;text-decoration:none;font-family:var(--fmono);font-size:.7rem;letter-spacing:.08em;transition:color .2s}
 .ve-foot-bottom a:hover{color:var(--brass)}
 
 /* floating cta */
@@ -401,7 +403,7 @@ function Header() {
     <header className="ve-header" data-scrolled={scrolled}>
       <div className="ve-wrap ve-nav">
         <Link href="/" className="ve-brand">
-          <Image src="/logos/logo.jpg" alt="Knowcap" width={28} height={28} priority />
+          <Image src="/logos/logo.jpg" alt="" width={28} height={28} priority />
           Knowcap
         </Link>
         <nav className="ve-navlinks" aria-label="Primary">
@@ -709,7 +711,7 @@ function SiteFooter() {
         <div className="ve-foot-grid">
           <div className="ve-foot-brand">
             <Link href="/" className="ve-brand" style={{ color: '#fff' }}>
-              <Image src="/logos/logo.jpg" alt="Knowcap" width={26} height={26} />
+              <Image src="/logos/logo.jpg" alt="" width={26} height={26} />
               Knowcap
             </Link>
             <p>The trust layer for AI agents. Every fact confirmed by a named human, with a full audit trail.</p>
