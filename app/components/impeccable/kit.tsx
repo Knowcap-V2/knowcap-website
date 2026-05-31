@@ -582,7 +582,102 @@ export function CloseSection({ title, sub }: { title: React.ReactNode; sub: stri
             <a className="ve-btn ve-btn--primary" href={`${APP_URL}/register`}>Get Started Free <Arrow /></a>
             <Link className="ve-btn ve-btn--ghost" href="/book">Book a Demo</Link>
           </div>
+          <p className="ve-close-note">Free to start. Partner pricing on a quick call.</p>
         </SectionReveal>
+      </div>
+    </section>
+  )
+}
+
+/* The problem beat (dark). Uses the approved POSITIONING.md sentence as the
+   turn. Honest failure-mode description — no un-shipped claims. */
+export function ProblemSection() {
+  return (
+    <section className="ve-section ve-dark ve-pad">
+      <div className="ve-field" aria-hidden="true" />
+      <div className="ve-wrap" style={{ position: 'relative' }}>
+        <SectionReveal className="ve-prob">
+          <h2 className="ve-h2">Most AI agents act on what the AI <span className="ve-dim">thinks</span> is true.</h2>
+          <p className="ve-lead ve-prose">
+            A model mishears one line in a meeting and your agent runs with it — the wrong scope in
+            a PR, a task from a comment nobody confirmed, a &ldquo;decision&rdquo; that was really just
+            discussion. When a client says &ldquo;that&apos;s not what we agreed,&rdquo; there&apos;s no record to point to.
+          </p>
+          <p className="ve-lead ve-prose ve-prob-turn">
+            Knowcap agents act only on what a <Mark>human</Mark> said is true — every fact confirmed,
+            timestamped to its source, and logged.
+          </p>
+        </SectionReveal>
+      </div>
+    </section>
+  )
+}
+
+const INTEGRATIONS = [
+  { k: 'MCP server', tag: 'Live', v: 'Wire Claude, Codex, Gemini, or any MCP-compatible agent directly to your verified facts.' },
+  { k: 'Odoo', tag: 'Live', v: 'Built for Odoo implementation partners — confirmed scope decisions flow toward your Odoo work.' },
+  { k: 'Jira · Asana · ClickUp', tag: 'On the roadmap', v: 'Project-tool sync so confirmed actions land where your team already works.' },
+]
+
+/* Integrations band (on-paper). Surfaces the MCP/Odoo story that was buried in
+   an eyebrow + FAQ. Tags match the shipped-vs-roadmap reality. */
+export function IntegrationsSection() {
+  return (
+    <section className="ve-section ve-on-paper ve-pad">
+      <div className="ve-wrap">
+        <SectionReveal className="ve-head">
+          <h2 className="ve-h2">Wire it into the tools you already run</h2>
+          <p className="ve-lead ve-prose ve-dim">
+            Knowcap is infrastructure, not another silo. Your agents query verified facts over MCP;
+            confirmed actions flow to your stack.
+          </p>
+        </SectionReveal>
+        <SectionReveal>
+          <div className="ve-integrations">
+            {INTEGRATIONS.map((it) => (
+              <div className="ve-integration" key={it.k}>
+                <div className="ve-integration-head">
+                  <h3 className="ve-h3">{it.k}</h3>
+                  <span className="ve-int-tag">{it.tag}</span>
+                </div>
+                <p>{it.v}</p>
+              </div>
+            ))}
+          </div>
+        </SectionReveal>
+      </div>
+    </section>
+  )
+}
+
+const TESTIMONIALS = [
+  { quote: 'Knowcap cut our support tickets by 40% after implementation.', who: 'Ibrahim Abed', org: 'Plementus (Egypt)' },
+  { quote: 'AI-generated PRDs reduced documentation time by half.', who: 'Mohamed Jamal', org: 'BI Solutions (KSA)' },
+  { quote: 'Our teams stopped re-explaining projects to new members. Onboarding now takes minutes.', who: 'Ariika Tech Team', org: 'Odoo Implementation Partner' },
+]
+
+/* Social proof (dark). The three real customer testimonials. */
+export function TestimonialsSection() {
+  return (
+    <section className="ve-section ve-dark ve-pad">
+      <div className="ve-field" aria-hidden="true" />
+      <div className="ve-wrap" style={{ position: 'relative' }}>
+        <SectionReveal className="ve-head">
+          <h2 className="ve-h2">What teams are saying</h2>
+        </SectionReveal>
+        <div className="ve-quotes">
+          {TESTIMONIALS.map((t) => (
+            <SectionReveal key={t.who}>
+              <figure className="ve-quote">
+                <blockquote>&ldquo;{t.quote}&rdquo;</blockquote>
+                <figcaption>
+                  <span className="ve-quote-who">{t.who}</span>
+                  <span className="ve-quote-org">{t.org}</span>
+                </figcaption>
+              </figure>
+            </SectionReveal>
+          ))}
+        </div>
       </div>
     </section>
   )
