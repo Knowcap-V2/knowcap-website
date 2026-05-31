@@ -42,12 +42,15 @@ function Hero() {
             <Tick className="ve-tick" />
             <span className="ve-mono">Knowcap · MCP server for Claude, Codex &amp; Gemini</span>
           </motion.div>
-          <motion.h1 className="ve-h1" variants={rise} style={{ fontSize: 'clamp(2.2rem,5vw,4.1rem)' }}>
+          <motion.h1
+            className="ve-h1" variants={rise}
+            style={{ fontSize: 'clamp(1.85rem,3.4vw,2.9rem)', lineHeight: 1.1, maxWidth: '22ch' }}
+          >
             Your meeting just flagged a risk, drafted mitigations, and contacted an alternate supplier.
           </motion.h1>
           <motion.p
             className="ve-display" variants={rise}
-            style={{ fontFamily: 'var(--t-fmono)', color: 'var(--t-accent)', fontSize: 'clamp(1.5rem,3.4vw,2.4rem)', margin: '0 0 26px' }}
+            style={{ fontFamily: 'var(--t-fmono)', color: 'var(--t-accent)', fontSize: 'clamp(1.2rem,2.4vw,1.65rem)', margin: '0 0 22px' }}
           >
             Before it ended.
           </motion.p>
