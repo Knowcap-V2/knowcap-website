@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Live A/B copy test: two finalists, both in the impeccable design, so COPY is
-// the only variable.
-//   bi → /bi  (Version B copy: outcome-first + the 80-second Odoo demo)
-//   di → /di  (Version D copy: show-the-magic + L1/L2/L3 escalation)
-// The cream A/C and the old cream B/D + the /e variant are retired from the
-// random rotation (still reachable by direct URL). The /bi and /di pages have a
-// fixed design and ignore the theme switcher, so no theme rotation here.
-const VARIANTS = ['bi', 'di'] as const
+// Live A/B copy test: the homepage random-rotates between the two finalist
+// copies only — B (outcome) and D (magic) — both in the themed impeccable
+// design, so COPY is the only variable. A and C exist at /a and /c for review
+// but are out of rotation. Theme is NOT rotated: each page defaults to baseline
+// and the visitor can switch via the nav.
+const VARIANTS = ['b', 'd'] as const
 const VARIANT_COOKIE = 'kc-landing-variant'
 
 export function middleware(request: NextRequest) {

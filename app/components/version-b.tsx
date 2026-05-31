@@ -1,23 +1,16 @@
 'use client'
 
 /**
- * Version B-imp — Version B's copy (outcome-first, Odoo demo) in the impeccable
- * "forensic dossier" design. Lives at /bi. Tracks as variant "b".
- *
- * Constant (shared with D-imp via the kit): chrome, Process, Results, Security,
- * FAQ, Close, Footer. Variable (B's bet): the hero + the "80-second Odoo PR"
- * signature section.
+ * Version B (outcome-first) — themed impeccable design.
+ * Hero sells the result; signature section is the 80-second Odoo demo.
+ * Tracks variant "b". Served at /b and in the live / rotation (outcome).
  */
 
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import ABTracker from '@/components/ab-tracker'
-import {
-  IMPECCABLE_CSS, APP_URL, Tick, Arrow, Mark, useReveal, SectionReveal,
-  ImpeccableHeader, ImpeccableFooter, ImpeccableFloatingCTA,
-  ProcessSection, ResultsSection, SecuritySection, FAQSection, CloseSection,
-} from '@/components/impeccable/kit'
+import ThemedShell from '@/components/impeccable/themed-shell'
+import { APP_URL, Tick, Arrow, Mark, useReveal, SectionReveal } from '@/components/impeccable/kit'
 
 function Hero() {
   const { reduce, rise, container } = useReveal()
@@ -30,22 +23,18 @@ function Hero() {
             <Tick className="ve-tick" />
             <span className="ve-mono">Knowcap · MCP server for Claude, Codex &amp; Gemini</span>
           </motion.div>
-
           <motion.h1 className="ve-h1" variants={rise}>
             Your meetings become <Mark ink>verified actions.</Mark>{' '}
             <span className="ve-dim">Automatically.</span>
           </motion.h1>
-
           <motion.p className="ve-lead ve-prose" variants={rise}>
             Record meetings. Extract the important parts. Let a human confirm each one.
             Then let your agents act — on verified facts only.
           </motion.p>
-
           <motion.div className="ve-cta-row" variants={rise}>
             <a className="ve-btn ve-btn--primary" href={`${APP_URL}/register`}>Get Started Free <Arrow /></a>
             <Link className="ve-btn ve-btn--ghost" href="/book">Book a Demo</Link>
           </motion.div>
-
           <motion.div className="ve-bullets" variants={rise}>
             <span className="ve-bullet"><Tick />Record from Meet, Zoom, Teams, WhatsApp, Telegram, or Slack</span>
             <span className="ve-bullet"><Tick />AI extracts decisions, tasks, risks, facts, and people</span>
@@ -53,8 +42,7 @@ function Hero() {
         </motion.div>
 
         <motion.figure
-          className="ve-hero-exhibit"
-          style={{ margin: 0 }}
+          className="ve-hero-exhibit" style={{ margin: 0 }}
           initial={reduce ? false : { opacity: 0, y: 40 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-8% 0px' }}
@@ -65,13 +53,7 @@ function Hero() {
               <span className="ve-mono">Exhibit · Inbox</span>
               <span className="ve-seal ve-mono"><Tick />Verified source</span>
             </div>
-            <Image
-              src="/screenshot-inbox-claims.png"
-              alt="Knowcap inbox: extracted meeting claims queued for human confirmation"
-              width={1920}
-              height={1080}
-              priority
-            />
+            <Image src="/screenshot-inbox-claims.png" alt="Knowcap inbox: extracted meeting claims queued for human confirmation" width={1920} height={1080} priority />
           </div>
         </motion.figure>
       </div>
@@ -79,7 +61,6 @@ function Hero() {
   )
 }
 
-/* B's signature section: the 80-second Odoo demo, rendered as a dossier exhibit. */
 function OdooDemo() {
   return (
     <section className="ve-section ve-on-paper ve-pad">
@@ -107,12 +88,7 @@ function OdooDemo() {
                   <span className="ve-mono">Exhibit · Artifact</span>
                   <span className="ve-seal ve-mono"><Tick />Verified source</span>
                 </div>
-                <Image
-                  src="/screenshot-artifacts.png"
-                  alt="Auto-generated project artifact with the client's quoted scope change"
-                  width={1920}
-                  height={1080}
-                />
+                <Image src="/screenshot-artifacts.png" alt="Auto-generated project artifact with the client's quoted scope change" width={1920} height={1080} />
               </div>
             </figure>
           </div>
@@ -122,24 +98,16 @@ function OdooDemo() {
   )
 }
 
-export default function VersionBImpeccable({ fontVars = '' }: { fontVars?: string }) {
+export default function VersionB() {
   return (
-    <main className={`ve-root ${fontVars}`}>
-      <style dangerouslySetInnerHTML={{ __html: IMPECCABLE_CSS }} />
-      <ABTracker variant="b" />
-      <ImpeccableHeader />
-      <Hero />
-      <OdooDemo />
-      <ProcessSection />
-      <ResultsSection />
-      <SecuritySection />
-      <FAQSection />
-      <CloseSection
-        title={<>Stop letting your agents act on meeting notes <span className="ve-dim">nobody checked.</span></>}
-        sub="Humans confirm. Agents act."
-      />
-      <ImpeccableFooter />
-      <ImpeccableFloatingCTA />
-    </main>
+    <ThemedShell
+      variant="b"
+      hero={<Hero />}
+      signature={<OdooDemo />}
+      close={{
+        title: <>Stop letting your agents act on meeting notes <span className="ve-dim">nobody checked.</span></>,
+        sub: 'Humans confirm. Agents act.',
+      }}
+    />
   )
 }

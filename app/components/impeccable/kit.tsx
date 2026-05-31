@@ -2,7 +2,7 @@
 
 /**
  * Impeccable design kit — shared primitives for the impeccable-designed landing
- * variants (B-imp at /bi, D-imp at /di). The live /e control (version-e.tsx)
+ * variants (B at /b, D at /d, plus /a and /c). The themed shell (themed-shell.tsx)
  * is intentionally NOT refactored onto this kit; it stays frozen.
  *
  * Aesthetic: brass-and-midnight "forensic dossier". Gold marks = "verified".
