@@ -62,6 +62,13 @@ function Hero() {
             <a className="ve-btn ve-btn--primary" href={`${APP_URL}/register`}>Get Started Free <Arrow /></a>
             <Link className="ve-btn ve-btn--ghost" href="/book">Book a Demo</Link>
           </motion.div>
+          <motion.div className="ve-trust" variants={rise}>
+            <span>Built by an Odoo partner</span>
+            <span className="ve-trust-dot" aria-hidden="true" />
+            <span>MCP-native</span>
+            <span className="ve-trust-dot" aria-hidden="true" />
+            <span>Full audit trail on every action</span>
+          </motion.div>
         </motion.div>
 
         <motion.figure

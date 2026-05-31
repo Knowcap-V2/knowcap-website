@@ -18,7 +18,8 @@ import ABTracker from '@/components/ab-tracker'
 import ThemeSwitcher, { useThemeColors } from '@/components/theme-switcher'
 import {
   IMPECCABLE_CSS, APP_URL,
-  ProcessSection, ResultsSection, SecuritySection, FAQSection, CloseSection,
+  ProblemSection, ProcessSection, IntegrationsSection, SecuritySection,
+  ResultsSection, TestimonialsSection, FAQSection, CloseSection,
   ImpeccableFooter, ImpeccableFloatingCTA,
 } from '@/components/impeccable/kit'
 
@@ -59,6 +60,61 @@ const THEME_OVERRIDES = `
 .ve-spec-row dt{color:var(--t-hero-heading)}
 .ve-themes{display:flex;align-items:center;gap:14px}
 @media(max-width:640px){.ve-themes .ve-textlink{display:none}}
+
+/* On near-black hero + dark sections the forest-green accent fails contrast, so
+   dark-context accents use the bright "verified" green (same hue — verified-green
+   stays the brand constant across themes). */
+.ve-dark .ve-mark{color:var(--t-accent-bright);background-image:linear-gradient(color-mix(in srgb,var(--t-accent-bright) 26%,transparent),color-mix(in srgb,var(--t-accent-bright) 26%,transparent))}
+.ve-dark .ve-mark--ink{color:var(--t-accent-bright);background-image:linear-gradient(color-mix(in srgb,var(--t-accent-bright) 22%,transparent),color-mix(in srgb,var(--t-accent-bright) 22%,transparent))}
+.ve-dark .ve-step-no,.ve-dark .ve-step .ve-step-tag,.ve-docid .ve-mono,.ve-seal,.ve-dark .ve-faq .ve-q-sign{color:var(--t-accent-bright)}
+.ve-dark .ve-step-no::before{background:linear-gradient(var(--t-accent-bright),transparent)}
+.ve-dark .ve-navlink:hover,.ve-dark .ve-textlink:hover{color:var(--t-accent-bright)}
+
+/* Two-column hero: the hero's two in-flow children (text block + framed exhibit)
+   become side-by-side columns on desktop, filling the dead right space. The
+   .ve-field is position:absolute so it stays out of the grid. Below 980px it
+   falls back to the original stacked layout. */
+@media(min-width:980px){
+  .ve-hero .ve-wrap{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(32px,4vw,64px);align-items:center}
+  .ve-hero .ve-hero-exhibit{margin-top:0}
+  .ve-hero h1{max-width:none}
+  .ve-hero .ve-lead{max-width:46ch}
+  .ve-hero .ve-bullets{max-width:none}
+}
+
+/* Hero trust strip (honest social proof under the CTAs) */
+.ve-trust{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:24px;
+  font-family:var(--t-fmono);font-size:.72rem;letter-spacing:.04em;color:var(--t-ink-prose-dim)}
+.ve-trust .ve-trust-dot{width:4px;height:4px;border-radius:999px;background:var(--t-accent-bright);flex:none}
+
+/* Problem section */
+.ve-prob{max-width:760px}
+.ve-prob .ve-lead{color:var(--t-ink-prose-dim);margin:22px 0 0}
+.ve-prob .ve-prob-turn{color:var(--t-ink-prose);margin-top:18px}
+
+/* Integrations band */
+.ve-integrations{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:820px){.ve-integrations{grid-template-columns:repeat(3,1fr)}}
+.ve-integration{border:1px solid var(--t-line);border-radius:6px;padding:clamp(22px,2.6vw,30px);background:var(--t-card)}
+.ve-integration-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.ve-integration-head h3{margin:0}
+.ve-int-tag{font-family:var(--t-fmono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;white-space:nowrap;border:1px solid color-mix(in srgb,var(--t-accent) 40%,transparent);color:var(--t-accent)}
+.ve-integration p{margin:0;color:var(--t-prose-dim);font-size:1rem;line-height:1.55}
+
+/* Testimonials */
+.ve-quotes{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:860px){.ve-quotes{grid-template-columns:repeat(3,1fr)}}
+.ve-quote{margin:0;border:1px solid var(--t-line);border-radius:6px;padding:clamp(22px,2.6vw,30px);
+  display:flex;flex-direction:column;gap:18px;background:color-mix(in srgb,var(--t-ink-prose) 4%,transparent)}
+.ve-quote blockquote{margin:0;font-family:var(--t-fdisp);font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.05rem,1.5vw,1.22rem);line-height:1.4;color:var(--t-hero-heading);text-wrap:pretty}
+.ve-quote figcaption{display:flex;flex-direction:column;gap:2px;margin-top:auto;border-top:1px solid var(--t-line);padding-top:16px}
+.ve-quote-who{font-family:var(--t-fdisp);font-weight:600;color:var(--t-hero-heading);font-size:.96rem}
+.ve-quote-org{font-family:var(--t-fmono);font-size:.7rem;letter-spacing:.06em;color:var(--t-ink-prose-dim)}
+
+/* Close section pricing note */
+.ve-close-note{margin:22px auto 0;font-family:var(--t-fmono);font-size:.72rem;letter-spacing:.04em;color:var(--t-ink-prose-dim)}
 `
 
 export const THEMED_STYLE = FONT_IMPORT + IMPECCABLE_CSS + THEME_OVERRIDES
@@ -123,6 +179,9 @@ export default function ThemedShell({
     '--t-ink-prose': colors.heroSub,
     '--t-ink-prose-dim': colors.heroBullet,
     '--t-accent': colors.accentColor,
+    // Bright "verified" green for dark sections (forest-green fails on near-black).
+    // Constant across themes so the verified-green keeps one identity.
+    '--t-accent-bright': '#4ade80',
     '--t-accent-contrast': colors.heroBtnText,
     '--t-heading': colors.headingColor,
     '--t-hero-from': colors.heroFrom,
@@ -139,10 +198,13 @@ export default function ThemedShell({
       <ABTracker variant={variant} />
       <ThemedHeader theme={theme} onThemeChange={setTheme} />
       {hero}
+      <ProblemSection />
       {signature}
       <ProcessSection />
-      <ResultsSection />
+      <IntegrationsSection />
       <SecuritySection />
+      <ResultsSection />
+      <TestimonialsSection />
       <FAQSection />
       <CloseSection title={close.title} sub={close.sub} />
       <ImpeccableFooter />

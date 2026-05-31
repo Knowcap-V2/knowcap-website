@@ -39,6 +39,13 @@ function Hero() {
             <span className="ve-bullet"><Tick />Record from Meet, Zoom, Teams, WhatsApp, Telegram, or Slack</span>
             <span className="ve-bullet"><Tick />AI extracts decisions, tasks, risks, facts, and people</span>
           </motion.div>
+          <motion.div className="ve-trust" variants={rise}>
+            <span>Built by an Odoo partner</span>
+            <span className="ve-trust-dot" aria-hidden="true" />
+            <span>MCP-native</span>
+            <span className="ve-trust-dot" aria-hidden="true" />
+            <span>Full audit trail on every action</span>
+          </motion.div>
         </motion.div>
 
         <motion.figure
