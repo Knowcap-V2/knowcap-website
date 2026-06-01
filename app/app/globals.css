@@ -209,3 +209,27 @@ html {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* === Polish layer (shared system, versions A–D) === */
+
+/* Even line wrapping on headings; fewer orphans in long prose. */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* Accessibility: every animation needs a reduced-motion path. The sections use
+   framer-motion / mount-triggered reveals and there is a global transition on *;
+   collapse all of it to instant when the user asks the OS for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
