@@ -154,17 +154,22 @@ function ThemedHeader({ theme, onThemeChange }: { theme: any; onThemeChange: (k:
  * @param hero     the copy-specific hero section
  * @param signature optional copy-specific section rendered right after the hero
  * @param close    the closing CTA block (title + sub)
+ * @param faq      optional FAQ override (e.g. for vertical landing pages). Pass
+ *                 a fully rendered section/node; if omitted, the default
+ *                 <FAQSection /> ships unchanged.
  */
 export default function ThemedShell({
   variant,
   hero,
   signature,
   close,
+  faq,
 }: {
   variant: string
   hero: React.ReactNode
   signature?: React.ReactNode
   close: { title: React.ReactNode; sub: string }
+  faq?: React.ReactNode
 }) {
   const [theme, colors, setTheme] = useThemeColors()
 
@@ -205,7 +210,7 @@ export default function ThemedShell({
       <SecuritySection />
       <ResultsSection />
       <TestimonialsSection />
-      <FAQSection />
+      {faq ?? <FAQSection />}
       <CloseSection title={close.title} sub={close.sub} />
       <ImpeccableFooter />
       <ImpeccableFloatingCTA />

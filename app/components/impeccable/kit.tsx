@@ -154,6 +154,52 @@ export const IMPECCABLE_CSS = `
 .ve-seal{display:inline-flex;align-items:center;gap:7px;color:var(--brass)}
 .ve-hero-exhibit{margin-top:clamp(54px,7vw,86px)}
 
+/* ── Claim stack mockup (the on-brand hero exhibit, replaces dense screenshots) ── */
+.ve-claim-stack{display:flex;flex-direction:column;gap:14px;width:100%;max-width:520px;margin-left:auto;perspective:1200px}
+.ve-claim-card{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:18px 20px;
+  box-shadow:0 24px 50px -32px rgba(0,0,0,.45),0 4px 12px -8px rgba(0,0,0,.25);
+  font-family:var(--fbody);color:var(--prose);position:relative;transform-origin:left center}
+.ve-dark .ve-claim-card{background:var(--ink-2);border-color:var(--line-dark-2);color:var(--ink-prose);
+  box-shadow:0 30px 60px -34px rgba(0,0,0,.7),0 4px 14px -10px rgba(0,0,0,.5)}
+.ve-claim-card:nth-child(1){transform:translateX(-22px) rotateY(2deg);opacity:.94}
+.ve-claim-card:nth-child(3){transform:translateX(-12px) rotateY(-1.5deg);opacity:.97}
+.ve-claim-head{display:flex;align-items:center;gap:10px;font-family:var(--fmono);font-size:.66rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--prose-dim);margin-bottom:10px}
+.ve-dark .ve-claim-head{color:var(--ink-prose-dim)}
+.ve-claim-stamp{color:var(--brass);font-weight:600}
+.ve-dark .ve-claim-stamp{color:var(--brass-bright)}
+.ve-claim-speaker{color:var(--prose);font-weight:500;text-transform:none;letter-spacing:0}
+.ve-dark .ve-claim-speaker{color:var(--ink-prose)}
+.ve-claim-text{font-family:var(--fdisp);font-weight:500;font-size:.95rem;line-height:1.4;letter-spacing:-.005em;color:var(--ink);margin:0 0 12px}
+.ve-dark .ve-claim-text{color:var(--ink-prose)}
+.ve-claim-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding-top:10px;border-top:1px dashed var(--line)}
+.ve-dark .ve-claim-foot{border-top-color:var(--line-dark)}
+.ve-claim-tag{font-family:var(--fmono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;font-weight:600}
+.ve-claim-tag--decision{background:rgba(124,58,237,.12);color:#7c3aed;border:1px solid rgba(124,58,237,.28)}
+.ve-claim-tag--risk{background:rgba(220,38,38,.12);color:#dc2626;border:1px solid rgba(220,38,38,.28)}
+.ve-claim-tag--task{background:rgba(59,130,246,.12);color:#3b82f6;border:1px solid rgba(59,130,246,.28)}
+.ve-dark .ve-claim-tag--decision{background:rgba(167,139,250,.16);color:#a78bfa}
+.ve-dark .ve-claim-tag--risk{background:rgba(248,113,113,.16);color:#f87171}
+.ve-dark .ve-claim-tag--task{background:rgba(96,165,250,.16);color:#60a5fa}
+.ve-claim-state{display:inline-flex;align-items:center;gap:6px;font-family:var(--fmono);font-size:.62rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--prose-dim);font-weight:600}
+.ve-dark .ve-claim-state{color:var(--ink-prose-dim)}
+.ve-claim-state--verified{color:var(--brass);}
+.ve-dark .ve-claim-state--verified{color:var(--brass-bright)}
+.ve-claim-state svg{width:11px;height:11px;flex:none}
+.ve-claim-action{margin-top:10px;padding:8px 12px;border-radius:6px;background:rgba(74,222,128,.08);
+  border:1px solid rgba(74,222,128,.22);font-family:var(--fmono);font-size:.66rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;font-weight:600}
+.ve-dark .ve-claim-action{background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.32);color:var(--brass-bright)}
+.ve-claim-action svg{width:10px;height:10px;flex:none}
+.ve-claim-bar{display:flex;align-items:center;justify-content:space-between;font-family:var(--fmono);font-size:.62rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--prose-dim);margin-bottom:14px;padding-bottom:14px;
+  border-bottom:1px solid var(--line)}
+.ve-dark .ve-claim-bar{color:var(--ink-prose-dim);border-bottom-color:var(--line-dark)}
+.ve-claim-bar .ve-claim-bar-meta{display:inline-flex;align-items:center;gap:9px}
+
 /* generic section head */
 .ve-head{max-width:720px;margin-bottom:clamp(44px,6vw,72px)}
 .ve-head .ve-lead{color:inherit;opacity:.82;margin:18px 0 0}
@@ -290,6 +336,70 @@ export function Arrow() {
 
 export function Mark({ children, ink = false }: { children: React.ReactNode; ink?: boolean }) {
   return <span className={ink ? 've-mark ve-mark--ink' : 've-mark'}>{children}</span>
+}
+
+/* ----------------------------------------------------------------------- */
+/* Claim stack exhibit — the canonical hero visual                          */
+/* ----------------------------------------------------------------------- */
+
+type ClaimCard = {
+  time: string
+  speaker: string
+  text: string
+  tag: 'decision' | 'risk' | 'task'
+  state: 'pending' | 'verified'
+  action?: string
+}
+
+/**
+ * On-brand mockup of three claim cards in different states — explains
+ * "verified actions" visually without needing a dense product screenshot.
+ * Defaults match Version B (outcome-first). Each version can pass `cards`
+ * + `bar` to retell the same widget for its own headline.
+ */
+export function ClaimsExhibit({
+  cards,
+  bar,
+}: {
+  cards?: ClaimCard[]
+  bar?: { left: string; right: string }
+} = {}) {
+  const data = cards ?? [
+    { time: '0:14:22', speaker: 'Client', text: '"Add the warehouse module to phase 2."', tag: 'decision', state: 'verified', action: 'Odoo SH PR opened' },
+    { time: '0:18:07', speaker: 'Eng lead', text: '"Lead time for the API integration is two weeks longer than scoped."', tag: 'risk', state: 'verified', action: 'Risk filed · client notified' },
+    { time: '0:24:51', speaker: 'PM', text: '"Send the revised SOW for sign-off by Friday."', tag: 'task', state: 'pending' },
+  ]
+  const barText = bar ?? { left: 'Inbox · 3 claims', right: 'Live · 0:31:04' }
+  return (
+    <div className="ve-claim-stack" aria-label="Verified claims from a live meeting">
+      <div className="ve-claim-bar">
+        <span className="ve-claim-bar-meta"><Tick />{barText.left}</span>
+        <span>{barText.right}</span>
+      </div>
+      {data.map((c, i) => (
+        <article key={i} className="ve-claim-card">
+          <div className="ve-claim-head">
+            <span className="ve-claim-stamp">{c.time}</span>
+            <span className="ve-claim-speaker">· {c.speaker}</span>
+          </div>
+          <p className="ve-claim-text">{c.text}</p>
+          <div className="ve-claim-foot">
+            <span className={`ve-claim-tag ve-claim-tag--${c.tag}`}>{c.tag}</span>
+            <span className={`ve-claim-state${c.state === 'verified' ? ' ve-claim-state--verified' : ''}`}>
+              {c.state === 'verified' ? <Tick /> : null}
+              {c.state}
+            </span>
+          </div>
+          {c.action ? (
+            <div className="ve-claim-action">
+              <Arrow />
+              {c.action}
+            </div>
+          ) : null}
+        </article>
+      ))}
+    </div>
+  )
 }
 
 /* ----------------------------------------------------------------------- */

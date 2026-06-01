@@ -1,19 +1,34 @@
-# Knowcap Landing Page
+# Knowcap Marketing Page
 
 ## What This Is
-Marketing landing page for Knowcap (knowcap.ai). Deployed on Vercel, auto-deploys from `main`.
+Brand + marketing + website for Knowcap (knowcap.ai). Renamed from `knowcap-landing` on 2026-06-01.
 
-- **Repo:** Knowcap-V2/knowcap-landing
+The website lives in `app/`. Everything else is brand/marketing surface area.
+
+- **Repo:** Knowcap-V2/knowcap-marketing
 - **Stack:** Next.js 14, Tailwind, deployed via Vercel
 - **Vercel project:** `app` on team `hsa-smetoolsios-projects`
 - **Root directory on Vercel:** `app/` (the Next.js subfolder, not repo root)
 - **Domain:** knowcap.ai (Cloudflare → Vercel)
 
+## Where things live
+
+| What | Where |
+|---|---|
+| Website code | `app/` (Next.js) |
+| Shipped blog posts | `app/content/blog/*.md` |
+| Brand DNA | `brand/` (VISION, POSITIONING, MOAT, STRATEGY, PRODUCT, personas, decisions, design-explorations, legacy) |
+| Marketing research | `research/` (audits/, data/, competitors/) |
+| Campaigns | `campaigns/` (stratdev/, landing-pages/, linkedin-outbound, meta-paid-sprint) |
+| Content drafts | `content-pipeline/` (strategy/, drafts/, ideas/, video/) |
+| Strategy | `strategy/` (gtm-strategy.md, june-2026-gtm-game.md) |
+
 ## Design System
-Always read DESIGN.md before making any visual or UI decisions.
-All font choices, colors, spacing, and aesthetic direction are defined there.
-Do not deviate without explicit user approval.
-In QA mode, flag any code that doesn't match DESIGN.md.
+Always read `DESIGN.md` (or `DESIGN-E.md` for the /e variant) before making any visual or UI decisions.
+Font choices, colors, spacing, and aesthetic direction are defined there.
+
+## Vision / brand DNA
+`brand/VISION.md` is the source of truth for everything Knowcap means. Cited by every feat() PR body in the main `knowcap` repo via full GitHub URL.
 
 ## Branch Rules
 Same as all Knowcap-V2 repos: never push to main. Branch + PR only.
@@ -24,6 +39,8 @@ Same as all Knowcap-V2 repos: never push to main. Branch + PR only.
 - `app/components/navbar.tsx` — sticky nav with logo, links, theme dots
 - `app/components/hero-section-general.tsx` — dark hero section
 - `app/next.config.js` — has `ignoreBuildErrors: true` (legacy API routes have TS errors)
+- `app/app/robots.ts` — origin robots.txt overrides Cloudflare's managed AI-bot block
+- `app/app/sitemap.ts` — sitemap incl. /for/* and /compare/* sub-pages
 
 ## Skill routing
 
