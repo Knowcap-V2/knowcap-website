@@ -1,0 +1,273 @@
+country,group,query,avg_interest_0_100,n_weeks
+AE,ar_meeting_notes,"محضر اجتماع",1.6,262
+AE,ar_meeting_notes,"محضر اجتماع",ERROR,0
+AE,ar_meeting_notes,"مذكرات الاجتماع",ERROR,0
+AE,ar_meeting_notes,"تلخيص اجتماع",ERROR,0
+AE,ar_meeting_notes,"محاضر اجتماعات",ERROR,0
+AE,ar_ai,"ذكاء اصطناعي",0.0,262
+AE,ar_ai,"ذكاء اصطناعي",ERROR,0
+AE,ar_ai,"تشات جي بي تي",ERROR,0
+AE,ar_ai,"شات جي بي تي",ERROR,0
+AE,ar_ai,"ChatGPT",ERROR,0
+AE,ar_odoo,"أودو",0.0,262
+AE,ar_odoo,"أودو",ERROR,0
+AE,ar_odoo,"اودو",ERROR,0
+AE,ar_odoo,"Odoo",ERROR,0
+AE,ar_scope,"تغيير النطاق",0.3,262
+AE,ar_scope,"تغيير النطاق",ERROR,0
+AE,ar_scope,"خلاف عميل",ERROR,0
+AE,ar_scope,"نطاق العمل",ERROR,0
+AE,ar_scope,"اتفاقية العمل",ERROR,0
+AE,ar_docs,"إجراءات تشغيل",0.0,262
+AE,ar_docs,"إجراءات تشغيل",ERROR,0
+AE,ar_docs,"وثيقة المشروع",ERROR,0
+AE,ar_docs,"محضر القرار",ERROR,0
+AE,ar_docs,"تقرير العميل",ERROR,0
+AE,ar_verticals,"وكالة تسويق",0.0,262
+AE,ar_verticals,"وكالة تسويق",ERROR,0
+AE,ar_verticals,"شركة استشارات",ERROR,0
+AE,ar_verticals,"مكتب محاسبة",ERROR,0
+AE,ar_verticals,"مكتب محاماة",ERROR,0
+AE,ar_franco,"enaktab",0.0,262
+AE,ar_franco,"كناب",2.7,262
+AE,ar_franco,"enaktab",ERROR,0
+AE,ar_franco,"كناب",ERROR,0
+AE,ar_franco,"noukap",ERROR,0
+SA,ar_meeting_notes,"محضر اجتماع",8.9,262
+SA,ar_meeting_notes,"محضر اجتماع",ERROR,0
+SA,ar_meeting_notes,"مذكرات الاجتماع",ERROR,0
+SA,ar_meeting_notes,"تلخيص اجتماع",ERROR,0
+SA,ar_meeting_notes,"محاضر اجتماعات",ERROR,0
+SA,ar_ai,"ذكاء اصطناعي",1.5,262
+SA,ar_ai,"ذكاء اصطناعي",ERROR,0
+SA,ar_ai,"تشات جي بي تي",ERROR,0
+SA,ar_ai,"شات جي بي تي",ERROR,0
+SA,ar_ai,"ChatGPT",ERROR,0
+SA,ar_odoo,"أودو",0.0,262
+SA,ar_odoo,"أودو",ERROR,0
+SA,ar_odoo,"اودو",ERROR,0
+SA,ar_odoo,"Odoo",ERROR,0
+SA,ar_scope,"تغيير النطاق",0.0,262
+SA,ar_scope,"تغيير النطاق",ERROR,0
+SA,ar_scope,"خلاف عميل",ERROR,0
+SA,ar_scope,"نطاق العمل",ERROR,0
+SA,ar_scope,"اتفاقية العمل",ERROR,0
+SA,ar_docs,"إجراءات تشغيل",0.0,262
+SA,ar_docs,"إجراءات تشغيل",ERROR,0
+SA,ar_docs,"وثيقة المشروع",ERROR,0
+SA,ar_docs,"محضر القرار",ERROR,0
+SA,ar_docs,"تقرير العميل",ERROR,0
+SA,ar_verticals,"وكالة تسويق",0.2,262
+SA,ar_verticals,"وكالة تسويق",ERROR,0
+SA,ar_verticals,"شركة استشارات",ERROR,0
+SA,ar_verticals,"مكتب محاسبة",ERROR,0
+SA,ar_verticals,"مكتب محاماة",ERROR,0
+SA,ar_franco,"enaktab",0.2,262
+SA,ar_franco,"كناب",45.5,262
+SA,ar_franco,"enaktab",ERROR,0
+SA,ar_franco,"كناب",ERROR,0
+SA,ar_franco,"noukap",ERROR,0
+EG,ar_meeting_notes,"محضر اجتماع",7.0,262
+EG,ar_meeting_notes,"محضر اجتماع",ERROR,0
+EG,ar_meeting_notes,"مذكرات الاجتماع",ERROR,0
+EG,ar_meeting_notes,"تلخيص اجتماع",ERROR,0
+EG,ar_meeting_notes,"محاضر اجتماعات",ERROR,0
+EG,ar_ai,"ذكاء اصطناعي",1.4,262
+EG,ar_ai,"ذكاء اصطناعي",ERROR,0
+EG,ar_ai,"تشات جي بي تي",ERROR,0
+EG,ar_ai,"شات جي بي تي",ERROR,0
+EG,ar_ai,"ChatGPT",ERROR,0
+EG,ar_odoo,"أودو",0.1,262
+EG,ar_odoo,"أودو",ERROR,0
+EG,ar_odoo,"اودو",ERROR,0
+EG,ar_odoo,"Odoo",ERROR,0
+EG,ar_scope,"تغيير النطاق",0.2,262
+EG,ar_scope,"تغيير النطاق",ERROR,0
+EG,ar_scope,"خلاف عميل",ERROR,0
+EG,ar_scope,"نطاق العمل",ERROR,0
+EG,ar_scope,"اتفاقية العمل",ERROR,0
+EG,ar_docs,"إجراءات تشغيل",0.6,262
+EG,ar_docs,"إجراءات تشغيل",ERROR,0
+EG,ar_docs,"وثيقة المشروع",ERROR,0
+EG,ar_docs,"محضر القرار",ERROR,0
+EG,ar_docs,"تقرير العميل",ERROR,0
+EG,ar_verticals,"وكالة تسويق",0.2,262
+EG,ar_verticals,"وكالة تسويق",ERROR,0
+EG,ar_verticals,"شركة استشارات",ERROR,0
+EG,ar_verticals,"مكتب محاسبة",ERROR,0
+EG,ar_verticals,"مكتب محاماة",ERROR,0
+EG,ar_franco,"enaktab",0.2,262
+EG,ar_franco,"كناب",48.6,262
+EG,ar_franco,"enaktab",ERROR,0
+EG,ar_franco,"كناب",ERROR,0
+EG,ar_franco,"noukap",ERROR,0
+JO,ar_meeting_notes,"محضر اجتماع",0.6,262
+JO,ar_meeting_notes,"محضر اجتماع",ERROR,0
+JO,ar_meeting_notes,"مذكرات الاجتماع",ERROR,0
+JO,ar_meeting_notes,"تلخيص اجتماع",ERROR,0
+JO,ar_meeting_notes,"محاضر اجتماعات",ERROR,0
+JO,ar_ai,"ذكاء اصطناعي",1.4,262
+JO,ar_ai,"ذكاء اصطناعي",ERROR,0
+JO,ar_ai,"تشات جي بي تي",ERROR,0
+JO,ar_ai,"شات جي بي تي",ERROR,0
+JO,ar_ai,"ChatGPT",ERROR,0
+JO,ar_odoo,"أودو",0.1,262
+JO,ar_odoo,"أودو",ERROR,0
+JO,ar_odoo,"اودو",ERROR,0
+JO,ar_odoo,"Odoo",ERROR,0
+JO,ar_scope,"تغيير النطاق",0.0,262
+JO,ar_scope,"تغيير النطاق",ERROR,0
+JO,ar_scope,"خلاف عميل",ERROR,0
+JO,ar_scope,"نطاق العمل",ERROR,0
+JO,ar_scope,"اتفاقية العمل",ERROR,0
+JO,ar_docs,"إجراءات تشغيل",0.4,262
+JO,ar_docs,"إجراءات تشغيل",ERROR,0
+JO,ar_docs,"وثيقة المشروع",ERROR,0
+JO,ar_docs,"محضر القرار",ERROR,0
+JO,ar_docs,"تقرير العميل",ERROR,0
+JO,ar_verticals,"وكالة تسويق",0.3,262
+JO,ar_verticals,"وكالة تسويق",ERROR,0
+JO,ar_verticals,"شركة استشارات",ERROR,0
+JO,ar_verticals,"مكتب محاسبة",ERROR,0
+JO,ar_verticals,"مكتب محاماة",ERROR,0
+JO,ar_franco,"enaktab",0.6,262
+JO,ar_franco,"كناب",7.4,262
+JO,ar_franco,"enaktab",ERROR,0
+JO,ar_franco,"كناب",ERROR,0
+JO,ar_franco,"noukap",ERROR,0
+KW,ar_meeting_notes,"محضر اجتماع",2.0,262
+KW,ar_meeting_notes,"محضر اجتماع",ERROR,0
+KW,ar_meeting_notes,"مذكرات الاجتماع",ERROR,0
+KW,ar_meeting_notes,"تلخيص اجتماع",ERROR,0
+KW,ar_meeting_notes,"محاضر اجتماعات",ERROR,0
+KW,ar_ai,"ذكاء اصطناعي",0.4,262
+KW,ar_ai,"ذكاء اصطناعي",ERROR,0
+KW,ar_ai,"تشات جي بي تي",ERROR,0
+KW,ar_ai,"شات جي بي تي",ERROR,0
+KW,ar_ai,"ChatGPT",ERROR,0
+KW,ar_odoo,"أودو",0.4,262
+KW,ar_odoo,"أودو",ERROR,0
+KW,ar_odoo,"اودو",ERROR,0
+KW,ar_odoo,"Odoo",ERROR,0
+KW,ar_scope,"تغيير النطاق",0.7,262
+KW,ar_scope,"تغيير النطاق",ERROR,0
+KW,ar_scope,"خلاف عميل",ERROR,0
+KW,ar_scope,"نطاق العمل",ERROR,0
+KW,ar_scope,"اتفاقية العمل",ERROR,0
+KW,ar_docs,"إجراءات تشغيل",0.8,262
+KW,ar_docs,"إجراءات تشغيل",ERROR,0
+KW,ar_docs,"وثيقة المشروع",ERROR,0
+KW,ar_docs,"محضر القرار",ERROR,0
+KW,ar_docs,"تقرير العميل",ERROR,0
+KW,ar_verticals,"وكالة تسويق",0.4,262
+KW,ar_verticals,"وكالة تسويق",ERROR,0
+KW,ar_verticals,"شركة استشارات",ERROR,0
+KW,ar_verticals,"مكتب محاسبة",ERROR,0
+KW,ar_verticals,"مكتب محاماة",ERROR,0
+KW,ar_franco,"enaktab",0.3,262
+KW,ar_franco,"كناب",2.0,262
+KW,ar_franco,"enaktab",ERROR,0
+KW,ar_franco,"كناب",ERROR,0
+KW,ar_franco,"noukap",ERROR,0
+QA,ar_meeting_notes,"محضر اجتماع",0.0,262
+QA,ar_meeting_notes,"محضر اجتماع",ERROR,0
+QA,ar_meeting_notes,"مذكرات الاجتماع",ERROR,0
+QA,ar_meeting_notes,"تلخيص اجتماع",ERROR,0
+QA,ar_meeting_notes,"محاضر اجتماعات",ERROR,0
+QA,ar_ai,"ذكاء اصطناعي",0.0,262
+QA,ar_ai,"ذكاء اصطناعي",ERROR,0
+QA,ar_ai,"تشات جي بي تي",ERROR,0
+QA,ar_ai,"شات جي بي تي",ERROR,0
+QA,ar_ai,"ChatGPT",ERROR,0
+QA,ar_odoo,"أودو",0.0,262
+QA,ar_odoo,"أودو",ERROR,0
+QA,ar_odoo,"اودو",ERROR,0
+QA,ar_odoo,"Odoo",ERROR,0
+QA,ar_scope,"تغيير النطاق",0.3,262
+QA,ar_scope,"تغيير النطاق",ERROR,0
+QA,ar_scope,"خلاف عميل",ERROR,0
+QA,ar_scope,"نطاق العمل",ERROR,0
+QA,ar_scope,"اتفاقية العمل",ERROR,0
+QA,ar_docs,"إجراءات تشغيل",0.2,262
+QA,ar_docs,"إجراءات تشغيل",ERROR,0
+QA,ar_docs,"وثيقة المشروع",ERROR,0
+QA,ar_docs,"محضر القرار",ERROR,0
+QA,ar_docs,"تقرير العميل",ERROR,0
+QA,ar_verticals,"وكالة تسويق",0.0,262
+QA,ar_verticals,"وكالة تسويق",ERROR,0
+QA,ar_verticals,"شركة استشارات",ERROR,0
+QA,ar_verticals,"مكتب محاسبة",ERROR,0
+QA,ar_verticals,"مكتب محاماة",ERROR,0
+QA,ar_franco,"enaktab",0.0,262
+QA,ar_franco,"كناب",0.7,262
+QA,ar_franco,"enaktab",ERROR,0
+QA,ar_franco,"كناب",ERROR,0
+QA,ar_franco,"noukap",ERROR,0
+LB,ar_meeting_notes,"محضر اجتماع",0.0,262
+LB,ar_meeting_notes,"محضر اجتماع",ERROR,0
+LB,ar_meeting_notes,"مذكرات الاجتماع",ERROR,0
+LB,ar_meeting_notes,"تلخيص اجتماع",ERROR,0
+LB,ar_meeting_notes,"محاضر اجتماعات",ERROR,0
+LB,ar_ai,"ذكاء اصطناعي",0.2,262
+LB,ar_ai,"ذكاء اصطناعي",ERROR,0
+LB,ar_ai,"تشات جي بي تي",ERROR,0
+LB,ar_ai,"شات جي بي تي",ERROR,0
+LB,ar_ai,"ChatGPT",ERROR,0
+LB,ar_odoo,"أودو",0.2,262
+LB,ar_odoo,"أودو",ERROR,0
+LB,ar_odoo,"اودو",ERROR,0
+LB,ar_odoo,"Odoo",ERROR,0
+LB,ar_scope,"تغيير النطاق",0.0,262
+LB,ar_scope,"تغيير النطاق",ERROR,0
+LB,ar_scope,"خلاف عميل",ERROR,0
+LB,ar_scope,"نطاق العمل",ERROR,0
+LB,ar_scope,"اتفاقية العمل",ERROR,0
+LB,ar_docs,"إجراءات تشغيل",0.4,262
+LB,ar_docs,"إجراءات تشغيل",ERROR,0
+LB,ar_docs,"وثيقة المشروع",ERROR,0
+LB,ar_docs,"محضر القرار",ERROR,0
+LB,ar_docs,"تقرير العميل",ERROR,0
+LB,ar_verticals,"وكالة تسويق",0.0,262
+LB,ar_verticals,"وكالة تسويق",ERROR,0
+LB,ar_verticals,"شركة استشارات",ERROR,0
+LB,ar_verticals,"مكتب محاسبة",ERROR,0
+LB,ar_verticals,"مكتب محاماة",ERROR,0
+LB,ar_franco,"enaktab",0.0,262
+LB,ar_franco,"كناب",0.4,262
+LB,ar_franco,"enaktab",ERROR,0
+LB,ar_franco,"كناب",ERROR,0
+LB,ar_franco,"noukap",ERROR,0
+MA,ar_meeting_notes,"محضر اجتماع",2.3,262
+MA,ar_meeting_notes,"محضر اجتماع",ERROR,0
+MA,ar_meeting_notes,"مذكرات الاجتماع",ERROR,0
+MA,ar_meeting_notes,"تلخيص اجتماع",ERROR,0
+MA,ar_meeting_notes,"محاضر اجتماعات",ERROR,0
+MA,ar_ai,"ذكاء اصطناعي",0.1,262
+MA,ar_ai,"ذكاء اصطناعي",ERROR,0
+MA,ar_ai,"تشات جي بي تي",ERROR,0
+MA,ar_ai,"شات جي بي تي",ERROR,0
+MA,ar_ai,"ChatGPT",ERROR,0
+MA,ar_odoo,"أودو",0.0,262
+MA,ar_odoo,"أودو",ERROR,0
+MA,ar_odoo,"اودو",ERROR,0
+MA,ar_odoo,"Odoo",ERROR,0
+MA,ar_scope,"تغيير النطاق",0.0,262
+MA,ar_scope,"تغيير النطاق",ERROR,0
+MA,ar_scope,"خلاف عميل",ERROR,0
+MA,ar_scope,"نطاق العمل",ERROR,0
+MA,ar_scope,"اتفاقية العمل",ERROR,0
+MA,ar_docs,"إجراءات تشغيل",0.3,262
+MA,ar_docs,"إجراءات تشغيل",ERROR,0
+MA,ar_docs,"وثيقة المشروع",ERROR,0
+MA,ar_docs,"محضر القرار",ERROR,0
+MA,ar_docs,"تقرير العميل",ERROR,0
+MA,ar_verticals,"وكالة تسويق",0.0,262
+MA,ar_verticals,"وكالة تسويق",ERROR,0
+MA,ar_verticals,"شركة استشارات",ERROR,0
+MA,ar_verticals,"مكتب محاسبة",ERROR,0
+MA,ar_verticals,"مكتب محاماة",ERROR,0
+MA,ar_franco,"enaktab",0.2,262
+MA,ar_franco,"كناب",2.5,262
+MA,ar_franco,"enaktab",ERROR,0
+MA,ar_franco,"كناب",ERROR,0
+MA,ar_franco,"noukap",ERROR,0

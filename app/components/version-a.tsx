@@ -7,11 +7,10 @@
  * Tracks variant "a". Reachable at /a; not in the live / rotation.
  */
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ThemedShell from '@/components/impeccable/themed-shell'
-import { APP_URL, Tick, Arrow, Mark, useReveal } from '@/components/impeccable/kit'
+import { APP_URL, Tick, Arrow, Mark, useReveal, ClaimsExhibit } from '@/components/impeccable/kit'
 
 function Hero() {
   const { reduce, rise, container } = useReveal()
@@ -43,21 +42,22 @@ function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.figure
+        <motion.div
           className="ve-hero-exhibit" style={{ margin: 0 }}
           initial={reduce ? false : { opacity: 0, y: 40 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-8% 0px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
         >
-          <div className="ve-exhibit">
-            <div className="ve-exhibit-bar">
-              <span className="ve-mono">Exhibit · Inbox</span>
-              <span className="ve-seal ve-mono"><Tick />Verified source</span>
-            </div>
-            <Image src="/screenshot-inbox.png" alt="Knowcap dashboard: project sources, AI chat, and verified artifacts" width={1920} height={1080} priority />
-          </div>
-        </motion.figure>
+          <ClaimsExhibit
+            bar={{ left: 'Inbox · 3 claims', right: '1 awaiting review' }}
+            cards={[
+              { time: '0:12:08', speaker: 'Sarah', text: '"We’re extending the warranty window to 90 days."', tag: 'decision', state: 'verified' },
+              { time: '0:21:33', speaker: 'Marcus', text: '"Q3 budget came in 12% under plan — flag this for the board."', tag: 'task', state: 'verified' },
+              { time: '0:27:14', speaker: 'Client', text: '"The vendor missed the staging deadline."', tag: 'risk', state: 'pending' },
+            ]}
+          />
+        </motion.div>
       </div>
     </section>
   )

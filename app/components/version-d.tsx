@@ -7,11 +7,10 @@
  * Tracks variant "d". Served at /d and in the live / rotation (magic).
  */
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ThemedShell from '@/components/impeccable/themed-shell'
-import { APP_URL, Tick, Arrow, useReveal, SectionReveal } from '@/components/impeccable/kit'
+import { APP_URL, Tick, Arrow, useReveal, SectionReveal, ClaimsExhibit } from '@/components/impeccable/kit'
 
 const LEVELS = [
   {
@@ -71,21 +70,22 @@ function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.figure
+        <motion.div
           className="ve-hero-exhibit" style={{ margin: 0 }}
           initial={reduce ? false : { opacity: 0, y: 40 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-8% 0px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
         >
-          <div className="ve-exhibit">
-            <div className="ve-exhibit-bar">
-              <span className="ve-mono">Exhibit · Inbox</span>
-              <span className="ve-seal ve-mono"><Tick />Verified source</span>
-            </div>
-            <Image src="/screenshot-inbox-claims.png" alt="Knowcap inbox: a flagged risk queued for human confirmation" width={1920} height={1080} priority />
-          </div>
-        </motion.figure>
+          <ClaimsExhibit
+            bar={{ left: 'Live · agents acting', right: '0:48:12' }}
+            cards={[
+              { time: '0:34:08', speaker: 'Supplier', text: '"Lead time slipping by two weeks — port congestion."', tag: 'risk', state: 'verified', action: 'Research agent dispatched' },
+              { time: '0:34:09', speaker: 'Knowcap', text: 'Drafted three mitigation options — alternate suppliers, expedited freight, partial fulfilment.', tag: 'task', state: 'verified', action: 'Report queued for review' },
+              { time: '0:34:11', speaker: 'Knowcap', text: 'Contacted Vendor A, Vendor B, Vendor C. Two responded within five minutes.', tag: 'decision', state: 'verified', action: 'PO amendment drafted' },
+            ]}
+          />
+        </motion.div>
       </div>
     </section>
   )

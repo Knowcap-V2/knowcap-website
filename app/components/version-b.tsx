@@ -10,7 +10,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ThemedShell from '@/components/impeccable/themed-shell'
-import { APP_URL, Tick, Arrow, Mark, useReveal, SectionReveal } from '@/components/impeccable/kit'
+import { APP_URL, Tick, Arrow, Mark, useReveal, SectionReveal, ClaimsExhibit } from '@/components/impeccable/kit'
 
 function Hero() {
   const { reduce, rise, container } = useReveal()
@@ -48,21 +48,15 @@ function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.figure
+        <motion.div
           className="ve-hero-exhibit" style={{ margin: 0 }}
           initial={reduce ? false : { opacity: 0, y: 40 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-8% 0px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
         >
-          <div className="ve-exhibit">
-            <div className="ve-exhibit-bar">
-              <span className="ve-mono">Exhibit · Inbox</span>
-              <span className="ve-seal ve-mono"><Tick />Verified source</span>
-            </div>
-            <Image src="/screenshot-inbox-claims.png" alt="Knowcap inbox: extracted meeting claims queued for human confirmation" width={1920} height={1080} priority />
-          </div>
-        </motion.figure>
+          <ClaimsExhibit />
+        </motion.div>
       </div>
     </section>
   )
@@ -92,10 +86,10 @@ function OdooDemo() {
             <figure className="ve-split-media" style={{ margin: 0 }}>
               <div className="ve-exhibit">
                 <div className="ve-exhibit-bar">
-                  <span className="ve-mono">Exhibit · Artifact</span>
+                  <span className="ve-mono">Exhibit · The one-tap confirm</span>
                   <span className="ve-seal ve-mono"><Tick />Verified source</span>
                 </div>
-                <Image src="/screenshot-artifacts.png" alt="Auto-generated project artifact with the client's quoted scope change" width={1920} height={1080} />
+                <Image src="/screenshot-confirm-action.png" alt="The exact moment a claim is promoted to evidence — the trigger that turns a meeting into an Odoo PR" width={1920} height={1080} />
               </div>
             </figure>
           </div>
