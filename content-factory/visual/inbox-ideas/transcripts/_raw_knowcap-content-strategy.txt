@@ -1,0 +1,120 @@
+
+Speaker 1  (00:02)
+So no cap is a knowledge base risk. Insurance system, so how does it mitigate risk? This is one of the very useful use cases in no cap. 
+
+Speaker 1  (00:16)
+Because we can talk about use cases in risks and decisions. In tasks and topics and in parties. So let's start off by talking about risks. 
+
+Speaker 1  (00:30)
+So my team is meeting with a supplier about a risk. A supplier about a purchase order suppliers somehow indicated in the meeting that adjusting a purchase order will cause probable delays for the lead time of that purchase. Order and Because no cap is connected across all my past meetings. 
+
+Speaker 1  (00:58)
+No cap knows that before. This supplier has caused a certain delay that made a certain issue with our clients. Because also it has access to all of my voiceover IP system. 
+
+Speaker 1  (01:15)
+So Ah, but that's that's a bit. That's a bit complex. Let's just talk about without the voiceover IP system. 
+
+Speaker 1  (01:24)
+So let's talk about this is level. One, we'll do level 1 level 2 level 3 of each one of these use cases. Hold s***. 
+
+Speaker 1  (01:33)
+This is a complete content creation strategy. So okay, so level one, it's with one of my project managers and my project managers was talking to a third party. Supplier and a risk was flagged because that supplier was going to delay delivery of software or product or anything, right? 
+
+Speaker 1  (01:56)
+By the time the meeting finishes, because I had in the rules flagged. As when erisk is mentioned, importance, level is one skipped, approval and assignment right away. So by the time the meeting finishes, what happens is that no cap would have already delivered to me as an owner or a supplier or a manager or whatever it would have delivered to me that risk that happened during the meeting and before the meeting ends. 
+
+Speaker 1  (02:31)
+Because we define every single memory layer, or let's just call it something like a paragraph. We define each paragraph with either a decision. A topic, a risk For a task or a combination of those 4 categories or parties, by the time we finish, and then I would already have known about the risk. 
+
+Speaker 1  (02:55)
+So, this is level one, so I can just after the meeting. The first level is I can just talk to my employee about that risk and how to meditate it. If I know that information, oh. 
+
+Speaker 1  (03:04)
+Or I can automatically spin-off a research agent from no cap that goes online researches. How that risk is mitigated across similar projects on the web gets all the research it can do, and then parses it up in any format possible that could be a PowerPoint presentation. It could be, I don't know a video, it could be a PDF for an even email or even a Telegram post or WhatsApp post or slack bot, that here's the rescue guys discussed with the supplier. 
+
+Speaker 1  (03:42)
+And here's how to mitigate it based on those research. And I can have it, get my approval for that mitigation. Before it sends it off to the team member who was on that meeting receiving that risk news. 
+
+Speaker 1  (03:56)
+So So that's level 14 decisions. There's still level 2 for decisions. Level 3 for decisions, another example, when it comes down to sorry risks, not decisions. 
+
+Speaker 1  (04:08)
+Another example when it comes down to risks. For example. You have the option to not only research that risk But you have the option to get notified, be approved by a human that this is an actual risk. 
+
+Speaker 1  (04:26)
+And then go on and research mitigation analysis or research assessment and then come back, come back and after it comes back, not only will it deliver a report, but it will actually do something like build a website or a CRM, or even a software, a mini application. To make sure that that risk is completely killed like, for example, if you're implementing ERP project, it could build a very small application or module on that ERP project that mitigates that risk exactly or if you're a supplier, it can go and contact on your behalf five different suppliers through WhatsApp, to see if they have the purchase order necessary capacity to fulfill that purchase order that the first supplier said it was a delay going to be a delay. 
+
+Speaker 1  (05:19)
+That's the third level risk assessment is that not only will it report and let you know the mitigation, but it will mitigate it itself through various means. Because the knowledge capture platform is basically divided across many different Many different what you want to call it mcps and APIs and connections to other software, like Claude and GitHub, so it can push code, it can create applications, but it can also do deep research and create presentations through notebook LLM, or create podcasts out of ideas, so basically let's say for example, we spoke about very interesting topics regarding Deep deep deep knowledge and a certain human industry in certain sector industry. 
+
+Speaker 1  (06:12)
+Let's say, for example, we spoke about The integration process between Shopify and odu and how to make sure that all products are synced across each other all the time without errors. So that's an interesting topic that there are not a lot of content about out there. So imagine after such a meeting, you have an agent that assesses interesting topics and then decides to go and read all the audio or video Transcript translate it into a piece of content, a real and push it through buffer to an Instagram. 
+
+Speaker 1  (06:49)
+So it has an mcp for Higgs field. So it can generate images, audios, videos, whatever, and then it has another API integration with buffer, so it can from the meetings generate content. Scheduled them on buffer and post them automatically from those meetings with approval or without approval. 
+
+Speaker 1  (07:10)
+Depends on your settings for me. I would set it to get my approval first so I can direct it in the right way. So it can send me that approval notification on Telegram on WhatsApp on Gmail on slack. 
+
+Speaker 1  (07:27)
+Or even as a task on my project management tool, so This is something topic. So, topic level 2 or level 3, then you have tasks. Obviously I don't need to explain how tasks could be very, very, very A 1000 people to say the least, because in tasks what you do is Basically, it's just you have an automatic project manager and an entire project management AI that not only does your tasks. 
+
+Speaker 1  (08:07)
+Meaning that it handles the movements of these tasks through your project management software on the canban view. No, it goes out there and does the task finishes? The task sends a customer, their task finished like a feature. 
+
+Speaker 1  (08:26)
+Additional feature that was implemented through called cloud. Here's a staging environment. Give us your okay, send us back. 
+
+Speaker 1  (08:33)
+Okay. So we can merge it all that happens by AI not humans, why? Because knowledge capture or no cap really organizes the information coming in and gestureing from all these different platform, mainly the meetings. 
+
+Speaker 1  (08:48)
+Because meetings is the biggest contract that could ever exist in any business. That's not email, it's not slack. It's meetings, right? 
+
+Speaker 1  (08:58)
+Meetings is where the information get passed on the most Out of any any other means? Maybe the next best thing, or the next biggest thing could be phone calls, which happens a lot in third world countries. It's not like the US. 
+
+Speaker 1  (09:13)
+Where everything is handled on a Google Meet? So we're planning also to integrate phone calls to using voiceover IP. What else? 
+
+Speaker 1  (09:31)
+Decisions, decision tree. Imagine how this reflects in SOPs. And imagine imagine each decision, getting added to a decision tree, and then every time a decision tree gets added, an automatic SOP gets generated from that decision tree sends it out to all employees involved in one of those decisions. 
+
+Speaker 1  (09:58)
+Because it can reference decisions to speakers and parties. So it can say decision X was taken by Sam referencing Sarah on how to do this this, and that So automatic SOPs, not only that, it's really just A It's a DNA on how to teach future agents to work approved by humans. That's the catch. 
+
+Speaker 1  (10:29)
+Is that this software is not going to be basically another agentic AI tool. No, because humans are extremely involved in the loop. Extremely like they approve every single ingestion. 
+
+Speaker 1  (10:46)
+Or every single knowledge capture And then they have the AI work. And then before it gets sent out of the system, they have to also approve every single Outbound, by the AI of course, they can write rules to override these rules, but the thing is, every time they approve an ingestion or approve an outbound message. The AI learns automatically through rules on how to adjust those approvals. 
+
+Speaker 1  (11:18)
+So with time, the AI that is working inside knowledge capture or the agents, the swarm of agents working on a 100 different things inside knowledge captures non knowledge capture AI really, they start learning how the humans in this organization learn or make decisions. And then because they have this extreme database, very big database of every single decision that was made ever and task and facts and topics. And parties They can learn extremely fast much faster than just chatting using your keyboard or audio or whatever much faster on what makes you special? 
+
+Speaker 1  (12:01)
+What is your culture? How do you make decisions? How do you make tasks who is usually responsible for those tasks? 
+
+Speaker 1  (12:08)
+If someone overloaded with tasks, because they've, for example, extracted a 170 tasks in the past couple of days who's doing the most tasks and who's not doing, who's doing the least? Who's basically not performing? Customer phone calls. 
+
+Speaker 1  (12:29)
+It can ingest all that so What customers are complaining about what are they Frustrated with and how We've solved similar issues in the past. Through what tasks? You know, that has sentiment to us. 
+
+Speaker 1  (12:51)
+Is because it sees the meetings as well? Not only it has audio would actually sees So, imagine imagine finishing up a meeting that is 2 hours on Demoing, how a certain system works like how clot code worked? For example, and by the time you're done with demo, your client would have already received an artifact that has the video embedded on top with timestamp of each task decision and fact. 
+
+Speaker 1  (13:25)
+And sequence, and then it has Screenshots, because it's watching your video so it's taking frames so screenshots between the text lines. But also inside the text lines Timestamps, that reference reference, that video That's the power. And if a customer was requesting a new feature by the time it's meeting done, it would have already sent a very organized prd to Claude, and Claude would have already It created a branch and a poll request of that feature. 
+
+Speaker 1  (14:09)
+So this is what no cap is. I hope you guys like it and I can't wait to show you the to create content about In the use cases because there'll be a lot. I have. 
+
+Speaker 1  (14:23)
+Fortunately, I have 3 companies running one of them is in 6 countries. Employing more than 300 people. So I'm going to have a lot of use cases in the future. 
+
+Speaker 1  (14:35)
+So please subscribe so you can see how this software that I'm Making open source for you guys can benefit your businesses. But of course, I have a company that implements the software. So if you guys are interested, let us know and we'll take a look at your business and see how an old cap can benefit you. 
+
+Speaker 1  (14:59)
+Thank you. 

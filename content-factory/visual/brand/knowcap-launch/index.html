@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=block" rel="stylesheet">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #FFFFFF;
+        color: #0A0A0A;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        font-feature-settings: "calt", "liga";
+        -webkit-font-smoothing: antialiased;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        opacity: 0;
+        z-index: 1;
+      }
+      .scene.dark {
+        background: #0A0A0A;
+        color: #FAFAFA;
+      }
+      .purple { color: #7C3AED; }
+      .word { display: inline-block; }
+
+      /* WIPE TRANSITION: full-screen white panel that slides across between scenes */
+      #wipe {
+        position: absolute;
+        inset: 0;
+        background: #FFFFFF;
+        z-index: 100;
+        transform: translateX(-100%);
+        pointer-events: none;
+      }
+
+      /* GRAIN OVERLAY for texture */
+      #grain {
+        position: absolute;
+        inset: 0;
+        z-index: 200;
+        pointer-events: none;
+        opacity: 0.08;
+        mix-blend-mode: multiply;
+        background-image:
+          radial-gradient(circle at 23% 17%, rgba(0,0,0,0.4) 0.5px, transparent 0.6px),
+          radial-gradient(circle at 61% 73%, rgba(0,0,0,0.4) 0.5px, transparent 0.6px),
+          radial-gradient(circle at 87% 31%, rgba(0,0,0,0.4) 0.5px, transparent 0.6px),
+          radial-gradient(circle at 19% 89%, rgba(0,0,0,0.4) 0.5px, transparent 0.6px),
+          radial-gradient(circle at 47% 47%, rgba(0,0,0,0.4) 0.5px, transparent 0.6px);
+        background-size: 4px 4px, 5px 5px, 3px 3px, 7px 7px, 6px 6px;
+      }
+
+      /* SCENE 1 + 2: icon + words */
+      .scene-asset {
+        display: flex;
+        align-items: center;
+        gap: 70px;
+      }
+      .icon-card {
+        width: 200px;
+        height: 200px;
+        border-radius: 28px;
+        background: #F3F4F6;
+        box-shadow: 0 16px 50px rgba(0, 0, 0, 0.10);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .icon-camera {
+        width: 100px;
+        height: 76px;
+        background: #18181B;
+        border-radius: 14px;
+        position: relative;
+      }
+      .icon-camera::before {
+        content: "";
+        position: absolute;
+        right: -24px;
+        top: 16px;
+        width: 0; height: 0;
+        border-top: 22px solid transparent;
+        border-bottom: 22px solid transparent;
+        border-left: 24px solid #18181B;
+      }
+      .icon-camera::after {
+        content: "";
+        position: absolute;
+        left: 22px;
+        top: 22px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #EF4444;
+      }
+      .icon-pdf {
+        width: 96px;
+        height: 124px;
+        background: #FFFFFF;
+        border: 3px solid #DC2626;
+        border-radius: 8px;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 14px;
+      }
+      .icon-pdf-glyph {
+        font-family: 'Inter', sans-serif;
+        font-weight: 900;
+        font-size: 22px;
+        color: #1F2937;
+        letter-spacing: -0.02em;
+      }
+
+      /* Text scenes — Inter with tight tracking */
+      .hero-text {
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+      }
+
+      /* Mock product card */
+      .product-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.10);
+        border: 1px solid #E5E7EB;
+        padding: 36px;
+        width: 1560px;
+      }
+      .pc-header {
+        background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+        color: white;
+        padding: 28px 36px;
+        border-radius: 12px;
+        margin-bottom: 32px;
+      }
+      .pc-header h3 { font-weight: 700; font-size: 36px; letter-spacing: -0.02em; margin-bottom: 8px; }
+      .pc-header p { font-size: 20px; opacity: 0.85; }
+      .pc-section-title {
+        display: flex; align-items: center; gap: 12px;
+        font-weight: 700; font-size: 26px; color: #2563EB;
+        margin-bottom: 22px;
+      }
+      .participants {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      }
+      .participant {
+        background: #F9FAFB; border-radius: 12px; padding: 20px;
+        display: flex; align-items: center; gap: 14px;
+      }
+      .avatar {
+        width: 44px; height: 44px; border-radius: 50%; background: #E5E7EB;
+      }
+      .participant .name { font-weight: 700; font-size: 20px; color: #111827; }
+      .participant .role { font-size: 16px; color: #6B7280; }
+
+      .risk-row { display: flex; gap: 20px; align-items: flex-start; padding: 22px 0; }
+      .risk-dot { width: 20px; height: 20px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+      .risk-dot.red { background: #EF4444; }
+      .risk-dot.yellow { background: #F59E0B; }
+      .risk-title { font-weight: 700; font-size: 26px; color: #111827; margin-bottom: 8px; letter-spacing: -0.01em; }
+      .risk-body { font-size: 22px; color: #4B5563; line-height: 1.5; }
+      .timestamp { color: #2563EB; font-weight: 600; }
+
+      /* Chat UI */
+      .chat-frame { width: 1240px; }
+      .attachments { display: flex; gap: 16px; margin-bottom: 24px; align-items: center; }
+      .att-chip {
+        display: flex; align-items: center; gap: 12px;
+        background: #FFFFFF; border: 1px solid #E5E7EB;
+        border-radius: 14px; padding: 14px 18px;
+        font-size: 22px; color: #111827; font-weight: 500;
+      }
+      .att-mp4 { width: 42px; height: 42px; background: #2563EB; border-radius: 8px;
+                 display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700; }
+      .att-pdf-mini { width: 42px; height: 42px; background: #DC2626; border-radius: 8px;
+                      display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700; }
+      .att-x { color: #9CA3AF; font-size: 26px; }
+      .att-plus { background: #F3F4F6; padding: 10px 22px; border-radius: 12px; color: #374151; font-weight: 600; font-size: 22px; }
+      .att-clear { color: #111827; font-weight: 500; font-size: 22px; }
+      .chat-input { border: 1px solid #E5E7EB; border-radius: 18px; padding: 32px 28px; background: #FFFFFF;
+                    display: flex; align-items: center; gap: 20px; }
+      .ci-paperclip { width: 52px; height: 52px; border-radius: 50%; border: 1px solid #E5E7EB;
+                      display: flex; align-items: center; justify-content: center; font-size: 24px; }
+      .ci-search-btn { padding: 14px 26px; border-radius: 12px; border: 1px solid #E5E7EB;
+                       font-weight: 500; font-size: 22px; color: #111827; display: flex; align-items: center; gap: 10px; }
+
+      /* Video player */
+      .video-mock { width: 920px; height: 560px; background: #2C2F36; border-radius: 14px;
+                    position: relative; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25); overflow: hidden; }
+      .vm-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                 width: 108px; height: 108px; border-radius: 50%; background: rgba(255,255,255,0.20); }
+      .vm-play::before { content: ""; position: absolute; top: 50%; left: 56%; transform: translate(-50%, -50%);
+                         width: 0; height: 0; border-top: 22px solid transparent; border-bottom: 22px solid transparent; border-left: 32px solid #FFFFFF; }
+      .vm-controls { position: absolute; bottom: 0; left: 0; right: 0; height: 72px; background: #111418;
+                     display: flex; align-items: center; padding: 0 24px; gap: 16px; color: #E5E7EB; font-size: 22px; }
+      .vm-progress { position: absolute; top: -6px; left: 0; right: 0; height: 4px; background: #2C2F36; }
+      .vm-progress-fill { height: 100%; background: #10B981; }
+      .vm-progress-thumb { position: absolute; top: -4px; width: 12px; height: 12px;
+                           border-radius: 50%; background: #10B981; transform: translateX(-50%); }
+      .vm-time { font-weight: 600; margin-left: auto; font-size: 28px; letter-spacing: 0.04em; }
+
+      /* Final lockup */
+      .lockup { display: flex; align-items: center; gap: 16px;
+                font-weight: 900; font-size: 140px; letter-spacing: -0.045em; color: #0A0A0A; }
+      .lockup img { width: 160px; height: 160px; mix-blend-mode: multiply; }
+
+      .tagline-words {
+        font-weight: 600; font-size: 50px; color: #7C3AED;
+        letter-spacing: -0.01em; margin-top: 36px;
+      }
+      .tagline-words .tw { display: inline-block; margin-right: 8px; }
+
+      .beta-cta { font-weight: 500; font-size: 36px; color: #18181B; margin-top: 18px; }
+
+      .qr-box {
+        width: 240px; height: 240px;
+        background:
+          linear-gradient(45deg, transparent 48%, #0A0A0A 49%, #0A0A0A 51%, transparent 52%),
+          conic-gradient(from 45deg at 50% 50%, #0A0A0A 0% 25%, transparent 0% 50%, #0A0A0A 0% 75%, transparent 0%) 50% / 13px 13px;
+        background-color: #FFFFFF;
+        position: relative;
+        margin-top: 36px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      }
+      .qr-corner { position: absolute; width: 60px; height: 60px; border: 13px solid #0A0A0A; }
+      .qr-corner.tl { top: 0; left: 0; }
+      .qr-corner.tr { top: 0; right: 0; }
+      .qr-corner.bl { bottom: 0; left: 0; }
+      .qr-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                   width: 64px; height: 64px; background: #FFFFFF;
+                   display: flex; align-items: center; justify-content: center; }
+      .qr-center img { width: 52px; height: 52px; mix-blend-mode: multiply; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="56"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Grain texture (always on) -->
+      <div id="grain"></div>
+
+      <!-- Wipe panel (slides across between scenes) -->
+      <div id="wipe"></div>
+
+      <!-- SCENE 1: Camera icon + "Turn Screen Recordings" -->
+      <div id="s1" class="scene">
+        <div class="scene-asset">
+          <div id="s1-icon" class="icon-card"><div class="icon-camera"></div></div>
+          <div class="hero-text" style="font-size: 130px;">
+            <span id="s1-w1" class="word">Turn</span>&nbsp;<span id="s1-w2" class="word purple">Screen</span>&nbsp;<span id="s1-w3" class="word purple">Recordings</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 2: PDF + "and Documents" -->
+      <div id="s2" class="scene">
+        <div class="scene-asset">
+          <div id="s2-icon" class="icon-card"><div class="icon-pdf"><div class="icon-pdf-glyph">PDF</div></div></div>
+          <div class="hero-text" style="font-size: 130px;">
+            <span id="s2-w1" class="word">and</span>&nbsp;<span id="s2-w2" class="word purple">Documents</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 3: DARK SCENE — "Into your project memory" -->
+      <div id="s3" class="scene dark">
+        <div class="hero-text" style="font-size: 150px;">
+          <span id="s3-w1" class="word">Into</span>&nbsp;<span id="s3-w2" class="word" style="color: #A78BFA;">your</span>
+        </div>
+        <div class="hero-text" style="font-size: 90px; margin-top: 24px; color: rgba(255,255,255,0.55);">
+          <span id="s3-w3" class="word">project</span>&nbsp;<span id="s3-w4" class="word">memory</span>
+        </div>
+      </div>
+
+      <!-- SCENE 4: "just Drag and Drop" -->
+      <div id="s4" class="scene">
+        <div class="hero-text" style="font-size: 150px;">
+          <span id="s4-w1" class="word">just</span>&nbsp;<span id="s4-w2" class="word purple">Drag</span>&nbsp;<span id="s4-w3" class="word">and</span>&nbsp;<span id="s4-w4" class="word purple">Drop</span>
+        </div>
+      </div>
+
+      <!-- SCENE 5: Chat UI -->
+      <div id="s5" class="scene">
+        <div class="chat-frame">
+          <div class="attachments">
+            <div id="s5-chip-1" class="att-chip"><div class="att-mp4">MP4</div><span>Product Strategy Q2.mp4</span><span class="att-x">×</span></div>
+            <div id="s5-chip-2" class="att-chip"><div class="att-pdf-mini">PDF</div><span>Product Strategy.pdf</span><span class="att-x">×</span></div>
+            <span id="s5-chip-3" class="att-plus">+4</span>
+            <span id="s5-clear" class="att-clear">Clear all</span>
+          </div>
+          <div id="s5-input" class="chat-input">
+            <div class="ci-paperclip">📎</div>
+            <div class="ci-search-btn">🌐 &nbsp;Search</div>
+            <span style="color: #6B7280; font-size: 24px; margin-left: auto;">🎙</span>
+            <div style="width: 52px; height: 52px; border-radius: 12px; background: #111827; display: flex; align-items: center; justify-content: center; color: white;">▮▮▮</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 6: Project Team Evaluation -->
+      <div id="s6" class="scene">
+        <div id="s6-card" class="product-card">
+          <div class="pc-header">
+            <h3>Odoo Project Team Evaluation</h3>
+            <p>Source: Knowcap · Project Knowledge Retrieval Demo</p>
+          </div>
+          <div class="pc-section-title">👥 Key Participants</div>
+          <div class="participants">
+            <div class="participant s6-p"><div class="avatar"></div><div><div class="name">Joe</div><div class="role">Odoo Implementer</div></div></div>
+            <div class="participant s6-p"><div class="avatar"></div><div><div class="name">Omar</div><div class="role">Designer</div></div></div>
+            <div class="participant s6-p"><div class="avatar"></div><div><div class="name">Lina</div><div class="role">Support Manager</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 7: Performance Analysis & Evidence -->
+      <div id="s7" class="scene">
+        <div id="s7-card" class="product-card">
+          <div class="pc-section-title">✓ Performance Analysis &amp; Evidence</div>
+          <div id="s7-r1" class="risk-row">
+            <div class="risk-dot red"></div>
+            <div>
+              <div class="risk-title">Risk: Over-promising on Timelines</div>
+              <div class="risk-body">Joe is over promising with dates without the full picture. <span class="timestamp">[1:02:30]</span></div>
+            </div>
+          </div>
+          <div id="s7-r2" class="risk-row">
+            <div class="risk-dot yellow"></div>
+            <div>
+              <div class="risk-title">Risk: Unnecessary Customization</div>
+              <div class="risk-body">Omar decided to promise delivery without his manager's approval. <span class="timestamp">[00:45:03]</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 8: Mock video player -->
+      <div id="s8" class="scene">
+        <div id="s8-player" class="video-mock">
+          <div class="vm-play"></div>
+          <div class="vm-controls">
+            <div class="vm-progress"><div id="s8-fill" class="vm-progress-fill" style="width: 0%;"></div><div id="s8-thumb" class="vm-progress-thumb" style="left: 0%;"></div></div>
+            <span>▶</span><span>⏸</span><span>⏹</span><span>⏭</span><span style="margin-left: 8px;">🔊</span>
+            <span class="vm-time">00:45<span style="color: #9CA3AF;">:0</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 9: "Complex Docs from Meetings in Minutes not Weeks" -->
+      <div id="s9" class="scene">
+        <div class="hero-text" style="font-size: 110px;">
+          <div>
+            <span id="s9-w1" class="word">Complex</span>&nbsp;<span id="s9-w2" class="word purple">Docs</span>&nbsp;<span id="s9-w3" class="word">from</span>&nbsp;<span id="s9-w4" class="word purple">Meetings</span>
+          </div>
+          <div style="margin-top: 18px;">
+            <span id="s9-w5" class="word purple">in Minutes</span>&nbsp;<span id="s9-w6" class="word">not Weeks</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 10: "On Board New Team Members in Minutes" -->
+      <div id="s10" class="scene">
+        <div class="hero-text" style="font-size: 110px;">
+          <div>
+            <span id="s10-w1" class="word">On Board</span>&nbsp;<span id="s10-w2" class="word purple">New Team Members</span>
+          </div>
+          <div style="margin-top: 18px;">
+            <span id="s10-w3" class="word purple">in Minutes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 11: Final lockup -->
+      <div id="s11" class="scene">
+        <div class="lockup">
+          <img id="s11-mark" src="k-mark-light.png" alt="Knowcap" />
+          <span id="s11-name">nowcap.ai</span>
+        </div>
+        <div class="tagline-words">
+          <span id="tag-w1" class="tw">Capture.</span>
+          <span id="tag-w2" class="tw">Govern.</span>
+          <span id="tag-w3" class="tw">Deliver.</span>
+        </div>
+        <div id="s11-cta" class="beta-cta">Apply for the Beta Program</div>
+        <div id="s11-qr" class="qr-box">
+          <div class="qr-corner tl"></div>
+          <div class="qr-corner tr"></div>
+          <div class="qr-corner bl"></div>
+          <div class="qr-center"><img src="k-mark-light.png" alt="" /></div>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // === WIPE TRANSITION helper ===
+      // Slides white panel across screen between scenes, switching content under cover
+      function wipeAt(t, hideSelectors, showSelector) {
+        // White wipes IN (right) covering screen
+        tl.to("#wipe", { xPercent: 100, duration: 0.25, ease: "power3.in" }, t);
+        // Switch scenes BEHIND the wipe at midpoint
+        tl.set(hideSelectors, { opacity: 0 }, t + 0.25);
+        tl.set(showSelector, { opacity: 1 }, t + 0.25);
+        // White wipes OUT (further right, off-screen)
+        tl.to("#wipe", { xPercent: 200, duration: 0.25, ease: "power3.out" }, t + 0.25);
+        // Reset wipe position for next use
+        tl.set("#wipe", { xPercent: -100 }, t + 0.55);
+      }
+
+      // === Per-word kinetic reveal helper ===
+      // entrance modes cycle through 4 patterns (top-drop, slide-left, slide-right, scale-pop)
+      // Each word lives for `dur` seconds before next word fires
+      function kineticWords(words, sceneStart) {
+        words.forEach(function (w, i) {
+          var mode = i % 4;
+          var t = sceneStart + w.at;
+          if (mode === 0) {
+            tl.fromTo(w.sel,
+              { opacity: 0, y: -60, filter: "blur(6px)" },
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.32, ease: "back.out(1.7)" }, t);
+          } else if (mode === 1) {
+            tl.fromTo(w.sel,
+              { opacity: 0, x: -80, filter: "blur(10px)" },
+              { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.28, ease: "expo.out" }, t);
+          } else if (mode === 2) {
+            tl.fromTo(w.sel,
+              { opacity: 0, x: 80, filter: "blur(10px)" },
+              { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.28, ease: "expo.out" }, t);
+          } else {
+            tl.fromTo(w.sel,
+              { opacity: 0, scale: 0.6, filter: "blur(8px)" },
+              { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "back.out(2.2)" }, t);
+          }
+        });
+      }
+
+      // ========== SCENE 1 (0 → 4.0s): Turn Screen Recordings ==========
+      tl.set("#s1", { opacity: 1 }, 0);
+      // Icon pops in with back overshoot
+      tl.fromTo("#s1-icon",
+        { opacity: 0, scale: 0.4, rotation: -25 },
+        { opacity: 1, scale: 1, rotation: -6, duration: 0.6, ease: "back.out(2.0)" }, 0.15);
+      // Words snap in
+      kineticWords([
+        { sel: "#s1-w1", at: 0.5 },
+        { sel: "#s1-w2", at: 0.75 },
+        { sel: "#s1-w3", at: 1.05 },
+      ], 0);
+      // Hold then wipe to s2 at 3.5s
+      wipeAt(3.5, "#s1", "#s2");
+
+      // ========== SCENE 2 (4 → 7.5s): and Documents ==========
+      tl.fromTo("#s2-icon",
+        { opacity: 0, scale: 0.4, rotation: 25 },
+        { opacity: 1, scale: 1, rotation: 5, duration: 0.6, ease: "back.out(2.0)" }, 4.2);
+      kineticWords([
+        { sel: "#s2-w1", at: 4.5 },
+        { sel: "#s2-w2", at: 4.8 },
+      ], 0);
+      // Wipe to s3 at 6.8s — but with DARK reveal (skip white wipe, just flash)
+      tl.to("#wipe", { xPercent: 100, duration: 0.22, ease: "power3.in" }, 6.9);
+      tl.set("#s2", { opacity: 0 }, 7.12);
+      tl.set("#s3", { opacity: 1 }, 7.12);
+      tl.to("#wipe", { xPercent: 200, duration: 0.22, ease: "power3.out" }, 7.12);
+      tl.set("#wipe", { xPercent: -100 }, 7.4);
+
+      // ========== SCENE 3 (7.3 → 10.3s): Into your project memory (DARK) ==========
+      kineticWords([
+        { sel: "#s3-w1", at: 7.4 },
+        { sel: "#s3-w2", at: 7.7 },
+        { sel: "#s3-w3", at: 8.05 },
+        { sel: "#s3-w4", at: 8.3 },
+      ], 0);
+      wipeAt(9.9, "#s3", "#s4");
+
+      // ========== SCENE 4 (10.5 → 14.5s): just Drag and Drop ==========
+      kineticWords([
+        { sel: "#s4-w1", at: 10.7 },
+        { sel: "#s4-w2", at: 10.95 },
+        { sel: "#s4-w3", at: 11.25 },
+        { sel: "#s4-w4", at: 11.5 },
+      ], 0);
+      wipeAt(14.3, "#s4", "#s5");
+
+      // ========== SCENE 5 (14.8 → 19.5s): Chat UI ==========
+      tl.fromTo("#s5 .chat-frame",
+        { opacity: 0, y: 100, scale: 0.92, filter: "blur(20px)" },
+        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.8, ease: "expo.out" }, 14.85);
+      // Stagger attachments in
+      tl.fromTo(["#s5-chip-1", "#s5-chip-2", "#s5-chip-3", "#s5-clear"],
+        { opacity: 0, y: -30, scale: 0.85 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(2.0)", stagger: 0.08 }, 15.5);
+      wipeAt(19.2, "#s5", "#s6");
+
+      // ========== SCENE 6 (19.6 → 26.5s): Project Team Evaluation (cinematic zoom) ==========
+      tl.fromTo("#s6-card",
+        { opacity: 0, y: 60, scale: 0.94, filter: "blur(20px)" },
+        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 1.0, ease: "expo.out" }, 19.6);
+      // Stagger participants
+      tl.fromTo(".s6-p",
+        { opacity: 0, y: 40, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.7)", stagger: 0.15 }, 20.5);
+      // Cinematic slow zoom
+      tl.to("#s6-card", { scale: 1.08, duration: 5.5, ease: "sine.out" }, 20.5);
+      wipeAt(26.2, "#s6", "#s7");
+
+      // ========== SCENE 7 (26.6 → 33.5s): Performance Analysis ==========
+      tl.fromTo("#s7-card",
+        { opacity: 0, y: 60, scale: 0.94, filter: "blur(20px)" },
+        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 1.0, ease: "expo.out" }, 26.6);
+      // Risks stagger in
+      tl.fromTo("#s7-r1",
+        { opacity: 0, x: -40 },
+        { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, 27.5);
+      tl.fromTo("#s7-r2",
+        { opacity: 0, x: 40 },
+        { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, 28.0);
+      tl.to("#s7-card", { scale: 1.06, duration: 5, ease: "sine.out" }, 27.5);
+      wipeAt(33.2, "#s7", "#s8");
+
+      // ========== SCENE 8 (33.6 → 37.8s): Video player ==========
+      tl.fromTo("#s8-player",
+        { opacity: 0, scale: 0.82, filter: "blur(20px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.7, ease: "expo.out" }, 33.6);
+      // Progress bar fills
+      tl.fromTo("#s8-fill",
+        { width: "0%" },
+        { width: "65%", duration: 2.5, ease: "power2.inOut" }, 34.5);
+      tl.fromTo("#s8-thumb",
+        { left: "0%" },
+        { left: "65%", duration: 2.5, ease: "power2.inOut" }, 34.5);
+      wipeAt(37.5, "#s8", "#s9");
+
+      // ========== SCENE 9 (37.8 → 42.5s): Complex Docs from Meetings ==========
+      kineticWords([
+        { sel: "#s9-w1", at: 38.0 },
+        { sel: "#s9-w2", at: 38.3 },
+        { sel: "#s9-w3", at: 38.6 },
+        { sel: "#s9-w4", at: 38.85 },
+        { sel: "#s9-w5", at: 39.5 },
+        { sel: "#s9-w6", at: 39.85 },
+      ], 0);
+      wipeAt(42.2, "#s9", "#s10");
+
+      // ========== SCENE 10 (42.5 → 47.5s): On Board New Team Members ==========
+      kineticWords([
+        { sel: "#s10-w1", at: 42.7 },
+        { sel: "#s10-w2", at: 43.0 },
+        { sel: "#s10-w3", at: 43.7 },
+      ], 0);
+      wipeAt(47.2, "#s10", "#s11");
+
+      // ========== SCENE 11 (47.5 → 56s): Final lockup ==========
+      // K-mark scales in with overshoot
+      tl.fromTo("#s11-mark",
+        { opacity: 0, scale: 0.3, rotation: -180 },
+        { opacity: 1, scale: 1, rotation: 0, duration: 1.0, ease: "back.out(1.8)" }, 47.6);
+      // Wordmark slides in from right
+      tl.fromTo("#s11-name",
+        { opacity: 0, x: 100, filter: "blur(20px)" },
+        { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.8, ease: "expo.out" }, 48.2);
+      // Tagline words appear one by one
+      tl.fromTo("#tag-w1",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "back.out(1.6)" }, 49.3);
+      tl.fromTo("#tag-w2",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "back.out(1.6)" }, 49.7);
+      tl.fromTo("#tag-w3",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "back.out(1.6)" }, 50.1);
+      // CTA + QR fade in
+      tl.fromTo("#s11-cta",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 50.7);
+      tl.fromTo("#s11-qr",
+        { opacity: 0, scale: 0.7, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "back.out(1.6)" }, 51.2);
+      // Hold to end — NO exit (per skill rule: only final scene can exit, and we end the timeline here)
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

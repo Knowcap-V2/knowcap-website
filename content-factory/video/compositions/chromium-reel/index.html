@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=block" rel="stylesheet">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #FFFFFF;
+        color: #0A0A0A;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        font-feature-settings: "calt", "liga";
+        -webkit-font-smoothing: antialiased;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 60px;
+        opacity: 0;
+      }
+      .purple { color: #7C3AED; }
+      .word { display: inline-block; }
+
+      #grain {
+        position: absolute;
+        inset: 0;
+        z-index: 200;
+        pointer-events: none;
+        opacity: 0.06;
+        mix-blend-mode: multiply;
+        background-image:
+          radial-gradient(circle at 23% 17%, rgba(0,0,0,0.5) 0.6px, transparent 0.7px),
+          radial-gradient(circle at 61% 73%, rgba(0,0,0,0.5) 0.6px, transparent 0.7px),
+          radial-gradient(circle at 87% 31%, rgba(0,0,0,0.5) 0.6px, transparent 0.7px),
+          radial-gradient(circle at 47% 47%, rgba(0,0,0,0.5) 0.6px, transparent 0.7px);
+        background-size: 4px 4px, 5px 5px, 3px 3px, 6px 6px;
+      }
+
+      #wipe {
+        position: absolute;
+        inset: 0;
+        background: #FFFFFF;
+        z-index: 100;
+        transform: translateX(-100%);
+        pointer-events: none;
+      }
+
+      .hero-text {
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        line-height: 1.0;
+      }
+
+      .lower-third {
+        position: absolute;
+        bottom: 180px;
+        left: 60px;
+        right: 60px;
+        background: rgba(10, 10, 10, 0.92);
+        color: #FAFAFA;
+        padding: 22px 28px;
+        border-radius: 14px;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 500;
+        text-align: left;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      }
+      .lower-third .name { font-size: 32px; font-weight: 600; }
+      .lower-third .role { font-size: 22px; color: #A78BFA; margin-top: 4px; }
+
+      .knowcap-badge {
+        position: absolute;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 28px;
+        background: rgba(124, 58, 237, 0.10);
+        border: 1px solid rgba(124, 58, 237, 0.30);
+        border-radius: 999px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 24px;
+        font-weight: 600;
+        color: #7C3AED;
+        letter-spacing: 0.04em;
+      }
+      .knowcap-badge .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #7C3AED;
+        box-shadow: 0 0 12px #7C3AED;
+      }
+
+      .lockup {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-weight: 900;
+        font-size: 100px;
+        letter-spacing: -0.04em;
+        color: #0A0A0A;
+      }
+      .lockup img { width: 110px; height: 110px; mix-blend-mode: multiply; }
+      .tagline {
+        margin-top: 30px;
+        font-weight: 600;
+        font-size: 42px;
+        color: #7C3AED;
+        letter-spacing: -0.01em;
+      }
+      .cta-url {
+        margin-top: 20px;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 500;
+        font-size: 32px;
+        color: #18181B;
+        letter-spacing: 0.04em;
+      }
+
+      .audio-bar {
+        position: absolute;
+        bottom: 80px;
+        left: 60px;
+        right: 60px;
+        height: 4px;
+        background: rgba(124, 58, 237, 0.15);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .audio-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: #7C3AED;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="14"
+      data-width="1080"
+      data-height="1920"
+    >
+
+      <div id="grain"></div>
+      <div id="wipe"></div>
+
+      <audio id="voice-audio"
+             src="voice.mp3"
+             data-start="2"
+             data-duration="10"
+             data-track-index="0"
+             data-has-audio="true"
+             muted></audio>
+
+      <!-- SCENE 1 (0-1.8s): Opening hook -->
+      <div id="s1" class="scene clip" data-start="0" data-duration="2" data-track-index="1">
+        <div class="hero-text" style="font-size: 120px;">
+          <div><span id="s1-w1" class="word">AUTONOMOUS</span></div>
+          <div style="margin-top: 18px; font-size: 200px;"><span id="s1-w2" class="word purple">AI.</span></div>
+        </div>
+      </div>
+
+      <!-- SCENE 2 (1.8-11.4s): Audio playing + English captions -->
+      <div id="s2" class="scene clip" data-start="1.8" data-duration="9.8" data-track-index="2">
+        <div id="s2-badge" class="knowcap-badge" style="opacity: 0;">
+          <span class="dot"></span>
+          <span>CAPTURED IN KNOWCAP</span>
+        </div>
+
+        <div id="caption-box" class="hero-text" style="font-size: 130px; max-width: 960px; position: relative; width: 100%; min-height: 280px;">
+          <div id="c1" class="word" style="opacity: 0; position: absolute; left: 0; right: 0; top: 0;">I made <span class="purple">Claude</span> work</div>
+          <div id="c2" class="word" style="opacity: 0; position: absolute; left: 0; right: 0; top: 0;">for <span class="purple">tens of hours</span></div>
+          <div id="c3" class="word" style="opacity: 0; position: absolute; left: 0; right: 0; top: 0;">without <span class="purple">supervision</span></div>
+          <div id="c4" class="word" style="opacity: 0; position: absolute; left: 0; right: 0; top: 0;">and it can <span class="purple">spin up</span></div>
+          <div id="c5" class="word" style="opacity: 0; position: absolute; left: 0; right: 0; top: 0;"><span class="purple">Chromium.</span></div>
+        </div>
+
+        <div id="lt" class="lower-third" style="opacity: 0;">
+          <div class="name">Hassan Arslan</div>
+          <div class="role">Founder · Knowcap</div>
+        </div>
+
+        <div id="audio-bar" class="audio-bar" style="opacity: 0;">
+          <div id="audio-fill" class="audio-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- SCENE 3 (11.6-14s): Outro lockup -->
+      <div id="s3" class="scene clip" data-start="11.6" data-duration="2.4" data-track-index="3">
+        <div id="s3-lockup" class="lockup" style="opacity: 0;">
+          <img src="k-mark-light.png" alt="Knowcap" />
+          <span>nowcap.ai</span>
+        </div>
+        <div id="s3-tag" class="tagline" style="opacity: 0;">Capture every conversation.</div>
+        <div id="s3-url" class="cta-url" style="opacity: 0;">knowcap.ai</div>
+      </div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      function wipeAt(t, hideSelectors, showSelector) {
+        tl.to("#wipe", { xPercent: 100, duration: 0.22, ease: "power3.in" }, t);
+        tl.set(hideSelectors, { opacity: 0 }, t + 0.22);
+        tl.set(showSelector, { opacity: 1 }, t + 0.22);
+        tl.to("#wipe", { xPercent: 200, duration: 0.22, ease: "power3.out" }, t + 0.22);
+        tl.set("#wipe", { xPercent: -100 }, t + 0.5);
+      }
+
+      // ===== SCENE 1: Opening hook (0 → 1.8s) =====
+      tl.set("#s1", { opacity: 1 }, 0);
+      tl.fromTo("#s1-w1",
+        { opacity: 0, y: -100, filter: "blur(20px)", scale: 0.7 },
+        { opacity: 1, y: 0, filter: "blur(0px)", scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 0.15);
+      tl.fromTo("#s1-w2",
+        { opacity: 0, scale: 0.4, filter: "blur(20px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5, ease: "back.out(2.4)" }, 0.55);
+
+      wipeAt(1.8, "#s1", "#s2");
+
+      // ===== SCENE 2: Audio + captions (2 → 11.4s) =====
+      tl.fromTo("#s2-badge",
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 2.1);
+
+      tl.fromTo("#lt",
+        { opacity: 0, y: 60 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 2.3);
+
+      tl.fromTo("#audio-bar",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4 }, 2.4);
+      tl.fromTo("#audio-fill",
+        { width: "0%" },
+        { width: "100%", duration: 9.0, ease: "none" }, 2.0);
+
+      // CAPTION 1: "I made Claude work" — 2.0-3.66s
+      tl.fromTo("#c1",
+        { opacity: 0, y: 50, filter: "blur(12px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease: "back.out(1.7)" }, 2.0);
+      tl.to("#c1", { opacity: 0, duration: 0.15, ease: "power2.in" }, 3.55);
+
+      // CAPTION 2: "for tens of hours" — 3.66-5.54s
+      tl.fromTo("#c2",
+        { opacity: 0, x: -80, filter: "blur(15px)" },
+        { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.3, ease: "expo.out" }, 3.66);
+      tl.to("#c2", { opacity: 0, duration: 0.15, ease: "power2.in" }, 5.45);
+
+      // CAPTION 3: "without supervision" — 5.54-6.92s
+      tl.fromTo("#c3",
+        { opacity: 0, x: 80, filter: "blur(15px)" },
+        { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.3, ease: "expo.out" }, 5.54);
+      tl.to("#c3", { opacity: 0, duration: 0.15, ease: "power2.in" }, 7.05);
+
+      // CAPTION 4: "and it can spin up" — 7.34-9.2s
+      tl.fromTo("#c4",
+        { opacity: 0, scale: 0.5, filter: "blur(15px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.4, ease: "back.out(2.0)" }, 7.34);
+      tl.to("#c4", { opacity: 0, duration: 0.15, ease: "power2.in" }, 9.25);
+
+      // CAPTION 5: "Chromium." — 9.36-10.9s — DRAMATIC ENTRANCE
+      tl.fromTo("#c5",
+        { opacity: 0, scale: 1.8, filter: "blur(30px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5, ease: "back.out(1.5)" }, 9.36);
+
+      wipeAt(11.4, "#s2", "#s3");
+
+      // ===== SCENE 3: Outro lockup (11.6 → 14s) =====
+      tl.fromTo("#s3-lockup",
+        { opacity: 0, y: 50, scale: 0.85, filter: "blur(20px)" },
+        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.7, ease: "expo.out" }, 11.7);
+
+      tl.fromTo("#s3-tag",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 12.2);
+
+      tl.fromTo("#s3-url",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 12.5);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

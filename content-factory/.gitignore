@@ -1,0 +1,13 @@
+# Outputs (regeneratable) — keep out of git
+**/renders/
+**/outputs/
+**/knowcap-claude-reel/
+**/agentdb.rvf
+**/agentdb.rvf.lock
+**/node_modules/
+**/.next/
+**/dist/
+**/build/
+
+# Vendored library — re-clone if needed (was 755MB in original repo)
+visual/brand/hyperframes/

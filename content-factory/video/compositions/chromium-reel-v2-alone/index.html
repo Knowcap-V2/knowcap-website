@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=block" rel="stylesheet">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #0A0A0A;
+        font-family: 'Inter', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        opacity: 0;
+        z-index: 1;
+      }
+
+      .scrim {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(10, 10, 10, 0.45) 0%,
+          rgba(10, 10, 10, 0.10) 30%,
+          rgba(10, 10, 10, 0.50) 65%,
+          rgba(10, 10, 10, 0.92) 100%
+        );
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .hook {
+        position: absolute;
+        top: 130px;
+        left: 50px;
+        right: 50px;
+        z-index: 10;
+        text-align: center;
+        font-weight: 800;
+        font-size: 68px;
+        line-height: 1.06;
+        color: #FFFFFF;
+        letter-spacing: -0.025em;
+        text-shadow:
+          0 0 1px #000,
+          0 3px 0 #000,
+          -3px 0 0 #000,
+          3px 0 0 #000,
+          0 -3px 0 #000,
+          0 6px 14px rgba(0, 0, 0, 0.6);
+        opacity: 0;
+      }
+      .hook .accent { color: #7C3AED; }
+
+      .caption {
+        position: absolute;
+        left: 50px;
+        right: 50px;
+        bottom: 420px;
+        z-index: 10;
+        text-align: center;
+        font-weight: 900;
+        font-size: 94px;
+        line-height: 1.0;
+        color: #FFFFFF;
+        letter-spacing: -0.025em;
+        text-shadow:
+          -4px -4px 0 #000,
+          4px -4px 0 #000,
+          -4px 4px 0 #000,
+          4px 4px 0 #000,
+          0 0 2px #000,
+          0 8px 16px rgba(0, 0, 0, 0.7);
+        opacity: 0;
+        text-transform: uppercase;
+      }
+      .caption .accent { color: #FFEE00; text-shadow: -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000, 0 0 2px #000, 0 8px 16px rgba(0, 0, 0, 0.7); }
+
+      .speaker {
+        position: absolute;
+        left: 50px;
+        bottom: 200px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 22px;
+        background: rgba(10, 10, 10, 0.78);
+        border-radius: 999px;
+        color: #FFFFFF;
+        font-weight: 600;
+        font-size: 28px;
+        backdrop-filter: blur(8px);
+        opacity: 0;
+      }
+      .speaker img { width: 36px; height: 36px; border-radius: 50%; background: #7C3AED; padding: 4px; }
+
+      .brand {
+        position: absolute;
+        top: 120px;
+        right: 50px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 18px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 26px;
+        color: #0A0A0A;
+        letter-spacing: -0.01em;
+        opacity: 0;
+      }
+      .brand img { width: 32px; height: 32px; mix-blend-mode: multiply; }
+
+      /* Fake mouse cursor */
+      .cursor {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        z-index: 9;
+        pointer-events: none;
+        opacity: 0;
+      }
+      .cursor svg { width: 100%; height: 100%; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+
+      .outro {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background: #0A0A0A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        opacity: 0;
+      }
+      .outro .lockup {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-weight: 900;
+        font-size: 130px;
+        color: #FFFFFF;
+        letter-spacing: -0.04em;
+      }
+      .outro .lockup img { width: 140px; height: 140px; filter: invert(1); }
+      .outro .tagline {
+        margin-top: 40px;
+        font-weight: 600;
+        font-size: 44px;
+        color: #A78BFA;
+      }
+      .outro .url {
+        margin-top: 22px;
+        font-weight: 500;
+        font-size: 34px;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="18"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- AUDIO: voice from 2s; music from 0s -->
+      <audio id="voice-audio" src="voice.mp3" data-start="2" data-duration="10" data-track-index="0" data-has-audio="true" muted></audio>
+      <audio id="music-audio" src="music.mp3" data-start="0" data-duration="18" data-track-index="1" data-has-audio="true" muted></audio>
+
+      <!-- BACKGROUNDS: scroll through inbox (top→mid→bot), then project, then dashboard -->
+      <img id="bg1" class="bg clip" src="bg-inbox-top.png" alt="" data-start="0" data-duration="5" data-track-index="2" />
+      <img id="bg2" class="bg clip" src="bg-inbox-mid.png" alt="" data-start="4.6" data-duration="4.5" data-track-index="3" />
+      <img id="bg3" class="bg clip" src="bg-inbox-bot.png" alt="" data-start="8.7" data-duration="3.5" data-track-index="4" />
+      <img id="bg4" class="bg clip" src="bg-project.png" alt="" data-start="11.8" data-duration="2.5" data-track-index="5" />
+      <img id="bg5" class="bg clip" src="bg-dashboard.png" alt="" data-start="13.9" data-duration="2.5" data-track-index="6" />
+
+      <!-- Fake mouse cursor -->
+      <svg id="cursor" class="cursor clip" viewBox="0 0 28 28" data-start="3" data-duration="9" data-track-index="7">
+        <path d="M4 4 L4 22 L9 18 L13 26 L16 25 L12 17 L19 17 Z" fill="white" stroke="#000" stroke-width="1.5"/>
+      </svg>
+
+      <div id="scrim" class="scrim clip" data-start="0" data-duration="16" data-track-index="8"></div>
+
+      <div id="brand" class="brand clip" data-start="0.3" data-duration="15.7" data-track-index="9">
+        <img src="k-mark-light.png" alt="" />
+        <span>knowcap.ai</span>
+      </div>
+
+      <!-- HOOK_PLACEHOLDER_START -->
+      <div id="hook" class="hook clip" data-start="0" data-duration="2" data-track-index="10">
+        I left <span class="accent">Claude</span><br/>alone for 10 hours.
+      </div>
+      <!-- HOOK_PLACEHOLDER_END -->
+
+      <!-- 5 captions at 3s holds each -->
+      <div id="cap1" class="caption clip" data-start="2" data-duration="3" data-track-index="11">
+        I made <span class="accent">Claude</span> work
+      </div>
+      <div id="cap2" class="caption clip" data-start="5" data-duration="3" data-track-index="12">
+        for <span class="accent">tens of hours</span>
+      </div>
+      <div id="cap3" class="caption clip" data-start="8" data-duration="2.5" data-track-index="13">
+        without <span class="accent">supervision</span>
+      </div>
+      <div id="cap4" class="caption clip" data-start="10.5" data-duration="3" data-track-index="14">
+        spinning up <span class="accent">Chromium</span>
+      </div>
+      <div id="cap5" class="caption clip" data-start="13.5" data-duration="2.5" data-track-index="15">
+        <span class="accent">Autonomously.</span>
+      </div>
+
+      <div id="speaker" class="speaker clip" data-start="2" data-duration="14" data-track-index="16">
+        <img src="k-mark-light.png" alt="" />
+        <span>Hassan @ Knowcap</span>
+      </div>
+
+      <div id="outro" class="outro clip" data-start="16" data-duration="2" data-track-index="17">
+        <div id="outro-lockup" class="lockup">
+          <img src="k-mark-light.png" alt="" />
+          <span>nowcap.ai</span>
+        </div>
+        <div id="outro-tagline" class="tagline">Capture every conversation.</div>
+        <div id="outro-url" class="url">knowcap.ai</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // ===== BACKGROUNDS — fake-scroll effect: each fades in, holds, fades out =====
+      // bg1 inbox-top (0-5s) — slight zoom in, like you're looking at the start
+      tl.fromTo("#bg1",
+        { opacity: 0, scale: 1.02, y: 0 },
+        { opacity: 1, scale: 1.02, duration: 0.5, ease: "power2.out" }, 0);
+      tl.to("#bg1", { scale: 1.08, duration: 5, ease: "sine.out" }, 0);
+      tl.to("#bg1", { opacity: 0, duration: 0.5, ease: "power2.in" }, 4.5);
+
+      // bg2 inbox-mid (4.6-9.1s)
+      tl.fromTo("#bg2",
+        { opacity: 0, scale: 1.05 },
+        { opacity: 1, scale: 1.05, duration: 0.5, ease: "power2.out" }, 4.6);
+      tl.to("#bg2", { scale: 1.1, duration: 4.5, ease: "sine.out" }, 4.6);
+      tl.to("#bg2", { opacity: 0, duration: 0.5, ease: "power2.in" }, 8.6);
+
+      // bg3 inbox-bot (8.7-12.2s)
+      tl.fromTo("#bg3",
+        { opacity: 0, scale: 1.05 },
+        { opacity: 1, scale: 1.05, duration: 0.5, ease: "power2.out" }, 8.7);
+      tl.to("#bg3", { scale: 1.12, duration: 3.5, ease: "sine.out" }, 8.7);
+      tl.to("#bg3", { opacity: 0, duration: 0.5, ease: "power2.in" }, 11.7);
+
+      // bg4 project (11.8-14.3s)
+      tl.fromTo("#bg4",
+        { opacity: 0, scale: 1.1 },
+        { opacity: 1, scale: 1.1, duration: 0.5, ease: "power2.out" }, 11.8);
+      tl.to("#bg4", { scale: 1.18, duration: 2.5, ease: "sine.out" }, 11.8);
+      tl.to("#bg4", { opacity: 0, duration: 0.5, ease: "power2.in" }, 13.8);
+
+      // bg5 dashboard (13.9-16.4s)
+      tl.fromTo("#bg5",
+        { opacity: 0, scale: 1.2 },
+        { opacity: 1, scale: 1.2, duration: 0.5, ease: "power2.out" }, 13.9);
+      tl.to("#bg5", { scale: 1.05, duration: 2.5, ease: "sine.out" }, 13.9);
+
+      // SCRIM
+      tl.fromTo("#scrim",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+
+      // BRAND BADGE
+      tl.fromTo("#brand",
+        { opacity: 0, x: 40 },
+        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 0.3);
+
+      // FAKE CURSOR — drift across the screen like a user
+      tl.fromTo("#cursor",
+        { opacity: 0, x: 200, y: 800 },
+        { opacity: 0.85, x: 220, y: 820, duration: 0.4, ease: "power2.out" }, 3);
+      tl.to("#cursor", { x: 700, y: 950, duration: 1.5, ease: "power2.inOut" }, 3.5);
+      tl.to("#cursor", { x: 800, y: 1100, duration: 1.2, ease: "power2.inOut" }, 5.2);
+      tl.to("#cursor", { x: 450, y: 1300, duration: 1.3, ease: "power2.inOut" }, 6.8);
+      tl.to("#cursor", { x: 600, y: 1000, duration: 1.4, ease: "power2.inOut" }, 8.5);
+      tl.to("#cursor", { x: 350, y: 1200, duration: 1.2, ease: "power2.inOut" }, 10);
+      tl.to("#cursor", { opacity: 0, duration: 0.3, ease: "power2.in" }, 11.5);
+
+      // HOOK
+      tl.fromTo("#hook",
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.2);
+      tl.to("#hook", { opacity: 0, duration: 0.3, ease: "power2.in" }, 1.7);
+
+      // CAPTIONS — TikTok pop
+      function popCaption(sel, startTime, duration) {
+        tl.fromTo(sel,
+          { opacity: 0, scale: 0.85, y: 30 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.0)" }, startTime);
+        tl.to(sel, { opacity: 0, scale: 1.05, duration: 0.2, ease: "power2.in" }, startTime + duration - 0.2);
+      }
+      popCaption("#cap1", 2, 3);
+      popCaption("#cap2", 5, 3);
+      popCaption("#cap3", 8, 2.5);
+      popCaption("#cap4", 10.5, 3);
+      popCaption("#cap5", 13.5, 2.5);
+
+      // SPEAKER
+      tl.fromTo("#speaker",
+        { opacity: 0, x: -40 },
+        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 2);
+
+      // OUTRO (16-18s)
+      tl.fromTo("#outro",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: "power2.out" }, 16);
+      tl.fromTo("#outro-lockup",
+        { opacity: 0, y: 40, scale: 0.85 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "expo.out" }, 16.1);
+      tl.fromTo("#outro-tagline",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 16.5);
+      tl.fromTo("#outro-url",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 16.8);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
