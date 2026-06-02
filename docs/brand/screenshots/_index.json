@@ -1,0 +1,12 @@
+{
+  "$schema": "./_index.schema.json",
+  "version": 1,
+  "last_updated": "2026-06-02",
+  "screenshots": [],
+  "_notes": [
+    "Empty until initial capture pass completes (see capture-plan.md)",
+    "Routines read this file at runtime to know what's available",
+    "Each entry mirrors the meta.yaml of its <slug>/ folder — keep in sync",
+    "Future: a regenerate-index.sh script will rebuild from meta.yaml files"
+  ]
+}
