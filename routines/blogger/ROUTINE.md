@@ -1,4 +1,4 @@
-# weekly-blog
+# blogger
 
 Generates one blog draft per week, picks the right mode (thesis / case-study / comparison) based on what's available, embeds matching screenshots if any, opens a PR to `docs/content-pipeline/drafts/`.
 
@@ -30,7 +30,7 @@ The first dry-run picked `thesis` mode (Demo org empty, no fresh competitor doc 
 
 ## Inputs (in execution order)
 
-1. **Read persona rotation state** from `routines/weekly-blog/state.json` (gitignored)
+1. **Read persona rotation state** from `routines/blogger/state.json` (gitignored)
 2. **Read `docs/brand/personas/PRODUCT-PERSONAS.md`** → pick the persona's section
 3. **Read `docs/brand/VISION.md`** → voice + anti-positioning
 4. **Read `docs/brand/POSITIONING.md`** → three sentences + anti-positioning

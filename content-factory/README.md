@@ -65,7 +65,7 @@ The Hyperframes-based compositions in `knowcap-launch/compositions/` reference t
 
 ## Why this lives here
 
-Both repos generate visual content for Knowcap marketing. Their outputs are blog hero images, landing page videos, social reels, launch animations. The blog routine (`routines/weekly-blog/`) will eventually embed video clips and stills from these.
+Both repos generate visual content for Knowcap marketing. Their outputs are blog hero images, landing page videos, social reels, launch animations. The blog routine (`routines/blogger/`) will eventually embed video clips and stills from these.
 
 Keeping them next to the docs/ they illustrate and the routines/ that may invoke them is the right shape.
 
