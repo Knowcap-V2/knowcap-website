@@ -6,7 +6,7 @@ Sales-facing competitive positioning. One folder per competitor. Each contains:
 - `positioning.md` — the angle Knowcap leads with vs them, grounded in `docs/VISION.md`
 - `index.md` — folder index + source recording pointers
 
-## Real threat envelope (per [knowcap/docs/POSITIONING.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/brand/POSITIONING.md))
+## Real threat envelope (per [knowcap/docs/POSITIONING.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/docs/brand/POSITIONING.md))
 
 After the 2026-05-19 trust-layer reframe, our competitive picture is sharper. **Read.ai is not the Tier-1 threat** — Glean, Zep, and Tana are. Read.ai is the most-encountered alternative in conversations and we still need the angle for it, but our build priority on additional competitor docs should match the actual threat hierarchy.
 

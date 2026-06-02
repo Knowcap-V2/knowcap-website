@@ -1,6 +1,6 @@
 # Read.ai vs Knowcap — Sales positioning
 
-_Rewritten 2026-05-19 after the trust-layer vision reframe ([VISION.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/brand/VISION.md), [POSITIONING.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/brand/POSITIONING.md), [MOAT.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/brand/MOAT.md)). Sister doc to [`architecture.md`](architecture.md) (technical breakdown) and [`index.md`](index.md). This file is the marketing/sales angle._
+_Rewritten 2026-05-19 after the trust-layer vision reframe ([VISION.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/docs/brand/VISION.md), [POSITIONING.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/docs/brand/POSITIONING.md), [MOAT.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/docs/brand/MOAT.md)). Sister doc to [`architecture.md`](architecture.md) (technical breakdown) and [`index.md`](index.md). This file is the marketing/sales angle._
 
 ## TL;DR for sales
 
@@ -183,9 +183,9 @@ While Read.ai and Glean are still selling "summaries" and "search," we are the o
 
 - [`architecture.md`](architecture.md) — technical breakdown of Read's capture stack, surfaces, compliance, scraped pages
 - [`index.md`](index.md) — folder index
-- [Knowcap VISION.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/brand/VISION.md) — trust-layer thesis
-- [Knowcap POSITIONING.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/brand/POSITIONING.md) — internal positioning doc
-- [Knowcap MOAT.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/brand/MOAT.md) — why verification survives 100% AI accuracy
+- [Knowcap VISION.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/docs/brand/VISION.md) — trust-layer thesis
+- [Knowcap POSITIONING.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/docs/brand/POSITIONING.md) — internal positioning doc
+- [Knowcap MOAT.md](https://github.com/Knowcap-V2/knowcap-marketing/blob/main/docs/brand/MOAT.md) — why verification survives 100% AI accuracy
 - Hassan's own 30-min Read.ai onboarding walkthrough at `~/Downloads/Read.ai Onboarding and Setup Walkthrough.txt`
 - Apify scrape of 87 read.ai marketing pages: dataset `YufiMdMvsnZ0j3zAc`, stored in llm-wiki not here (research artifact, not marketing material)
 - Competitive analysis conducted 2026-05-19 across 4 parallel research agents + 1 multi-attendee design research agent — findings consolidated into the docs above

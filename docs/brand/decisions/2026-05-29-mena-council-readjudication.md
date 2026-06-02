@@ -46,7 +46,7 @@ The 2026-05-25 council said: water down the copy to match what the code does. **
 
 > "agents act only on human-verified facts"
 
-This is a **2–4 day `confirmation_source` build**, not a copy edit. Do **not** weaken the positioning. Spec: [`proposals/honesty-fix-confirmation-source.md`](../proposals/honesty-fix-confirmation-source.md).
+This is a **2–4 day `confirmation_source` build**, not a copy edit. Do **not** weaken the positioning. Spec: [honesty-fix-confirmation-source.md](https://github.com/Knowcap-V2/knowcap/blob/main/docs/proposals/honesty-fix-confirmation-source.md).
 
 ### 4. New bottleneck = founder SELLING hours + calendar-bound items — not building
 
@@ -124,5 +124,5 @@ The docs currently assert these. They are wrong — fix on contact (verified via
 - [x] `marketing-content-plan.md` — launch peg, content piece #15, regulatory brief re-pegged; moat-in-content note added
 - [x] `june-2026-gtm-game.md` — XP/no-XP contradiction in anti-cheat removed
 - [x] [`decisions/2026-05-25-strategic-council.md`](./2026-05-25-strategic-council.md) — superseded-by banner + stat corrections
-- [x] [`proposals/odoo-sh-lighthouse.md`](../proposals/odoo-sh-lighthouse.md) — superseded banner (SH-PR demo killed)
+- [x] [odoo-sh-lighthouse.md](https://github.com/Knowcap-V2/knowcap/blob/main/docs/proposals/odoo-sh-lighthouse.md) — superseded banner (SH-PR demo killed)
 - [ ] `STRATEGY.md` — no hard factual error (Art 14 used as a segment label); revisit launch-timing language on next edit

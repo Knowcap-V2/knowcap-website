@@ -1,9 +1,7 @@
 # Knowcap Marketing Page
 
 ## What This Is
-Brand + marketing + website for Knowcap (knowcap.ai). Renamed from `knowcap-landing` on 2026-06-01.
-
-The website lives in `app/`. Everything else is brand/marketing surface area.
+Brand + marketing + website for Knowcap (knowcap.ai). Renamed from `knowcap-landing` on 2026-06-01. Layout mirrors the main `knowcap` repo: `app/` runs, `docs/` reads.
 
 - **Repo:** Knowcap-V2/knowcap-marketing
 - **Stack:** Next.js 14, Tailwind, deployed via Vercel
@@ -17,18 +15,18 @@ The website lives in `app/`. Everything else is brand/marketing surface area.
 |---|---|
 | Website code | `app/` (Next.js) |
 | Shipped blog posts | `app/content/blog/*.md` |
-| Brand DNA | `brand/` (VISION, POSITIONING, MOAT, STRATEGY, PRODUCT, personas, decisions, design-explorations, legacy) |
-| Marketing research | `research/` (audits/, data/, competitors/) |
-| Campaigns | `campaigns/` (stratdev/, landing-pages/, linkedin-outbound, meta-paid-sprint) |
-| Content drafts | `content-pipeline/` (strategy/, drafts/, ideas/, video/) |
-| Strategy | `strategy/` (gtm-strategy.md, june-2026-gtm-game.md) |
+| Brand DNA | `docs/brand/` (VISION, POSITIONING, MOAT, STRATEGY, PRODUCT, personas, decisions, design-explorations, legacy) |
+| Marketing research | `docs/research/` (audits/, data/, competitors/) |
+| Campaigns | `docs/campaigns/` (stratdev/, landing-pages/, linkedin-outbound, meta-paid-sprint) |
+| Content drafts | `docs/content-pipeline/` (strategy/, drafts/, ideas/, video/) |
+| Strategy | `docs/strategy/` (gtm-strategy.md, june-2026-gtm-game.md) |
+| Design system | `docs/DESIGN.md` + `docs/DESIGN-E.md` |
 
 ## Design System
-Always read `DESIGN.md` (or `DESIGN-E.md` for the /e variant) before making any visual or UI decisions.
-Font choices, colors, spacing, and aesthetic direction are defined there.
+Always read `docs/DESIGN.md` (or `docs/DESIGN-E.md` for the /e variant) before making any visual or UI decisions. Font choices, colors, spacing, and aesthetic direction are defined there.
 
 ## Vision / brand DNA
-`brand/VISION.md` is the source of truth for everything Knowcap means. Cited by every feat() PR body in the main `knowcap` repo via full GitHub URL.
+`docs/brand/VISION.md` is the source of truth for everything Knowcap means. Cited by every feat() PR body in the main `knowcap` repo via full GitHub URL.
 
 ## Branch Rules
 Same as all Knowcap-V2 repos: never push to main. Branch + PR only.
