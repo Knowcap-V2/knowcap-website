@@ -1,0 +1,6 @@
+# Folders Vercel does NOT need to clone for the website build
+# (Vercel reads from app/ only via vercel.json rootDirectory)
+docs/
+routines/
+content-factory/
+research/

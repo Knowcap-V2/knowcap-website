@@ -1,0 +1,170 @@
+{
+  "backend": "groq",
+  "segments": [
+    {
+      "start": 0.32,
+      "end": 5.12,
+      "text": "Another idea is to make because I've had a couple of ideas while I'm recording this video is the"
+    },
+    {
+      "start": 5.12,
+      "end": 16.24,
+      "text": "first of all um read AI it it definitely needs it definitely needs to be embedded"
+    },
+    {
+      "start": 18.24,
+      "end": 25.44,
+      "text": "through google meet so I can have like real-time transcription and that's way better also"
+    },
+    {
+      "start": 25.44,
+      "end": 31.92,
+      "text": "transcription should take into should be loaded with context of the last recent memories for"
+    },
+    {
+      "start": 32.8,
+      "end": 38.72,
+      "text": "the same kind of meeting or same speakers so it can transcribe very well"
+    },
+    {
+      "start": 40.08,
+      "end": 42.24,
+      "text": "i don't know if the transcription engine should also"
+    },
+    {
+      "start": 44.0,
+      "end": 49.6,
+      "text": "i mean if it has context of the last 10 meetings then not only can it transcribe but it can"
+    },
+    {
+      "start": 49.6,
+      "end": 54.0,
+      "text": "summarize in a way where it's adjacent to the first 10 meetings that's a good idea"
+    },
+    {
+      "start": 55.44,
+      "end": 63.6,
+      "text": "the risks, tasks, everything can be superseded or mitigated."
+    },
+    {
+      "start": 64.26,
+      "end": 69.04,
+      "text": "Because we spoke about superseded, we didn't speak about mitigated."
+    },
+    {
+      "start": 69.62,
+      "end": 72.18,
+      "text": "Or tasks done, for example."
+    },
+    {
+      "start": 73.38,
+      "end": 79.14,
+      "text": "Or tasks ignored because of previous tasks that were done in previous meetings"
+    },
+    {
+      "start": 79.14,
+      "end": 81.32,
+      "text": "that were already done."
+    },
+    {
+      "start": 81.32,
+      "end": 82.64,
+      "text": "Lots of things."
+    },
+    {
+      "start": 82.64,
+      "end": 100.4,
+      "text": "So basically, decisions could be superseded. Tasks could be completed or reassigned. Risks could be mitigated. Partied could be double or triple referenced."
+    },
+    {
+      "start": 100.4,
+      "end": 105.4,
+      "text": "topics could be increased in size if they're reoccurring."
+    },
+    {
+      "start": 109.6,
+      "end": 112.84,
+      "text": "So they could have, topics could be weighted."
+    },
+    {
+      "start": 112.84,
+      "end": 125.93,
+      "text": "Topics could be weighted And I think this would definitely definitely increase the accuracy of the RAG system especially if"
+    },
+    {
+      "start": 125.93,
+      "end": 135.23,
+      "text": "this is amazing architecture because if like a if like a organization had hundreds or thousands"
+    },
+    {
+      "start": 135.23,
+      "end": 144.07,
+      "text": "of meetings, then no matter how much, no matter how big the rag database gets, because it"
+    },
+    {
+      "start": 144.07,
+      "end": 151.53,
+      "text": "is confirmed with importance and history for every single decision, task, and etc., because"
+    },
+    {
+      "start": 151.53,
+      "end": 160.55,
+      "text": "of the task and decision databases, holy shit, this is truly artificial intelligence."
+    },
+    {
+      "start": 160.55,
+      "end": 164.55,
+      "text": "You can argue that this is actual artificial intelligence, not what they've invented with"
+    },
+    {
+      "start": 164.55,
+      "end": 169.91,
+      "text": "with Claude and Chad GPT with these lame-ass coding memory systems because"
+    },
+    {
+      "start": 171.03,
+      "end": 173.03,
+      "text": "They don't benefit anyone"
+    },
+    {
+      "start": 173.19,
+      "end": 178.73,
+      "text": "we wanted team memory and history and knowledge capture and"
+    },
+    {
+      "start": 179.59,
+      "end": 181.59,
+      "text": "That doesn't happen in Claude"
+    },
+    {
+      "start": 185.97,
+      "end": 191.15,
+      "text": "Like why isn't the question another question is why isn't Claude or Chad GPT doing this?"
+    },
+    {
+      "start": 191.15,
+      "end": 196.27,
+      "text": "I'm very curious, like why is it not in the underlying infrastructure of the module?"
+    },
+    {
+      "start": 196.83,
+      "end": 199.15,
+      "text": "You have like rack pipeline across meetings."
+    },
+    {
+      "start": 199.15,
+      "end": 210.55,
+      "text": "So if someone like bought 100 agents of cloud for his team members, why don't they all share memory across the board from the chat conversations?"
+    },
+    {
+      "start": 211.17,
+      "end": 219.57,
+      "text": "But even if they did this through the chat conversations, our solution is much stronger because it's in just meeting visuals and audio."
+    },
+    {
+      "start": 219.57,
+      "end": 231.41,
+      "text": "oh my god i'm on to something big i feel it i feel like i'm on to something very very big let me know"
+    }
+  ]
+}
