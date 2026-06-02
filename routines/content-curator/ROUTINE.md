@@ -28,7 +28,7 @@ Calls [`_skills/write-blog-draft/SKILL.md`](../_skills/write-blog-draft/SKILL.md
 
 ## Human confirms
 
-- React to the comment with thumbs-up = approve a draft (will trigger `weekly-blog` to prioritize)
+- React to the comment with thumbs-up = approve a draft (will trigger `blogger` to prioritize)
 - Reply with "skip" = ignore
 
 ## Constraints

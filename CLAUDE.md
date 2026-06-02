@@ -21,7 +21,7 @@ Brand + marketing + website for Knowcap (knowcap.ai). Renamed from `knowcap-land
 | Content drafts | `docs/content-pipeline/` (strategy/, drafts/, ideas/, video/) |
 | Strategy | `docs/strategy/` (gtm-strategy.md, june-2026-gtm-game.md) |
 | Design system | `docs/DESIGN.md` + `docs/DESIGN-E.md` |
-| Routines (autonomous work) | `routines/` (weekly-blog, nightly-seo-audit, persona-refresh, content-curator) — see `routines/README.md` for the Routine→Skill→Run→Inbox pattern |
+| Routines (autonomous work) | `routines/` (blogger, nightly-seo-audit, persona-refresh, content-curator) — see `routines/README.md` for the Routine→Skill→Run→Inbox pattern |
 
 ## Design System
 Always read `docs/DESIGN.md` (or `docs/DESIGN-E.md` for the /e variant) before making any visual or UI decisions. Font choices, colors, spacing, and aesthetic direction are defined there.

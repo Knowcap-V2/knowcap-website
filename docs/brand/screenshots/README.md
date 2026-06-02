@@ -1,6 +1,6 @@
 # Knowcap product screenshot library
 
-Curated screenshots of the Knowcap product surfaces, used by the [`weekly-blog`](../../../routines/weekly-blog/) routine (and any future blog or comparison-page routine) to embed visuals in posts.
+Curated screenshots of the Knowcap product surfaces, used by the [`blogger`](../../../routines/blogger/) routine (and any future blog or comparison-page routine) to embed visuals in posts.
 
 ## Scope vs. other repos
 
@@ -18,7 +18,7 @@ If you're wondering "which repo gets this asset?":
 ```
 docs/brand/screenshots/
 ├── README.md              ← this file
-├── _index.json            ← machine-readable index (used by weekly-blog routine)
+├── _index.json            ← machine-readable index (used by blogger routine)
 ├── <slug>/
 │   ├── full.png           ← 1600×900 (or aspect-matched) hero capture
 │   ├── thumb.png          ← 800×450 inline-blog crop
@@ -54,7 +54,7 @@ Library drifts when the UI changes. Maintenance:
 - **Per-feature ship:** when a major new surface ships (new page, redesigned modal), capture it during the same week and update `_index.json`
 - **Automated drift detection (future):** a `screenshot-drift-audit` routine compares live captures against library hashes monthly, opens a PR with diffs
 
-## How the weekly-blog routine uses this
+## How the blogger routine uses this
 
 1. After generating the draft, scan body for trigger keywords (inbox, confirm, audit trail, Odoo, etc.)
 2. Match against `_index.json` → filter by features + persona

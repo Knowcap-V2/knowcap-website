@@ -31,7 +31,7 @@ routines/
 
 | Routine | Trigger | Skill | Output | Status |
 |---|---|---|---|---|
-| [`weekly-blog/`](./weekly-blog/) | Cron: Mon 06:00 UTC | `write-blog-draft` | PR to `docs/content-pipeline/drafts/` | stub |
+| [`blogger/`](./blogger/) | Cron: Mon 06:00 UTC | `write-blog-draft` | PR to `docs/content-pipeline/drafts/` | stub |
 | [`nightly-seo-audit/`](./nightly-seo-audit/) | Cron: daily 03:00 UTC | `audit-seo` | PR to `docs/research/audits/` if regression | stub |
 | [`persona-refresh/`](./persona-refresh/) | Cron: monthly | `refresh-persona` | PR to `docs/brand/personas/` if signal shifts | stub |
 | [`content-curator/`](./content-curator/) | Event: new file in `docs/research/` | (chain: read research → suggest blog topics) | Comment on the PR that added the research | stub |
