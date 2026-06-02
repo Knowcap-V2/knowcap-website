@@ -124,7 +124,7 @@ each new Pack pulls more vertical buyers; each new buyer makes Pack-building att
 
 This is the **platform flywheel.** Highest revenue ceiling — Shopify Apps does ~$1B/year on top of Shopify itself; Salesforce AppExchange does similar. Knowcap's twist: every Pack is BOTH a Knowcap-internal install AND a portable Anthropic Skill folder. Buyers can deploy in either runtime.
 
-**The Knowcap-specific advantage:** because we have the verification primitive AND the Instructions Hierarchy above the Skill body, a Knowcap-authored Pack delivers something a vanilla Anthropic Skill cannot — **provenance-bound execution.** Regulated buyers (the EU AI Act Article 14 segment) will pay a 5-10x premium for that tier.
+**The Knowcap-specific advantage:** because we have the verification primitive AND the Instructions Hierarchy above the Skill body, a Knowcap-authored Pack delivers something a vanilla Anthropic Skill cannot — **provenance-bound execution.** Regulated buyers (the Saudi PDPL + GDPR Article 22 segment today, EU AI Act Article 14 from 2027) will pay a 5-10x premium for that tier.
 
 **What we build now (pre-Loop 3):**
 - Knowcap MCP is shipped + stable (post-2026-05-19 with `verification_strictness`)

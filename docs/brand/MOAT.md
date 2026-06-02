@@ -185,10 +185,10 @@ The existential risk is not any single competitor. It is shipping too slowly for
 2. **Ship the `confirmation_source` schema split** — add a column to `project_memories` distinguishing `human_confirmed` from `auto_confirmed_rule_v1`. Without this, [VERIFICATION-UX.md](./VERIFICATION-UX.md) Mechanism 2 (rule promotion) cannot ship honestly. Migration + server + UI. **Target: 30 days.**
 3. ~~Add MCP `verification_strictness` convenience parameter~~ **DONE 2026-05-19 via knowcap-mcp PR #7.** Agents now call `search_memories(verification_strictness='human_only')` and the MCP guarantees only `confirmed+edited` memories return. `rule_auto_ok` is identical today and will expand when `confirmation_source` ships (item 2).
 4. **Ship the Odoo lighthouse demo** — meeting → human-confirmed memory → **Odoo task** (the auto-generated SH **PR** version is killed — ≈0% built; see [2026-05-29 decision](./decisions/2026-05-29-mena-council-readjudication.md)). **Target: on demo-readiness.**
-5. **Publish the "Knowcap and EU AI Act Article 14" technical brief.** Hassan's voice; technical depth; positioned for compliance officers Google-searching the regulation. **Target: 2026-06-15.**
+5. **Publish the "Knowcap and the human-in-the-loop mandate (Saudi PDPL + GDPR Article 22)" technical brief.** Hassan's voice; technical depth; positioned for compliance officers shopping on the regs enforced today. (Keep an EU-AI-Act-Article-14 brief in reserve for 2027.) **Target: 2026-07-06.**
 6. **Land 3-5 regulated-vertical pilot customers** with full audit-trail demos by 2026-09-30.
 
-If we hit these six, the moat is in production with proof points by the time the EU AI Act enforcement window peaks. If we miss them, the MENA mid-market buyers who are ready now will find workarounds — and workarounds calcify into habits we can't displace.
+If we hit these six, the moat is in production with proof points while the MENA PDPL + GDPR buyers are actively shopping — and well before the EU AI Act Article 14 wave lands in 2027. If we miss them, the MENA mid-market buyers who are ready now will find workarounds — and workarounds calcify into habits we can't displace.
 
 ---
 

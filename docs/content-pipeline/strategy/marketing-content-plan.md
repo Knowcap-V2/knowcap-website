@@ -178,13 +178,13 @@ Log numbers in the weekly scorecard (see june-2026-gtm-game.md). Kill underperfo
 
 ### One campaign, not three
 
-Scope Creep Insurance is the only campaign until it proves CPL under $10. Founder Brain and EU AI Act campaigns are deferred — they dilute the $2K budget across too many messages before any single one has proven conversion.
+Scope Creep Insurance is the only campaign until it proves CPL under $10. Founder Brain and the PDPL/GDPR compliance campaigns are deferred — they dilute the $2K budget across too many messages before any single one has proven conversion.
 
 ### Budget split
 
 | Line item | Amount | Geo | Why |
 |---|---|---|---|
-| **Scope Creep Insurance** | $1,800 | Egypt + Saudi + UAE + UK/EU | One message, one landing page, one audience — agencies/consultants/Odoo partners |
+| **Scope Creep Insurance** | $1,800 | Egypt + Saudi + UAE | One message, one landing page, one audience — MENA agencies/consultants/Odoo partners (UK/EU dropped — MENA-first, no EU-AI-Act geo) |
 | **LinkedIn retargeting** | $200 | People who engaged with organic LinkedIn content | Warm audience, cheapest conversion path |
 
 ### Ad creative (1 campaign)

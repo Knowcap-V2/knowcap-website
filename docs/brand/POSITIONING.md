@@ -143,7 +143,7 @@ The buyer pitch: *"Anthropic gives agents skills. We give those skills an org, a
 **What we sell them:**
 - Every fact AI acts on is confirmed by a named human, signed, timestamped to source, audit-trailed
 - "Compliance-attested AI" tier of agents — only confirmed facts as inputs, full lineage on every action
-- Document the audit-defense story explicitly (EU AI Act Article 14, GDPR Article 22, etc. — see [MOAT.md](./MOAT.md))
+- Document the audit-defense story explicitly (Saudi PDPL + GDPR Article 22 first, then EU AI Act Article 14 from Dec 2027 — see [MOAT.md](./MOAT.md))
 
 **Pricing implication:** $100–500/seat/month range. Compliance buyers pay 5-10x what productivity buyers pay.
 

@@ -61,8 +61,9 @@ This is the real reason we win against Read.ai for the buyers who matter most.
 
 | Regulation | What it mandates | Effective |
 |---|---|---|
-| EU AI Act Article 14 | Natural-person oversight for high-risk AI systems | Aug 2 2026 |
-| GDPR Article 22 | Human intervention right for automated decisions with legal effect | In force |
+| Saudi PDPL (Art. 36 + SDAIA rules) | Human oversight + explainability on automated processing; SDAIA enforcing, fines to SAR 5M | In force since Sep 2024 |
+| GDPR Article 22 / CJEU SCHUFA | Human intervention right for automated decisions with legal effect (rubber-stamp human is legally insufficient) | In force |
+| EU AI Act Article 14 | Natural-person oversight for high-risk AI systems | Dec 2 2027 (deferred from Aug 2 2026 via the Digital Omnibus) |
 | ESMA MiFID II Statement | Investment firm decisions remain management's responsibility, non-delegable to AI | May 2024 |
 | CMS Medicare Advantage Final Rule | AI may inform, cannot decide; physician review required on denials | Jan 1 2024 |
 | ABA Formal Opinion 512 | Lawyers may not rely on AI outputs "without independent verification" | Jul 2024 |
@@ -98,8 +99,8 @@ This requires a Party → Risk → no `mitigated_by` edge traversal across many 
 - Boutique-to-mid-market law firms (ABA Op. 512, attorney-client privilege)
 - Healthcare admin (CMS MA Final Rule)
 - Compliance officers at mid-size companies
-- Pain: their regulator requires human attestation on AI-assisted decisions; EU AI Act enforcement Aug 2 2026 is a forcing function
-- Knowcap pitch: audit-ready human confirmation infrastructure under EU AI Act Article 14
+- Pain: their regulator requires human attestation on AI-assisted decisions; Saudi PDPL (enforced Sep 2024) + GDPR Article 22 are the in-force forcing functions now (EU AI Act Article 14 deferred to Dec 2027)
+- Knowcap pitch: audit-ready human confirmation infrastructure — defensible under Saudi PDPL + GDPR Article 22 today, EU AI Act Article 14 when it lands
 - Pricing: $100-500/seat/month range vs Read.ai's $19-39 productivity tiers
 
 ### Anti-buyer — DO NOT sell here
@@ -137,7 +138,7 @@ Sales must not promise vapor. This matrix is the truth.
 
 - Buyers wiring up AI agents who need a trusted knowledge substrate (dev tools, autonomous ops, AI agencies)
 - Regulated buyers with explicit human-attestation mandates (financial advisors, legal, healthcare admin)
-- Compliance officers shopping for EU AI Act Article 14 tooling (June-December 2026 window)
+- Compliance officers shopping for human-in-the-loop tooling under Saudi PDPL + GDPR Article 22 (in force now; EU AI Act Article 14 a 2027 tailwind)
 - Odoo partners with client SOW-attestation pain (Hassan's distribution segment)
 - Founders running multiple orgs who want cross-org confirmation bridges
 - Procurement / supply-chain teams who genuinely need "which supplier has the most unresolved risks?" — *once edges ship*
@@ -165,17 +166,18 @@ Knowcap's free-and-low wedge is right for early productivity-curious adoption. T
 
 ---
 
-## The EU AI Act window (June - December 2026)
+## The compliance window — PDPL + GDPR now, EU AI Act later (revised 2026-05-29)
 
-Aug 2 2026 is when high-risk AI systems under the EU AI Act become enforceable (current Digital Omnibus deferral could push to Dec 2027 — monitor monthly). Between June and December 2026, every regulated buyer in Europe will Google "EU AI Act Article 14 compliance" looking for tooling.
+The EU AI Act Article 14 enforcement date moved from **Aug 2 2026 → Dec 2 2027** (Digital Omnibus, ~May 2026), so it is a 2027/2028 tailwind, not the near-term forcing function. The *active* window is driven by regulations in force **today**: **Saudi PDPL** (enforced Sep 2024, SDAIA, SAR 5M fines) and **GDPR Article 22 / CJEU SCHUFA**. MENA-first, with the EU as a secondary front on existing law.
 
-**Positioning moves to land before the window peaks:**
-- Publish a "Knowcap and EU AI Act Article 14" technical brief by 2026-06-15
-- Add "Article 14 compliance" copy to the landing page hero by 2026-06-30
-- Outbound campaign to EU-based RIA / law firm / fractional CFO networks 2026-07-01 → 2026-09-30
+**Positioning moves to land now:**
+- Publish a "human-in-the-loop attestation under Saudi PDPL + GDPR Article 22" technical brief by 2026-07-06 — lead with the regs that bite now
+- Add "human-confirmed before any AI acts" compliance copy to the landing page hero
+- Outbound to Saudi/UAE regulated buyers + Odoo partners first; EU RIA / law-firm / fractional-CFO networks as a secondary track
 - Land 3-5 regulated-vertical pilot customers by 2026-09-30
+- Keep an EU-AI-Act-Article-14 brief in reserve for 2027 as the deadline re-approaches — do NOT lead with it in 2026
 
-While Read.ai and Glean are still selling "summaries" and "search," we are the only player selling "audit-ready human confirmation infrastructure under EU AI Act Article 14."
+While Read.ai and Glean are still selling "summaries" and "search," we are the only player selling "audit-ready human-confirmation infrastructure" — defensible under Saudi PDPL and GDPR Article 22 today, EU AI Act Article 14 when it lands.
 
 ---
 

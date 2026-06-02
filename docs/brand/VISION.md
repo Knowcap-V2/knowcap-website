@@ -14,7 +14,7 @@ Hassan-owned. Edited when direction changes. The mockup in the `agents-research-
 
 Knowcap is not a meeting notetaker (Read.ai, Otter, Fathom, Granola already own that). Knowcap is not a knowledge-graph platform (Glean already owns that). Knowcap is not AI memory infrastructure (Mem0, Zep, Letta already own that). Knowcap sits **on top of those primitives** and adds the one thing none of them deliver: a record of which facts a named human has confirmed against named evidence — and a contract that AI agents only act on confirmed facts.
 
-**Product DNA: Otter + Loom + NotebookLM, verified.** Knowcap combines transcription + cross-meeting knowledge (Otter's domain), video recording + sharing (Loom's domain), and multi-source synthesis with timestamped citations (NotebookLM's domain). What none of them deliver: human verification of every extracted fact, cross-org confirmation where both sides attest, and an audit trail that satisfies EU AI Act Article 14.
+**Product DNA: Otter + Loom + NotebookLM, verified.** Knowcap combines transcription + cross-meeting knowledge (Otter's domain), video recording + sharing (Loom's domain), and multi-source synthesis with timestamped citations (NotebookLM's domain). What none of them deliver: human verification of every extracted fact, cross-org confirmation where both sides attest, and an audit trail that satisfies regulators' human-in-the-loop mandates — Saudi PDPL and GDPR Article 22 today, EU AI Act Article 14 from 2027.
 
 Meetings are the highest-density capture channel, but not the only one. Documents, emails, Telegram, WhatsApp, URLs all feed in. The substrate that matters is the verified-fact graph the org accumulates over time, not the input pipe.
 
