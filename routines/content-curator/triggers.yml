@@ -1,0 +1,6 @@
+event: push-to-main
+filter:
+  path: docs/research/**
+  action: added
+runtime: TBD
+status: stub

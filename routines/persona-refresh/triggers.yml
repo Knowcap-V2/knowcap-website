@@ -1,0 +1,5 @@
+cron: "0 6 1 * *"
+timezone: UTC
+description: First of each month, 06:00 UTC
+runtime: TBD
+status: stub

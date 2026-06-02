@@ -27,3 +27,7 @@ out
 .logs
 *.tsbuildinfo
 .gstack/
+
+# Routine run logs (per-routine state, not tracked)
+routines/**/runs/
+routines/**/baselines/
