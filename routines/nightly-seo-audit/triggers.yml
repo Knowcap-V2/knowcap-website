@@ -1,0 +1,5 @@
+cron: "0 3 * * *"
+timezone: UTC
+description: Daily 03:00 UTC (05:00 Cairo)
+runtime: TBD
+status: stub
