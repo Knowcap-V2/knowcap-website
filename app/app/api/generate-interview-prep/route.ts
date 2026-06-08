@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import { getJobDescription } from '@/lib/jobDescriptions'
+import { requireAdmin } from '@/lib/adminAuth'
 
 const prisma = new PrismaClient()
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
+  const denied = requireAdmin(request)
+  if (denied) return denied
+
   try {
     const body = await request.json()
     const { applicationId } = body

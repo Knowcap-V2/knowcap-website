@@ -45,14 +45,18 @@ export default function BetaAppDashboard() {
 
   useEffect(() => {
     document.title = 'Admin Dashboard | Knowcap.ai'
-    // Check if already authenticated
-    const authenticated = sessionStorage.getItem('admin_authenticated')
-    if (authenticated === 'true') {
-      setIsAuthenticated(true)
-      fetchData()
-    } else {
-      setLoading(false)
-    }
+    // Verify session server-side — the HttpOnly kc_admin cookie rides automatically.
+    // A 200 means the cookie is valid; anything else means we need to log in.
+    fetch('/api/recruitment-applications', { method: 'GET' })
+      .then((res) => {
+        if (res.ok) {
+          setIsAuthenticated(true)
+          fetchData()
+        } else {
+          setLoading(false)
+        }
+      })
+      .catch(() => setLoading(false))
   }, [])
 
   // Initialize meeting link and admin notes when application is selected
@@ -103,20 +107,33 @@ export default function BetaAppDashboard() {
     setLoading(false)
   }
 
-  const handlePasscodeSubmit = (e: React.FormEvent) => {
+  const handlePasscodeSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (passcode === '2686') {
-      setIsAuthenticated(true)
-      sessionStorage.setItem('admin_authenticated', 'true')
-      setError('')
-      fetchData()
-    } else {
-      setError('Invalid passcode')
+    setError('')
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passcode }),
+      })
+      if (res.ok) {
+        setIsAuthenticated(true)
+        setPasscode('')
+        fetchData()
+      } else {
+        setError('Invalid passcode')
+      }
+    } catch {
+      setError('Login failed — please try again')
     }
   }
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('admin_authenticated')
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' })
+    } catch {
+      // ignore network errors on logout
+    }
     setIsAuthenticated(false)
     setPasscode('')
   }
