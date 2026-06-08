@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import { getJobDescription } from '@/lib/jobDescriptions'
 import { getFileUrl } from '@/lib/s3'
+import { requireAdmin } from '@/lib/adminAuth'
 
 const prisma = new PrismaClient()
 
@@ -244,6 +245,9 @@ Respond with raw JSON only.`
 }
 
 export async function POST(request: NextRequest) {
+  const denied = requireAdmin(request)
+  if (denied) return denied
+
   try {
     const { applicationId, bulkScore } = await request.json()
 

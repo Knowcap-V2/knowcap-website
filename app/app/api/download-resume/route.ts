@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import { getFileUrl } from '@/lib/s3'
+import { requireAdmin } from '@/lib/adminAuth'
 
 const prisma = new PrismaClient()
 
@@ -8,6 +9,9 @@ const prisma = new PrismaClient()
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
+  const denied = requireAdmin(request)
+  if (denied) return denied
+
   try {
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')

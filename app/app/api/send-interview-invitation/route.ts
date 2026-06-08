@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import nodemailer from 'nodemailer'
+import { requireAdmin } from '@/lib/adminAuth'
 
 const prisma = new PrismaClient()
 
@@ -49,6 +50,9 @@ async function sendEmail(to: string, subject: string, htmlBody: string) {
 }
 
 export async function POST(request: NextRequest) {
+  const denied = requireAdmin(request)
+  if (denied) return denied
+
   try {
     const { applicationId } = await request.json()
     
