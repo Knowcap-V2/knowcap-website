@@ -16,6 +16,14 @@ Comparable companies that ran this play: Salesforce (CRM record → AppExchange)
 
 ---
 
+## The substrate, precisely: a web of commitments
+
+The "verified-knowledge graph" the three loops spin on isn't an abstract pile of facts. It's a **web of commitments** — every promise the org makes, internal and external. Commitments carry risk; risk is mitigated by decisions and tasks; tasks fulfil the commitments; notes are the verified facts it all stands on. That's the Layer-1 ontology (see [VISION.md → "The 5 Layer-1 categories"](./VISION.md) and [POSITIONING.md](./POSITIONING.md)).
+
+Why it matters for the flywheel: a **commitment has a counterparty** — the client, supplier, or manager it was made to. That counterparty is exactly who Loop 2 pulls onto Knowcap to confirm the shared commitment. The commitment ontology is what makes the cross-org confirmation network (Loop 2) inevitable rather than bolted-on.
+
+---
+
 ## Loop 1 — Within-org capture deepening
 
 **Spins from customer #1. Lowest ceiling. Fastest to start.**
@@ -213,3 +221,9 @@ Every feature decision should be evaluated against which loop it accelerates:
 - **Not a product roadmap.** Loop sequencing is not a Gantt chart. Specific features ship when their value to the current loop is clear; the strategy doc tells you which loop the feature serves.
 - **Not a pitch deck narrative.** External-facing storytelling lives in [POSITIONING.md](./POSITIONING.md). This doc is internal — devs and Hassan use it to align build priorities.
 - **Not a substitute for VISION.md.** VISION says *what we are.* STRATEGY says *how the business compounds.*
+
+---
+
+## Companion — product vs. services: who builds what
+
+The three loops above describe how the **product** compounds. They do not describe the **services** motion that funds the early product and feeds it features. For B2B engagements (implant Knowcap across an org for 30 days → capture → AI strategy → custom automations), the division of labor between **Knowcap (the data plane)** and **Claude/Claw (the build plane)** — and the boundary test for what graduates from a bespoke build into a native Knowcap feature — lives in [`../strategy/knowcap-vs-claude-division-of-labor.md`](../strategy/knowcap-vs-claude-division-of-labor.md). Read it before scoping any custom-automation engagement.
