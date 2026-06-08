@@ -4,7 +4,7 @@ Hassan-owned. Edited when direction changes. The mockup in the `agents-research-
 
 **How devs use this:** read the relevant section before opening a `feat(...)` PR. Link the section from your PR description. Hassan reviews your preview URL against this doc and the mockup frame it points to.
 
-**Updated:** 2026-05-29 — re-adjudication council ([decision record](./decisions/2026-05-29-mena-council-readjudication.md)): launch re-pegged off the deferred EU AI Act onto Saudi PDPL + GDPR Art 22, MENA stats corrected, lighthouse demo revised, full vision is the plan. Prior 2026-05-25: Adds council research findings: product DNA positioning (Otter + Loom + NotebookLM, verified), market evidence across 15 competitors (Force 4), painkiller analysis by buyer persona, MENA-first go-to-market ruling, platform AI anti-positioning row. Prior update 2026-05-20: Playbooks unification, Instructions Hierarchy, `Party → Person` rename, Anthropic Skills layer. See companion docs [STRATEGY.md](./STRATEGY.md), [POSITIONING.md](./POSITIONING.md), [MOAT.md](./MOAT.md), [VERIFICATION-UX.md](./VERIFICATION-UX.md), [FEATURES-FROM-VISION.md](./FEATURES-FROM-VISION.md), [INSTRUCTIONS-HIERARCHY.md](./INSTRUCTIONS-HIERARCHY.md).
+**Updated:** 2026-05-29 — re-adjudication council ([decision record](./decisions/2026-05-29-mena-council-readjudication.md)): launch re-pegged off the deferred EU AI Act onto Saudi PDPL + GDPR Art 22, MENA stats corrected, lighthouse demo revised, full vision is the plan. Prior 2026-05-25: Adds council research findings: product DNA positioning (Otter + Loom + NotebookLM, verified), market evidence across 15 competitors (Force 4), painkiller analysis by buyer persona, MENA-first go-to-market ruling, platform AI anti-positioning row. Prior update 2026-05-20: Playbooks unification, Instructions Hierarchy, `Party → Person` rename, Anthropic Skills layer. See companion docs [STRATEGY.md](./STRATEGY.md), [POSITIONING.md](./POSITIONING.md), [MOAT.md](./MOAT.md), [VERIFICATION-UX.md](./VERIFICATION-UX.md), [FEATURES-FROM-VISION.md](./FEATURES-FROM-VISION.md), [INSTRUCTIONS-HIERARCHY.md](./INSTRUCTIONS-HIERARCHY.md). **2026-06-08:** "The 5 memory categories" reworked into the commitment ontology (Decision · Task · Commitment · Risk · Note) — see [`memory-ontology.html`](./memory-ontology.html); plane-of-labor strategy added at [`../strategy/knowcap-vs-claude-division-of-labor.md`](../strategy/knowcap-vs-claude-division-of-labor.md).
 
 ---
 
@@ -83,19 +83,23 @@ Together these two layers make Knowcap's knowledge trustworthy for AI agents to 
 
 ---
 
-## The 5 memory categories
+## The 5 Layer-1 categories (commitment ontology — proposed 2026-06-04)
 
-Every paragraph of every ingested source is classified as one or a combination of:
+Every paragraph of every ingested source is classified into the org's **Layer-1 categories** — the four things an agent acts on, plus one reference type:
 
-1. **Risks** — threats, delays, blockers, objections
-2. **Decisions** — choices made, directions locked, commitments given
-3. **Tasks** — work assigned, actions required, deadlines set
-4. **Topics** — important concepts, domain knowledge, recurring themes
-5. **Persons** — people, companies, suppliers, customers referenced (internal id `people`; displayed as "Person/Persons" — renamed from "Party/Parties" 2026-05-20)
+1. **Decisions** — choices made, directions locked
+2. **Tasks** — work assigned, actions required, deadlines set
+3. **Commitments** *(new)* — a promise the org owes someone: a client, partner, or supplier externally, or manager↔employee internally. Typed fields: `promisor` / `promisee` / `due` / `deliverable` / `source_ref`. A commitment is the SOW baseline; scope creep is a request with no matching commitment behind it. Closes via a `fulfilled_by` or `breached_at` edge.
+4. **Risks** — threats, delays, blockers, objections; every risk threatens a commitment
+5. **Notes** — the verified substrate the other four stand on (everything that was `fact` + `general`). Agents READ notes as grounding; they never act on a note.
 
-**These labels are org-configurable via the Instructions Hierarchy.** A sales org defines Risks as sales objections. An ERP team defines Risks as integration failures. A law firm defines Risks as case-law adverse precedent. The 5 categories are the taxonomy; the Instructions Hierarchy defines what they mean for each org.
+**Why this membership (4→5 — the number stays ~5, the membership changes).** The org model is a **web of commitments** (see [POSITIONING.md](./POSITIONING.md)): commitments carry risk, risk is mitigated by decisions and tasks, tasks fulfil commitments, notes are the facts it all stands on. So `fact` + `general` collapse into **Note**, and **Commitment** is promoted to a first-class actionable category. **Person / Topic / Speaker leave the category list** — they were never peers of an action; they are **Layer-2 dimensions** every memory is tagged with. `status` stops being a typed box and becomes *derived* from closing edges (`fulfilled_by`, `mitigated_by`, `superseded_by`).
 
-**Honest note:** the 5 categories themselves are not a moat — Read.ai, Otter, and Fellow all extract similar artifacts under different labels. The differentiation is that ours are *org-tunable through the Instructions Hierarchy* AND only flow downstream after human verification.
+**Status: proposed, not shipped.** Today's schema still ships `task / risk / decision / fact / general / people`. The migration (`fact`+`general` → `note`, add `commitment` + its edge, demote Person/Topic/Speaker to Layer-2, derive `status` from edges) is specced in [`memory-ontology.html`](./memory-ontology.html) and the main-repo schema ADR. **Sales describes the CURRENT extraction until the migration ships.**
+
+**These labels are org-configurable via the Instructions Hierarchy.** A sales org defines Risks as sales objections. An ERP team defines Risks as integration failures. A law firm defines Risks as adverse precedent. The categories are the taxonomy; the Instructions Hierarchy defines what they mean for each org.
+
+**Honest note:** the category labels themselves are not a moat — Read.ai, Otter, and Fellow all extract similar artifacts. The differentiation is (1) **Commitment as a first-class entity** with a promisor/promisee/due structure nobody else models, (2) categories org-tunable through the Instructions Hierarchy, and (3) downstream flow only after human verification.
 
 ---
 
