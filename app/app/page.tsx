@@ -1,8 +1,8 @@
-import VersionB from '@/components/version-b'
+import HomeCommitment from '@/components/home-commitment'
 
-// Homepage. The middleware rewrites `/` to `/b` or `/d` (the live B-vs-D copy
-// test), so this component only renders as a fallback if middleware is bypassed.
-// We render Version B (outcome) as the sensible default.
+// Homepage — Commitment Ledger edition (full replacement, 2026-06-10).
+// The B-vs-D middleware rotation is retired; /a /b /c /d remain reachable
+// for reference. Copy: docs/content-pipeline/drafts/homepage-commitment-copy.md
 export default function Home() {
-  return <VersionB />
+  return <HomeCommitment />
 }
