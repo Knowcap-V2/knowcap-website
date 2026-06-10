@@ -37,3 +37,4 @@ database_export/
 *.sql
 *_dump.json
 all_data_combined.json
+.vercel

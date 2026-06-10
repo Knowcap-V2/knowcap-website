@@ -16,17 +16,25 @@ Calls [`_skills/write-blog-draft/SKILL.md`](../_skills/write-blog-draft/SKILL.md
 
 ```
 1. Pick persona via round-robin from state.json
-2. Try `case-study` mode:
-   - Query Knowcap MCP (Demo org → persona project) for sources
-   - For each candidate source, pull confirmed memories (>= 3 required)
-   - If 1+ candidate qualifies → mode = case-study, pick the most recent
+2. Try `case-study` mode (two-tier source qualification):
+   a. Tier 1 — confirmed memories (preferred):
+      - Query Knowcap MCP (Demo org → persona project) for sources
+      - For each candidate, pull confirmed memories
+      - If source has >= 3 confirmed memories → mode = case-study, claim_provenance = "memories"
+   b. Tier 2 — transcript fallback (when memory pipeline didn't fire):
+      - For each Demo-org source in target persona project, fetch full `content` via mcp__knowcap__get_source
+      - Filter: content length >= 8,000 chars AND status = active
+      - If 1+ candidate qualifies → mode = case-study, claim_provenance = "transcript-fallback"
+      - Skill extracts claims at draft-time directly from transcript
 3. If no case-study candidate, try `comparison` mode:
    - Check docs/research/competitors/<name>/positioning.md mtime
    - If freshest competitor doc is < 30 days old AND not covered in last 5 shipped → mode = comparison
 4. Default to `thesis` mode
 ```
 
-The first dry-run picked `thesis` mode (Demo org empty, no fresh competitor doc < 30d). That's the expected path until Demo org gets seeded.
+Two-tier rationale: `regenerate-public` on existing Demo sources does NOT re-trigger memory extraction (skip-if-already-extracted guard at `services/chat/memoryService.ts:235`). Tier 2 closes that gap — raw transcript is still anchored to a real recording, the skill just does the claim extraction itself instead of relying on the memory pipeline. Drafts produced this way carry `claim_provenance: transcript-fallback` in frontmatter so the human reviewer sees the trust level before publish.
+
+The first dry-run picked `thesis` mode (Demo org empty, no fresh competitor doc < 30d). After Demo seeding (2026-06-08, 3 Odoo sources moved), Tier 2 qualifies them for case-study mode.
 
 ## Inputs (in execution order)
 
@@ -36,11 +44,10 @@ The first dry-run picked `thesis` mode (Demo org empty, no fresh competitor doc 
 4. **Read `docs/brand/POSITIONING.md`** → three sentences + anti-positioning
 5. **Read most recent `docs/research/audits/SEO-AUDIT-*.md`** → top-3 keyword opportunities (currently: scan for keyword candidates manually; eventually: parse a `keyword_opportunities_by_persona` table)
 6. **Query Google Trends via pytrends** (urllib3<2.0 required) → validate 5-year MENA interest, pick highest recent growth
-7. **Try `case-study` mode:**
-   - Query Knowcap MCP `mcp__knowcap__list_sources` → Demo org, persona project
-   - For each source, `mcp__knowcap__list_memories` filtered to source via `metadata.source_id`
-   - Pick source with ≥3 confirmed memories tagged with target_keyword OR persona
-   - If found: assemble `knowcap_sources` input array
+7. **Try `case-study` mode (two-tier):**
+   - **Tier 1 (memories):** Query `mcp__knowcap__list_sources` → Demo org, persona project. For each source, `mcp__knowcap__search_memories` filtered to source via `sourceId`. Pick source with ≥3 confirmed memories tagged with target_keyword OR persona. If found: assemble `knowcap_sources` with `claim_provenance: "memories"` + `verified_claims`.
+   - **Tier 2 (transcript fallback):** If Tier 1 returns zero, for each Demo-org source in target persona project, fetch full `content` via `mcp__knowcap__get_source`. Filter sources where `content.length >= 8000` AND `status == "active"`. If 1+ qualifies, pick the longest transcript and assemble `knowcap_sources` with `claim_provenance: "transcript-fallback"` + `transcript_content` = the raw `content` string. Skip `verified_claims`.
+   - If neither tier qualifies: fall through to comparison/thesis.
 8. **If no case-study candidate, try `comparison` mode:**
    - List `docs/research/competitors/*/positioning.md` mtime
    - If freshest is < 30 days AND topic not in recent 5 shipped → mode = comparison
@@ -57,8 +64,8 @@ The first dry-run picked `thesis` mode (Demo org empty, no fresh competitor doc 
 | Connection | Purpose | Auth | Mode |
 |---|---|---|---|
 | `mcp__knowcap__list_sources` | List Demo org sources for persona | `KNOWCAP_API_KEY` in `~/.claude.json` mcpServers.knowcap.env | read |
-| `mcp__knowcap__list_memories` | Pull verified claims from picked sources | same | read |
-| `mcp__knowcap__get_source` | Get source title + duration + metadata | same | read |
+| `mcp__knowcap__search_memories` | Tier 1: pull confirmed claims from picked sources | same | read |
+| `mcp__knowcap__get_source` | Tier 2: pull raw `content` (transcript) when memories absent + get title/duration | same | read |
 | Google Trends via `pytrends` | Keyword sizing (MENA-only, 5-year) | none (free) | read |
 | Filesystem | Read docs/, write `docs/content-pipeline/drafts/<slug>.md` | OS perms | read + write |
 | `gh` CLI (or GitHub MCP when re-loaded) | Open PR | `gh auth` | write |
@@ -70,7 +77,8 @@ A single markdown file at `docs/content-pipeline/drafts/<slug>.md` with frontmat
 PR body includes:
 - Mode picked + why
 - Persona + keyword + Google Trends signal
-- If case-study: source_knowcap_ids cited
+- If case-study: source_knowcap_ids cited + `claim_provenance` (`memories` or `transcript-fallback`)
+- If `claim_provenance: transcript-fallback`: explicit reviewer note — "claims extracted at draft-time, sanity-check against transcript before publish"
 - If screenshots embedded: which slugs from `_index.json`
 - Validation gate pass/fail summary
 - Link to `runs/<timestamp>/REPORT.md`
@@ -93,7 +101,9 @@ PR body includes:
 
 | Failure | Behavior |
 |---|---|
-| Demo project empty | Fall through to `thesis` mode (don't skip) |
+| Demo project empty (no sources at all) | Fall through to `thesis` mode (don't skip) |
+| Demo has sources but no confirmed memories | Tier 2 transcript fallback → case-study still works |
+| Demo source content < 8,000 chars | Skip that source; if all sub-threshold, fall through to thesis |
 | Trends API fails | Pass `target_keyword_5y_mena_interest: null`, flag in PR body, continue |
 | Knowcap API fails | If `case-study` attempted, fall through to `thesis` mode |
 | Last 20 blogs cover this keyword | Advance to next keyword from audit; if all 3 covered, skip this run |

@@ -6,6 +6,18 @@ Hassan-owned. The outward-facing answer to "what is Knowcap and who is it for." 
 
 ---
 
+## The commitment-centric thesis (org model — 2026-06-04)
+
+> **An organization is a web of commitments — internal (employee↔manager) and external (client, partner, supplier). Every commitment carries risk. Risk is mitigated by decisions and tasks. Tasks fulfil commitments. Notes are the verified substrate.**
+>
+> Knowcap captures every commitment your org makes — to your team and to your clients — flags the risks against them, and turns the mitigation into tracked tasks.
+
+This is the product's center of gravity. The three positioning sentences below are how you SAY it in different rooms; the org model above is WHY it's true.
+
+Full thesis (mini blog + LinkedIn draft): [`docs/content-pipeline/drafts/commitment-thesis.md`](../content-pipeline/drafts/commitment-thesis.md)
+
+---
+
 ## The three sentences (use the right one in the right place)
 
 | Surface | Sentence |

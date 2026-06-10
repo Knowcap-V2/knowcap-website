@@ -32,15 +32,19 @@ recent_shipped_slugs: [...]     # last 20 slugs from app/content/blog/
 recent_drafts_in_pipeline: [...] # to avoid double-drafting
 
 # Required only when mode = case-study
+# Pass EITHER verified_claims (preferred, pre-extracted from confirmed memories)
+# OR transcript_content (fallback when memories aren't extracted yet — skill extracts at draft-time)
 knowcap_sources:
   - source_id: "<uuid>"
     title: "<recording title>"
     duration_seconds: <int>
-    verified_claims:
+    claim_provenance: "memories" | "transcript-fallback"   # which path used
+    verified_claims:                                        # populated only if claim_provenance=memories
       decisions: [...]
       risks: [...]
       tasks: [...]
       facts: [...]
+    transcript_content: "<raw transcript text>"             # populated only if claim_provenance=transcript-fallback
 
 # Required only when mode = comparison
 competitor_positioning_md: "<text>"  # from docs/research/competitors/<name>/positioning.md
@@ -81,6 +85,7 @@ geo_score: <0-100 per GEO-AUDIT rubric, your honest estimate>
 est_word_count: <draft word count>
 draft_date: <today YYYY-MM-DD>
 source_knowcap_ids: [<list only if mode=case-study, else []>]
+claim_provenance: memories | transcript-fallback | null   # null for non-case-study modes
 embedded_screenshots: [<list of screenshot slugs used, else []>]
 status: draft
 ---
@@ -107,12 +112,21 @@ Body structure (locked, 1,300-1,600 words total):
 ```
 You are writing a story-spine post anchored on a REAL Knowcap recording from Demo org.
 
-GROUND THE BLOG IN THE RECORDING. Quote the actual verified decisions/risks/tasks from `knowcap_sources[].verified_claims`. Name names (or anonymize as "the partner", "the project lead"). Cite the recording's surface fact in the hook (e.g., "Last month an Odoo partner in Cairo recorded a 47-minute scope call with their client — three of the five 'must-have' modules became Phase Two by the end.").
+GROUND THE BLOG IN THE RECORDING. Two claim sources are supported — check `knowcap_sources[].claim_provenance`:
+
+  - `memories`: pre-extracted verified claims live in `knowcap_sources[].verified_claims`. Quote those directly.
+  - `transcript-fallback`: raw transcript lives in `knowcap_sources[].transcript_content`. Extract claims yourself at draft-time:
+      * Read the full transcript first.
+      * Pull 8-12 concrete claims: decisions (something resolved), risks (something flagged as could-go-wrong), tasks (action assigned), facts (load-bearing detail — names, dates, dollar amounts, module names, durations).
+      * Treat extracted claims with the same authority as pre-extracted ones, BUT flag the post's frontmatter `claim_provenance: transcript-fallback` so a human can sanity-check before publish.
+      * Quote verbatim where the wording matters (a decision's reasoning, a flagged risk's exact phrasing).
+
+Name names (or anonymize as "the partner", "the project lead"). Cite the recording's surface fact in the hook (e.g., "Last month an Odoo partner in Cairo recorded a 47-minute scope call with their client — three of the five 'must-have' modules became Phase Two by the end.").
 
 Body structure (locked, 1,300-1,600 words total):
 
 1. HOOK — open with a fact from the recording.
-2. THE STORY SPINE — 250-400 words. Walk through what actually happened in the call, citing verified_claims. Quote specific decisions with their reasoning.
+2. THE STORY SPINE — 250-400 words. Walk through what actually happened in the call, citing claims (verified or extracted). Quote specific decisions with their reasoning.
 3. WHAT WENT WRONG (OR RIGHT) — 134-167 words. The inflection point.
 4. THE INSIGHT — 134-167 words. What this proves about the broader pattern for {target_persona}.
 5. WHAT THIS MEANS FOR YOU — 200-300 words. Concrete actions. Reference available_screenshots if they show the same surface.
@@ -120,6 +134,7 @@ Body structure (locked, 1,300-1,600 words total):
 7. CLOSING — 1-2 sentences.
 
 `source_knowcap_ids` in frontmatter MUST list the source(s) you actually cited.
+Add `claim_provenance: memories | transcript-fallback` to frontmatter so human reviewer knows the trust level.
 ```
 
 ## Mode `comparison` — the prompt
