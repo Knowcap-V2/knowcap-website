@@ -104,24 +104,36 @@ const CSS = `
   letter-spacing:.04em;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1);
   background:rgba(255,255,255,.05);border-radius:999px;padding:7px 14px;margin-bottom:30px}
 .cl-kicker .cl-dot{width:5px;height:5px;border-radius:999px;background:var(--green-bright)}
-.cl-h1{font-size:clamp(2rem,4.3vw,3.05rem);line-height:1.12;letter-spacing:-.02em;font-weight:700;color:#fff}
-.cl-h1 .cl-h1-accent{color:var(--green-bright)}
-.cl-hero-sub{font-size:clamp(1rem,1.45vw,1.12rem);line-height:1.65;color:rgba(255,255,255,.72);
-  max-width:50ch;margin:24px 0 0}
-.cl-doctrine{margin:26px 0 0;border-left:2px solid var(--green-bright);
-  background:rgba(255,255,255,.04);border-radius:0 8px 8px 0;padding:14px 18px;
-  font-family:var(--mono);font-size:13px;line-height:1.7;color:rgba(255,255,255,.82);max-width:54ch}
-.cl-cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.cl-h1{font-size:clamp(1.7rem,3.2vw,2.45rem);line-height:1.16;letter-spacing:-.02em;font-weight:700;
+  color:rgba(255,255,255,.92);max-width:21ch}
+.cl-h1 .cl-h1-accent{display:block;margin-top:10px;color:var(--green-bright);
+  font-size:clamp(2rem,3.9vw,2.95rem);letter-spacing:-.025em}
+.cl-hero-sub{font-size:clamp(.98rem,1.4vw,1.08rem);line-height:1.68;color:rgba(255,255,255,.66);
+  max-width:46ch;margin:26px 0 0}
+.cl-doctrine{margin:30px 0 0;border-left:2px solid var(--green-bright);
+  background:rgba(255,255,255,.04);border-radius:0 8px 8px 0;padding:13px 17px;
+  font-family:var(--mono);font-size:12.5px;line-height:1.7;color:rgba(255,255,255,.8);max-width:50ch}
+.cl-cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
 .cl-bullets{display:flex;flex-direction:column;gap:9px;margin-top:28px}
 .cl-bullet{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:rgba(255,255,255,.6)}
 .cl-bullet svg{flex:none;margin-top:3px}
-.cl-trust{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:26px;
+.cl-trust{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:30px;
   font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:rgba(255,255,255,.56)}
 .cl-trust-dot{width:4px;height:4px;border-radius:999px;background:var(--green-bright);flex:none}
 
-/* hero ledger exhibit */
-.cl-ledger{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);border-radius:12px;
-  overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+/* hero ledger exhibit — the visual anchor of the fold */
+.cl-ledger-wrap{position:relative}
+.cl-ledger-wrap::before{content:'';position:absolute;inset:-12% -10%;pointer-events:none;
+  background:radial-gradient(ellipse 60% 55% at 60% 40%,rgba(74,222,128,.13),transparent 70%)}
+.cl-ledger{position:relative;background:rgba(20,22,21,.88);border:1px solid rgba(74,222,128,.22);
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 36px 90px rgba(0,0,0,.55),0 0 60px rgba(74,222,128,.07)}
+.cl-row{animation:cl-row-in .55s ease-out both}
+.cl-row:nth-child(2){animation-delay:.25s}
+.cl-row:nth-child(3){animation-delay:.85s}
+.cl-row:nth-child(4){animation-delay:1.6s}
+@keyframes cl-row-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.cl-row{animation:none}}
 .cl-ledger-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;
   border-bottom:1px solid rgba(255,255,255,.08);font-family:var(--mono);font-size:11px;
   letter-spacing:.06em;color:rgba(255,255,255,.5)}
@@ -333,7 +345,7 @@ function Hero() {
               Knowcap · MCP server for Claude, Codex &amp; Gemini
             </div>
             <h1 className="cl-h1">
-              Your company&rsquo;s deepest knowledge is its commitments and the risks against them.{' '}
+              Your company&rsquo;s deepest knowledge is its commitments and the risks against them.
               <span className="cl-h1-accent">Knowcap makes sure they&rsquo;re kept.</span>
             </h1>
             <p className="cl-hero-sub">
@@ -352,16 +364,6 @@ function Hero() {
               </a>
               <Link className="cl-btn cl-btn--ghost-dark" href="/book">Book a Demo</Link>
             </div>
-            <div className="cl-bullets">
-              <span className="cl-bullet">
-                <Tick dark />
-                Capture meetings, recordings, voice notes, documents, URLs, and Telegram
-              </span>
-              <span className="cl-bullet">
-                <Tick dark />
-                AI extracts every commitment, decision, task, and risk — with the speaker and the timestamp
-              </span>
-            </div>
             <div className="cl-trust">
               <span>Built by an Odoo partner</span>
               <span className="cl-trust-dot" aria-hidden="true" />
@@ -369,8 +371,12 @@ function Hero() {
               <span className="cl-trust-dot" aria-hidden="true" />
               <span>Full audit trail on every action</span>
             </div>
+            <div className="cl-trust" style={{ marginTop: 10 }}>
+              <span>Captures Meet · recordings · voice notes · documents · URLs · Telegram</span>
+            </div>
           </div>
 
+          <div className="cl-ledger-wrap">
           <div className="cl-ledger" role="img"
             aria-label="Live commitment ledger: a client commitment is captured, a conflicting risk is flagged, and a human confirms it in one tap.">
             <div className="cl-ledger-bar">
@@ -412,6 +418,7 @@ function Hero() {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
