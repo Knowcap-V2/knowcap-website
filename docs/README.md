@@ -1,27 +1,23 @@
-# docs/ — Knowcap marketing content
+# docs/ — Knowcap website assets
 
-Everything humans read in this repo. Mirrors the `docs/` pattern from the main `knowcap` repo, but here the content is brand + research + campaigns instead of architecture + governance + ops.
+Website-specific assets only. All knowledge docs (brand, strategy, research, content) migrated to the **claude-knowcap brain** 2026-06-11.
 
-## Layout
+→ [claude-knowcap/knowledge/](https://github.com/Knowcap-V2/claude-knowcap/tree/main/knowledge)
 
-| Folder | What |
+## What's still here
+
+| What | Where |
 |---|---|
-| [`brand/`](./brand/) | DNA — VISION, POSITIONING, MOAT, STRATEGY, PRODUCT, personas, decisions, design explorations, legacy positioning |
-| [`research/`](./research/) | Audits (SEO + GEO), competitor breakdowns, raw data CSVs |
-| [`campaigns/`](./campaigns/) | StratDev agency briefs, paid-ad copy, landing-page experiments |
-| [`content-pipeline/`](./content-pipeline/) | Blog drafts pre-publish, ideas, video briefs, marketing content plan |
-| [`strategy/`](./strategy/) | GTM strategy + June 2026 GTM game plan |
-| [`DESIGN.md`](./DESIGN.md) | Primary design system (cream + Space Grotesk) |
-| [`DESIGN-E.md`](./DESIGN-E.md) | /e variant design system (brass + midnight forensic dossier) |
+| Live Next.js website code | `../app/` |
+| Shipped blog posts | `../app/content/blog/` |
 
-## What's NOT here
+## What moved to claude-knowcap brain
 
-- The live Next.js website code → `../app/`
-- Shipped blog posts (Markdown rendered by Next.js) → `../app/content/blog/`
-- Engineer docs (architecture, ops, governance, proposals) → [`Knowcap-V2/knowcap/docs/`](https://github.com/Knowcap-V2/knowcap/tree/main/docs)
-
-## Cross-links
-
-- `feat()` PRs in the main `knowcap` repo cite `docs/brand/VISION.md` via the full GitHub URL pattern: `https://github.com/Knowcap-V2/knowcap-marketing/blob/main/docs/brand/VISION.md`
-- `docs/research/competitors/read.ai/positioning.md` cites Knowcap's brand DNA via full URLs above
-- `docs/campaigns/meta-paid-sprint.md` cites `docs/brand/legacy/` and `docs/content-pipeline/video/` via relative paths
+| Was here | Now at |
+|---|---|
+| `brand/` (VISION, MOAT, POSITIONING, STRATEGY, PRODUCT, personas, decisions, design-explorations) | `knowledge/strategies/` · `knowledge/people/` · `knowledge/decisions/` · `knowledge/product/` |
+| `research/` (audits, competitors, data) | `knowledge/topics/research/` |
+| `campaigns/` | `knowledge/strategies/campaigns/` |
+| `content-pipeline/` | `knowledge/content-and-features/content-pipeline/` |
+| `strategy/` | `knowledge/strategies/` |
+| `DESIGN.md`, `DESIGN-E.md` | `knowledge/product/` |
