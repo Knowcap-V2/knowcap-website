@@ -1,13 +1,23 @@
 import type { MetadataRoute } from 'next'
+import { getAllPosts } from '@/lib/blog'
 
 /**
  * Sitemap for knowcap.ai — covers main, /for/* sub-pages, /compare/* comparison pages,
- * and the blog index. Lists known routes; future programmatic SEO pages should be
- * appended here or generated dynamically from a content source.
+ * and the blog (index + every post in content/blog/, read at build time).
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://knowcap.ai'
   const now = new Date()
+
+  const blogEntries: MetadataRoute.Sitemap = [
+    { url: `${base}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    ...getAllPosts().map((post) => ({
+      url: `${base}/blog/${post.slug}`,
+      lastModified: new Date(post.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+  ]
 
   return [
     // Main
@@ -15,6 +25,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Conversion sub-pages (paid traffic destinations)
     { url: `${base}/for/odoo-partners`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+
+    // Blog (index + posts)
+    ...blogEntries,
 
     // Comparison pages (SEO bait)
     { url: `${base}/compare/knowcap-vs-otter`,     lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
