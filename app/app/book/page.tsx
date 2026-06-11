@@ -3,27 +3,23 @@
 import { useEffect } from 'react'
 import Footer from '@/components/footer'
 
+const CALENDLY_URL = 'https://calendly.com/smetools/meeting-with-hassan'
+
 export default function BookPage() {
   useEffect(() => {
     // Set page title
     document.title = 'Book a Strategy Conversation - Knowcap.ai'
-    
-    // Load the Reclaim script
+
+    // Load the Calendly inline widget (replaced Reclaim 2026-06-11)
     const script = document.createElement('script')
-    script.src = 'https://meet.reclaimai.com/scripts/embed-scheduling-link.0.x.x.js'
-    script.setAttribute('data-id', '6fb86eda-27d1-41c1-b807-726cad75a2e9')
-    script.setAttribute('data-redirect', 'NONE')
+    script.src = 'https://assets.calendly.com/assets/external/widget.js'
     script.async = true
-    
-    const container = document.getElementById('reclaim-embed-container')
-    if (container) {
-      container.appendChild(script)
-    }
-    
+    document.body.appendChild(script)
+
     return () => {
       // Cleanup
-      if (container && script.parentNode === container) {
-        container.removeChild(script)
+      if (script.parentNode === document.body) {
+        document.body.removeChild(script)
       }
     }
   }, [])
@@ -43,9 +39,20 @@ export default function BookPage() {
             </p>
           </div>
 
-          {/* Embedded Scheduling Widget */}
-          <div className="w-full min-h-[600px]">
-            <div id="reclaim-embed-container" />
+          {/* Embedded Calendly Widget */}
+          <div className="w-full">
+            <div
+              className="calendly-inline-widget"
+              data-url={CALENDLY_URL}
+              style={{ minWidth: '320px', height: '700px' }}
+            />
+            <noscript>
+              <p className="text-center">
+                <a href={CALENDLY_URL} className="underline text-[#1a1d29]">
+                  Book a time on Calendly
+                </a>
+              </p>
+            </noscript>
           </div>
 
 
