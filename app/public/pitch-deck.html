@@ -3,23 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowcap Pitch Deck (Static)</title>
-    
-    <!-- FONTS -->
+    <title>Knowcap Pitch Deck</title>
+
+    <!-- FONTS: V6b Editorial Light -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* --- VARIABLES & RESET --- */
+        /* --- V6b DESIGN TOKENS --- */
         :root {
-            --primary: #005EFF;
-            --primary-dark: #0046bd;
-            --primary-light: rgba(0, 94, 255, 0.08);
-            --dark: #191F2E;
-            --gray-text: #414651;
-            --bg-light: #F5F7FA;
-            --surface-glass: rgba(255, 255, 255, 0.95);
+            --cream: #FBFAF8;
+            --ink: #18181B;
+            --ink-soft: #2A2A2F;
+            --green: #1F6B3A;
+            --green-deep: #17522C;
+            --green-tint: #E8F5ED;
+            --green-dark: #7ED39B;
+            --sec: #4A4F5A;
+            --border: #E7E4DD;
+            --amber: #B07C28;
+
+            /* Aliases for backward-compat with existing HTML classes */
+            --primary: var(--green);
+            --primary-dark: var(--green-deep);
+            --primary-light: var(--green-tint);
+            --dark: var(--ink);
+            --gray-text: var(--sec);
+            --bg-light: var(--cream);
+            --surface-glass: rgba(255,255,255,0.95);
+
+            /* Typography */
+            --disp: 'Fraunces', Georgia, serif;
+            --body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+
             --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
             --shadow-md: 0 12px 24px -6px rgba(0,0,0,0.05);
             --shadow-lg: 0 20px 40px -10px rgba(0,0,0,0.1);
@@ -27,12 +45,12 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: var(--body);
             line-height: 1.6;
-            color: var(--dark);
-            background: var(--bg-light);
+            color: var(--ink);
+            background: var(--cream);
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
             overflow-x: hidden;
@@ -40,54 +58,60 @@
 
         /* --- TYPOGRAPHY --- */
         h1, h2, h3, h4, h5 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
+            font-family: var(--disp);
+            font-weight: 500;
             letter-spacing: -0.02em;
             line-height: 1.2;
-            color: var(--dark);
+            color: var(--ink);
+            font-variation-settings: 'SOFT' 55, 'WONK' 0;
         }
 
-        h1 { font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center; }
-        h2 { font-size: 2rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center; font-weight: 460; }
+        h2 { font-size: 2rem; margin-bottom: 1rem; font-weight: 460; }
         h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
         h4 { font-size: 1.125rem; margin-bottom: 1rem; }
         h5 { font-size: 1rem; margin-bottom: 0.5rem; }
-        
+
+        /* Gradient-text → Fraunces italic green */
         .gradient-text {
-            background: linear-gradient(135deg, #005EFF 0%, #00C6FF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
+            font-style: italic;
+            color: var(--green);
+            font-variation-settings: 'SOFT' 80, 'WONK' 1;
+            display: inline;
         }
 
-        p { margin-bottom: 1rem; color: var(--gray-text); font-size: 1rem; }
+        p { margin-bottom: 1rem; color: var(--sec); font-size: 1rem; }
         .text-center { text-align: center; }
         .font-medium { font-weight: 500; }
-        .font-bold { font-weight: 700; }
-        .text-primary { color: var(--primary); }
+        .font-bold { font-weight: 600; }
+        .text-primary { color: var(--green); }
         .text-white { color: white; }
         .text-sm { font-size: 0.875rem; }
         .text-xs { font-size: 0.75rem; }
         .text-lg { font-size: 1.125rem; }
+        .text-gray { color: var(--sec); }
+        .text-dark { color: var(--ink); }
 
         /* --- LAYOUT --- */
         main { overflow-x: hidden; }
-        section { padding: 5rem 1.5rem; position: relative; }
+        section { padding: 5rem 1.5rem; position: relative; background: var(--cream); }
         .container { max-width: 1100px; margin: 0 auto; }
-        
+
+        /* Slide label → mono kicker */
         .slide-label {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--sec);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.14em;
             margin-bottom: 1rem;
             display: inline-block;
-            background: var(--primary-light);
-            padding: 4px 12px;
-            border-radius: 100px;
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 3px;
         }
+        .slide-label::before { content: '· '; color: var(--green); }
 
         .grid { display: grid; gap: 1.5rem; }
         .grid-cols-2 { grid-template-columns: 1fr; }
@@ -96,35 +120,33 @@
 
         /* --- CARDS --- */
         .card {
-            background: var(--surface-glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: var(--radius-lg);
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
             padding: 1.5rem;
             box-shadow: var(--shadow-sm);
             height: 100%;
         }
-        
-        /* Updated Card Dark: Smaller, Centered */
+
+        /* Dark card */
         .card-dark {
-            background: var(--dark);
+            background: var(--ink);
             color: white;
             border: 1px solid #333;
-            padding: 1.5rem; 
-            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border-radius: 10px;
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            max-width: 90%; 
+            max-width: 90%;
             margin-left: auto;
             margin-right: auto;
         }
-        .card-dark p { color: #9ca3af; margin-bottom: 0; }
-        .card-dark .text-white { color: white; }
-        
-        /* Specific override for the milestone progress bar card to allow left alignment internally */
+        .card-dark p { color: rgba(251,250,248,.65); margin-bottom: 0; }
+        .card-dark .text-white { color: var(--cream); }
+
         .card-dark.left-align {
             align-items: flex-start;
             text-align: left;
@@ -132,49 +154,57 @@
         }
 
         /* --- VISUAL ELEMENTS --- */
-        .hero-bg { background: radial-gradient(circle at 50% 0%, #E3F2FD 0%, #F8FAFC 70%); padding-top: 6rem; padding-bottom: 6rem;}
-        .number-circle { width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--primary); font-weight: 700; margin-right: 1rem; }
-        
+        .hero-bg {
+            background: var(--cream);
+            border-bottom: 1px solid var(--border);
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+        .number-circle {
+            width: 2.5rem; height: 2.5rem; border-radius: 50%;
+            background: var(--green-tint);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; color: var(--green); font-weight: 700; margin-right: 1rem;
+        }
+
         /* --- MOBILE OPTIMIZATIONS & TABLES --- */
-        .table-container { 
-            background: white; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            border: 1px solid #E5E7EB; 
-            box-shadow: var(--shadow-sm); 
-            overflow-x: auto; 
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
         }
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        thead { background: var(--dark); color: white; }
-        th { padding: 1rem 1.5rem; text-align: left; font-weight: 600; font-size: 0.9rem; }
-        td { padding: 1rem 1.5rem; border-bottom: 1px solid #E5E7EB; font-size: 0.9rem; color: var(--dark); }
+        thead { background: var(--ink); color: var(--cream); }
+        th { padding: 1rem 1.5rem; text-align: left; font-weight: 600; font-size: 0.9rem; font-family: var(--mono); letter-spacing: .04em; }
+        td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--ink); }
         tr:last-child td { border-bottom: none; }
 
         /* Comparison Table */
-        .comp-table th { background: #F3F4F6; color: #535862; }
-        .comp-table th:first-child { background: white; color: var(--dark); }
-        .comp-table th:last-child { background: var(--primary); color: white; }
-        .col-knowcap { background: rgba(0, 94, 255, 0.04); border-left: 2px solid var(--primary); }
+        .comp-table th { background: #F3F4F6; color: var(--sec); font-family: var(--mono); }
+        .comp-table th:first-child { background: white; color: var(--ink); }
+        .comp-table th:last-child { background: var(--green); color: white; }
+        .col-knowcap { background: var(--green-tint); border-left: 2px solid var(--green); }
 
         /* --- TAM CIRCLES (RESPONSIVE) --- */
         .tam-wrapper { position: relative; width: 100%; height: auto; margin: 0 auto; display: block; }
         .tam-circle { border-radius: 50%; display: flex; flex-direction: column; align-items: center; text-align: center; position: absolute; justify-content: flex-start; }
-        
+
         /* --- ACQUISITION FLOW & BOXES --- */
-        .flow-arrow { color: #CBD5E1; width: 24px; height: 24px; transform: rotate(0deg); margin: 0 0.5rem; }
-        .milestone-box { background: white; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.5rem; text-align: center; width: auto; min-width: 120px; }
-        .acquisition-tag { background: white; padding: 0.75rem 1.5rem; border-radius: 50px; border: 1px solid #E2E8F0; font-weight: 600; color: var(--dark); box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
-        
-        /* Wrapper for Flow to control direction */
+        .flow-arrow { color: var(--border); width: 24px; height: 24px; margin: 0 0.5rem; }
+        .milestone-box { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; text-align: center; width: auto; min-width: 120px; }
+        .acquisition-tag { background: white; padding: 0.75rem 1.5rem; border-radius: 50px; border: 1px solid var(--border); font-weight: 600; color: var(--ink); box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+
         .acquisition-container { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; }
 
-        /* --- BOTTOM SPACING FIX CLASS --- */
-        .mt-spacer { margin-top: 3rem; } 
+        .mt-spacer { margin-top: 3rem; }
 
-        /* Button */
-        .btn-primary { display: inline-flex; padding: 1rem 2rem; font-weight: 600; background: white; color: var(--dark); border-radius: 8px; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .btn-white { background-color: white; color: #0A0D12; padding: 12px 32px; border-radius: 6px; font-weight: 600; display: inline-flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
+        /* Buttons */
+        .btn-primary { display: inline-flex; padding: 1rem 2rem; font-weight: 600; background: var(--green); color: white; border-radius: 3px; text-decoration: none; box-shadow: 0 4px 6px rgba(31,107,58,.18); transition: all 0.2s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(31,107,58,.25); }
+        .btn-white { background-color: white; color: var(--ink); padding: 12px 32px; border-radius: 3px; font-weight: 600; display: inline-flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
         .btn-white:hover { opacity: 0.9; }
 
         /* Mobile Grid Utilities */
@@ -183,7 +213,6 @@
         .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .visible { opacity: 1; transform: translateY(0); }
 
-        /* --- UTILITIES FOR RESPONSIVE LOGIC --- */
         .desktop-only { display: block; }
         .mobile-only { display: none; }
 
@@ -192,17 +221,17 @@
             h1 { font-size: 3.5rem; }
             h2 { font-size: 2.5rem; }
             section { padding: 7rem 2rem; }
-            
+
             .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
             .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
             .span-3 { grid-column: span 3; }
-            
+
             /* TAM Desktop */
-            .tam-wrapper { height: 720px; } 
-            .tam-large { width: 540px; height: 540px; border: 2px solid #BBDEFB; z-index: 1; top: 0; left: 50%; transform: translateX(-50%); padding-top: 30px; }
-            .tam-medium { width: 360px; height: 360px; background: #E3F2FD; border: 2px solid #64B5F6; z-index: 2; top: 157px; left: 50%; transform: translateX(-50%); padding-top: 40px; }
-            .tam-small { width: 200px; height: 200px; background: var(--primary); color: white; border: 2px solid #0046bd; z-index: 3; top: 330px; left: 50%; transform: translateX(-50%); padding-top: 45px; box-shadow: 0 10px 25px rgba(0, 94, 255, 0.3); }
-        
+            .tam-wrapper { height: 720px; }
+            .tam-large { width: 540px; height: 540px; border: 2px solid #A8D5B5; z-index: 1; top: 0; left: 50%; transform: translateX(-50%); padding-top: 30px; }
+            .tam-medium { width: 360px; height: 360px; background: var(--green-tint); border: 2px solid #5FAE7A; z-index: 2; top: 157px; left: 50%; transform: translateX(-50%); padding-top: 40px; }
+            .tam-small { width: 200px; height: 200px; background: var(--green); color: white; border: 2px solid var(--green-deep); z-index: 3; top: 330px; left: 50%; transform: translateX(-50%); padding-top: 45px; box-shadow: 0 10px 25px rgba(31,107,58,.3); }
+
             .tam-text-card { max-width: 320px; }
         }
 
@@ -211,63 +240,47 @@
             .desktop-only { display: none !important; }
             .mobile-only { display: block !important; }
 
-            /* Acquisition Flow Vertical Stack */
             .acquisition-container { flex-direction: column; }
             .acquisition-container .flow-arrow { transform: rotate(90deg); margin: 5px 0; }
 
-            /* Mobile Comparison Card Styles */
             .mobile-comp-card {
                 background: white;
-                border-radius: 12px;
+                border-radius: 10px;
                 overflow: hidden;
                 box-shadow: var(--shadow-sm);
-                border: 1px solid #E5E7EB;
+                border: 1px solid var(--border);
                 margin-bottom: 1.5rem;
             }
             .mobile-comp-header {
-                background: var(--dark);
-                color: white;
+                background: var(--ink);
+                color: var(--cream);
                 padding: 10px 16px;
                 font-weight: 600;
                 font-size: 0.9rem;
+                font-family: var(--mono);
+                letter-spacing: .04em;
             }
-            .mobile-comp-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-            .mobile-comp-cell {
-                padding: 12px;
-                font-size: 0.85rem;
-            }
-            .mobile-comp-cell.competitor {
-                background: #f9f9f9;
-                color: #666;
-                border-right: 1px solid #eee;
-            }
-            .mobile-comp-cell.knowcap {
-                background: rgba(0, 94, 255, 0.04);
-                color: var(--dark);
-                font-weight: 600;
-            }
+            .mobile-comp-grid { display: grid; grid-template-columns: 1fr 1fr; }
+            .mobile-comp-cell { padding: 12px; font-size: 0.85rem; }
+            .mobile-comp-cell.competitor { background: #f9f9f9; color: #666; border-right: 1px solid var(--border); }
+            .mobile-comp-cell.knowcap { background: var(--green-tint); color: var(--ink); font-weight: 600; }
 
-            /* Mobile TAM Box Styles */
             .mobile-tam-box {
                 background: white;
-                border: 1px solid #E5E7EB;
-                border-radius: 12px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
                 padding: 1.5rem;
                 margin-bottom: 1rem;
                 text-align: center;
                 box-shadow: var(--shadow-sm);
             }
-            .mobile-tam-box h5 { font-size: 0.9rem; text-transform: uppercase; color: var(--gray-text); margin-bottom: 0.5rem; }
-            .mobile-tam-box p { font-size: 1.2rem; font-weight: 700; color: var(--dark); margin: 0; line-height: 1.3; }
+            .mobile-tam-box h5 { font-size: 0.9rem; text-transform: uppercase; color: var(--sec); margin-bottom: 0.5rem; }
+            .mobile-tam-box p { font-size: 1.2rem; font-weight: 700; color: var(--ink); margin: 0; line-height: 1.3; }
 
-            /* Mobile Financial Card Styles */
             .mobile-fin-card {
                 background: white;
-                border: 1px solid #E5E7EB;
-                border-radius: 12px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
                 padding: 1.25rem;
                 margin-bottom: 1rem;
                 display: flex;
@@ -275,6 +288,9 @@
                 align-items: center;
             }
         }
+
+        /* Alternate section bg */
+        section:nth-child(even) { background: #F5F3EF; }
     </style>
 </head>
 <body>
@@ -285,18 +301,18 @@
             <div class="container">
                 <!-- 1. HEADLINES -->
                 <div class="fade-in text-center max-w-4xl mx-auto" style="margin-bottom: 4rem;">
-                    
+
                     <h1>Knowcap AI Turns Meetings & Screen Work Into <span class="gradient-text">Verified Project Documents</span></h1>
-                    
+
                     <!-- BLACK BOX WITH SUB-HEADLINE -->
                     <div class="card-dark max-w-3xl mx-auto left-align" style="margin-top: 2rem;">
                         <p class="text-white text-base mb-4" style="line-height: 1.6;">
                             <strong>Imagine this:</strong> You are an ERP Agency Owner. You installed Knowcap on your team's computers. It captures their silent screen work and attends all client and team meetings, recording every visual and audio detail. Now, you can just ask it:
                         </p>
                         <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-                            <div style="display: flex; gap: 0.75rem; align-items: flex-start; background: rgba(0, 94, 255, 0.1); padding: 1rem; border-radius: 8px;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start; background: rgba(31,107,58,0.12); padding: 1rem; border-radius: 6px;">
                                 <div style="flex-shrink: 0; margin-top: 2px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #005EFF;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #7ED39B;">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                                         <path d="M12 17h.01"></path>
@@ -306,9 +322,9 @@
                                     "Based on our Sales Playbook, tell me if this new hire followed the correct steps in their client meetings."
                                 </p>
                             </div>
-                            <div style="display: flex; gap: 0.75rem; align-items: flex-start; background: rgba(0, 94, 255, 0.1); padding: 1rem; border-radius: 8px;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start; background: rgba(31,107,58,0.12); padding: 1rem; border-radius: 6px;">
                                 <div style="flex-shrink: 0; margin-top: 2px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #005EFF;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #7ED39B;">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                                         <path d="M12 17h.01"></path>
@@ -351,23 +367,23 @@
                             <h4 class="text-dark">Timeline</h4>
                             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <div style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">AUG</div>
+                                    <div style="background: var(--green); color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">AUG</div>
                                     <div><strong>Founded</strong><p class="mb-0 text-sm text-gray">August 19th, 2025.</p></div>
                                 </div>
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <div style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">SEP</div>
+                                    <div style="background: var(--green); color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">SEP</div>
                                     <div><strong>1 pilot partner</strong><p class="mb-0 text-sm text-gray">Validated execution gap & workflow model.</p></div>
                                 </div>
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <div style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">OCT</div>
+                                    <div style="background: var(--green); color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">OCT</div>
                                     <div><strong>Expanded to 8 pilot partners</strong><p class="mb-0 text-sm text-gray">$52K ARR.</p></div>
                                 </div>
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <div style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">NOV</div>
+                                    <div style="background: var(--green); color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">NOV</div>
                                     <div><strong>Added $96K/Year committed pipeline</strong><p class="mb-0 text-sm text-gray">Contingent on Zoom, Teams & Odoo integrations.</p></div>
                                 </div>
-                                <div style="display: flex; gap: 1rem; align-items: flex-start; background: rgba(0,94,255,0.05); padding: 1rem; border-radius: 8px; border: 1px dashed var(--primary);">
-                                    <div style="background: white; color: var(--primary); border: 1px solid var(--primary); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">NEXT</div>
+                                <div style="display: flex; gap: 1rem; align-items: flex-start; background: var(--green-tint); padding: 1rem; border-radius: 6px; border: 1px dashed var(--green);">
+                                    <div style="background: white; color: var(--green); border: 1px solid var(--green); padding: 2px 8px; border-radius: 3px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">NEXT</div>
                                     <div><strong>Next Milestone</strong><p class="mb-0 text-sm text-dark">8 additional pilot partners at $12K/year each.</p></div>
                                 </div>
                             </div>
@@ -378,7 +394,7 @@
         </section>
 
         <!-- SLIDE 3: THE PROBLEM -->
-        <section style="background: #F5F7FA;">
+        <section>
             <div class="container fade-in">
                 <div class="mb-12">
                     <span class="slide-label">The Problem</span>
@@ -446,8 +462,8 @@
             </div>
         </section>
 
-        <!-- SLIDE 5: HOW IT WORKS (Adjusted Layout) -->
-        <section style="background: #F5F7FA;">
+        <!-- SLIDE 5: HOW IT WORKS -->
+        <section>
             <div class="container fade-in">
                 <div class="mb-12 text-center">
                     <span class="slide-label">How It Works</span>
@@ -455,7 +471,6 @@
                     <p>Command the AI to Audit, Quote, and Document.</p>
                 </div>
 
-                <!-- Changed to Single Column for Readability without Video -->
                 <div class="max-w-3xl mx-auto space-y-4" style="display: flex; flex-direction: column; gap: 1rem;">
                     <div class="card" style="padding: 1.5rem;">
                         <h5 class="text-primary m-0 mb-2">1. Instant Quality Control</h5>
@@ -483,7 +498,7 @@
                     <span class="slide-label">Why Knowcap Wins</span>
                     <h2>Competitors are Recorders. Knowcap is the Operating System.</h2>
                 </div>
-                
+
                 <!-- DESKTOP TABLE -->
                 <div class="table-container comp-table desktop-only">
                     <table>
@@ -534,7 +549,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Feature 2 -->
                     <div class="mobile-comp-card">
                         <div class="mobile-comp-header">Integration Depth</div>
                         <div class="mobile-comp-grid">
@@ -548,7 +562,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Feature 3 -->
                     <div class="mobile-comp-card">
                         <div class="mobile-comp-header">Language</div>
                         <div class="mobile-comp-grid">
@@ -562,7 +575,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Feature 4 -->
                     <div class="mobile-comp-card">
                         <div class="mobile-comp-header">Trust</div>
                         <div class="mobile-comp-grid">
@@ -582,7 +594,7 @@
         </section>
 
         <!-- SLIDE 7: WHY NOW -->
-        <section style="background: #F5F7FA;">
+        <section>
             <div class="container fade-in">
                 <div class="mb-12 text-center">
                     <span class="slide-label">Why Now</span>
@@ -611,32 +623,32 @@
                         <span class="slide-label">Market Opportunity</span>
                         <h2>Beachhead: $90M &rarr; Expansion: $5.1B</h2>
                         <div class="card mt-6 tam-text-card" style="height: auto;">
-                            <p class="mb-2 text-xs uppercase tracking-wide text-gray">Beachhead Logic</p>
+                            <p class="mb-2 text-xs uppercase tracking-wide text-gray" style="font-family: var(--mono); letter-spacing: .1em;">Beachhead Logic</p>
                             <p class="text-lg font-bold mb-1">Odoo Ecosystem — $90M</p>
                             <p class="text-sm text-gray mb-2">7,500 Partners × $12K ACV</p>
-                            <div style="background: var(--primary-light); padding: 8px; border-radius: 8px;">
-                                <p class="text-xs text-primary font-bold mb-0">Target Penetration:</p>
+                            <div style="background: var(--green-tint); padding: 8px; border-radius: 6px;">
+                                <p class="text-xs font-bold mb-0" style="color: var(--green);">Target Penetration:</p>
                                 <p class="text-xs text-dark mb-0">1.3% in 2026 &rarr; 2.6% in 2027</p>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- TAM CIRCLES (Desktop Only) -->
                     <div class="tam-wrapper desktop-only">
                         <div class="tam-circle tam-large">
-                            <h5 class="uppercase tracking-widest text-sm font-bold mb-0">Global TAM</h5>
+                            <h5 class="uppercase tracking-widest text-sm font-bold mb-0" style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em;">Global TAM</h5>
                             <p class="text-xs text-gray mb-1">Professional Service Agencies</p>
                             <p class="text-sm text-gray font-bold mb-0">430,000 Firms × $12,000 ACV =</p>
                             <h3 class="text-dark">$5.1B</h3>
                         </div>
                         <div class="tam-circle tam-medium">
-                            <h5 class="uppercase tracking-widest text-sm font-bold mb-0">Expansion</h5>
+                            <h5 class="uppercase tracking-widest text-sm font-bold mb-0" style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em;">Expansion</h5>
                             <p class="text-xs text-dark mb-1">Specialized ERP Integrators</p>
                             <p class="text-sm text-dark font-bold mb-0">50,000 Firms × $12,000 ACV =</p>
                             <h3 class="text-dark">$600M</h3>
                         </div>
                         <div class="tam-circle tam-small">
-                            <h5 class="uppercase tracking-widest text-sm font-bold mb-0 text-white opacity-80">Beachhead</h5>
+                            <h5 class="uppercase tracking-widest text-sm font-bold mb-0 text-white opacity-80" style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em;">Beachhead</h5>
                             <p class="text-xs text-white opacity-90 mb-1">Odoo Ecosystem</p>
                             <p class="text-sm text-white font-bold mb-0">7,500 Partners × $12,000 ACV</p>
                             <h3 class="text-white mb-0">= $90M</h3>
@@ -661,7 +673,7 @@
                             <h5>Expansion</h5>
                             <p>50,000 Specialized Firms = $600M</p>
                         </div>
-                        <div class="mobile-tam-box" style="background: var(--primary); border: none;">
+                        <div class="mobile-tam-box" style="background: var(--green); border: none;">
                             <h5 style="color: rgba(255,255,255,0.8);">Beachhead: Odoo Ecosystem</h5>
                             <p style="color: white; font-size: 1.5rem;">$90M</p>
                             <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin-top: 5px;">7,500 Partners × $12K ACV</p>
@@ -675,7 +687,7 @@
         </section>
 
         <!-- SLIDE 9: BUSINESS MODEL -->
-        <section style="background: #F5F7FA;">
+        <section>
             <div class="container fade-in">
                 <div class="mb-12 text-center">
                     <span class="slide-label">Business Model</span>
@@ -683,7 +695,7 @@
                 </div>
 
                 <div class="grid grid-cols-3 gap-6">
-                    <div class="card text-center" style="border: 2px solid var(--primary);">
+                    <div class="card text-center" style="border: 2px solid var(--green);">
                         <h4 class="text-primary">Core</h4>
                         <p class="text-dark" style="font-size: 2rem; font-weight:700;">$1,000<span class="text-sm text-gray">/mo</span></p>
                         <p class="text-xs text-gray mt-2">Up to 10 seats</p>
@@ -699,7 +711,7 @@
                         <p class="text-xs text-gray mt-2">Unlimited seats</p>
                     </div>
                 </div>
-                
+
                 <div class="card" style="margin-top: 5rem;">
                     <h4 class="mb-4">Why customers pay</h4>
                     <ul class="text-gray" style="list-style-position: inside;">
@@ -739,8 +751,8 @@
             </div>
         </section>
 
-        <!-- SLIDE 11 & 12 MERGED: FINANCIALS & UNIT ECONOMICS (Updated Table) -->
-        <section style="background: #F5F7FA;">
+        <!-- SLIDE 11 & 12 MERGED: FINANCIALS & UNIT ECONOMICS -->
+        <section>
             <div class="container fade-in">
                 <div class="text-center mb-12">
                     <span class="slide-label">Financials & Unit Economics</span>
@@ -750,8 +762,8 @@
                     <!-- LEFT: PROJECTIONS -->
                     <div>
                         <h3 class="mb-4">Projections</h3>
-                        
-                        <!-- DESKTOP TABLE (Detailed Breakdown) -->
+
+                        <!-- DESKTOP TABLE -->
                         <div class="table-container desktop-only">
                             <table>
                                 <thead><tr><th>Year</th><th>Partner Breakdown</th><th>Outcome</th></tr></thead>
@@ -802,19 +814,19 @@
                         <h3 class="mb-4">Unit Economics (60-Day Payback)</h3>
                         <div class="mobile-forced-grid gap-4">
                             <div class="card text-center flex flex-col justify-center" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-                                <small class="text-gray uppercase font-bold">Avg Sub</small>
+                                <small class="text-gray uppercase font-bold" style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em;">Avg Sub</small>
                                 <p class="text-xl font-bold mt-1 mb-0 text-dark">$12K/yr</p>
                             </div>
                             <div class="card text-center flex flex-col justify-center" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-                                <small class="text-gray uppercase font-bold">Gross Margin</small>
+                                <small class="text-gray uppercase font-bold" style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em;">Gross Margin</small>
                                 <p class="text-xl font-bold mt-1 mb-0 text-primary">85%</p>
                             </div>
                             <div class="card text-center flex flex-col justify-center" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-                                <small class="text-gray uppercase font-bold">CAC</small>
+                                <small class="text-gray uppercase font-bold" style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em;">CAC</small>
                                 <p class="text-xl font-bold mt-1 mb-0 text-dark">$1.5K</p>
                             </div>
                             <div class="card text-center flex flex-col justify-center" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-                                <small class="text-gray uppercase font-bold">LTV</small>
+                                <small class="text-gray uppercase font-bold" style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em;">LTV</small>
                                 <p class="text-xl font-bold mt-1 mb-0 text-dark">$36K+</p>
                             </div>
                         </div>
@@ -841,18 +853,18 @@
 
                 <!-- Quarterly Plan -->
                 <div class="mb-12" style="margin-top: 3rem;">
-                    <h4 class="text-center mb-6 text-gray text-sm uppercase tracking-wider">Quarterly Growth Plan</h4>
+                    <h4 class="text-center mb-6 text-gray text-sm uppercase tracking-wider" style="font-family: var(--mono); font-size: 0.75rem; letter-spacing: .12em;">Quarterly Growth Plan</h4>
                     <div class="mobile-forced-grid flex flex-wrap justify-center items-center gap-4" style="justify-content: center;">
-                        <div class="milestone-box"><p class="text-gray font-bold mb-1">Q1</p><p class="text-primary text-2xl font-bold mb-0">+15</p></div>
-                        <div class="milestone-box"><p class="text-gray font-bold mb-1">Q2</p><p class="text-primary text-2xl font-bold mb-0">+23</p></div>
-                        <div class="milestone-box"><p class="text-gray font-bold mb-1">Q3</p><p class="text-primary text-2xl font-bold mb-0">+25</p></div>
-                        <div class="milestone-box"><p class="text-gray font-bold mb-1">Q4</p><p class="text-primary text-2xl font-bold mb-0">+37</p></div>
+                        <div class="milestone-box"><p class="text-gray font-bold mb-1" style="font-family: var(--mono); font-size: 0.75rem;">Q1</p><p class="text-primary text-2xl font-bold mb-0">+15</p></div>
+                        <div class="milestone-box"><p class="text-gray font-bold mb-1" style="font-family: var(--mono); font-size: 0.75rem;">Q2</p><p class="text-primary text-2xl font-bold mb-0">+23</p></div>
+                        <div class="milestone-box"><p class="text-gray font-bold mb-1" style="font-family: var(--mono); font-size: 0.75rem;">Q3</p><p class="text-primary text-2xl font-bold mb-0">+25</p></div>
+                        <div class="milestone-box"><p class="text-gray font-bold mb-1" style="font-family: var(--mono); font-size: 0.75rem;">Q4</p><p class="text-primary text-2xl font-bold mb-0">+37</p></div>
                     </div>
                 </div>
 
-                <!-- Acquisition Flow (Updated SDR) -->
+                <!-- Acquisition Flow -->
                 <div style="margin-top: 3rem;">
-                    <h4 class="text-center mb-6 text-gray text-sm uppercase tracking-wider">Acquisition Flow</h4>
+                    <h4 class="text-center mb-6 text-gray text-sm uppercase tracking-wider" style="font-family: var(--mono); font-size: 0.75rem; letter-spacing: .12em;">Acquisition Flow</h4>
                     <div class="acquisition-container">
                         <div class="acquisition-tag">Network</div><svg class="flow-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         <div class="acquisition-tag">Referrals</div><svg class="flow-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
@@ -863,8 +875,8 @@
             </div>
         </section>
 
-        <!-- SLIDE 14: TEAM (Updated Trauma Text) -->
-        <section style="background: #F5F7FA;">
+        <!-- SLIDE 14: TEAM -->
+        <section>
             <div class="container fade-in">
                 <div class="mb-16 text-center">
                     <span class="slide-label">Team</span>
@@ -894,44 +906,44 @@
                     <h2>From Documentation &rarr; Automation &rarr; The Verification Standard</h2>
                 </div>
                 <div class="grid grid-cols-3 gap-6">
-                    <div class="card" style="border-top: 4px solid var(--primary);"><div class="number-circle mb-4">1</div><h5>Phase 1: Documentation & Verification</h5></div>
-                    <div class="card" style="border-top: 4px solid #00C6FF;"><div class="number-circle mb-4">2</div><h5>Phase 2: Vibe Tasking (AI creates & completes tasks)</h5></div>
-                    <div class="card" style="border-top: 4px solid var(--dark);"><div class="number-circle mb-4" style="background: var(--dark); color: white;">3</div><h5>Phase 3: The Verification Standard (The global dataset for project truth)</h5></div>
+                    <div class="card" style="border-top: 4px solid var(--green);"><div class="number-circle mb-4">1</div><h5>Phase 1: Documentation & Verification</h5></div>
+                    <div class="card" style="border-top: 4px solid var(--green-dark);"><div class="number-circle mb-4">2</div><h5>Phase 2: Vibe Tasking (AI creates & completes tasks)</h5></div>
+                    <div class="card" style="border-top: 4px solid var(--ink);"><div class="number-circle mb-4" style="background: var(--ink); color: white;">3</div><h5>Phase 3: The Verification Standard (The global dataset for project truth)</h5></div>
                 </div>
                 <div class="card-dark mt-spacer text-center"><p class="text-white mb-0"><strong>Moat:</strong> verified datasets competitors cannot replicate.</p></div>
             </div>
         </section>
 
         <!-- SLIDE 16: THE ASK -->
-        <section class="bg-dark" style="background: #0A0D12; color: white; min-height: 90vh; display: flex; align-items: center;">
+        <section style="background: var(--ink); color: var(--cream); min-height: 90vh; display: flex; align-items: center;">
             <div class="container fade-in">
                 <div class="text-center mb-16">
-                    <span class="slide-label" style="background: rgba(255,255,255,0.1); color: white;">The Ask</span>
-                    <h2 style="color: white;">Raising $750K <span style="font-weight:400; color:#888;">(SAFE @ $10M Pre)</span></h2>
-                    <p style="color: #aaa;">To reach 100 customers & break-even at 50 (September 2026)</p>
+                    <span class="slide-label" style="border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.6);">The Ask</span>
+                    <h2 style="color: var(--cream);">Raising $750K <span style="font-weight:400; color:rgba(251,250,248,.5);">(SAFE @ $10M Pre)</span></h2>
+                    <p style="color: rgba(251,250,248,.6);">To reach 100 customers & break-even at 50 (September 2026)</p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-12 items-start">
                     <!-- Milestone Unlock -->
                     <div class="card-dark left-align">
                         <h4 class="text-white mb-6">Milestone Unlock (18 Months)</h4>
-                        <div style="height: 8px; border-radius: 4px; background: #333; overflow: hidden; display: flex; margin-bottom: 1.5rem;">
-                            <div style="width: 45%; background: #005EFF;"></div>
-                            <div style="width: 30%; background: #00C6FF;"></div>
-                            <div style="width: 25%; background: #fff;"></div>
+                        <div style="height: 8px; border-radius: 4px; background: rgba(255,255,255,.1); overflow: hidden; display: flex; margin-bottom: 1.5rem;">
+                            <div style="width: 45%; background: var(--green);"></div>
+                            <div style="width: 30%; background: var(--green-dark);"></div>
+                            <div style="width: 25%; background: rgba(251,250,248,.4);"></div>
                         </div>
                         <div class="space-y-4" style="display: grid; gap: 1rem;">
                             <div style="display: flex; gap: 10px; align-items: start;">
-                                <div style="width:40px; text-align:center; font-weight:bold; background:#005EFF; color:white; border-radius:50%;">45%</div>
-                                <div style="text-align: left;"><strong class="text-white">Growth Engine</strong><br><span class="text-sm text-gray">Ads, partner referrals, and outbound SDR operations.</span></div>
+                                <div style="width:40px; text-align:center; font-weight:700; background:var(--green); color:white; border-radius:50%; font-family:var(--mono); font-size:.75rem;">45%</div>
+                                <div style="text-align: left;"><strong class="text-white">Growth Engine</strong><br><span class="text-sm" style="color: rgba(251,250,248,.6);">Ads, partner referrals, and outbound SDR operations.</span></div>
                             </div>
                             <div style="display: flex; gap: 10px; align-items: start;">
-                                <div style="width:40px; text-align:center; font-weight:bold; background:#00C6FF; color:white; border-radius:50%;">30%</div>
-                                <div style="text-align: left;"><strong class="text-white">Product Acceleration</strong><br><span class="text-sm text-gray">Mobile app, deep integrations, and "Vibe Tasking" beta.</span></div>
+                                <div style="width:40px; text-align:center; font-weight:700; background:var(--green-dark); color:var(--ink); border-radius:50%; font-family:var(--mono); font-size:.75rem;">30%</div>
+                                <div style="text-align: left;"><strong class="text-white">Product Acceleration</strong><br><span class="text-sm" style="color: rgba(251,250,248,.6);">Mobile app, deep integrations, and "Vibe Tasking" beta.</span></div>
                             </div>
                             <div style="display: flex; gap: 10px; align-items: start;">
-                                <div style="width:40px; text-align:center; font-weight:bold; background:#fff; color:#000; border-radius:50%;">25%</div>
-                                <div style="text-align: left;"><strong class="text-white">Core Team & Infrastructure</strong><br><span class="text-sm text-gray">Expanding AI and engineering capacity.</span></div>
+                                <div style="width:40px; text-align:center; font-weight:700; background:rgba(251,250,248,.3); color:var(--cream); border-radius:50%; font-family:var(--mono); font-size:.75rem;">25%</div>
+                                <div style="text-align: left;"><strong class="text-white">Core Team & Infrastructure</strong><br><span class="text-sm" style="color: rgba(251,250,248,.6);">Expanding AI and engineering capacity.</span></div>
                             </div>
                         </div>
                     </div>
@@ -942,37 +954,37 @@
                             <h4 class="text-white mb-4">Expected Outcomes:</h4>
                             <ul style="list-style: none; padding: 0;" class="space-y-3">
                                 <li style="display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start;">
-                                    <span class="text-primary" style="font-weight: bold;">✓</span> 
-                                    <div><strong>Immediate:</strong> Deliver Zoom, Teams & Odoo multimodal integration → unlock $96K/yr committed pipeline.</div>
+                                    <span style="color: var(--green-dark); font-weight: bold;">✓</span>
+                                    <div style="color: rgba(251,250,248,.8);"><strong style="color:var(--cream);">Immediate:</strong> Deliver Zoom, Teams & Odoo multimodal integration → unlock $96K/yr committed pipeline.</div>
                                 </li>
                                 <li style="display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start;">
-                                    <span class="text-primary" style="font-weight: bold;">✓</span> 
-                                    <div><strong>Launch:</strong> Go public with 20–25 paying customers.</div>
+                                    <span style="color: var(--green-dark); font-weight: bold;">✓</span>
+                                    <div style="color: rgba(251,250,248,.8);"><strong style="color:var(--cream);">Launch:</strong> Go public with 20–25 paying customers.</div>
                                 </li>
                                 <li style="display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start;">
-                                    <span class="text-primary" style="font-weight: bold;">✓</span> 
-                                    <div><strong>Scale:</strong> Reach 100 customers → $1.2M ARR.</div>
+                                    <span style="color: var(--green-dark); font-weight: bold;">✓</span>
+                                    <div style="color: rgba(251,250,248,.8);"><strong style="color:var(--cream);">Scale:</strong> Reach 100 customers → $1.2M ARR.</div>
                                 </li>
                                 <li style="display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start;">
-                                    <span class="text-primary" style="font-weight: bold;">✓</span> 
-                                    <div><strong>Safety:</strong> Achieve break-even profitability by September 2026.</div>
+                                    <span style="color: var(--green-dark); font-weight: bold;">✓</span>
+                                    <div style="color: rgba(251,250,248,.8);"><strong style="color:var(--cream);">Safety:</strong> Achieve break-even profitability by September 2026.</div>
                                 </li>
                             </ul>
                         </div>
-                        <div style="background: var(--primary); padding: 1.5rem; border-radius: 12px; text-align: center;">
-                            <p class="text-white font-bold mb-2">Thesis</p>
+                        <div style="background: var(--green); padding: 1.5rem; border-radius: 6px; text-align: center;">
+                            <p style="color:rgba(255,255,255,.85); font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.5rem;">Thesis</p>
                             <p class="text-white text-sm mb-0">Capture the Odoo ecosystem first — then expand to all professional service firms with a verified AI delivery layer.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- CTA -->
-                <div class="text-center" style="margin-top: 6rem;"> 
+                <div class="text-center" style="margin-top: 6rem;">
                     <a href="https://knowcap.ai/invest" class="btn-white">
                         Schedule an Investor Call &rarr;
                     </a>
                     <div class="mt-6">
-                        <a href="https://share.knowcap.ai/?token=6b654198-54a4-4092-9cf9-e829cecd153c" style="color: #888; font-size: 0.8rem; text-decoration: underline;">Watch 2 min demo on how i created this Interactive Pitch Deck</a>
+                        <a href="https://share.knowcap.ai/?token=6b654198-54a4-4092-9cf9-e829cecd153c" style="color: rgba(251,250,248,.5); font-size: 0.8rem; text-decoration: underline;">Watch 2 min demo on how i created this Interactive Pitch Deck</a>
                     </div>
                 </div>
             </div>
