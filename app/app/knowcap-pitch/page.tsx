@@ -1,20 +1,17 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
+import EditorialShell from '@/components/editorial/shell'
 
 export default function KnowcapPitchPage() {
-  useEffect(() => {
-    // Set page title
-    document.title = "Knowcap Pitch Deck | Knowcap.ai";
-  }, []);
-
   return (
-    <div className="w-full h-screen">
-      <iframe
-        src="/knowcap-pitch.html"
-        className="w-full h-full border-0"
-        title="Knowcap Pitch Deck"
-      />
-    </div>
-  );
+    <EditorialShell>
+      <div style={{ height: 'calc(100vh - 64px)' }}>
+        <iframe
+          src="/knowcap-pitch.html"
+          style={{ width: '100%', height: '100%', border: 'none' }}
+          title="Knowcap Pitch Deck"
+        />
+      </div>
+    </EditorialShell>
+  )
 }
