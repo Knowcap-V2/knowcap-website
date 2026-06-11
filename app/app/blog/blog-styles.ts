@@ -6,10 +6,10 @@
  */
 export const BLOG_CSS = `
 .kb-root{--bg:#FBFAF8;--surface:#FFFFFF;--bg-muted:#F5F4F1;--border:#E7E4DD;--ink:#18181B;--ink-2:#4A4F5A;--ink-3:#8A8F99;--accent:#1F6B3A;--accent-light:#E8F5ED;
-  background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6}
+  background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6;padding-top:80px}
 .kb-grotesk{font-family:var(--font-space-grotesk),sans-serif}
 .kb-mono{font-family:var(--font-mono),monospace}
-.kb-hero{background:linear-gradient(135deg,#18181B,#0A0A0A);color:#fff;padding:128px 40px 64px}
+.kb-hero{background:linear-gradient(135deg,#18181B,#0A0A0A);color:#fff;padding:80px 40px 64px}
 .kb-hero-inner{max-width:780px;margin:0 auto}
 .kb-crumbs{font-family:var(--font-mono),monospace;font-size:12px;color:rgba(255,255,255,.45);margin-bottom:28px}
 .kb-crumbs a{color:rgba(255,255,255,.45);text-decoration:none}
@@ -47,7 +47,7 @@ export const BLOG_CSS = `
 .kb-cta h2{font-family:var(--font-space-grotesk),sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.02em;margin:0 0 14px}
 .kb-cta p{color:rgba(255,255,255,.55);font-size:15px;margin:0 0 28px}
 .kb-btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:15px}
-.kb-index-head{background:linear-gradient(135deg,#18181B,#0A0A0A);color:#fff;padding:128px 40px 56px}
+.kb-index-head{background:linear-gradient(135deg,#18181B,#0A0A0A);color:#fff;padding:80px 40px 56px}
 .kb-index-head-inner{max-width:1100px;margin:0 auto}
 .kb-index-sub{color:rgba(255,255,255,.55);font-size:16px;max-width:560px;margin:0}
 .kb-grid{max-width:1100px;margin:0 auto;padding:48px 40px 72px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}

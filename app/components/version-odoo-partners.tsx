@@ -2,275 +2,81 @@
 
 /**
  * /for/odoo-partners — Phase 1 beachhead conversion page.
- *
- * Audience: Odoo implementation partners (the StratDev Meta-Ads target).
- * Pattern: closest to Version B — themed impeccable design with a hero + a
- * single signature section. Signature here is "The 80-second loop", a vertical
- * 4-card timeline using the kit's numbered rail (ve-process) with small inline
- * mockup chips. FAQ section is overridden via ThemedShell's `faq` prop with
- * Odoo-partner-specific questions.
- *
- * Tracks variant "odoo-partners".
+ * Rewritten to V6b Editorial Light (EditorialShell) to match site-wide theme.
  */
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import ThemedShell from '@/components/impeccable/themed-shell'
-import {
-  APP_URL,
-  Tick,
-  Arrow,
-  Mark,
-  useReveal,
-  SectionReveal,
-  ClaimsExhibit,
-} from '@/components/impeccable/kit'
+import EditorialShell, { PageHero } from '@/components/editorial/shell'
 
+const APP_URL = 'https://app.knowcap.ai'
 const REGISTER_URL = `${APP_URL}/register?utm_source=odoo_partners_page`
 
-/* ----------------------------------------------------------------------- */
-/* Page-scoped CSS — small additions on top of the kit for the 80s loop     */
-/* timeline mockup chips. No global selectors; all scoped under .ve-odoop.  */
-/* ----------------------------------------------------------------------- */
-
 const PAGE_CSS = `
-.ve-odoop .ve-step{position:relative}
-.ve-odoop .ve-step .ve-step-time{font-family:var(--t-fmono);font-size:.7rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--t-accent-bright);display:inline-block;margin-bottom:6px}
-.ve-odoop .ve-mockup{margin-top:18px;border:1px solid var(--t-line);border-radius:6px;overflow:hidden;
-  background:color-mix(in srgb,var(--t-ink-prose) 4%,transparent)}
-.ve-odoop .ve-mockup-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:9px 14px;border-bottom:1px solid var(--t-line);font-family:var(--t-fmono);
-  font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t-ink-prose-dim)}
-.ve-odoop .ve-mockup-bar .ve-mockup-tag{color:var(--t-accent-bright);display:inline-flex;
-  align-items:center;gap:6px}
-.ve-odoop .ve-mockup-body{padding:14px 16px;font-family:var(--t-fbody);color:var(--t-ink-prose);
-  font-size:.95rem;line-height:1.5}
-.ve-odoop .ve-mockup-body code{font-family:var(--t-fmono);font-size:.82rem;background:rgba(255,255,255,.06);
-  padding:1px 6px;border-radius:3px;color:var(--t-accent-bright)}
-.ve-odoop .ve-mockup-row{display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:8px 0;border-bottom:1px dashed color-mix(in srgb,var(--t-ink-prose) 12%,transparent)}
-.ve-odoop .ve-mockup-row:last-child{border-bottom:0}
-.ve-odoop .ve-mockup-k{font-family:var(--t-fmono);font-size:.66rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--t-ink-prose-dim)}
-.ve-odoop .ve-mockup-v{font-family:var(--t-fbody);color:var(--t-ink-prose);font-size:.92rem}
-.ve-odoop .ve-strip{margin-top:clamp(40px,5vw,60px);padding:clamp(20px,2.4vw,28px) clamp(22px,2.6vw,30px);
-  border:1px solid var(--t-line);border-left:3px solid var(--t-accent);border-radius:4px;
-  background:color-mix(in srgb,var(--t-ink-prose) 3%,transparent);
-  font-family:var(--t-fbody);color:var(--t-prose);font-size:1rem;line-height:1.55;max-width:820px}
-.ve-odoop .ve-strip strong{color:var(--t-heading);font-weight:600}
+/* Odoo Partners page — op-* prefix, cl-root vars */
+.op-exhibit{max-width:780px;margin:32px auto 0;padding:0 40px}
+.op-exhibit-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--sec);margin-bottom:12px}
+.op-claims{display:flex;flex-direction:column;gap:8px}
+.op-claim{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:12px 16px;display:grid;grid-template-columns:64px 1fr auto;gap:8px 14px;align-items:start}
+.op-claim[data-state=verified]{border-left:3px solid var(--green)}
+.op-claim[data-state=pending]{border-left:3px solid var(--amber)}
+.op-claim-time{font-family:var(--mono);font-size:11px;color:var(--sec);padding-top:3px}
+.op-claim-body{}
+.op-claim-speaker{font-family:var(--mono);font-size:10px;color:var(--sec);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.06em}
+.op-claim-text{font-size:13.5px;color:var(--ink);line-height:1.5}
+.op-claim-action{font-family:var(--mono);font-size:11px;color:var(--green);display:block;margin-top:4px}
+.op-claim-tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;align-self:center}
+.op-claim-tag[data-t=risk]{background:rgba(220,38,38,.1);color:#DC2626}
+.op-claim-tag[data-t=decision]{background:var(--green-tint);color:var(--green)}
+.op-claim-tag[data-t=task]{background:rgba(176,124,40,.1);color:var(--amber)}
+.op-section{padding:clamp(48px,5vw,72px) 0}
+.op-section-head{text-align:center;max-width:640px;margin:0 auto clamp(32px,4vw,52px)}
+.op-section-head h2{font-family:var(--disp);font-size:clamp(1.5rem,2.8vw,2rem);font-weight:460;letter-spacing:-.02em;font-variation-settings:'SOFT' 55,'WONK' 0;margin-bottom:12px}
+.op-section-head p{font-size:16px;line-height:1.7;color:var(--sec)}
+.op-steps{max-width:720px;margin:0 auto}
+.op-step{display:grid;grid-template-columns:52px 1fr;gap:24px;padding:36px 0;border-bottom:1px solid var(--border)}
+.op-step:last-child{border-bottom:0}
+.op-step-no{font-family:var(--mono);font-size:12px;color:var(--green);font-weight:500;letter-spacing:.06em;padding-top:5px}
+.op-step-time{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sec);display:block;margin-bottom:8px}
+.op-step-h{font-family:var(--disp);font-size:clamp(1.05rem,2vw,1.2rem);font-weight:460;font-variation-settings:'SOFT' 55,'WONK' 0;margin:0 0 10px;color:var(--ink)}
+.op-step-p{font-size:15px;line-height:1.7;color:var(--sec);margin:0}
+.op-mockup{margin-top:16px;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.op-mockup-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 14px;background:var(--ink);font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(251,250,248,.5)}
+.op-mockup-ok{color:var(--green-dark)}
+.op-mockup-body{padding:12px 16px;background:var(--white)}
+.op-mockup-body blockquote{font-size:13.5px;line-height:1.6;color:var(--sec);font-style:italic;margin:0}
+.op-mockup-body code{font-family:var(--mono);font-size:.8rem;background:var(--green-tint);color:var(--green);padding:1px 6px;border-radius:3px}
+.op-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--border)}
+.op-row:last-child{border-bottom:0}
+.op-rk{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sec);flex-shrink:0}
+.op-rv{font-size:.88rem;color:var(--ink);text-align:right}
+.op-strip{margin-top:clamp(28px,3.5vw,44px);padding:clamp(16px,2vw,22px) clamp(18px,2.4vw,26px);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:4px;background:var(--white);font-size:15px;line-height:1.6;color:var(--sec);max-width:720px;margin-left:auto;margin-right:auto}
+.op-strip strong{color:var(--ink)}
+.op-cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px;justify-content:center}
+.op-faq{border-top:1px solid var(--border);margin-top:28px;max-width:720px;margin-left:auto;margin-right:auto}
+.op-faq details{border-bottom:1px solid var(--border)}
+.op-faq summary{padding:18px 0;cursor:pointer;font-weight:500;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;color:var(--ink)}
+.op-faq summary::-webkit-details-marker{display:none}
+.op-faq summary::after{content:'+';font-family:var(--mono);font-size:18px;color:var(--sec);flex-shrink:0}
+.op-faq details[open] summary::after{content:'−'}
+.op-faq-a{padding:0 0 18px;color:var(--sec);font-size:15px;line-height:1.75}
+.op-close{background:var(--ink);color:rgba(251,250,248,.7);text-align:center;padding:clamp(56px,6vw,80px) 40px}
+.op-close h2{font-family:var(--disp);font-size:clamp(1.7rem,3vw,2.4rem);font-weight:460;font-variation-settings:'SOFT' 55,'WONK' 0;color:#fff;margin-bottom:18px;letter-spacing:-.02em;line-height:1.15}
+.op-close p{font-size:15px;margin-bottom:28px}
+@media(max-width:720px){.op-exhibit{padding:0 22px}.op-claim{grid-template-columns:52px 1fr auto}.op-step{grid-template-columns:40px 1fr}.op-cta-row{flex-direction:column;align-items:stretch}.op-close{padding:48px 22px}}
 `
 
-/* ----------------------------------------------------------------------- */
-/* Hero                                                                     */
-/* ----------------------------------------------------------------------- */
-
-function Hero() {
-  const { reduce, rise, container } = useReveal()
-  return (
-    <section className="ve-section ve-dark ve-hero">
-      <div className="ve-field" aria-hidden="true" />
-      <div className="ve-wrap" style={{ position: 'relative' }}>
-        <motion.div variants={container} initial={reduce ? false : 'hidden'} animate={reduce ? undefined : 'show'}>
-          <motion.div className="ve-hbadge" variants={rise}>
-            <Tick />
-            <span className="ve-mono" style={{ fontSize: '.7rem' }}>For Odoo implementation partners</span>
-          </motion.div>
-          <motion.h1 className="ve-h1" variants={rise}>
-            From client meeting to Odoo SH PR.{' '}
-            <Mark ink>Before the meeting ends.</Mark>
-          </motion.h1>
-          <motion.p className="ve-lead ve-prose" variants={rise}>
-            Your client mentions a bug or asks for a feature mid-meeting. Knowcap captures it,
-            classifies it as a scope decision or bug, and waits for one tap from you. Then an Odoo SH
-            ticket opens, a GitHub PR appears, and your project tracker advances — all before the call
-            wraps.
-          </motion.p>
-          <motion.div className="ve-cta-row" variants={rise}>
-            <a className="ve-btn ve-btn--primary" href={REGISTER_URL}>Start free for Odoo partners <Arrow /></a>
-            <a className="ve-btn ve-btn--ghost" href="#demo">Watch the 2-minute demo</a>
-          </motion.div>
-          <motion.div className="ve-trust" variants={rise}>
-            <span>Built by an Odoo partner</span>
-            <span className="ve-trust-dot" aria-hidden="true" />
-            <span>MCP-native</span>
-            <span className="ve-trust-dot" aria-hidden="true" />
-            <span>Native Odoo SH integration</span>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="ve-hero-exhibit" style={{ margin: 0 }}
-          initial={reduce ? false : { opacity: 0, y: 40 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-8% 0px' }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-        >
-          <ClaimsExhibit
-            bar={{ left: 'Inbox · 2 claims', right: 'Live · 0:31:04' }}
-            cards={[
-              { time: '0:14:22', speaker: 'Client', text: '"The warehouse module crashes when we receive a partial shipment."', tag: 'risk', state: 'verified', action: 'Odoo SH ticket #4821 opened' },
-              { time: '0:17:49', speaker: 'Client', text: '"Can we add a barcode scanner to the picking flow?"', tag: 'decision', state: 'verified', action: 'PR opened on stock_barcode module' },
-              { time: '0:24:51', speaker: 'PM', text: '"Send the revised SOW for sign-off by Friday."', tag: 'task', state: 'pending' },
-            ]}
-          />
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-/* ----------------------------------------------------------------------- */
-/* Signature: "The 80-second loop" — vertical 4-card timeline               */
-/* ----------------------------------------------------------------------- */
-
-function EightySecondLoop() {
-  return (
-    <section id="demo" className="ve-section ve-on-paper ve-pad">
-      <div className="ve-wrap">
-        <SectionReveal className="ve-head">
-          <div className="ve-split-rule" />
-          <span className="ve-figure-xl">80 seconds</span>
-          <h2 className="ve-h2">The 80-second loop.</h2>
-          <p className="ve-lead ve-prose ve-dim">
-            One client conversation. One tap from you. Four agents working in parallel. By the time the
-            call ends, your Odoo SH ticket is in code review.
-          </p>
-        </SectionReveal>
-
-        <div className="ve-process">
-          <SectionReveal>
-            <div className="ve-step">
-              <div className="ve-step-no">01</div>
-              <div>
-                <span className="ve-step-time">0:00 — Client records the bug</span>
-                <h3 className="ve-h3">Your client opens Knowcap and records a 30-second screen capture.</h3>
-                <p>
-                  No ticket form. No &ldquo;please file a bug report&rdquo; email. The reproduction is
-                  captured live, in the client&apos;s own words, with the screen as evidence.
-                </p>
-                <div className="ve-mockup" aria-hidden="true">
-                  <div className="ve-mockup-bar">
-                    <span>Knowcap · screen recording</span>
-                    <span className="ve-mockup-tag"><Tick />Recording · 0:24</span>
-                  </div>
-                  <div className="ve-mockup-body">
-                    &ldquo;Watch — I click receive, pick partial, and the warehouse module just...
-                    reloads. No error, no ticket, it just dumps the picking.&rdquo;
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SectionReveal>
-
-          <SectionReveal>
-            <div className="ve-step">
-              <div className="ve-step-no">02</div>
-              <div>
-                <span className="ve-step-time">0:30 — Knowcap extracts the claim</span>
-                <h3 className="ve-h3">AI identifies the affected module, severity, and reproduction steps.</h3>
-                <p>
-                  Categorized as a Risk, ready for one-tap human review. The claim sits in your inbox
-                  with the exact 24-second clip attached and the words quoted verbatim.
-                </p>
-                <div className="ve-mockup" aria-hidden="true">
-                  <div className="ve-mockup-bar">
-                    <span>Inbox · claim extracted</span>
-                    <span className="ve-mockup-tag">Risk · pending</span>
-                  </div>
-                  <div className="ve-mockup-body">
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Module</span><span className="ve-mockup-v"><code>stock.picking</code></span></div>
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Severity</span><span className="ve-mockup-v">High · data loss</span></div>
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Repro</span><span className="ve-mockup-v">Receive → partial → reload</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SectionReveal>
-
-          <SectionReveal>
-            <div className="ve-step">
-              <div className="ve-step-no">03</div>
-              <div>
-                <span className="ve-step-time">1:00 — You confirm</span>
-                <h3 className="ve-h3">One tap promotes the claim to evidence.</h3>
-                <p>
-                  An agent reads it, creates a ticket in YOUR Odoo SH instance (Customer: Demo Client A,
-                  Module: Warehouse), moves it from New → In Progress, and notifies your dev team in
-                  Telegram.
-                </p>
-                <div className="ve-mockup" aria-hidden="true">
-                  <div className="ve-mockup-bar">
-                    <span>Odoo SH · ticket #4821 created</span>
-                    <span className="ve-mockup-tag"><Tick />In Progress</span>
-                  </div>
-                  <div className="ve-mockup-body">
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Customer</span><span className="ve-mockup-v">Demo Client A</span></div>
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Module</span><span className="ve-mockup-v">Warehouse</span></div>
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Assigned</span><span className="ve-mockup-v">@dev-team · Telegram pinged</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SectionReveal>
-
-          <SectionReveal>
-            <div className="ve-step">
-              <div className="ve-step-no">04</div>
-              <div>
-                <span className="ve-step-time">2:00 — GitHub PR opened</span>
-                <h3 className="ve-h3">A second agent reads your client&apos;s repo and generates the fix.</h3>
-                <p>
-                  It identifies the unindexed loop in <code>stock.picking.bulk_receive</code>, generates
-                  the patch, opens a PR. Ticket auto-moves to Code Review with the PR linked.
-                </p>
-                <div className="ve-mockup" aria-hidden="true">
-                  <div className="ve-mockup-bar">
-                    <span>GitHub · PR #312 opened</span>
-                    <span className="ve-mockup-tag"><Tick />Code Review</span>
-                  </div>
-                  <div className="ve-mockup-body">
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Title</span><span className="ve-mockup-v">fix(stock): index bulk_receive loop</span></div>
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Files</span><span className="ve-mockup-v"><code>stock/models/stock_picking.py</code></span></div>
-                    <div className="ve-mockup-row"><span className="ve-mockup-k">Ticket</span><span className="ve-mockup-v">#4821 → Code Review</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </SectionReveal>
-        </div>
-
-        <SectionReveal>
-          <p className="ve-strip">
-            <strong>Same loop for features.</strong> Client describes the feature on a call → Task in
-            project → PR scaffold ready. You only ever review what a named human already confirmed.
-          </p>
-        </SectionReveal>
-
-        <SectionReveal className="ve-process-cta">
-          <a className="ve-btn ve-btn--primary" href={REGISTER_URL}>Start free for Odoo partners <Arrow /></a>
-        </SectionReveal>
-      </div>
-    </section>
-  )
-}
-
-/* ----------------------------------------------------------------------- */
-/* FAQ override — Odoo-partner-specific                                     */
-/* ----------------------------------------------------------------------- */
-
-const ODOO_FAQS = [
+const FAQS = [
   {
     q: 'How does Knowcap know which Odoo module the bug is in?',
     a: 'Knowcap reads the screen recording (what the client clicked, the URL path, the field names) and the spoken context. It maps those signals to the Odoo module tree (stock, sale, account, hr, etc.). When the call-out is ambiguous, the claim sits in your inbox tagged "module: unsure" and you pick from a shortlist before promoting to evidence.',
   },
   {
-    q: 'Does Knowcap need write access to my client’s GitHub repo?',
+    q: 'Does Knowcap need write access to my client\'s GitHub repo?',
     a: 'Only if you want the agent to open the PR for you. Connect-only mode (read access) is supported — the agent will draft the PR locally and hand the patch back to your dev team as a diff. You decide per-client.',
   },
   {
     q: 'Can my client record bugs in Arabic? In Hindi?',
-    a: 'Yes. Knowcap’s transcription handles 80+ languages including Arabic, Hindi, French, and Egyptian Arabic specifically. The extracted claim is stored in the original language; the PR description and Odoo ticket can be translated to English (or kept in the original) per your project setting.',
+    a: 'Yes. Knowcap\'s transcription handles 80+ languages including Arabic, Hindi, French, and Egyptian Arabic specifically. The extracted claim is stored in the original language; the PR description and Odoo ticket can be translated to English (or kept in the original) per your project setting.',
   },
   {
     q: 'What if the bug is in a custom module not in the codebase?',
@@ -282,53 +88,178 @@ const ODOO_FAQS = [
   },
   {
     q: 'How long does setup take for a new client?',
-    a: 'About 15 minutes. You point Knowcap at the client’s Odoo SH project and GitHub repo, set the default ticket assignee, and pick the Telegram (or Slack) channel for notifications. The client only needs to install the Knowcap recorder browser extension — one click.',
+    a: 'About 15 minutes. You point Knowcap at the client\'s Odoo SH project and GitHub repo, set the default ticket assignee, and pick the Telegram (or Slack) channel for notifications. The client only needs to install the Knowcap recorder browser extension — one click.',
   },
 ]
 
-function OdooFAQSection() {
-  return (
-    <section className="ve-section ve-on-paper ve-pad">
-      <div className="ve-wrap">
-        <SectionReveal>
-          <h2 className="ve-h2" style={{ textAlign: 'center', marginBottom: 'clamp(36px,5vw,56px)' }}>FAQ</h2>
-        </SectionReveal>
-        <SectionReveal>
-          <div className="ve-faq">
-            {ODOO_FAQS.map((f, i) => (
-              <details key={f.q} open={i === 0}>
-                <summary>
-                  <span className="ve-q-sign" aria-hidden="true" />
-                  {f.q}
-                </summary>
-                <div className="ve-faq-a">{f.a}</div>
-              </details>
-            ))}
-          </div>
-        </SectionReveal>
-      </div>
-    </section>
-  )
-}
-
-/* ----------------------------------------------------------------------- */
-/* Page export                                                              */
-/* ----------------------------------------------------------------------- */
-
 export default function VersionOdooPartners() {
   return (
-    <div className="ve-odoop">
+    <>
       <style dangerouslySetInnerHTML={{ __html: PAGE_CSS }} />
-      <ThemedShell
-        variant="odoo-partners"
-        hero={<Hero />}
-        signature={<EightySecondLoop />}
-        faq={<OdooFAQSection />}
-        close={{
-          title: <>Stop manually triaging tickets.</>,
-          sub: 'Your client records. Knowcap extracts. Agents act. You merge.',
-        }}
-      />
-    </div>
+      <EditorialShell>
+        <PageHero
+          kicker="For Odoo implementation partners"
+          title={<>From client meeting to Odoo SH PR.<br />Before the meeting ends.</>}
+          sub="Your client mentions a bug or asks for a feature mid-meeting. Knowcap captures it, classifies it, and waits for one tap from you. Then an Odoo SH ticket opens, a GitHub PR appears — before the call wraps."
+        />
+
+        {/* Live claims exhibit */}
+        <div className="op-exhibit">
+          <div className="op-exhibit-label">Live · 2 claims · 0:31:04</div>
+          <div className="op-claims">
+            <div className="op-claim" data-state="verified">
+              <span className="op-claim-time">0:14:22</span>
+              <div className="op-claim-body">
+                <span className="op-claim-speaker">Client</span>
+                <span className="op-claim-text">"The warehouse module crashes when we receive a partial shipment."</span>
+                <span className="op-claim-action">✓ Odoo SH ticket #4821 opened</span>
+              </div>
+              <span className="op-claim-tag" data-t="risk">Risk</span>
+            </div>
+            <div className="op-claim" data-state="verified">
+              <span className="op-claim-time">0:17:49</span>
+              <div className="op-claim-body">
+                <span className="op-claim-speaker">Client</span>
+                <span className="op-claim-text">"Can we add a barcode scanner to the picking flow?"</span>
+                <span className="op-claim-action">✓ PR opened on stock_barcode module</span>
+              </div>
+              <span className="op-claim-tag" data-t="decision">Decision</span>
+            </div>
+            <div className="op-claim" data-state="pending">
+              <span className="op-claim-time">0:24:51</span>
+              <div className="op-claim-body">
+                <span className="op-claim-speaker">PM</span>
+                <span className="op-claim-text">"Send the revised SOW for sign-off by Friday."</span>
+              </div>
+              <span className="op-claim-tag" data-t="task">Task · pending</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 80-second loop */}
+        <div className="cl-page-body">
+          <div className="cl-wrap">
+            <div className="op-section">
+              <div className="op-section-head">
+                <h2>The 80-second loop.</h2>
+                <p>One client conversation. One tap from you. Four agents working in parallel. By the time the call ends, your Odoo SH ticket is in code review.</p>
+              </div>
+
+              <div className="op-steps">
+                <div className="op-step">
+                  <span className="op-step-no">01</span>
+                  <div>
+                    <span className="op-step-time">0:00 — Client records the bug</span>
+                    <h3 className="op-step-h">Your client opens Knowcap and records a 30-second screen capture.</h3>
+                    <p className="op-step-p">No ticket form. No "please file a bug report" email. The reproduction is captured live, in the client's own words, with the screen as evidence.</p>
+                    <div className="op-mockup" aria-hidden="true">
+                      <div className="op-mockup-bar">
+                        <span>Knowcap · screen recording</span>
+                        <span className="op-mockup-ok">● Recording · 0:24</span>
+                      </div>
+                      <div className="op-mockup-body">
+                        <blockquote>"Watch — I click receive, pick partial, and the warehouse module just… reloads. No error, no ticket, it just dumps the picking."</blockquote>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="op-step">
+                  <span className="op-step-no">02</span>
+                  <div>
+                    <span className="op-step-time">0:30 — Knowcap extracts the claim</span>
+                    <h3 className="op-step-h">AI identifies the affected module, severity, and reproduction steps.</h3>
+                    <p className="op-step-p">Categorized as a Risk, ready for one-tap human review. The claim sits in your inbox with the exact 24-second clip attached and the words quoted verbatim.</p>
+                    <div className="op-mockup" aria-hidden="true">
+                      <div className="op-mockup-bar">
+                        <span>Inbox · claim extracted</span>
+                        <span>Risk · pending</span>
+                      </div>
+                      <div className="op-mockup-body">
+                        <div className="op-row"><span className="op-rk">Module</span><span className="op-rv"><code>stock.picking</code></span></div>
+                        <div className="op-row"><span className="op-rk">Severity</span><span className="op-rv">High · data loss</span></div>
+                        <div className="op-row"><span className="op-rk">Repro</span><span className="op-rv">Receive → partial → reload</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="op-step">
+                  <span className="op-step-no">03</span>
+                  <div>
+                    <span className="op-step-time">1:00 — You confirm</span>
+                    <h3 className="op-step-h">One tap promotes the claim to evidence.</h3>
+                    <p className="op-step-p">An agent reads it, creates a ticket in your Odoo SH instance, moves it from New → In Progress, and notifies your dev team in Telegram.</p>
+                    <div className="op-mockup" aria-hidden="true">
+                      <div className="op-mockup-bar">
+                        <span>Odoo SH · ticket #4821 created</span>
+                        <span className="op-mockup-ok">● In Progress</span>
+                      </div>
+                      <div className="op-mockup-body">
+                        <div className="op-row"><span className="op-rk">Customer</span><span className="op-rv">Demo Client A</span></div>
+                        <div className="op-row"><span className="op-rk">Module</span><span className="op-rv">Warehouse</span></div>
+                        <div className="op-row"><span className="op-rk">Assigned</span><span className="op-rv">@dev-team · Telegram pinged</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="op-step">
+                  <span className="op-step-no">04</span>
+                  <div>
+                    <span className="op-step-time">2:00 — GitHub PR opened</span>
+                    <h3 className="op-step-h">A second agent reads your client's repo and generates the fix.</h3>
+                    <p className="op-step-p">It identifies the unindexed loop in <code>stock.picking.bulk_receive</code>, generates the patch, opens a PR. Ticket auto-moves to Code Review with the PR linked.</p>
+                    <div className="op-mockup" aria-hidden="true">
+                      <div className="op-mockup-bar">
+                        <span>GitHub · PR #312 opened</span>
+                        <span className="op-mockup-ok">● Code Review</span>
+                      </div>
+                      <div className="op-mockup-body">
+                        <div className="op-row"><span className="op-rk">Title</span><span className="op-rv">fix(stock): index bulk_receive loop</span></div>
+                        <div className="op-row"><span className="op-rk">Files</span><span className="op-rv"><code>stock/models/stock_picking.py</code></span></div>
+                        <div className="op-row"><span className="op-rk">Ticket</span><span className="op-rv">#4821 → Code Review</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="op-strip">
+                <strong>Same loop for features.</strong> Client describes the feature on a call → Task in project → PR scaffold ready. You only ever review what a named human already confirmed.
+              </div>
+
+              <div className="op-cta-row">
+                <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Start free for Odoo partners →</a>
+                <Link className="cl-btn cl-btn--ghost" href="/book">Book a 20-min demo</Link>
+              </div>
+            </div>
+
+            {/* FAQ */}
+            <div className="op-section">
+              <div className="op-section-head">
+                <h2>FAQ</h2>
+              </div>
+              <div className="op-faq">
+                {FAQS.map((f, i) => (
+                  <details key={f.q} open={i === 0}>
+                    <summary>{f.q}</summary>
+                    <div className="op-faq-a">{f.a}</div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="op-close">
+          <div className="cl-wrap">
+            <h2>Stop manually triaging tickets.<br />Start acting on meetings.</h2>
+            <p>Your client records. Knowcap extracts. Agents act. You merge.</p>
+            <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Get Started Free →</a>
+          </div>
+        </div>
+      </EditorialShell>
+    </>
   )
 }
