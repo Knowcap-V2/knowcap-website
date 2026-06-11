@@ -3,16 +3,15 @@
 /**
  * Knowcap vs Fireflies.ai — competitor comparison landing page.
  * SEO bait for "Knowcap vs Fireflies" / "alternative to Fireflies.ai".
- * Emphasis: multilingual mid-meeting code-switching + agent actions.
  */
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import ThemedShell from '@/components/impeccable/themed-shell'
-import { APP_URL, Tick, Arrow, Mark, useReveal, SectionReveal } from '@/components/impeccable/kit'
+import EditorialShell, { PageHero } from '@/components/editorial/shell'
+import { COMPARE_CSS } from '../compare-styles'
 
 const COMPETITOR = 'Fireflies.ai'
 const COMPETITOR_SLUG = 'fireflies'
+const APP_URL = 'https://app.knowcap.ai'
 const REGISTER_URL = `${APP_URL}/register?utm_source=compare_${COMPETITOR_SLUG}_page`
 
 const COMPARISON_ROWS: { feature: string; them: string; us: string; them_yes: boolean; us_yes: boolean; highlight?: boolean }[] = [
@@ -57,154 +56,77 @@ const FAQS = [
   },
 ]
 
-function Hero() {
-  const { reduce, rise, container } = useReveal()
-  return (
-    <section className="ve-section ve-dark ve-hero">
-      <div className="ve-field" aria-hidden="true" />
-      <div className="ve-wrap" style={{ position: 'relative' }}>
-        <motion.div variants={container} initial={reduce ? false : 'hidden'} animate={reduce ? undefined : 'show'}>
-          <motion.div className="ve-docid" variants={rise}>
-            <Tick className="ve-tick" />
-            <span className="ve-mono">Comparison · Knowcap vs {COMPETITOR}</span>
-          </motion.div>
-          <motion.h1 className="ve-h1" variants={rise}>
-            {COMPETITOR} transcribes. Knowcap <Mark ink>acts.</Mark>
-          </motion.h1>
-          <motion.p className="ve-lead ve-prose" variants={rise}>
-            {COMPETITOR} gives you a meeting transcript and an AI summary. Knowcap captures the
-            meeting, extracts every decision / risk / task, lets a human confirm with one tap, then
-            triggers agents that open PRs, create Odoo tickets, send WhatsApp messages — based on
-            what was confirmed. The summary is table stakes. The agent action is the product.
-          </motion.p>
-          <motion.div className="ve-cta-row" variants={rise}>
-            <a className="ve-btn ve-btn--primary" href={REGISTER_URL}>Switch from {COMPETITOR} free <Arrow /></a>
-            <a className="ve-btn ve-btn--ghost" href="#demo">See the difference live</a>
-          </motion.div>
-          <motion.div className="ve-trust" variants={rise}>
-            <span>Multilingual per-utterance</span>
-            <span className="ve-trust-dot" aria-hidden="true" />
-            <span>Human-verified facts only</span>
-            <span className="ve-trust-dot" aria-hidden="true" />
-            <span>Agents that ship work</span>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-function ComparisonTable() {
-  return (
-    <section id="demo" className="ve-section ve-on-paper ve-pad">
-      <div className="ve-wrap">
-        <SectionReveal className="ve-head">
-          <h2 className="ve-h2">Side by side</h2>
-          <p className="ve-lead ve-prose ve-dim">
-            Where {COMPETITOR} stops at automated CRM updates, Knowcap continues — through human verification, into real-world action.
-          </p>
-        </SectionReveal>
-        <SectionReveal>
-          <div className="ve-compare-wrap" role="region" aria-label={`Knowcap vs ${COMPETITOR} feature comparison`}>
-            <table className="ve-compare">
-              <thead>
-                <tr>
-                  <th scope="col" className="ve-compare-feat">Feature</th>
-                  <th scope="col" className="ve-compare-them">{COMPETITOR}</th>
-                  <th scope="col" className="ve-compare-us">Knowcap</th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARISON_ROWS.map((row) => (
-                  <tr key={row.feature} className={row.highlight ? 've-compare-row--hl' : ''}>
-                    <th scope="row">{row.feature}</th>
-                    <td className={row.them_yes ? 've-compare-yes' : 've-compare-no'}>
-                      <span aria-hidden="true">{row.them_yes ? '✓' : '✕'}</span>
-                      <span className="ve-compare-cell-text">{row.them}</span>
-                    </td>
-                    <td className={row.us_yes ? 've-compare-yes ve-compare-us-cell' : 've-compare-no'}>
-                      <span aria-hidden="true">{row.us_yes ? '✓' : '✕'}</span>
-                      <span className="ve-compare-cell-text">{row.us}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </SectionReveal>
-        <SectionReveal>
-          <div className="ve-compare-cta">
-            <a className="ve-btn ve-btn--primary" href={REGISTER_URL}>Switch from {COMPETITOR} free <Arrow /></a>
-            <Link className="ve-btn ve-btn--ghost" href="/book">Book a 20-min demo</Link>
-          </div>
-        </SectionReveal>
-      </div>
-    </section>
-  )
-}
-
-function CompareFAQ() {
-  return (
-    <section className="ve-section ve-on-paper ve-pad">
-      <div className="ve-wrap">
-        <SectionReveal>
-          <h2 className="ve-h2" style={{ textAlign: 'center', marginBottom: 'clamp(36px,5vw,56px)' }}>
-            Switching from {COMPETITOR}
-          </h2>
-        </SectionReveal>
-        <SectionReveal>
-          <div className="ve-faq">
-            {FAQS.map((f, i) => (
-              <details key={f.q} open={i === 0}>
-                <summary>
-                  <span className="ve-q-sign" aria-hidden="true" />
-                  {f.q}
-                </summary>
-                <div className="ve-faq-a">{f.a}</div>
-              </details>
-            ))}
-          </div>
-        </SectionReveal>
-      </div>
-    </section>
-  )
-}
-
-const COMPARE_CSS = `
-.ve-compare-wrap{overflow-x:auto;border:1px solid var(--t-line);border-radius:6px;background:var(--t-card)}
-.ve-compare{width:100%;border-collapse:collapse;font-family:var(--t-fbody);min-width:680px}
-.ve-compare th,.ve-compare td{padding:clamp(14px,1.6vw,18px) clamp(14px,1.8vw,22px);text-align:left;vertical-align:top;border-bottom:1px solid var(--t-line);font-size:.98rem;line-height:1.5}
-.ve-compare thead th{font-family:var(--t-fmono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t-prose-dim);background:color-mix(in srgb,var(--t-accent) 6%,transparent);border-bottom:1px solid var(--t-line)}
-.ve-compare thead .ve-compare-us{color:var(--t-accent);font-weight:600}
-.ve-compare tbody th{font-weight:500;color:var(--t-heading);font-family:var(--t-fbody);width:34%}
-.ve-compare tbody td{color:var(--t-prose);width:33%}
-.ve-compare-cell-text{display:block;margin-top:2px;font-size:.92rem}
-.ve-compare-yes>span[aria-hidden]{display:inline-block;color:var(--t-accent);font-weight:600;margin-right:8px}
-.ve-compare-no>span[aria-hidden]{display:inline-block;color:var(--t-prose-dim);opacity:.6;margin-right:8px}
-.ve-compare-us-cell{background:color-mix(in srgb,var(--t-accent) 4%,transparent);font-weight:500}
-.ve-compare-row--hl th,.ve-compare-row--hl td{background:color-mix(in srgb,var(--t-accent) 7%,transparent)}
-.ve-compare-row--hl .ve-compare-us-cell{background:color-mix(in srgb,var(--t-accent) 11%,transparent)}
-.ve-compare tbody tr:last-child th,.ve-compare tbody tr:last-child td{border-bottom:0}
-.ve-compare-cta{margin-top:clamp(32px,4vw,48px);display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
-`
-
-function StyleInject() {
-  return <style dangerouslySetInnerHTML={{ __html: COMPARE_CSS }} />
-}
-
 export default function ComparePage() {
   return (
     <>
-      <StyleInject />
-      <ThemedShell
-        variant={`compare-${COMPETITOR_SLUG}`}
-        hero={<Hero />}
-        signature={<><ComparisonTable /><CompareFAQ /></>}
-        close={{
-          title: <>Stop summarizing meetings. <Mark>Start acting on them.</Mark></>,
-          sub: 'Knowcap is the AI meeting tool with agents that do the work — under your human-confirmed control.',
-        }}
-      />
+      <style dangerouslySetInnerHTML={{ __html: COMPARE_CSS }} />
+      <EditorialShell>
+        <PageHero
+          kicker={`Comparison · Knowcap vs ${COMPETITOR}`}
+          title={<>{COMPETITOR} transcribes. Knowcap <span style={{ color: 'var(--green)' }}>acts.</span></>}
+          sub={`${COMPETITOR} gives you a meeting transcript and an AI summary. Knowcap captures the meeting, extracts every decision / risk / task, lets a human confirm with one tap, then triggers agents that open PRs, create Odoo tickets, and send WhatsApp messages.`}
+        />
+        <div className="cl-page-body">
+          <div className="cl-wrap">
+            <div className="cm-cta-row">
+              <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Switch from {COMPETITOR} free →</a>
+              <Link className="cl-btn cl-btn--ghost" href="/book">Book a 20-min demo</Link>
+            </div>
+            <div className="cm-section" id="compare">
+              <h2 className="cm-h2">Side by side</h2>
+              <p className="cm-lead">Where {COMPETITOR} stops at automated CRM updates, Knowcap continues — through human verification, into real-world action.</p>
+              <div className="cm-table-wrap" role="region" aria-label={`Knowcap vs ${COMPETITOR} feature comparison`}>
+                <table className="cm-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Feature</th>
+                      <th scope="col">{COMPETITOR}</th>
+                      <th scope="col" className="cm-us">Knowcap</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {COMPARISON_ROWS.map((row) => (
+                      <tr key={row.feature} className={row.highlight ? 'cm-hl' : ''}>
+                        <th scope="row">{row.feature}</th>
+                        <td className={row.them_yes ? 'cm-yes' : 'cm-no'}>
+                          <span aria-hidden="true">{row.them_yes ? '✓' : '✕'}</span>
+                          <span className="cm-cell-text">{row.them}</span>
+                        </td>
+                        <td className={row.us_yes ? 'cm-yes cm-us-cell' : 'cm-no'}>
+                          <span aria-hidden="true">{row.us_yes ? '✓' : '✕'}</span>
+                          <span className="cm-cell-text">{row.us}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="cm-cta-row cm-cta-center">
+                <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Switch from {COMPETITOR} free →</a>
+                <Link className="cl-btn cl-btn--ghost" href="/book">Book a 20-min demo</Link>
+              </div>
+            </div>
+            <div className="cm-section">
+              <h2 className="cm-h2" style={{ textAlign: 'center' }}>Switching from {COMPETITOR}</h2>
+              <div className="cm-faq">
+                {FAQS.map((f, i) => (
+                  <details key={f.q} open={i === 0}>
+                    <summary>{f.q}</summary>
+                    <div className="cm-faq-a">{f.a}</div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="cm-close">
+          <div className="cl-wrap">
+            <h2>Stop summarizing meetings.<br />Start acting on them.</h2>
+            <p>Knowcap is the AI meeting tool with agents that do the work — under your human-confirmed control.</p>
+            <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Get Started Free →</a>
+          </div>
+        </div>
+      </EditorialShell>
     </>
   )
 }
