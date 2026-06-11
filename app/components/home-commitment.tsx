@@ -905,8 +905,11 @@ function Mcp() {
                 <span className="cl-bullet"><Tick />Every fact links back to the second it was said</span>
               </div>
               <div className="cl-cta-row">
-                <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>
+                <a className="cl-btn cl-btn--solid" href="https://docs.knowcap.ai/#mcp-overview">
                   Connect Your Claude <span aria-hidden="true">→</span>
+                </a>
+                <a className="cl-btn cl-btn--ghost" href={`${APP_URL}/register`}>
+                  Get your API key
                 </a>
               </div>
             </div>
