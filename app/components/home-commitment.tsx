@@ -733,7 +733,7 @@ function Problem() {
 const STEPS = [
   {
     no: '01', title: 'Listen',
-    body: 'Knowcap captures the conversations your team is already having: meetings, recordings, voice notes, documents, Telegram.',
+    body: 'Knowcap captures the conversations your team is already having: meetings, recordings, voice notes, documents, Telegram. WhatsApp, email, and Slack are next.',
   },
   {
     no: '02', title: 'Extract',
