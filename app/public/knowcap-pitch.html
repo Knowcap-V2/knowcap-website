@@ -6,91 +6,120 @@
     <title>Knowcap Pitch Deck</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #005EFF;
-            --primary-dark: #0046bd;
-            --primary-light: rgba(0, 94, 255, 0.08);
-            --dark: #191F2E;
-            --gray-text: #414651;
-            --bg-light: #F5F7FA;
-            --surface-glass: rgba(255, 255, 255, 0.95);
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
-            --shadow-md: 0 12px 24px -6px rgba(0,0,0,0.05);
-            --shadow-lg: 0 20px 40px -10px rgba(0,0,0,0.1);
-            --radius-lg: 16px;
+            /* V6b Editorial Light palette */
+            --cream: #FBFAF8;
+            --white: #FFFFFF;
+            --border: #E7E4DD;
+            --border-2: #DCD7CB;
+            --ink: #18181B;
+            --ink-soft: #2A2A2F;
+            --sec: #4A4F5A;
+            --green: #1F6B3A;
+            --green-deep: #17522C;
+            --green-tint: #E8F5ED;
+            --green-dark: #7ED39B;
+            --disp: 'Fraunces', Georgia, serif;
+            --body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+            /* Aliases so existing inline styles that use old var names auto-update */
+            --primary: var(--green);
+            --primary-dark: var(--green-deep);
+            --primary-light: var(--green-tint);
+            --dark: var(--ink);
+            --gray-text: var(--sec);
+            --bg-light: var(--cream);
+            --surface-glass: var(--white);
+            --shadow-sm: 0 1px 2px rgba(24,24,27,.04), 0 4px 12px rgba(24,24,27,.04);
+            --shadow-md: 0 1px 2px rgba(24,24,27,.04), 0 10px 28px rgba(24,24,27,.06);
+            --shadow-lg: 0 1px 2px rgba(24,24,27,.04), 0 10px 28px rgba(24,24,27,.06), 0 30px 72px rgba(24,24,27,.09);
+            --radius-lg: 10px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: var(--body);
             line-height: 1.6;
-            color: var(--dark);
-            background: var(--bg-light);
+            color: var(--ink);
+            background: var(--cream);
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
         h1, h2, h3, h4, h5 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            color: var(--dark);
+            font-family: var(--disp);
+            font-weight: 480;
+            font-variation-settings: 'SOFT' 55, 'WONK' 0;
+            letter-spacing: -0.018em;
+            line-height: 1.12;
+            color: var(--ink);
         }
         h1 { font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center; }
         h2 { font-size: 2rem; margin-bottom: 1rem; }
         h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        h4 { font-size: 1.125rem; margin-bottom: 1rem; }
-        h5 { font-size: 1rem; margin-bottom: 0.5rem; }
+        h4 { font-size: 1.125rem; margin-bottom: 1rem; font-weight: 560; }
+        h5 { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 560; }
         .gradient-text {
-            background: linear-gradient(135deg, #005EFF 0%, #00C6FF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
+            color: var(--green);
+            font-style: italic;
+            font-variation-settings: 'SOFT' 70, 'WONK' 1;
+            font-weight: 540;
+            display: inline;
         }
-        p { margin-bottom: 1rem; color: var(--gray-text); font-size: 1rem; }
+        p { margin-bottom: 1rem; color: var(--sec); font-size: 1rem; }
         .text-center { text-align: center; }
         .font-medium { font-weight: 500; }
         .font-bold { font-weight: 700; }
-        .text-primary { color: var(--primary); }
+        .text-primary { color: var(--green); }
         .text-white { color: white; }
+        .text-gray { color: var(--sec); }
+        .text-dark { color: var(--ink); }
         .text-sm { font-size: 0.875rem; }
         .text-xs { font-size: 0.75rem; }
         .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-base { font-size: 1rem; }
         main { overflow-x: hidden; }
-        section { padding: 5rem 1.5rem; position: relative; }
+        section { padding: 5rem 1.5rem; position: relative; border-top: 1px solid var(--border); }
         .container { max-width: 1100px; margin: 0 auto; }
         .slide-label {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--sec);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.14em;
             margin-bottom: 1rem;
             display: inline-block;
-            background: var(--primary-light);
-            padding: 4px 12px;
-            border-radius: 100px;
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+        }
+        .slide-label::before {
+            content: '·';
+            color: var(--green);
+            padding-right: 8px;
+            font-size: 1.1em;
+            vertical-align: baseline;
         }
         .grid { display: grid; gap: 1.5rem; }
         .grid-cols-2 { grid-template-columns: 1fr; }
         .grid-cols-3 { grid-template-columns: 1fr; }
         .span-3 { grid-column: span 1; }
         .card {
-            background: var(--surface-glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: var(--white);
+            border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 1.5rem;
             box-shadow: var(--shadow-sm);
             height: 100%;
         }
         .card-dark {
-            background: var(--dark);
+            background: var(--ink);
             color: white;
-            border: 1px solid #333;
+            border: 1px solid rgba(255,255,255,.08);
             padding: 1.5rem;
             border-radius: var(--radius-lg);
             text-align: center;
@@ -102,83 +131,88 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .card-dark p { color: #9ca3af; margin-bottom: 0; }
+        .card-dark p { color: rgba(251,250,248,.65); margin-bottom: 0; }
         .card-dark .text-white { color: white; }
         .card-dark.left-align { align-items: flex-start; text-align: left; display: block; }
         .browser-window {
-            border-radius: 12px;
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            background: #000;
+            background: var(--ink);
             box-shadow: var(--shadow-md);
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
             width: 100%;
             max-width: 900px;
             margin: 0 auto 1.5rem auto;
         }
         .browser-header {
-            background: #F1F1F1;
+            background: #F7F5F0;
             padding: 10px 16px;
             display: flex;
             gap: 8px;
-            border-bottom: 1px solid #E5E5E5;
+            border-bottom: 1px solid var(--border);
             align-items: center;
         }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
         .dot-red { background: #FF5F56; }
         .dot-yellow { background: #FFBD2E; }
         .dot-green { background: #27C93F; }
-        .browser-title { font-size: 12px; color: #888; margin-left: 10px; font-family: 'Inter', sans-serif; }
+        .browser-title { font-size: 12px; color: var(--sec); margin-left: 10px; font-family: var(--mono); }
         video { width: 100%; height: auto; display: block; }
         .timestamp-link {
             display: inline-flex;
             align-items: center;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--mono);
             font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--primary);
-            background: rgba(0, 94, 255, 0.08);
+            font-weight: 500;
+            color: var(--green);
+            background: var(--green-tint);
             padding: 2px 6px;
-            border-radius: 4px;
+            border-radius: 2px;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             border: 1px solid transparent;
             white-space: nowrap;
             margin-left: 6px;
             vertical-align: middle;
         }
-        .timestamp-link:hover { background: rgba(0, 94, 255, 0.15); border-color: var(--primary); }
-        .hero-bg { background: radial-gradient(circle at 50% 0%, #E3F2FD 0%, #F8FAFC 70%); padding-top: 6rem; }
+        .timestamp-link:hover { background: rgba(31,107,58,.2); border-color: var(--green); }
+        .hero-bg {
+            background: var(--cream);
+            padding-top: 6rem;
+            border-top: none;
+        }
         .number-circle {
             width: 2.5rem;
             height: 2.5rem;
             border-radius: 50%;
-            background: var(--primary-light);
+            background: var(--green-tint);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            color: var(--primary);
+            color: var(--green);
             font-weight: 700;
+            font-family: var(--mono);
             margin-right: 1rem;
         }
         .table-container {
-            background: white;
-            border-radius: 12px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            border: 1px solid #E5E7EB;
+            border: 1px solid var(--border);
             box-shadow: var(--shadow-sm);
             overflow-x: auto;
         }
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        thead { background: var(--dark); color: white; }
-        th { padding: 1rem 1.5rem; text-align: left; font-weight: 600; font-size: 0.9rem; }
-        td { padding: 1rem 1.5rem; border-bottom: 1px solid #E5E7EB; font-size: 0.9rem; color: var(--dark); }
+        thead { background: var(--ink); color: white; }
+        th { padding: 1rem 1.5rem; text-align: left; font-weight: 600; font-size: 0.9rem; font-family: var(--mono); letter-spacing: .04em; }
+        td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--ink); }
         tr:last-child td { border-bottom: none; }
-        .comp-table th { background: #F3F4F6; color: #535862; }
-        .comp-table th:first-child { background: white; color: var(--dark); }
-        .comp-table th:last-child { background: var(--primary); color: white; }
-        .col-knowcap { background: rgba(0, 94, 255, 0.04); border-left: 2px solid var(--primary); }
+        .comp-table th { background: #F7F5F0; color: var(--sec); font-family: var(--mono); }
+        .comp-table th:first-child { background: var(--white); color: var(--ink); }
+        .comp-table th:last-child { background: var(--green); color: white; }
+        .col-knowcap { background: rgba(31,107,58,.04); border-left: 2px solid var(--green); }
         .tam-wrapper { position: relative; width: 100%; height: auto; margin: 0 auto; display: block; }
         .tam-circle {
             border-radius: 50%;
@@ -189,24 +223,23 @@
             position: absolute;
             justify-content: flex-start;
         }
-        .flow-arrow { color: #CBD5E1; width: 24px; height: 24px; transform: rotate(0deg); margin: 0 0.5rem; }
+        .flow-arrow { color: var(--border-2); width: 24px; height: 24px; transform: rotate(0deg); margin: 0 0.5rem; }
         .milestone-box {
-            background: white;
-            border: 1px solid #E2E8F0;
-            border-radius: 12px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             padding: 1.5rem;
             text-align: center;
             width: auto;
             min-width: 120px;
         }
         .acquisition-tag {
-            background: white;
+            background: var(--white);
             padding: 0.75rem 1.5rem;
             border-radius: 50px;
-            border: 1px solid #E2E8F0;
+            border: 1px solid var(--border);
             font-weight: 600;
-            color: var(--dark);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            color: var(--ink);
         }
         .acquisition-container { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; }
         .mt-spacer { margin-top: 3rem; }
@@ -214,26 +247,27 @@
             display: inline-flex;
             padding: 1rem 2rem;
             font-weight: 600;
-            background: white;
-            color: var(--dark);
-            border-radius: 8px;
+            background: var(--white);
+            color: var(--ink);
+            border-radius: 3px;
             text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.2s;
+            border: 1px solid var(--ink);
+            transition: all 0.18s;
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .btn-primary:hover { background: var(--ink); color: var(--cream); transform: translateY(-1px); }
         .btn-white {
-            background-color: white;
-            color: #0A0D12;
-            padding: 12px 32px;
-            border-radius: 6px;
+            background: var(--green);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 3px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
             text-decoration: none;
-            transition: opacity 0.2s;
+            border: 1px solid var(--green);
+            transition: background .18s ease, border-color .18s ease, transform .18s ease;
         }
-        .btn-white:hover { opacity: 0.9; }
+        .btn-white:hover { background: var(--green-deep); border-color: var(--green-deep); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(31,107,58,.22); }
         .mobile-forced-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .visible { opacity: 1; transform: translateY(0); }
@@ -250,7 +284,7 @@
             .tam-large {
                 width: 540px;
                 height: 540px;
-                border: 2px solid #BBDEFB;
+                border: 2px solid var(--border-2);
                 z-index: 1;
                 top: 0;
                 left: 50%;
@@ -260,8 +294,8 @@
             .tam-medium {
                 width: 360px;
                 height: 360px;
-                background: #E3F2FD;
-                border: 2px solid #64B5F6;
+                background: var(--green-tint);
+                border: 2px solid rgba(31,107,58,.3);
                 z-index: 2;
                 top: 157px;
                 left: 50%;
@@ -271,15 +305,15 @@
             .tam-small {
                 width: 200px;
                 height: 200px;
-                background: var(--primary);
+                background: var(--green);
                 color: white;
-                border: 2px solid #0046bd;
+                border: 2px solid var(--green-deep);
                 z-index: 3;
                 top: 330px;
                 left: 50%;
                 transform: translateX(-50%);
                 padding-top: 45px;
-                box-shadow: 0 10px 25px rgba(0, 94, 255, 0.3);
+                box-shadow: 0 10px 25px rgba(31,107,58,.3);
             }
             .tam-text-card { max-width: 320px; }
         }
@@ -289,39 +323,40 @@
             .acquisition-container { flex-direction: column; }
             .acquisition-container .flow-arrow { transform: rotate(90deg); margin: 5px 0; }
             .mobile-comp-card {
-                background: white;
-                border-radius: 12px;
+                background: var(--white);
+                border-radius: var(--radius-lg);
                 overflow: hidden;
                 box-shadow: var(--shadow-sm);
-                border: 1px solid #E5E7EB;
+                border: 1px solid var(--border);
                 margin-bottom: 1.5rem;
             }
             .mobile-comp-header {
-                background: var(--dark);
+                background: var(--ink);
                 color: white;
                 padding: 10px 16px;
                 font-weight: 600;
                 font-size: 0.9rem;
+                font-family: var(--mono);
             }
             .mobile-comp-grid { display: grid; grid-template-columns: 1fr 1fr; }
             .mobile-comp-cell { padding: 12px; font-size: 0.85rem; }
-            .mobile-comp-cell.competitor { background: #f9f9f9; color: #666; border-right: 1px solid #eee; }
-            .mobile-comp-cell.knowcap { background: rgba(0, 94, 255, 0.04); color: var(--dark); font-weight: 600; }
+            .mobile-comp-cell.competitor { background: var(--cream); color: var(--sec); border-right: 1px solid var(--border); }
+            .mobile-comp-cell.knowcap { background: rgba(31,107,58,.04); color: var(--ink); font-weight: 600; }
             .mobile-tam-box {
-                background: white;
-                border: 1px solid #E5E7EB;
-                border-radius: 12px;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
                 padding: 1.5rem;
                 margin-bottom: 1rem;
                 text-align: center;
                 box-shadow: var(--shadow-sm);
             }
-            .mobile-tam-box h5 { font-size: 0.9rem; text-transform: uppercase; color: var(--gray-text); margin-bottom: 0.5rem; }
-            .mobile-tam-box p { font-size: 1.2rem; font-weight: 700; color: var(--dark); margin: 0; line-height: 1.3; }
+            .mobile-tam-box h5 { font-size: 0.9rem; text-transform: uppercase; color: var(--sec); margin-bottom: 0.5rem; }
+            .mobile-tam-box p { font-size: 1.2rem; font-weight: 700; color: var(--ink); margin: 0; line-height: 1.3; }
             .mobile-fin-card {
-                background: white;
-                border: 1px solid #E5E7EB;
-                border-radius: 12px;
+                background: var(--white);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
                 padding: 1.25rem;
                 margin-bottom: 1rem;
                 display: flex;
@@ -342,9 +377,9 @@
                             <strong>Imagine this:</strong> You are an ERP Agency Owner. You installed Knowcap on your team's computers. It captures their silent screen work and attends all client and team meetings, recording every visual and audio detail. Now, you can just ask it:
                         </p>
                         <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-                            <div style="display: flex; gap: 0.75rem; align-items: flex-start; background: rgba(0, 94, 255, 0.1); padding: 1rem; border-radius: 8px;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start; background: rgba(31,107,58,.15); padding: 1rem; border-radius: 8px;">
                                 <div style="flex-shrink: 0; margin-top: 2px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #005EFF;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--green-dark);">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                                         <path d="M12 17h.01"></path>
@@ -354,9 +389,9 @@
                                     "Based on our Sales Playbook, tell me if this new hire followed the correct steps in their client meetings."
                                 </p>
                             </div>
-                            <div style="display: flex; gap: 0.75rem; align-items: flex-start; background: rgba(0, 94, 255, 0.1); padding: 1rem; border-radius: 8px;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start; background: rgba(31,107,58,.15); padding: 1rem; border-radius: 8px;">
                                 <div style="flex-shrink: 0; margin-top: 2px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #005EFF;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--green-dark);">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                                         <path d="M12 17h.01"></path>
@@ -395,23 +430,23 @@
                             <h4 class="text-dark">Timeline</h4>
                             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <div style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">AUG</div>
+                                    <div style="background: var(--green); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">AUG</div>
                                     <div><strong>Founded</strong><p class="mb-0 text-sm text-gray">August 19th, 2025.</p></div>
                                 </div>
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <div style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">SEP</div>
+                                    <div style="background: var(--green); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">SEP</div>
                                     <div><strong>1 pilot partner</strong><p class="mb-0 text-sm text-gray">Validated execution gap & workflow model.</p></div>
                                 </div>
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <div style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">OCT</div>
+                                    <div style="background: var(--green); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">OCT</div>
                                     <div><strong>Expanded to 8 pilot partners</strong><p class="mb-0 text-sm text-gray">$4.3k MRR.</p></div>
                                 </div>
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <div style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">NOV</div>
+                                    <div style="background: var(--green); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">NOV</div>
                                     <div><strong>Added $8k/Month committed pipeline</strong><p class="mb-0 text-sm text-gray">Contingent on Zoom, Teams & Odoo integrations.</p></div>
                                 </div>
-                                <div style="display: flex; gap: 1rem; align-items: flex-start; background: rgba(0,94,255,0.05); padding: 1rem; border-radius: 8px; border: 1px dashed var(--primary);">
-                                    <div style="background: white; color: var(--primary); border: 1px solid var(--primary); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px;">NEXT</div>
+                                <div style="display: flex; gap: 1rem; align-items: flex-start; background: rgba(31,107,58,.06); padding: 1rem; border-radius: 8px; border: 1px dashed var(--green);">
+                                    <div style="background: var(--white); color: var(--green); border: 1px solid var(--green); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 2px; font-family: var(--mono);">NEXT</div>
                                     <div><strong>Next Milestone</strong><p class="mb-0 text-sm text-dark">8 additional pilot partners at $1k/month each.</p></div>
                                 </div>
                             </div>
@@ -439,7 +474,7 @@
                     <div class="text-center">
                         <span class="slide-label">Demo</span>
                         <h3>6-Minute Detailed Walkthrough</h3>
-                        <p class="text-sm text-gray mb-4">Click the blue timestamps below to jump to specific features.</p>
+                        <p class="text-sm text-gray mb-4">Click the green timestamps below to jump to specific features.</p>
                         <div class="browser-window">
                             <div class="browser-header">
                                 <div class="dot dot-red"></div>
@@ -456,7 +491,7 @@
             </div>
         </section>
 
-        <section style="background: #F5F7FA;">
+        <section style="background: var(--white);">
             <div class="container fade-in">
                 <div class="mb-12">
                     <span class="slide-label">The Problem</span>
@@ -475,7 +510,7 @@
                         <div class="number-circle">2</div>
                         <div>
                             <h5>Scope creep</h5>
-                            <p class="mb-0 text-sm">Clients “remember” extra work without proof. <span class="timestamp-link" onclick="seekAndPlay(73, 'detailedVideo')">▶ 01:13</span></p>
+                            <p class="mb-0 text-sm">Clients "remember" extra work without proof. <span class="timestamp-link" onclick="seekAndPlay(73, 'detailedVideo')">▶ 01:13</span></p>
                         </div>
                     </div>
                     <div class="card flex items-start" style="border-left: 4px solid #FF5F56;">
@@ -520,7 +555,7 @@
             </div>
         </section>
 
-        <section style="background: #F5F7FA;">
+        <section style="background: var(--white);">
             <div class="container fade-in">
                 <div class="mb-12 text-center">
                     <span class="slide-label">How It Works</span>
@@ -532,7 +567,7 @@
                         <div class="card" style="padding: 1.5rem;">
                             <h5 class="text-primary m-0 mb-2">1. Instant Quality Control</h5>
                             <p class="text-sm font-bold mt-2 mb-1">The Prompt:</p>
-                            <p class="text-sm italic mb-0">"Audit @Junior’s work in these @4_meetings against @Odoo_Implementation_Methodology." <button class="timestamp-link" onclick="seekAndPlay(1, 'tutorialVideo')">▶ 00:01</button></p>
+                            <p class="text-sm italic mb-0">"Audit @Junior's work in these @4_meetings against @Odoo_Implementation_Methodology." <button class="timestamp-link" onclick="seekAndPlay(1, 'tutorialVideo')">▶ 00:01</button></p>
                         </div>
                         <div class="card" style="padding: 1.5rem;">
                             <h5 class="text-primary m-0 mb-2">2. Admin on Autopilot</h5>
@@ -659,7 +694,7 @@
             </div>
         </section>
 
-        <section style="background: #F5F7FA;">
+        <section style="background: var(--white);">
             <div class="container fade-in">
                 <div class="mb-12 text-center">
                     <span class="slide-label">Why Now</span>
@@ -688,8 +723,8 @@
                             <p class="mb-2 text-xs uppercase tracking-wide text-gray">Beachhead Logic</p>
                             <p class="text-lg font-bold mb-1">Odoo Ecosystem — $90M</p>
                             <p class="text-sm text-gray mb-2">7,500 Partners × $12K ACV</p>
-                            <div style="background: var(--primary-light); padding: 8px; border-radius: 8px;">
-                                <p class="text-xs text-primary font-bold mb-0">Target Penetration:</p>
+                            <div style="background: var(--green-tint); padding: 8px; border-radius: 8px;">
+                                <p class="text-xs font-bold mb-0" style="color: var(--green-deep);">Target Penetration:</p>
                                 <p class="text-xs text-dark mb-0">1.3% in 2026 &rarr; 2.6% in 2027</p>
                             </div>
                         </div>
@@ -731,7 +766,7 @@
                             <h5>Expansion</h5>
                             <p>50,000 Specialized Firms = $600M</p>
                         </div>
-                        <div class="mobile-tam-box" style="background: var(--primary); border: none;">
+                        <div class="mobile-tam-box" style="background: var(--green); border: none;">
                             <h5 style="color: rgba(255,255,255,0.8);">Beachhead: Odoo Ecosystem</h5>
                             <p style="color: white; font-size: 1.5rem;">$90M</p>
                             <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin-top: 5px;">7,500 Partners × $12K ACV</p>
@@ -744,14 +779,14 @@
             </div>
         </section>
 
-        <section style="background: #F5F7FA;">
+        <section style="background: var(--white);">
             <div class="container fade-in">
                 <div class="mb-12 text-center">
                     <span class="slide-label">Business Model</span>
                     <h2>Tier-based SaaS: $1k–$5k MRR per firm</h2>
                 </div>
                 <div class="grid grid-cols-3 gap-6">
-                    <div class="card text-center" style="border: 2px solid var(--primary);">
+                    <div class="card text-center" style="border: 2px solid var(--green);">
                         <h4 class="text-primary">Core</h4>
                         <p class="text-dark" style="font-size: 2rem; font-weight:700;">$1,000<span class="text-sm text-gray">/mo</span></p>
                         <p class="text-xs text-gray mt-2">Up to 10 seats</p>
@@ -804,7 +839,7 @@
             </div>
         </section>
 
-        <section style="background: #F5F7FA;">
+        <section style="background: var(--white);">
             <div class="container fade-in">
                 <div class="text-center mb-12">
                     <span class="slide-label">Financials & Unit Economics</span>
@@ -914,7 +949,7 @@
             </div>
         </section>
 
-        <section style="background: #F5F7FA;">
+        <section style="background: var(--white);">
             <div class="container fade-in">
                 <div class="mb-16 text-center">
                     <span class="slide-label">Team</span>
@@ -929,7 +964,7 @@
                     <div class="card">
                         <h3>Hesham Tarek</h3>
                         <p class="text-primary font-bold mb-4">Technical Co-Founder</p>
-                        <p>AI systems architect. <strong>Wrote 100% of Knowcap’s VTE core code.</strong></p>
+                        <p>AI systems architect. <strong>Wrote 100% of Knowcap's VTE core code.</strong></p>
                     </div>
                 </div>
                 <p class="text-center mt-8 text-gray font-medium">Founders with deep domain obsession and proven execution.</p>
@@ -943,41 +978,41 @@
                     <h2>From Documentation &rarr; Automation &rarr; The Verification Standard</h2>
                 </div>
                 <div class="grid grid-cols-3 gap-6">
-                    <div class="card" style="border-top: 4px solid var(--primary);"><div class="number-circle mb-4">1</div><h5>Phase 1: Documentation & Verification</h5></div>
-                    <div class="card" style="border-top: 4px solid #00C6FF;"><div class="number-circle mb-4">2</div><h5>Phase 2: Vibe Tasking (AI creates & completes tasks)</h5></div>
-                    <div class="card" style="border-top: 4px solid var(--dark);"><div class="number-circle mb-4" style="background: var(--dark); color: white;">3</div><h5>Phase 3: The Verification Standard (The global dataset for project truth)</h5></div>
+                    <div class="card" style="border-top: 4px solid var(--green);"><div class="number-circle mb-4">1</div><h5>Phase 1: Documentation & Verification</h5></div>
+                    <div class="card" style="border-top: 4px solid var(--green-dark);"><div class="number-circle mb-4">2</div><h5>Phase 2: Vibe Tasking (AI creates & completes tasks)</h5></div>
+                    <div class="card" style="border-top: 4px solid var(--ink);"><div class="number-circle mb-4" style="background: var(--ink); color: white;">3</div><h5>Phase 3: The Verification Standard (The global dataset for project truth)</h5></div>
                 </div>
                 <div class="card-dark mt-spacer text-center"><p class="text-white mb-0"><strong>Moat:</strong> verified datasets competitors cannot replicate.</p></div>
             </div>
         </section>
 
-        <section class="bg-dark" style="background: #0A0D12; color: white; min-height: 90vh; display: flex; align-items: center;">
+        <section class="bg-dark" style="background: var(--ink); color: var(--cream); min-height: 90vh; display: flex; align-items: center; border-top: 1px solid rgba(255,255,255,.08);">
             <div class="container fade-in">
                 <div class="text-center mb-16">
-                    <span class="slide-label" style="background: rgba(255,255,255,0.1); color: white;">The Ask</span>
-                    <h2 style="color: white;">Raising $750K <span style="font-weight:400; color:#888;">(SAFE @ $10M Pre)</span></h2>
-                    <p style="color: #aaa;">To reach 100 customers & break-even at 50 (September 2026)</p>
+                    <span class="slide-label" style="background: transparent; color: rgba(251,250,248,.6);">The Ask</span>
+                    <h2 style="color: var(--cream);">Raising $750K <span style="font-weight:400; color:rgba(251,250,248,.55);">(SAFE @ $10M Pre)</span></h2>
+                    <p style="color: rgba(251,250,248,.65);">To reach 100 customers & break-even at 50 (September 2026)</p>
                 </div>
                 <div class="grid grid-cols-2 gap-12 items-start">
                     <div class="card-dark left-align">
                         <h4 class="text-white mb-6">Milestone Unlock (18 Months)</h4>
-                        <div style="height: 8px; border-radius: 4px; background: #333; overflow: hidden; display: flex; margin-bottom: 1.5rem;">
-                            <div style="width: 45%; background: #005EFF;"></div>
-                            <div style="width: 30%; background: #00C6FF;"></div>
-                            <div style="width: 25%; background: #fff;"></div>
+                        <div style="height: 8px; border-radius: 4px; background: rgba(255,255,255,.12); overflow: hidden; display: flex; margin-bottom: 1.5rem;">
+                            <div style="width: 45%; background: var(--green);"></div>
+                            <div style="width: 30%; background: var(--green-dark);"></div>
+                            <div style="width: 25%; background: rgba(255,255,255,.6);"></div>
                         </div>
                         <div class="space-y-4" style="display: grid; gap: 1rem;">
                             <div style="display: flex; gap: 10px; align-items: start;">
-                                <div style="width:40px; text-align:center; font-weight:bold; background:#005EFF; color:white; border-radius:50%;">45%</div>
-                                <div style="text-align: left;"><strong class="text-white">Growth Engine</strong><br><span class="text-sm text-gray">Ads, partner referrals, and outbound SDR operations.</span></div>
+                                <div style="width:40px; text-align:center; font-weight:bold; background: var(--green); color:white; border-radius:50%; font-family: var(--mono); font-size: 0.75rem; line-height: 40px; flex-shrink: 0;">45%</div>
+                                <div style="text-align: left;"><strong class="text-white">Growth Engine</strong><br><span class="text-sm" style="color: rgba(251,250,248,.6);">Ads, partner referrals, and outbound SDR operations.</span></div>
                             </div>
                             <div style="display: flex; gap: 10px; align-items: start;">
-                                <div style="width:40px; text-align:center; font-weight:bold; background:#00C6FF; color:white; border-radius:50%;">30%</div>
-                                <div style="text-align: left;"><strong class="text-white">Product Acceleration</strong><br><span class="text-sm text-gray">Mobile app, deep integrations, and "Vibe Tasking" beta.</span></div>
+                                <div style="width:40px; text-align:center; font-weight:bold; background: var(--green-dark); color: var(--ink); border-radius:50%; font-family: var(--mono); font-size: 0.75rem; line-height: 40px; flex-shrink: 0;">30%</div>
+                                <div style="text-align: left;"><strong class="text-white">Product Acceleration</strong><br><span class="text-sm" style="color: rgba(251,250,248,.6);">Mobile app, deep integrations, and "Vibe Tasking" beta.</span></div>
                             </div>
                             <div style="display: flex; gap: 10px; align-items: start;">
-                                <div style="width:40px; text-align:center; font-weight:bold; background:#fff; color:#000; border-radius:50%;">25%</div>
-                                <div style="text-align: left;"><strong class="text-white">Core Team & Infrastructure</strong><br><span class="text-sm text-gray">Expanding AI and engineering capacity.</span></div>
+                                <div style="width:40px; text-align:center; font-weight:bold; background:rgba(255,255,255,.85); color: var(--ink); border-radius:50%; font-family: var(--mono); font-size: 0.75rem; line-height: 40px; flex-shrink: 0;">25%</div>
+                                <div style="text-align: left;"><strong class="text-white">Core Team & Infrastructure</strong><br><span class="text-sm" style="color: rgba(251,250,248,.6);">Expanding AI and engineering capacity.</span></div>
                             </div>
                         </div>
                     </div>
@@ -1003,7 +1038,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div style="background: var(--primary); padding: 1.5rem; border-radius: 12px; text-align: center;">
+                        <div style="background: var(--green); padding: 1.5rem; border-radius: var(--radius-lg); text-align: center;">
                             <p class="text-white font-bold mb-2">Thesis</p>
                             <p class="text-white text-sm mb-0">Capture the Odoo ecosystem first — then expand to all professional service firms with a verified AI delivery layer.</p>
                         </div>
@@ -1014,7 +1049,7 @@
                         Schedule an Investor Call &rarr;
                     </a>
                     <div class="mt-6">
-                        <a href="https://share.knowcap.ai/?token=6b654198-54a4-4092-9cf9-e829cecd153c" style="color: #888; font-size: 0.8rem; text-decoration: underline;">Watch 2 min demo on how i created this Interactive Pitch Deck</a>
+                        <a href="https://share.knowcap.ai/?token=6b654198-54a4-4092-9cf9-e829cecd153c" style="color: rgba(251,250,248,.5); font-size: 0.8rem; text-decoration: underline; font-family: var(--mono);">Watch 2 min demo on how i created this Interactive Pitch Deck</a>
                     </div>
                 </div>
             </div>
