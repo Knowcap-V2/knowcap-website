@@ -61,7 +61,8 @@ available_screenshots:
 - BANNED — hard rejected at output: `leverage`, `synergy`, `ecosystem`, `stakeholder`, `stakeholders`, `holistic`, `journey` (as noun), `unlock`, `drive` (as verb meaning produce), `robust`
 - USE: "the team", "the partner", "the client", "the meeting", "the recording", "the call", "the routine"
 - Active voice. Short sentences when the claim is sharp.
-- GEO structure: 134-167 word self-contained passages, FAQ section, schema-friendly H2/H3 hierarchy.
+- GEO structure: 134-167 word self-contained passages, a `## FAQ` section, schema-friendly H2/H3 hierarchy.
+- FAQ heading MUST be exactly `## FAQ` (not "Frequently asked questions") — `app/lib/blog.ts` emits the FAQPage JSON-LD only when it matches `## FAQ` literally. Each question is a `###` under it.
 
 ## ICP gate (enforced at skill entry, all modes)
 
@@ -98,7 +99,7 @@ Body structure (locked, 1,300-1,600 words total):
 3. WHY THE CURRENT TOOLING DOESN'T SOLVE IT — 134-167 words. Cite the specific category — productivity meeting tools, generic AI summarizers, etc. Be specific about WHY they fall short for {target_persona}.
 4. WHAT THE VERIFIED-FACTS MODEL CHANGES — 200-300 words. Cite vision_md (the trust-ladder, the named-human-confirms, the no-Confirm-All-button rule). Anchor to {target_persona}'s actual workflow.
 5. WHAT THIS LOOKS LIKE IN PRACTICE for {target_persona} — 200-300 words. Concrete actions. If `available_screenshots` has matching items, REFERENCE them inline (e.g., "see screenshot below — the partner's project manager confirms 7 claims after a 47-minute call, takes about 4 minutes").
-6. FAQ — exactly 5 questions, 134-167 words each, schema-friendly H3.
+6. `## FAQ` (exact H2 heading) — exactly 5 questions as `###`, 134-167 words each.
 7. CLOSING — 1-2 sentences. NEVER "book a demo." Use understated finish.
 ```
 
@@ -116,7 +117,7 @@ Body structure (locked, 1,300-1,600 words total):
 3. WHAT WENT WRONG (OR RIGHT) — 134-167 words. The inflection point.
 4. THE INSIGHT — 134-167 words. What this proves about the broader pattern for {target_persona}.
 5. WHAT THIS MEANS FOR YOU — 200-300 words. Concrete actions. Reference available_screenshots if they show the same surface.
-6. FAQ — exactly 5 questions, 134-167 words each.
+6. `## FAQ` (exact H2 heading) — exactly 5 questions as `###`, 134-167 words each.
 7. CLOSING — 1-2 sentences.
 
 `source_knowcap_ids` in frontmatter MUST list the source(s) you actually cited.
@@ -140,7 +141,7 @@ Body structure (locked, 1,300-1,600 words total):
 3. WHERE THE COMPETITOR'S MODEL BREAKS for {target_persona} — 200-300 words. The persona-specific edge case.
 4. THE DIFFERENT QUESTION KNOWCAP ANSWERS — 200-300 words. Vision-anchored. Reference screenshots if they show the load-bearing surface.
 5. WHEN TO PICK COMPETITOR, WHEN TO PICK KNOWCAP — 134-167 words. HONEST recommendation (if competitor is the right fit for this persona, say so — it builds trust).
-6. FAQ — exactly 5 questions, 134-167 words each.
+6. `## FAQ` (exact H2 heading) — exactly 5 questions as `###`, 134-167 words each.
 7. CLOSING — 1-2 sentences.
 ```
 
@@ -178,7 +179,7 @@ Add the used screenshot slugs to frontmatter `embedded_screenshots: [...]`.
 2. Word count → 1,300-1,600 (body only, not frontmatter). If outside, retry once with tightening/expansion guidance.
 3. Target keyword → must appear in title AND H2-section-one AND ≥3 times in body.
 4. Slug uniqueness → must not match any slug in `recent_shipped_slugs` or `recent_drafts_in_pipeline`.
-5. FAQ count → exactly 5 H3 questions in the FAQ section.
+5. FAQ → heading is exactly `## FAQ` (literal) AND exactly 5 `###` questions under it (the FAQPage schema in `app/lib/blog.ts` depends on the literal heading).
 6. Frontmatter shape → all required keys present, types correct.
 
 ## REFUSED output shape
