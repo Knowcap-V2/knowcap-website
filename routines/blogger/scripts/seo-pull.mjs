@@ -44,6 +44,10 @@ const LOCATIONS = getArg('locations', 'Saudi Arabia,Egypt,United Arab Emirates')
 const LANGS = getArg('langs', 'en,ar').split(',').map(s => s.trim())
 const MAX = parseInt(getArg('max', '25'), 10)
 const STAMP = getArg('stamp', null)
+// Reuse guard: skip the paid pull while the cached queue is still fresh + deep enough.
+const MAX_AGE_DAYS = parseInt(getArg('max-age-days', '7'), 10) // re-pull at least weekly so volumes stay current
+const MIN_FRESH = parseInt(getArg('min-fresh', '4'), 10)        // re-pull early if the backlog runs thin
+const FORCE = argv.includes('--force')                          // ignore the cache, always re-pull
 
 // ---- creds ----
 function readCreds() {
@@ -82,10 +86,17 @@ const PERSONAS = {
 const ICP_INTENT = /(meeting|minute|note|transcri|record|audit|complian|pdpl|govern|odoo|erp|scope|verif|attest|sign[- ]?off|محضر|اجتماع|تدقيق|اودو|امتثال|حوكمة|توثيق)/i
 const COMP_WEIGHT = { LOW: 1.0, MEDIUM: 0.6, HIGH: 0.35 }
 
-// ---- shipped-slug dedup ----
+// ---- shipped/drafted-slug dedup ----
+// Scan BOTH shipped posts and pending drafts so a keyword already turned into a
+// draft is not re-picked on a later run that reuses the cached queue.
+const DRAFTS_DIR = path.join(REPO_ROOT, 'docs', 'content-pipeline', 'drafts')
 function shippedSlugs() {
-  if (!fs.existsSync(BLOG_DIR)) return []
-  return fs.readdirSync(BLOG_DIR).filter(f => f.endsWith('.md')).map(f => f.replace(/\.md$/, ''))
+  const out = []
+  for (const d of [BLOG_DIR, DRAFTS_DIR]) {
+    if (!fs.existsSync(d)) continue
+    for (const f of fs.readdirSync(d)) if (f.endsWith('.md')) out.push(f.replace(/\.md$/, ''))
+  }
+  return out
 }
 const slugify = s => String(s).toLowerCase().replace(/[^a-z0-9؀-ۿ]+/g, '-').replace(/^-|-$/g, '')
 function isCovered(keyword, slugs) {
@@ -115,9 +126,58 @@ async function keywordsForKeywords(seeds, locationName, languageCode) {
   return { items: task.result || [], cost: json.cost || 0 }
 }
 
-// ---- main ----
-const personas = ONLY_PERSONA ? [ONLY_PERSONA] : Object.keys(PERSONAS)
+const QUEUE = path.join(BLOGGER_DIR, 'opportunity-queue.json')
 const slugs = shippedSlugs()
+const freshen = top => (top || []).filter(r => !isCovered(r.keyword, slugs)).slice(0, 20)
+
+// ---- digest + write (shared by the reuse and pull paths) ----
+function buildDigest(o) {
+  const lines = []
+  lines.push(`# SEO opportunity digest — ${o.generated_at.slice(0, 10)}`)
+  lines.push('')
+  lines.push(o.reused
+    ? `Source: cached opportunity-queue — no API call (reused ${o.last_reused_at.slice(0, 10)}, pulled ${o.generated_at.slice(0, 10)}) · API cost this run: $0.000`
+    : `Source: DataForSEO (MENA ${o.locations.join(', ')} · ${o.langs.join('/')}) · API cost this run: $${o.cost.toFixed(3)}`)
+  lines.push(`Fresh opportunities (not yet covered by a shipped or drafted post): **${o.top.length}**`)
+  lines.push('')
+  lines.push('## Top picks (write next)')
+  lines.push('')
+  lines.push('| # | keyword | persona | vol | comp | score |')
+  lines.push('|---|---|---|---|---|---|')
+  o.top.slice(0, 10).forEach((r, i) => lines.push(`| ${i + 1} | ${r.keyword} | ${r.persona} | ${r.search_volume} | ${r.competition || '-'} | ${r.score} |`))
+  return lines.join('\n')
+}
+function writeOutputs(o) {
+  fs.writeFileSync(QUEUE, JSON.stringify(o, null, 2))
+  const digest = buildDigest(o)
+  if (STAMP) {
+    const runDir = path.join(BLOGGER_DIR, 'runs', STAMP)
+    fs.mkdirSync(runDir, { recursive: true })
+    fs.writeFileSync(path.join(runDir, 'seo-digest.md'), digest)
+  }
+  console.log(digest)
+}
+
+// ---- reuse guard: skip the paid pull while the cached queue is fresh + deep enough ----
+if (!FORCE && !ONLY_PERSONA && fs.existsSync(QUEUE)) {
+  try {
+    const cached = JSON.parse(fs.readFileSync(QUEUE, 'utf8'))
+    const ageDays = (Date.now() - new Date(cached.generated_at).getTime()) / 86400000
+    const fresh = freshen(cached.top)
+    if (ageDays <= MAX_AGE_DAYS && fresh.length >= MIN_FRESH) {
+      // generated_at stays the real pull date so age keeps climbing → forces a re-pull by MAX_AGE_DAYS
+      writeOutputs({ ...cached, reused: true, last_reused_at: new Date().toISOString(), cost: 0, top: fresh })
+      console.error(`\nREUSED ${QUEUE} — ${fresh.length} fresh opportunities, age ${ageDays.toFixed(1)}d, API cost $0.000 (use --force to re-pull)`)
+      process.exit(0)
+    }
+    console.error(`queue stale/thin (age ${ageDays.toFixed(1)}d, fresh ${fresh.length}/${MIN_FRESH}) → pulling fresh`)
+  } catch (e) {
+    console.error('could not reuse cached queue (' + e.message + ') → pulling fresh')
+  }
+}
+
+// ---- main (paid pull) ----
+const personas = ONLY_PERSONA ? [ONLY_PERSONA] : Object.keys(PERSONAS)
 const out = { generated_at: new Date().toISOString(), source: 'dataforseo:google_ads/keywords_for_keywords', locations: LOCATIONS, langs: LANGS, cost: 0, personas: {}, top: [] }
 const seen = new Set()
 
@@ -166,28 +226,5 @@ for (const persona of personas) {
 out.top.sort((a, b) => b.score - a.score)
 out.top = out.top.slice(0, 20)
 
-// ---- write queue ----
-const QUEUE = path.join(BLOGGER_DIR, 'opportunity-queue.json')
-fs.writeFileSync(QUEUE, JSON.stringify(out, null, 2))
-
-// ---- digest ----
-const lines = []
-lines.push(`# SEO opportunity digest — ${out.generated_at.slice(0, 10)}`)
-lines.push('')
-lines.push(`Source: DataForSEO (MENA ${LOCATIONS.join(', ')} · ${LANGS.join('/')}) · API cost this run: $${out.cost.toFixed(3)}`)
-lines.push(`Fresh opportunities (not yet covered by a shipped post): **${out.top.length}**`)
-lines.push('')
-lines.push('## Top picks (write next)')
-lines.push('')
-lines.push('| # | keyword | persona | vol | comp | score |')
-lines.push('|---|---|---|---|---|---|')
-out.top.slice(0, 10).forEach((r, i) => lines.push(`| ${i + 1} | ${r.keyword} | ${r.persona} | ${r.search_volume} | ${r.competition || '-'} | ${r.score} |`))
-const digest = lines.join('\n')
-
-if (STAMP) {
-  const runDir = path.join(BLOGGER_DIR, 'runs', STAMP)
-  fs.mkdirSync(runDir, { recursive: true })
-  fs.writeFileSync(path.join(runDir, 'seo-digest.md'), digest)
-}
-console.log(digest)
+writeOutputs(out)
 console.error(`\nwrote ${QUEUE} — ${out.top.length} fresh opportunities, total API cost $${out.cost.toFixed(3)}`)
