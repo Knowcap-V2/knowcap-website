@@ -154,6 +154,22 @@ const CSS = `
   color:var(--sec);display:flex;flex-wrap:wrap;gap:8px 0}
 .cl-trust--2{margin-top:12px}
 .cl-trust .cl-sep{color:var(--border-2);padding:0 14px}
+.cl-trust--privacy span{color:var(--green-deep)}
+
+/* works-with band — integrations + who-it's-for (honest pre-launch proof) */
+.cl-worksband{border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--white);padding:28px 0}
+.cl-works-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:16px 30px}
+.cl-works-grp{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.cl-works-lbl{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--green)}
+.cl-works-item{font-family:var(--body);font-size:14.5px;font-weight:600;color:var(--ink-soft);
+  letter-spacing:-.01em}
+.cl-works-dot{color:var(--border-2)}
+.cl-works-aud{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--sec)}
+.cl-works-aud b{color:var(--ink);font-weight:500}
+@media(max-width:720px){.cl-works-aud{width:100%}}
 
 /* cover photo — the app window */
 .cl-cover{padding:64px 0 0}
@@ -724,12 +740,40 @@ function Hero() {
             <div className="cl-trust cl-trust--2">
               <span>Captures Meet · recordings · screen recordings · documents · URLs · Telegram</span>
             </div>
+            <div className="cl-trust cl-trust--2 cl-trust--privacy">
+              <span>Your data stays yours · never used to train models · built for Saudi PDPL &amp; GDPR Article&nbsp;22</span>
+            </div>
           </Reveal>
         </div>
 
         <Reveal delay={200}>
           <AppWindow />
         </Reveal>
+      </div>
+    </section>
+  )
+}
+
+/* --------------------------------------------------- works-with band */
+
+const WORKS_WITH = ['Claude', 'Codex', 'Gemini', 'Google Meet', 'Odoo', 'Telegram']
+
+function WorksWith() {
+  return (
+    <section className="cl-worksband" aria-label="Integrations and who Knowcap is for">
+      <div className="cl-wrap cl-works-inner">
+        <div className="cl-works-grp">
+          <span className="cl-works-lbl">Works with</span>
+          {WORKS_WITH.map((name, idx) => (
+            <span key={name} style={{ display: 'inline-flex', alignItems: 'center', gap: 18 }}>
+              {idx > 0 && <span className="cl-works-dot" aria-hidden="true">·</span>}
+              <span className="cl-works-item">{name}</span>
+            </span>
+          ))}
+        </div>
+        <span className="cl-works-aud">
+          Built for <b>Odoo partners</b> · <b>regulated teams</b> · <b>AI power-users</b>
+        </span>
       </div>
     </section>
   )
@@ -1175,6 +1219,7 @@ export default function HomeCommitment({ recentPosts = [] }: { recentPosts?: Pos
       <ABTracker variant="e" />
       <Header />
       <Hero />
+      <WorksWith />
       <Problem />
       <Loop />
       <Story />
