@@ -32,6 +32,8 @@ out
 routines/**/runs/
 routines/**/baselines/
 routines/**/state.json
+routines/**/opportunity-queue.json
+routines/**/burn-state.json
 
 # Database exports / PII dumps — never commit (5804)
 database_export/
