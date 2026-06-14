@@ -22,7 +22,7 @@ export default function PolicyPage() {
       <PageHero
         kicker="Legal Information"
         title="Privacy Policy"
-        sub="Knowcap Chrome Extension • Effective Date: September 9, 2025"
+        sub="Knowcap Chrome Extension • Effective Date: June 14, 2026"
       />
       <div className="cl-page-body">
         <div className="cl-wrap">
@@ -46,7 +46,7 @@ export default function PolicyPage() {
 
             <h2 style={h2Anchor}>2. Description of Service</h2>
             <p>
-              The Knowcap Chrome Extension provides a service to help users record, transcribe, and organize their Google Meetings and other screen-captured content. It features an AI-powered bot that can automatically join and record meetings, as well as tools for manual screen, camera, and audio recording. All captured content is processed for transcription and uploaded to the user&apos;s account at app.knowcap.ai for easy access and management.
+              The Knowcap Chrome Extension helps you capture the work your team already does — meetings (including Google Meet), calls, screen recordings, documents, and links — as part of Knowcap&apos;s verified work intelligence for AI agents. It features an AI-powered bot that can automatically join and record meetings, as well as tools for manual screen, camera, and audio recording. All captured content is processed for transcription and uploaded to the user&apos;s account at app.knowcap.ai, where a named human confirms what becomes durable evidence for your agents.
             </p>
 
             <h2 id="data-collection" style={h2Anchor}>3. Information We Collect</h2>

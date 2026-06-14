@@ -703,7 +703,7 @@ function Hero() {
               <span>Full audit trail on every action</span>
             </div>
             <div className="cl-trust cl-trust--2">
-              <span>Captures Meet · recordings · voice notes · documents · URLs · Telegram</span>
+              <span>Captures Meet · recordings · screen recordings · documents · URLs · Telegram</span>
             </div>
           </Reveal>
         </div>
@@ -730,7 +730,7 @@ function Problem() {
           <Reveal delay={120}>
             <p className="cl-lead">
               A company makes hundreds of promises a week. To clients. To employees. To suppliers.
-              None of them live in your project tool. They live in calls, voice notes, and chat
+              None of them live in your project tool. They live in calls, messages, and chat
               threads. When one breaks, you find out last.
             </p>
           </Reveal>
@@ -781,7 +781,7 @@ function Problem() {
 const STEPS = [
   {
     no: '01', title: 'Listen',
-    body: 'Knowcap captures the conversations your team is already having: meetings, recordings, voice notes, documents, Telegram. WhatsApp, email, and Slack are next.',
+    body: 'Knowcap captures the conversations your team is already having: meetings, recordings, screen recordings, documents, Telegram. WhatsApp, email, and Slack are next.',
   },
   {
     no: '02', title: 'Extract',
@@ -1000,7 +1000,7 @@ const FAQS = [
   },
   {
     q: 'Which tools does it work with?',
-    a: 'Claude, Codex, and Gemini today via MCP. Capture from Google Meet, uploaded recordings, voice notes, documents, URLs, and Telegram. Odoo task creation for implementation teams.',
+    a: 'Claude, Codex, and Gemini today via MCP. Capture from Google Meet, uploaded recordings, screen recordings, documents, URLs, and Telegram. Odoo task creation for implementation teams.',
   },
 ]
 
@@ -1043,7 +1043,7 @@ function Closer() {
                 Most AI acts on what it <em>thinks</em> is true.<br />
                 Knowcap acts on what a human <em>said</em> is true.
               </h2>
-              <p className="cl-closer-sub">Record. Confirm. Let your agents act on verified facts.</p>
+              <p className="cl-closer-sub">Capture. Confirm. Let your agents act on verified facts.</p>
             </div>
             <div className="cl-closer-ctas">
               <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>

@@ -121,7 +121,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
         <section className="kb-cta">
           <h2>AI that only acts on truth.</h2>
-          <p>Record the meeting. Confirm the claims. Let agents do the work.</p>
+          <p>Capture the work. Confirm the claims. Let agents act on what&rsquo;s verified.</p>
           <a className="kb-btn" href={`https://app.knowcap.ai/register?utm_source=blog_${post.slug.slice(0, 40)}_cta`}>Start Verifying →</a>
         </section>
       </div>

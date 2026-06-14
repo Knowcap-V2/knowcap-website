@@ -13,7 +13,7 @@ const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-serif' })
 
 export const metadata: Metadata = {
   title: 'Knowcap — The Trust Layer for AI Agents',
-  description: 'Turn human claims into evidence your AI agents can learn from. Capture meetings, voice notes, and chats. Promote the durable parts to evidence. Let agents act on what\'s verified.',
+  description: 'Turn human claims into evidence your AI agents can learn from. Capture meetings, messages, and recordings. Promote the durable parts to evidence. Let agents act on what\'s verified.',
   icons: {
     icon: '/favicon.ico',
   },

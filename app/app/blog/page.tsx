@@ -7,7 +7,7 @@ import EditorialShell from '@/components/editorial/shell'
 export const metadata: Metadata = {
   title: 'Blog — Knowcap',
   description:
-    'Verified-meeting intelligence for MENA teams: Odoo partners, agencies, audit firms. Case studies, comparisons, and field notes from the trust layer for AI agents.',
+    'Verified work intelligence for MENA teams: Odoo partners, agencies, audit firms. Case studies, comparisons, and field notes from the trust layer for AI agents.',
   alternates: { canonical: 'https://knowcap.ai/blog' },
   openGraph: {
     title: 'Knowcap Blog',
@@ -30,7 +30,7 @@ export default function BlogIndexPage() {
             <div className="kb-eyebrow">Field notes</div>
             <h1 className="kb-h1">The Knowcap Blog</h1>
             <p className="kb-index-sub">
-              Verified-meeting intelligence for MENA teams — Odoo partners, agencies, audit firms.
+              Verified work intelligence for MENA teams — Odoo partners, agencies, audit firms.
               Real cases, real numbers, no recycled listicles.
             </p>
           </div>
@@ -54,7 +54,7 @@ export default function BlogIndexPage() {
 
         <section className="kb-cta">
           <h2>AI that only acts on truth.</h2>
-          <p>Record the meeting. Confirm the claims. Let agents do the work.</p>
+          <p>Capture the work. Confirm the claims. Let agents act on what&rsquo;s verified.</p>
           <a className="kb-btn" href="https://app.knowcap.ai/register?utm_source=blog_index_cta">Start Verifying →</a>
         </section>
       </div>

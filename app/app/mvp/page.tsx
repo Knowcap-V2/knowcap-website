@@ -1,23 +1,8 @@
-'use client';
+import { redirect } from 'next/navigation'
 
-import React, { useEffect } from 'react';
-import dynamic from 'next/dynamic';
-
-// Dynamically import the App component with no SSR to avoid hydration issues
-// since it uses browser APIs (localStorage, IndexedDB, microphone, screen capture)
-const KnowApp = dynamic(() => import('@/lib/knowapp/App'), { ssr: false });
-
+// /mvp is retired from the public site. The in-browser Knowapp demo exposed a
+// developer API-key setup screen to visitors; until it's productized behind a
+// gate it redirects home. (Audit 2026-06-14.)
 export default function MVPPage() {
-  useEffect(() => {
-    // Set page title
-    document.title = 'MVP - AI Notebook | Knowcap.ai';
-  }, []);
-
-  return (
-    <>
-      <div style={{ height: '100vh' }}>
-        <KnowApp />
-      </div>
-    </>
-  );
+  redirect('/')
 }
