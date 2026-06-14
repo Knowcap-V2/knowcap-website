@@ -17,6 +17,7 @@ const APP_URL = 'https://app.knowcap.ai'
 const REGISTER_URL = `${APP_URL}/register?utm_source=compare_${COMPETITOR_SLUG}_page`
 
 const COMPARISON_ROWS: { feature: string; them: string; us: string; them_yes: boolean; us_yes: boolean; highlight?: boolean }[] = [
+  { feature: 'Reads the screen — slides, shared docs & on-screen actions (not just the audio)', them: 'Slides only — screenshots in the transcript, not read (gated AI image-chat on Business/Enterprise)', us: 'Yes — captures the screen and AI-reads what’s shown (slides, docs, code, dashboards), timestamped & searchable', them_yes: false, us_yes: true, highlight: true },
   { feature: 'Meeting recording (Zoom, Meet, Teams)', them: 'Yes', us: 'Yes', them_yes: true, us_yes: true },
   { feature: 'AI transcript', them: 'Yes', us: 'Yes', them_yes: true, us_yes: true },
   { feature: 'AI summary', them: 'Yes', us: 'Yes', them_yes: true, us_yes: true },
