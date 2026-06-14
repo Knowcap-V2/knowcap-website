@@ -43,6 +43,8 @@ Brand DNA, personas, research, and screenshots migrated to the `claude-knowcap` 
 
 Outputs stay in THIS repo: drafts → `docs/content-pipeline/drafts/`, shipped → `app/content/blog/`.
 
+Routine config also lives in THIS repo (NOT the hub): keyword targets → `routines/blogger/keyword-opportunities.md`, rotation cursor → `routines/blogger/state.json`.
+
 ## Persona rotation state
 
 `routines/blogger/state.json` (gitignored) holds the round-robin cursor. Shape:
@@ -59,8 +61,8 @@ Each run reads `cursor`, picks `personas[cursor]`, then advances `cursor = (curs
 2. **Read `../claude-knowcap/knowledge/people/PRODUCT-PERSONAS.md`** → pick the persona's section (study segment names map to slugs: "Odoo implementation partners" → `odoo-partners`, "Audit / accounting firms" → `mena-audit-firms`, etc.)
 3. **Read `../claude-knowcap/knowledge/strategies/VISION.md`** → voice + anti-positioning
 4. **Read `../claude-knowcap/knowledge/strategies/POSITIONING.md`** → three sentences + anti-positioning
-5. **Read most recent `../claude-knowcap/knowledge/topics/research/audits/SEO-AUDIT-*.md`** → top-3 keyword opportunities (currently: scan for keyword candidates manually; eventually: parse a `keyword_opportunities_by_persona` table)
-6. **Query Google Trends via pytrends** (urllib3<2.0 required) → validate 5-year MENA interest, pick highest recent growth
+5. **Read `routines/blogger/keyword-opportunities.md`** (PRIMARY keyword source) → pick the persona's table, choose the highest-priority keyword NOT covered in last-20 shipped. The hub SEO audit (`../claude-knowcap/knowledge/topics/research/audits/SEO-AUDIT-*.md`) is **technical/on-page only — it has no keyword table**; read it for on-page guidance, not keyword candidates.
+6. **Google Trends (pytrends, urllib3<2.0) — ADVISORY ONLY.** B2B ICP terms have negligible MENA Trends volume (dry-run 2026-06-14: closest odoo term ≤0.9/100). Use as a tiebreaker between two keyword-opportunities candidates, NEVER as a gate. Record `target_keyword_5y_mena_interest` for the frontmatter, but do not reject a keyword for low Trends.
 7. **Try `case-study` mode:**
    - Query Knowcap MCP `mcp__knowcap__list_sources` → Demo org, persona project
    - For each source, `mcp__knowcap__list_memories` filtered to source via `metadata.source_id`
@@ -121,7 +123,7 @@ PR body includes:
 | Demo project empty | Fall through to `thesis` mode (don't skip) |
 | Trends API fails | Pass `target_keyword_5y_mena_interest: null`, flag in PR body, continue |
 | Knowcap API fails | If `case-study` attempted, fall through to `thesis` mode |
-| Last 20 blogs cover this keyword | Advance to next keyword from audit; if all 3 covered, skip this run |
+| Last 20 blogs cover this keyword | Advance to next priority in the persona's `keyword-opportunities.md` table; if all covered, skip this run |
 | Banned words in output | Skill regenerates that paragraph (max 2 retries); if still bad, REFUSED |
 | Word count outside range | Skill retries once with adjustment guidance |
 | Screenshot library has no match | Ship text-only, no failure |
