@@ -1,6 +1,22 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import EditorialShell, { PageHero } from '@/components/editorial/shell'
+import { faqJsonLd } from '@/lib/site-schema'
+
+const COMPARE_FAQ = [
+  {
+    q: 'How does Knowcap compare to Otter, Fireflies, Read AI, Fellow, and Granola?',
+    a: 'Those tools transcribe meetings and write AI summaries; several auto-push action items into your stack with no human gate. Knowcap is the layer after the transcript: a named human confirms each extracted claim with one tap, then AI agents act only on confirmed facts — opening Odoo SH tickets, drafting GitHub PRs, and sending follow-ups — with a full audit trail back to the timestamp and speaker. It also detects language per utterance, so Arabic/English code-switching meetings are captured intact.',
+  },
+  {
+    q: 'Which AI meeting tool is best for MENA teams and Odoo partners?',
+    a: 'For MENA SMEs, Odoo implementation partners, agencies, and audit firms, Knowcap is purpose-built: per-utterance Arabic/English handling, EU/MENA data residency, and agents that open Odoo SH tickets and GitHub PRs from a confirmed client call. Otter, Fireflies, Read AI, Fellow, and Granola are general meeting-notes tools that force one language per recording and stop at notes.',
+  },
+  {
+    q: 'Do these meeting tools verify what was said before acting on it?',
+    a: 'Most do not — they generate an AI summary and, in several cases, push action items straight into your CRM or task board. Knowcap requires a one-tap human confirmation on each claim before any agent acts, so a misheard line never becomes a wrong ticket. The confirmation, timestamp, and speaker quote are kept as the record.',
+  },
+]
 
 export const metadata: Metadata = {
   title: 'Compare Knowcap — vs Otter, Fireflies, Granola, Fellow & Read.ai',
@@ -42,6 +58,7 @@ export default function CompareHubPage() {
   return (
     <EditorialShell>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(COMPARE_FAQ)) }} />
       <PageHero
         kicker="Compare"
         title={<>Knowcap vs the meeting-AI tools</>}

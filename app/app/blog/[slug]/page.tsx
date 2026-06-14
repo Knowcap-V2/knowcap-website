@@ -48,7 +48,17 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       headline: post.title,
       description: post.description,
       datePublished: post.date,
-      author: { '@type': 'Person', name: post.author },
+      dateModified: post.date,
+      author: {
+        '@type': 'Person',
+        name: post.author,
+        ...(post.author === 'Hassan Arslan'
+          ? {
+              url: 'https://www.linkedin.com/in/hassan-arslan-66a023142/',
+              jobTitle: 'Founder, Knowcap',
+            }
+          : {}),
+      },
       publisher: { '@type': 'Organization', name: 'Knowcap', url: 'https://knowcap.ai' },
       mainEntityOfPage: `https://knowcap.ai/blog/${post.slug}`,
       keywords: post.tags.join(', '),
