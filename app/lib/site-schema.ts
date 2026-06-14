@@ -18,7 +18,10 @@ export const ORGANIZATION_JSONLD = {
   logo: 'https://knowcap.ai/knowcap-logo.png',
   description:
     'Knowcap is verified work intelligence — the trust layer for AI agents. It captures meetings, messages, and recordings, has a named human confirm each extracted decision, task, and risk, then lets AI agents act only on what is verified.',
-  sameAs: ['https://www.instagram.com/knowcap.ai'],
+  sameAs: [
+    'https://www.linkedin.com/company/knowcap-ai/',
+    'https://www.instagram.com/knowcap.ai',
+  ],
   founder: {
     '@type': 'Person',
     name: 'Hassan Arslan',
