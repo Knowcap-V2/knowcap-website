@@ -3,11 +3,17 @@
  * seo-pull.mjs — daily SEO opportunity pull for the Knowcap blogger routine.
  *
  * Replaces the static keyword-opportunities.md + the dead Google Trends step.
- * Pulls LIVE MENA keyword demand from DataForSEO (Google Ads keywords_for_keywords:
- * expands persona seed terms into related keywords with real search volume +
- * competition), EN + AR across KSA / Egypt / UAE, filters to Knowcap's ICP intent,
- * ranks, dedups against already-shipped posts, and writes a ranked opportunity queue
- * + a human digest.
+ * Pulls LIVE MENA keyword demand from DataForSEO Labs (keyword_ideas: expands persona
+ * seed terms into related keywords with search volume, ad-competition, AND — the reason
+ * we use Labs over the Google Ads endpoint — organic keyword_difficulty + search_intent
+ * + a 12-month trend). EN + AR across KSA / Egypt / UAE, filtered to Knowcap's ICP intent.
+ * Ranks by organic winnability (volume × ease-to-rank × intent-fit), NOT ad-auction
+ * competition. Dedups against already-shipped/drafted posts; writes a ranked queue + digest.
+ *
+ * Why Labs keyword_ideas, not google_ads/keywords_for_keywords:
+ *   - $0.01 + $0.0001/result (≈$0.03-0.04/call capped) vs flat $0.075 — cheaper at our size.
+ *   - Adds keyword_difficulty (can a NEW site rank?) + search_intent — the data you cannot
+ *     get free. Ad "competition" alone is the wrong signal for an organic blog.
  *
  * NO browser. Auth = HTTP Basic from ~/.claude/secrets/blogger.md.
  *
@@ -16,6 +22,8 @@
  *   node seo-pull.mjs --persona odoo-partners # one persona
  *   node seo-pull.mjs --locations "Saudi Arabia" --langs en   # scope to conserve balance
  *   node seo-pull.mjs --max 25                # cap queue size per persona
+ *   node seo-pull.mjs --limit 250             # keyword_ideas results per call (cost lever)
+ *   node seo-pull.mjs --force                 # ignore the fresh-queue cache, re-pull now
  *
  * Outputs (gitignored — runtime state):
  *   routines/blogger/opportunity-queue.json
@@ -43,6 +51,7 @@ const ONLY_PERSONA = getArg('persona', null)
 const LOCATIONS = getArg('locations', 'Saudi Arabia,Egypt,United Arab Emirates').split(',').map(s => s.trim())
 const LANGS = getArg('langs', 'en,ar').split(',').map(s => s.trim())
 const MAX = parseInt(getArg('max', '25'), 10)
+const LIMIT = parseInt(getArg('limit', '250'), 10) // keyword_ideas results per call — caps cost ($0.01 + $0.0001/result)
 const STAMP = getArg('stamp', null)
 // Reuse guard: skip the paid pull while the cached queue is still fresh + deep enough.
 const MAX_AGE_DAYS = parseInt(getArg('max-age-days', '7'), 10) // re-pull at least weekly so volumes stay current
@@ -84,7 +93,25 @@ const PERSONAS = {
 }
 // Keep only keywords whose intent Knowcap can credibly own.
 const ICP_INTENT = /(meeting|minute|note|transcri|record|audit|complian|pdpl|govern|odoo|erp|scope|verif|attest|sign[- ]?off|محضر|اجتماع|تدقيق|اودو|امتثال|حوكمة|توثيق)/i
-const COMP_WEIGHT = { LOW: 1.0, MEDIUM: 0.6, HIGH: 0.35 }
+
+// ---- organic-winnability scoring (replaces ad-competition weighting) ----
+// A blog ranks ORGANICALLY, so reward volume, penalize ranking difficulty, and favour
+// blog-suitable intent. Ad "competition" is kept for display only — it is NOT the ranker.
+const INTENT_WEIGHT = { informational: 1.0, commercial: 0.95, transactional: 0.6, navigational: 0.3 }
+const diffWeight = kd => (kd == null ? 0.6 : Math.max(0.05, (100 - kd) / 100)) // low difficulty → ~1, high → ~0
+const intentWeight = intent => INTENT_WEIGHT[intent] ?? 0.7
+const scoreOf = (vol, kd, intent) => Math.round(vol * diffWeight(kd) * intentWeight(intent))
+// Derive a LOW/MEDIUM/HIGH band from the 0-1 ad-competition float when no level string is returned.
+const compLevel = (lvl, f) => (lvl ? String(lvl).toUpperCase() : f == null ? null : f >= 0.66 ? 'HIGH' : f >= 0.33 ? 'MEDIUM' : 'LOW')
+// 12-month direction from monthly_searches (order-agnostic: sort by date, compare first 3 vs last 3).
+function trendOf(monthly) {
+  if (!Array.isArray(monthly) || monthly.length < 6) return null
+  const v = [...monthly].sort((a, b) => (a.year * 12 + a.month) - (b.year * 12 + b.month)).map(m => m.search_volume || 0)
+  const older = (v[0] + v[1] + v[2]) / 3, recent = (v[v.length - 1] + v[v.length - 2] + v[v.length - 3]) / 3
+  if (!older) return null
+  const ratio = recent / older
+  return ratio >= 1.15 ? 'rising' : ratio <= 0.85 ? 'falling' : 'flat'
+}
 
 // ---- shipped/drafted-slug dedup ----
 // Scan BOTH shipped posts and pending drafts so a keyword already turned into a
@@ -111,10 +138,18 @@ function isCovered(keyword, slugs) {
   return false
 }
 
-// ---- DataForSEO call ----
-async function keywordsForKeywords(seeds, locationName, languageCode) {
-  const body = [{ keywords: seeds, location_name: locationName, language_code: languageCode }]
-  const res = await fetch('https://api.dataforseo.com/v3/keywords_data/google_ads/keywords_for_keywords/live', {
+// ---- DataForSEO Labs call ----
+async function keywordIdeas(seeds, locationName, languageCode) {
+  const body = [{
+    keywords: seeds,
+    location_name: locationName,
+    language_code: languageCode,
+    limit: LIMIT,
+    order_by: ['keyword_info.search_volume,desc'],
+    filters: [['keyword_info.search_volume', '>', 0]],
+    include_serp_info: false,
+  }]
+  const res = await fetch('https://api.dataforseo.com/v3/dataforseo_labs/google/keyword_ideas/live', {
     method: 'POST',
     headers: { Authorization: AUTH, 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -123,7 +158,7 @@ async function keywordsForKeywords(seeds, locationName, languageCode) {
   if (json.status_code !== 20000) throw new Error(`API ${json.status_code}: ${json.status_message}`)
   const task = (json.tasks || [])[0] || {}
   if (task.status_code !== 20000) throw new Error(`task ${task.status_code}: ${task.status_message}`)
-  return { items: task.result || [], cost: json.cost || 0 }
+  return { items: task.result?.[0]?.items || [], cost: json.cost || 0 }
 }
 
 const QUEUE = path.join(BLOGGER_DIR, 'opportunity-queue.json')
@@ -140,11 +175,13 @@ function buildDigest(o) {
     : `Source: DataForSEO (MENA ${o.locations.join(', ')} · ${o.langs.join('/')}) · API cost this run: $${o.cost.toFixed(3)}`)
   lines.push(`Fresh opportunities (not yet covered by a shipped or drafted post): **${o.top.length}**`)
   lines.push('')
+  lines.push('Ranked by organic winnability (volume × ease-to-rank × intent-fit), not ad competition.')
+  lines.push('')
   lines.push('## Top picks (write next)')
   lines.push('')
-  lines.push('| # | keyword | persona | vol | comp | score |')
-  lines.push('|---|---|---|---|---|---|')
-  o.top.slice(0, 10).forEach((r, i) => lines.push(`| ${i + 1} | ${r.keyword} | ${r.persona} | ${r.search_volume} | ${r.competition || '-'} | ${r.score} |`))
+  lines.push('| # | keyword | persona | vol | difficulty | intent | trend | score |')
+  lines.push('|---|---|---|---|---|---|---|---|')
+  o.top.slice(0, 10).forEach((r, i) => lines.push(`| ${i + 1} | ${r.keyword} | ${r.persona} | ${r.search_volume} | ${r.keyword_difficulty ?? '-'} | ${r.search_intent || '-'} | ${r.trend || '-'} | ${r.score} |`))
   return lines.join('\n')
 }
 function writeOutputs(o) {
@@ -178,7 +215,7 @@ if (!FORCE && !ONLY_PERSONA && fs.existsSync(QUEUE)) {
 
 // ---- main (paid pull) ----
 const personas = ONLY_PERSONA ? [ONLY_PERSONA] : Object.keys(PERSONAS)
-const out = { generated_at: new Date().toISOString(), source: 'dataforseo:google_ads/keywords_for_keywords', locations: LOCATIONS, langs: LANGS, cost: 0, personas: {}, top: [] }
+const out = { generated_at: new Date().toISOString(), source: 'dataforseo:labs/keyword_ideas', locations: LOCATIONS, langs: LANGS, cost: 0, personas: {}, top: [] }
 const seen = new Set()
 
 for (const persona of personas) {
@@ -190,16 +227,23 @@ for (const persona of personas) {
       const seeds = lang === 'ar' ? cfg.seeds_ar : cfg.seeds_en
       if (!seeds?.length) continue
       try {
-        const { items, cost } = await keywordsForKeywords(seeds, loc, lang)
+        const { items, cost } = await keywordIdeas(seeds, loc, lang)
         out.cost += cost
         for (const it of items) {
           const kw = it.keyword
-          const vol = it.search_volume || 0
+          const ki = it.keyword_info || {}
+          const vol = ki.search_volume || 0
           if (!kw || vol <= 0) continue
           if (!ICP_INTENT.test(kw)) continue
-          const comp = (it.competition || '').toUpperCase()
-          const score = Math.round(vol * (COMP_WEIGHT[comp] ?? 0.5))
-          bucket.push({ keyword: kw, search_volume: vol, competition: comp || null, cpc: it.cpc ?? null, score, location: loc, lang, covered: isCovered(kw, slugs) })
+          const kd = it.keyword_properties?.keyword_difficulty ?? null
+          const intent = it.search_intent_info?.main_intent ?? null
+          const comp = compLevel(ki.competition_level, ki.competition)
+          const score = scoreOf(vol, kd, intent)
+          bucket.push({
+            keyword: kw, search_volume: vol, keyword_difficulty: kd, search_intent: intent,
+            competition: comp, competition_value: ki.competition ?? null, cpc: ki.cpc ?? null,
+            trend: trendOf(ki.monthly_searches), score, location: loc, lang, covered: isCovered(kw, slugs),
+          })
         }
         console.error(`  ${persona} | ${loc} | ${lang}: +${items.length} (cost $${cost})`)
       } catch (e) {

@@ -14,11 +14,16 @@ hit a quota.
 ## Daily run (in order)
 
 1. **SEO pull** — `node routines/blogger/scripts/seo-pull.mjs` (creds in `~/.claude/secrets/blogger.md`).
-   Writes `opportunity-queue.json` (ranked, ICP-filtered, deduped vs shipped **and drafted**) + a digest.
+   Source: **DataForSEO Labs `keyword_ideas`** — each keyword carries search volume, **organic
+   keyword_difficulty**, **search_intent**, and a 12-month **trend**. The queue is **ranked by organic
+   winnability** (volume × ease-to-rank × intent-fit), NOT ad-auction competition. When picking
+   `target_keyword`, prefer high-volume + LOW difficulty + informational/commercial intent; record the
+   row's `keyword_difficulty`, `search_intent`, and `trend` in frontmatter (no more `null` trend).
+   Writes `opportunity-queue.json` (ICP-filtered, deduped vs shipped **and drafted**) + a digest.
    **Self-skips the paid API** while the cached queue is fresh (<7d) and deep enough (≥4 fresh picks) —
-   one ~$0.90 pull feeds weeks of posts at ~$0.05 each, then re-pulls automatically when the queue ages
-   out (weekly) or the backlog runs thin. Always call it every run; the script decides whether to spend
-   (`--force` overrides). If DataForSEO errors (auth/funds), log one line + STOP (don't fabricate keywords).
+   one pull (~$0.6-0.9) feeds weeks of posts at ~$0.05 each, then re-pulls automatically when the queue
+   ages out (weekly) or the backlog runs thin. Always call it every run; the script decides whether to
+   spend (`--force` overrides). If DataForSEO errors (auth/funds), log one line + STOP (don't fabricate).
 2. **Digest** — surface the top picks to Hassan in the run window / Claude agents sidebar.
 3. **Burn-state** — read `burn-state.json`; decide if today is a blog-gen day (see ROUTINE.md
    "Daily flow + burn cadence"). If not → done for today (insights only).
