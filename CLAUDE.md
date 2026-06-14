@@ -1,13 +1,13 @@
-# Knowcap Marketing Page
+# Knowcap Website
 
 ## What This Is
-Brand + marketing + website for Knowcap (knowcap.ai). Renamed from `knowcap-landing` on 2026-06-01. Layout mirrors the main `knowcap` repo: `app/` runs, `docs/` reads.
+Brand + marketing + website for Knowcap (knowcap.ai). Renamed `knowcap-landing` → `knowcap-marketing` (2026-06-01) → `knowcap-website` (2026-06-11; GitHub auto-redirects old URLs). Layout mirrors the main `knowcap` repo: `app/` runs, `docs/` reads.
 
-- **Repo:** Knowcap-V2/knowcap-marketing
+- **Repo:** Knowcap-V2/knowcap-website
 - **Stack:** Next.js 14, Tailwind, deployed via Vercel
-- **Vercel project:** `app` on team `hsa-smetoolsios-projects`
-- **Root directory on Vercel:** `app/` (the Next.js subfolder, not repo root)
-- **Domain:** knowcap.ai (Cloudflare → Vercel)
+- **Vercel project:** `knowcap-website` (ex `knowcap-landing`) on team `knowcap` (info@smetools.io account; hsa = DEVELOPER role, preview deploys only)
+- **Root directory on Vercel:** `app/` (the Next.js subfolder; CLI deploys run from repo root where `.vercel/` lives)
+- **Domain:** knowcap.ai + www (Cloudflare → Vercel)
 
 ## Where things live
 
