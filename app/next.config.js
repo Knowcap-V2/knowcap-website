@@ -26,6 +26,14 @@ const nextConfig = {
       { source: '/privacy-policy', destination: '/policy' },
     ];
   },
+  // /pitch is the legacy no-video deck. Investors get the video deck at
+  // /knowcap-pitch (founder decision). 308-redirect /pitch so any already-sent
+  // links self-heal to the video deck and only one deck stays canonical.
+  async redirects() {
+    return [
+      { source: '/pitch', destination: '/knowcap-pitch', permanent: true },
+    ];
+  },
 };
 
 module.exports = nextConfig;
