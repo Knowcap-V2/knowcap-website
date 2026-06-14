@@ -12,7 +12,7 @@
  *
  * Positioning fixes applied inline:
  *  - Knowcap = verified work intelligence, the trust layer for AI agents
- *    (NOT an "AI meeting tool"); meetings are ONE input.
+ *    (not a meeting-only tool); meetings are ONE input.
  *  - Live capture = meetings (Meet), calls/recordings, screen recordings,
  *    documents/URLs, Telegram. Messages (WhatsApp/email/Slack) are BUILDING.
  *  - MCP framed as a supporting capability, not the headline identity.

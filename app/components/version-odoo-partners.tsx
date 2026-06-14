@@ -14,8 +14,8 @@
  *
  * Positioning: Knowcap is verified work intelligence — the trust layer for AI
  * agents. Meetings/calls/screen recordings/documents/Telegram are inputs; MCP
- * is a supporting capability, not the headline. No "voice notes", no
- * "meeting recorder" framing.
+ * is a supporting capability, not the headline. No legacy capture wording, no
+ * recorder-only framing.
  */
 
 import { useEffect, useRef, useState } from 'react'
