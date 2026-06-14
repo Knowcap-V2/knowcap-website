@@ -12,6 +12,24 @@ See [`triggers.yml`](./triggers.yml) — cron `0 6 * * MON` (Monday 06:00 UTC = 
 
 Calls [`_skills/write-blog-draft/SKILL.md`](../_skills/write-blog-draft/SKILL.md) in `thesis` / `case-study` / `comparison` mode (routine picks).
 
+## Daily flow + burn cadence (SEO engine)
+
+This routine fires DAILY (07:00 Sun–Thu). Every run:
+
+1. **Pull SEO insights** — `node routines/blogger/scripts/seo-pull.mjs` → refresh `opportunity-queue.json` + digest (every day, ~$0.1–0.5).
+2. **Surface the digest** to Hassan (the open:agent run window / Claude agents sidebar — see AGENT.md).
+3. **Decide if today is a blog-gen day** from `routines/blogger/burn-state.json`:
+   - **burn phase**: generate a post on 3 days/week (Sun/Tue/Thu) until `total_posts >= 24` (~8 weeks), then flip to steady.
+   - **steady phase**: generate 1 post/week (Sun).
+   - Not a blog-gen day → stop after the digest (insights only, no post).
+4. On a blog-gen day → mode selection + write, using the queue's top fresh opportunity as `target_keyword`.
+
+`burn-state.json` (gitignored runtime state):
+```json
+{ "phase": "burn", "started": "2026-06-15", "total_posts": 0, "week_start": "2026-06-15", "posts_this_week": 0, "blog_days": ["SUN","TUE","THU"] }
+```
+After each shipped draft PR: `total_posts++`, `posts_this_week++`. Reset `posts_this_week` on week rollover. Flip `phase→steady` + `blog_days→["SUN"]` when `total_posts >= 24`. If the file is absent, seed burn from today. **Quality bar:** never publish to hit a quota — if no fresh opportunity clears the gates, skip the day (a missed burn post beats a thin one).
+
 ## Mode selection (runtime)
 
 ```
@@ -59,8 +77,8 @@ Each run reads `cursor`, picks `personas[cursor]`, then advances `cursor = (curs
 2. **Read `../claude-knowcap/knowledge/people/PRODUCT-PERSONAS.md`** → pick the persona's section (study segment names map to slugs: "Odoo implementation partners" → `odoo-partners`, "Audit / accounting firms" → `mena-audit-firms`, etc.)
 3. **Read `../claude-knowcap/knowledge/strategies/VISION.md`** → voice + anti-positioning
 4. **Read `../claude-knowcap/knowledge/strategies/POSITIONING.md`** → three sentences + anti-positioning
-5. **Read most recent `../claude-knowcap/knowledge/topics/research/audits/SEO-AUDIT-*.md`** → top-3 keyword opportunities (currently: scan for keyword candidates manually; eventually: parse a `keyword_opportunities_by_persona` table)
-6. **Query Google Trends via pytrends** (urllib3<2.0 required) → validate 5-year MENA interest, pick highest recent growth
+5. **Run `node routines/blogger/scripts/seo-pull.mjs`** (live SEO engine, replaces the old static SEO-audit scan AND the dead Google Trends step). Pulls DataForSEO Google-Ads keyword demand for MENA (KSA + Egypt + UAE) in EN + AR, expands persona seeds into real related keywords with **search volume + competition**, filters to Knowcap ICP intent, ranks by `volume × competition-weight`, dedups against shipped posts, and writes `routines/blogger/opportunity-queue.json` + a digest. **`target_keyword` = the persona's top fresh (uncovered) opportunity** from the queue. Auth: DataForSEO creds in `~/.claude/secrets/blogger.md`.
+6. **(Google Trends removed.)** DataForSEO volume + competition from step 5 is the demand signal — Trends was near-zero for this B2B ICP. Record the chosen keyword's `search_volume` + `competition` in frontmatter.
 7. **Try `case-study` mode:**
    - Query Knowcap MCP `mcp__knowcap__list_sources` → Demo org, persona project
    - For each source, `mcp__knowcap__list_memories` filtered to source via `metadata.source_id`
