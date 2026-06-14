@@ -16,7 +16,7 @@ Calls [`_skills/write-blog-draft/SKILL.md`](../_skills/write-blog-draft/SKILL.md
 
 This routine fires DAILY (07:00 Sun–Thu). Every run:
 
-1. **Pull SEO insights** — `node routines/blogger/scripts/seo-pull.mjs` → refresh `opportunity-queue.json` + digest (every day, ~$0.1–0.5).
+1. **Pull SEO insights** — `node routines/blogger/scripts/seo-pull.mjs` → refresh `opportunity-queue.json` + digest. **Cost-amortized:** the script reuses the cached queue (no API spend) while it's fresh (<7d) and ≥4 fresh picks remain, and re-pulls automatically when it ages out or runs thin. So a real pull (~$0.45–0.90) happens roughly weekly; the other runs are $0.00. ≈$0.05/post amortized. `--force` to re-pull on demand.
 2. **Surface the digest** to Hassan (the open:agent run window / Claude agents sidebar — see AGENT.md).
 3. **Decide if today is a blog-gen day** from `routines/blogger/burn-state.json`:
    - **burn phase**: generate a post on 3 days/week (Sun/Tue/Thu) until `total_posts >= 24` (~8 weeks), then flip to steady.
