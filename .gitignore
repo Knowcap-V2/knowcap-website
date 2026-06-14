@@ -31,6 +31,7 @@ out
 # Routine run logs (per-routine state, not tracked)
 routines/**/runs/
 routines/**/baselines/
+routines/**/state.json
 
 # Database exports / PII dumps — never commit (5804)
 database_export/
