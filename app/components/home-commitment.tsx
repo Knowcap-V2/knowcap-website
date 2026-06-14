@@ -620,7 +620,7 @@ function AppWindow() {
 
 /* ----------------------------------------------------- rotating source */
 
-const HERO_SOURCES = ['meeting', 'screen recording', 'Telegram chat', 'WhatsApp message', 'email thread']
+const HERO_SOURCES = ['meeting', 'screen recording', 'Telegram', 'WhatsApp', 'email']
 
 function RotatingSource() {
   const [i, setI] = useState(0)
