@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>knowcap.ai — full-site audit · 2026-06-14</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBFAF8;--white:#fff;--border:#E7E4DD;--ink:#18181B;--sec:#4A4F5A;--ink3:#8A8F99;
+    --green:#1F6B3A;--green-deep:#17522C;--green-tint:#E8F5ED;--amber:#B07C28;--red:#B0392B;
+    --disp:'Fraunces',Georgia,serif;--body:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 40px}
+  h1,h2,h3{font-family:var(--disp);margin:0;font-variation-settings:'SOFT' 55,'WONK' 0}
+  .head{border-top:3px solid var(--ink);padding:48px 0 8px}
+  .kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sec)}
+  .kick b{color:var(--green)}
+  .h1{font-weight:480;font-size:clamp(2rem,4vw,2.9rem);letter-spacing:-.02em;line-height:1.1;margin-top:12px}
+  .lead{margin-top:18px;font-size:16px;line-height:1.7;color:var(--sec);max-width:74ch}
+  /* stats */
+  .stats{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0 6px}
+  .stat{border:1px solid var(--border);background:var(--white);border-radius:12px;padding:16px 22px;min-width:120px}
+  .stat .n{font-family:var(--disp);font-size:2rem;font-weight:480;line-height:1}
+  .stat .l{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--sec);margin-top:6px}
+  .stat.p0 .n{color:var(--red)}.stat.p1 .n{color:var(--amber)}.stat.ok .n{color:var(--green)}
+  /* sections */
+  section{margin:44px 0}
+  .h2{font-weight:460;font-size:1.5rem;letter-spacing:-.015em;border-bottom:1px solid var(--border);padding-bottom:10px}
+  .note{font-family:var(--mono);font-size:12px;color:var(--sec);margin:8px 0 0}
+  /* table */
+  table{width:100%;border-collapse:collapse;margin-top:18px;font-size:13.5px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--sec);font-weight:500}
+  td.route{font-family:var(--mono);font-size:12.5px;color:var(--ink);white-space:nowrap}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:500;padding:2px 8px;border-radius:4px;letter-spacing:.04em}
+  .b-ok{background:var(--green-tint);color:var(--green-deep)}
+  .b-p0{background:#F6E3DF;color:var(--red)}
+  .b-p1{background:#F6ECD9;color:var(--amber)}
+  .b-redir{background:#EDEAE3;color:var(--sec)}
+  /* fix queue */
+  .fix{border:1px solid var(--border);background:var(--white);border-radius:12px;padding:18px 20px;margin:12px 0}
+  .fix.p0{border-left:4px solid var(--red)}
+  .fix.p1{border-left:4px solid var(--amber)}
+  .fix.p2{border-left:4px solid var(--ink3)}
+  .fix .sev{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;padding:2px 7px;border-radius:4px;margin-right:8px}
+  .p0 .sev{background:#F6E3DF;color:var(--red)}.p1 .sev{background:#F6ECD9;color:var(--amber)}.p2 .sev{background:#EDEAE3;color:var(--sec)}
+  .fix .where{font-family:var(--mono);font-size:11.5px;color:var(--sec)}
+  .fix .iss{margin-top:8px;font-size:14px;color:var(--ink)}
+  .fix .fixline{margin-top:6px;font-size:13.5px;color:var(--green-deep)}
+  .fix .fixline b{color:var(--green)}
+  /* lanes */
+  .lanes{display:grid;grid-template-columns:1fr;gap:18px;margin-top:18px}
+  @media(min-width:820px){.lanes{grid-template-columns:1fr 1fr}}
+  .lane{border:1px solid var(--border);border-radius:14px;background:var(--white);overflow:hidden}
+  .lane h3{padding:14px 20px;font-size:1.05rem;font-weight:520;border-bottom:1px solid var(--border)}
+  .lane.do h3{background:var(--green-tint);color:var(--green-deep)}
+  .lane.ask h3{background:#F6ECD9;color:var(--amber)}
+  .lane ul{margin:0;padding:14px 20px 18px 36px}
+  .lane li{margin-bottom:9px;font-size:13.5px;line-height:1.55}
+  .lane li b{color:var(--ink)}
+  .foot{margin:50px 0 70px;font-family:var(--mono);font-size:12px;color:var(--sec);border-top:1px solid var(--border);padding-top:18px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="kick">Knowcap <b>·</b> full-site audit · 2026-06-14 · 27 routes, multi-agent</div>
+    <h1 class="h1">The site is split in two.</h1>
+    <p class="lead">The canonical homepage, the blog, all five <code>/compare/*</code> pages, the legal/utility/Calendly pages, and both pitch decks render correct <b>V6b Editorial Light</b>. But <b>9 routes are off-theme</b> — five on the deprecated dark <em>ThemedShell</em>, four on an older blue "pitch" theme — and the locked <b>"verified work intelligence / trust layer for AI agents"</b> positioning hasn't propagated: most comparison pages still call Knowcap an "AI meeting tool", four overclaim WhatsApp as a live capture source, and the dropped word "voice notes" survives in 6+ files.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat ok"><div class="n">15</div><div class="l">on-theme routes</div></div>
+    <div class="stat p0"><div class="n">9</div><div class="l">off-theme (P0)</div></div>
+    <div class="stat p1"><div class="n">9</div><div class="l">narrowness / overclaim (P1)</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">clean redirects</div></div>
+  </div>
+
+  <section>
+    <h2 class="h2">Route-by-route status</h2>
+    <p class="note">Theme drift = P0. Copy/positioning = P1–P2. "OK" = correct V6b shell.</p>
+    <table>
+      <thead><tr><th>Route</th><th>Shell</th><th>Status</th><th>Headline issue</th></tr></thead>
+      <tbody>
+        <tr><td class="route">/</td><td>inline V6b</td><td><span class="badge b-ok">OK</span></td><td>On-theme, on-message. Only P2: stale "voice notes" ×3, closer leads "Record."</td></tr>
+        <tr><td class="route">/blog</td><td>EditorialShell</td><td><span class="badge b-p1">P1 copy</span></td><td>"Verified-MEETING intelligence" + "Record the meeting" CTA → narrowness</td></tr>
+        <tr><td class="route">/compare/* (×5)</td><td>EditorialShell</td><td><span class="badge b-p1">P1 copy</span></td><td>"AI meeting tool" close · WhatsApp claimed live · "voice notes"</td></tr>
+        <tr><td class="route">/for/odoo-partners</td><td>ThemedShell</td><td><span class="badge b-p0">P0 theme</span></td><td>Old dark shell + dark-on-dark hero (your screenshot). High-value page.</td></tr>
+        <tr><td class="route">/a /b /c /d</td><td>ThemedShell</td><td><span class="badge b-p0">P0 theme</span></td><td>Experimental A/B variants, dark shell + dark-on-dark hero + meeting framing</td></tr>
+        <tr><td class="route">/mvp</td><td>Knowapp demo</td><td><span class="badge b-p0">P0</span></td><td>Live Gemini demo — shows a raw "set NEXT_PUBLIC_GEMINI_API_KEY / restart dev server" screen to visitors. No nav home.</td></tr>
+        <tr><td class="route">/thank-you</td><td>blue "pitch"</td><td><span class="badge b-p0">P0 theme</span></td><td>Form-success landing on old blue theme + legacy dark footer</td></tr>
+        <tr><td class="route">/offer</td><td>blue "pitch"</td><td><span class="badge b-p0">P0 theme</span></td><td>"Odoo Partner Edition" sales page, old dark/blue, no nav</td></tr>
+        <tr><td class="route">/meet-us</td><td>blue "pitch"</td><td><span class="badge b-p0">P0 theme</span></td><td>Custom blue hero, not EditorialShell</td></tr>
+        <tr><td class="route">/pitch</td><td>EditorialShell + iframe</td><td><span class="badge b-p0">P0 layout</span></td><td>Theme OK, but deck iframe renders under the fixed header (clipped)</td></tr>
+        <tr><td class="route">/knowcap-pitch</td><td>EditorialShell + iframe</td><td><span class="badge b-p1">P1 copy</span></td><td>Theme OK. Deck framed "meetings→docs"; Odoo write-access claimed live</td></tr>
+        <tr><td class="route">/policy /terms</td><td>EditorialShell</td><td><span class="badge b-p1">P2 copy</span></td><td>Legal Service desc = "Google Meet recorder / visual transcription"</td></tr>
+        <tr><td class="route">/book /invest /team /careers /contact-us</td><td>EditorialShell</td><td><span class="badge b-ok">OK</span></td><td>Theme correct. P2: generic positioning-silent subheads; contact form needs aria-live</td></tr>
+        <tr><td class="route">/vendors /partners /teams</td><td>→ redirect</td><td><span class="badge b-redir">REDIRECT</span></td><td>301 → /vendor /partner /team (all EditorialShell). Clean.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="h2">Prioritized fix queue</h2>
+
+    <div class="fix p0">
+      <span class="sev">P0</span><span class="where">theme · /for/odoo-partners, /a, /b, /c, /d</span>
+      <div class="iss">Render the deprecated dark <b>ThemedShell</b> (4-theme switcher, <code>--t-*</code> vars) with a dark-on-dark hero under the transparent header — nav + heading invisible on load.</div>
+      <div class="fixline"><b>Fix:</b> rebuild each on EditorialShell (cream, Fraunces, single green). One shell swap per route.</div>
+    </div>
+    <div class="fix p0">
+      <span class="sev">P0</span><span class="where">theme · /mvp, /thank-you, /offer, /meet-us</span>
+      <div class="iss">On an older blue "pitch" theme (#005EFF / Space Grotesk) or a standalone demo app — not EditorialShell. <b>/mvp</b> additionally exposes a developer API-key screen to real visitors.</div>
+      <div class="fixline"><b>Fix:</b> reskin to EditorialShell; for /mvp, gate or unpublish the demo (it shouldn't show ".env / restart dev server" to the public).</div>
+    </div>
+    <div class="fix p0">
+      <span class="sev">P0</span><span class="where">layout · /pitch</span>
+      <div class="iss">Deck iframe drops into <code>&lt;main&gt;</code> with no top offset → the first slide renders under the 64px fixed header and the bottom is clipped.</div>
+      <div class="fixline"><b>Fix:</b> add <code>padding-top:64px</code> + let the iframe scroll.</div>
+    </div>
+
+    <div class="fix p1">
+      <span class="sev">P1</span><span class="where">narrowness · /compare ×5, /blog, /a /b /c /d, /for/odoo-partners</span>
+      <div class="iss">Copy leads "AI meeting tool" / "record the meeting" / "Stop summarizing meetings" — collapses Knowcap into the competitor's category instead of "verified work intelligence, the trust layer for AI agents."</div>
+      <div class="fixline"><b>Fix:</b> reframe heroes + closing CTAs around the trust layer over "meetings, messages &amp; recordings."</div>
+    </div>
+    <div class="fix p1">
+      <span class="sev">P1</span><span class="where">overclaim · /compare ×5</span>
+      <div class="iss">WhatsApp capture marked a live "Yes" in the comparison tables + FAQs. Only Telegram is live; WhatsApp is building before launch.</div>
+      <div class="fixline"><b>Fix:</b> Telegram = live "Yes"; WhatsApp under the "messages (building)" umbrella, no present-tense claim.</div>
+    </div>
+    <div class="fix p2">
+      <span class="sev">P2</span><span class="where">overclaim · /, /compare ×5, /a, global layout.tsx</span>
+      <div class="iss">Founder-dropped "voice notes" / "voice memos" survives in hero trust lines, Loop step 01, FAQs, comparison rows, and the global meta description.</div>
+      <div class="fixline"><b>Fix:</b> global removal → "screen recordings" (home) / "Telegram audio" (compare).</div>
+    </div>
+    <div class="fix p2">
+      <span class="sev">P2</span><span class="where">copy · /policy, /terms</span>
+      <div class="iss">Legal Service clauses describe a "Google Meet recorder / visual transcription platform"; data-source &amp; consent lists are meetings-only; policy effective date predates the positioning lock.</div>
+      <div class="fixline"><b>Fix:</b> positioning pass on the Service/data clauses (careful — it's legal copy).</div>
+    </div>
+    <div class="fix p2">
+      <span class="sev">P2</span><span class="where">copy · shared footer + /book /invest /team /contact</span>
+      <div class="iss">Utility subheads are positioning-silent; footer tagline reads "verified knowledge for AI agents" vs the locked noun "verified work intelligence."</div>
+      <div class="fixline"><b>Fix:</b> one-line trust-layer anchor per page; one footer edit fixes every subpage.</div>
+    </div>
+    <div class="fix p2">
+      <span class="sev">P2</span><span class="where">a11y · /contact-us · links · /careers</span>
+      <div class="iss">Contact form status has no aria-live region + no accessible name; careers role deep-links are hash-only (weak SEO/shareability).</div>
+      <div class="fixline"><b>Fix:</b> wrap status in role="status" aria-live; add form aria-label. (careers = optional)</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="h2">Plan</h2>
+    <div class="lanes">
+      <div class="lane do">
+        <h3>I'll fix without asking (aligned with locked decisions)</h3>
+        <ul>
+          <li><b>/for/odoo-partners → EditorialShell</b> (the reshell you've asked for 3×)</li>
+          <li><b>Drop "voice notes" site-wide</b> — compare ×5, homepage, global meta</li>
+          <li><b>Compare ×5 copy:</b> "AI meeting tool" close → trust-layer; WhatsApp live-claim → building; add docs/URLs + screen recordings</li>
+          <li><b>Blog:</b> "Verified-meeting" → "Verified work intelligence" + CTA reframe</li>
+          <li><b>Homepage P2:</b> closer "Record." → "Capture."; trust line cleanup</li>
+          <li><b>/pitch</b> iframe header-offset fix</li>
+        </ul>
+      </div>
+      <div class="lane ask">
+        <h3>Needs your call (3 questions →)</h3>
+        <ul>
+          <li><b>/a /b /c /d</b> — dead A/B variants. Retire (redirect → /) or reskin to V6b?</li>
+          <li><b>/mvp /thank-you /offer /meet-us</b> — the blue-theme pages. Reskin all, or unpublish the demo + reskin the rest?</li>
+          <li><b>/policy /terms</b> — rewrite the meeting-recorder Service copy now, or hold for a careful legal pass?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    Method: 27 routes, one read-only agent per route reading the page + its component against a locked rubric (V6b theme · positioning · dark-on-dark · links · overclaims · a11y), then synthesis.<br>
+    Coverage: 19 routes first pass + 8 rate-limited routes re-run. No broken app.knowcap.ai CTAs found. Homepage is the healthiest surface.
+  </div>
+
+</div>
+</body>
+</html>

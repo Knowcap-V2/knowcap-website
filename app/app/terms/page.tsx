@@ -22,7 +22,7 @@ export default function TermsPage() {
       <PageHero
         kicker="Legal Information"
         title="Terms of Service"
-        sub={<>Knowcap Service &amp; Browser Extension &bull; Last updated: May 11, 2026</>}
+        sub={<>Knowcap Service &amp; Browser Extension &bull; Last updated: June 14, 2026</>}
       />
       <div className="cl-page-body">
         <div className="cl-wrap">
@@ -54,7 +54,7 @@ export default function TermsPage() {
 
             <h2 id="description" style={h2Anchor}>2. Description of Service</h2>
             <p>
-              Knowcap is a visual transcription platform that watches meetings and screen activity to automatically generate timestamp-backed product requirement documents, standard operating procedures, onboarding guides, and other structured artifacts from your work. The Service turns ephemeral work into verified, searchable memory through transcription, analysis, and AI-generated summaries. Features, integrations, and supported workflows may change over time as we improve the Service.
+              Knowcap is verified work intelligence — the trust layer for AI agents. It captures the work your team already does across meetings, messages, and recordings (including Google Meet, calls, screen recordings, documents, and links), extracts decisions, tasks, risks, and other claims, and lets a named human confirm each one before AI agents act on it. The Service turns ephemeral work into verified, searchable memory through capture, human confirmation, analysis, and AI-generated summaries. Features, integrations, and supported workflows may change over time as we improve the Service.
             </p>
 
             <h2 id="use-of-service" style={h2Anchor}>3. User Accounts</h2>

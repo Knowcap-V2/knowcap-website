@@ -55,7 +55,7 @@ export default function ContactUsPage() {
       <div className="cl-page-body">
         <div className="cl-wrap">
           <div className="cl-card" style={{ maxWidth: 720, margin: '0 auto', padding: 40 }}>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" aria-label="Contact Knowcap">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="cl-label">
@@ -129,19 +129,21 @@ export default function ContactUsPage() {
                 />
               </div>
 
-              {status === 'error' && (
-                <div style={{ padding: '12px 16px', background: '#FBEFEA', border: '1px solid #E4C3B7', borderRadius: 6 }}>
-                  <p style={{ color: '#9A3B26', fontSize: 14 }}>{errorMessage}</p>
-                </div>
-              )}
+              <div role="status" aria-live="polite">
+                {status === 'error' && (
+                  <div style={{ padding: '12px 16px', background: '#FBEFEA', border: '1px solid #E4C3B7', borderRadius: 6 }}>
+                    <p style={{ color: '#9A3B26', fontSize: 14 }}>{errorMessage}</p>
+                  </div>
+                )}
 
-              {status === 'success' && (
-                <div style={{ padding: '12px 16px', background: 'var(--green-tint)', border: '1px solid var(--green)', borderRadius: 6 }}>
-                  <p style={{ color: 'var(--green-deep)', fontSize: 14, fontWeight: 600 }}>
-                    Message sent successfully! We&apos;ll get back to you within 24 hours.
-                  </p>
-                </div>
-              )}
+                {status === 'success' && (
+                  <div style={{ padding: '12px 16px', background: 'var(--green-tint)', border: '1px solid var(--green)', borderRadius: 6 }}>
+                    <p style={{ color: 'var(--green-deep)', fontSize: 14, fontWeight: 600 }}>
+                      Message sent successfully! We&apos;ll get back to you within 24 hours.
+                    </p>
+                  </div>
+                )}
+              </div>
 
               <button
                 type="submit"

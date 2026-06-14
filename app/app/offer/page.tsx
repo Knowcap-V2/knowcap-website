@@ -1,371 +1,305 @@
 'use client'
 
+/**
+ * /offer — Knowcap Odoo Partner Edition pilot offer.
+ *
+ * Re-skinned onto the V6b "Editorial Light" system (EditorialShell + cl-* tokens).
+ * Positioning: Knowcap is verified work intelligence — the trust layer for AI
+ * agents. The artifacts a partner cares about (step-by-step SOPs, change-order
+ * evidence, the searchable record of every decision) are OUTPUTS of that loop,
+ * not the product itself. Meetings are one input among several.
+ *
+ * Preserved exactly: the cost-of-inaction math, the value stack, the pilot
+ * pricing, the buy.stripe.com checkout CTA, and the 30-day guarantee.
+ */
+
 import { useEffect } from 'react'
-import Footer from '@/components/footer'
+import Link from 'next/link'
+import EditorialShell, { PageHero } from '@/components/editorial/shell'
+
+const APP_URL = 'https://app.knowcap.ai'
+const STRIPE_CHECKOUT = 'https://buy.stripe.com/5kQ14n4Tm9STca94bH0co05'
+
+const CSS = `
+/* ---- value stack ---------------------------------------------------- */
+.of-section{padding:clamp(56px,6vw,88px) 0}
+.of-section--tint{background:var(--white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.of-head{max-width:760px;margin:0 auto;text-align:center}
+.of-h2{font-family:var(--disp);font-size:clamp(1.6rem,3vw,2.3rem);font-weight:460;
+  letter-spacing:-.02em;font-variation-settings:'SOFT' 55,'WONK' 0;line-height:1.14}
+.of-h2 em{font-style:italic;font-weight:540;font-variation-settings:'SOFT' 70,'WONK' 1;color:var(--green)}
+.of-lead{margin:18px auto 0;max-width:60ch;font-size:16px;line-height:1.7;color:var(--sec)}
+
+/* mono register label, centered */
+.of-reg{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;
+  font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--sec);margin-bottom:16px}
+.of-reg .of-reg-n{color:var(--green)}
+
+/* cost-of-inaction — dark ink panel */
+.of-cost{margin:36px auto 0;max-width:720px;background:var(--ink);color:rgba(251,250,248,.78);
+  border-radius:12px;padding:clamp(28px,4vw,44px);text-align:left}
+.of-cost h3{font-family:var(--disp);font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:460;
+  font-variation-settings:'SOFT' 55,'WONK' 0;color:var(--cream);margin-bottom:16px;letter-spacing:-.01em}
+.of-cost p{font-size:16px;line-height:1.7;margin:0}
+.of-cost strong{color:var(--cream);font-weight:600}
+.of-cost .of-burn{display:block;margin-top:14px;font-family:var(--mono);font-size:12.5px;
+  letter-spacing:.02em;color:var(--green-dark)}
+
+/* card grid */
+.of-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:48px}
+@media(min-width:760px){.of-grid{grid-template-columns:1fr 1fr}}
+.of-card{background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:28px;display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease}
+.of-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(24,24,27,.07)}
+.of-card--service{border-color:var(--border-2);background:color-mix(in srgb,var(--green) 3%,var(--white))}
+.of-card-title{font-family:var(--disp);font-size:1.3rem;font-weight:500;letter-spacing:-.01em;
+  font-variation-settings:'SOFT' 55,'WONK' 0;color:var(--ink);margin:14px 0 4px}
+.of-card-sub{font-size:13.5px;font-weight:600;color:var(--green-deep);margin-bottom:16px;
+  letter-spacing:.01em}
+.of-card-sub--service{color:var(--amber)}
+.of-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.of-list li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.6;color:var(--sec)}
+.of-list li strong{color:var(--ink);font-weight:600}
+.of-list svg{flex:none;margin-top:4px}
+.of-card-text{font-size:14.5px;line-height:1.7;color:var(--sec);margin:0}
+.of-card-text strong{color:var(--ink);font-weight:600}
+.of-card-foot{margin-top:auto;padding-top:18px}
+.of-card-val{margin-top:18px;padding-top:16px;border-top:1px solid var(--border);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--sec)}
+.of-card-val strong{color:var(--ink);font-weight:600}
+
+/* status tags */
+.of-tag{display:inline-block;align-self:flex-start;font-family:var(--mono);font-size:9.5px;
+  font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:3px}
+.of-tag--live{background:var(--green-tint);color:var(--green-deep)}
+.of-tag--future{background:color-mix(in srgb,var(--amber) 14%,var(--cream));color:var(--amber)}
+.of-tag--service{background:transparent;color:var(--sec);border:1px solid var(--border-2)}
+
+/* pricing panel — dark ink */
+.of-price{margin:0 auto;max-width:680px;background:var(--ink);color:rgba(251,250,248,.78);
+  border-radius:16px;padding:clamp(32px,5vw,52px);text-align:center}
+.of-price .of-reg{color:rgba(251,250,248,.6);margin-bottom:18px}
+.of-price .of-reg-n{color:var(--green-dark)}
+.of-price-h{font-family:var(--disp);font-size:clamp(1.5rem,3vw,2.1rem);font-weight:460;
+  font-variation-settings:'SOFT' 55,'WONK' 0;color:var(--cream);letter-spacing:-.02em;margin-bottom:10px}
+.of-spots{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--green-dark);
+  border:1px solid rgba(126,211,155,.4);border-radius:100px;padding:6px 16px;margin-bottom:30px}
+.of-price-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:0 36px;margin-bottom:26px}
+.of-price-was,.of-price-now{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 0}
+.of-price-was{border-right:1px solid rgba(251,250,248,.16);padding-right:36px}
+@media(max-width:520px){.of-price-was{border-right:0;border-bottom:1px solid rgba(251,250,248,.16);
+  padding-right:0;padding-bottom:18px;margin-bottom:6px}}
+.of-price-cap{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:rgba(251,250,248,.55)}
+.of-price-strike{font-family:var(--disp);font-size:1.6rem;font-weight:420;color:rgba(251,250,248,.5);
+  text-decoration:line-through}
+.of-price-main{font-family:var(--disp);font-weight:480;font-variation-settings:'SOFT' 55,'WONK' 0;
+  font-size:clamp(2.6rem,6vw,3.4rem);line-height:1;letter-spacing:-.02em;color:var(--green-dark)}
+.of-price-main span{font-size:1rem;font-weight:400;color:rgba(251,250,248,.6);font-family:var(--body)}
+.of-save{display:inline-block;font-family:var(--mono);font-size:12.5px;font-weight:500;
+  letter-spacing:.02em;color:var(--green-dark);background:rgba(126,211,155,.1);
+  border:1px solid rgba(126,211,155,.28);border-radius:8px;padding:10px 18px;margin-bottom:28px}
+.of-price .cl-btn--solid{background:var(--green-dark);color:var(--ink);border-color:var(--green-dark)}
+.of-price .cl-btn--solid:hover{background:#fff;border-color:#fff;color:var(--ink);
+  box-shadow:0 6px 22px rgba(126,211,155,.28)}
+.of-fine{margin-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:rgba(251,250,248,.5)}
+
+/* guarantee */
+.of-guarantee{margin:0 auto;max-width:680px;background:var(--white);border:1px solid var(--border);
+  border-top:3px solid var(--green);border-radius:12px;padding:clamp(28px,4vw,44px);text-align:center}
+.of-guarantee h3{font-family:var(--disp);font-size:clamp(1.3rem,2.4vw,1.7rem);font-weight:460;
+  font-variation-settings:'SOFT' 55,'WONK' 0;letter-spacing:-.015em;color:var(--ink);margin-bottom:16px}
+.of-guarantee p{font-size:15.5px;line-height:1.7;color:var(--sec);margin:0 0 12px}
+.of-guarantee .of-g-list{list-style:none;margin:20px auto;padding:0;max-width:48ch;text-align:left;
+  display:flex;flex-direction:column;gap:12px}
+.of-guarantee .of-g-list li{display:flex;gap:12px;align-items:flex-start;font-size:15px;
+  line-height:1.6;color:var(--ink)}
+.of-g-num{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--green);flex:none;
+  margin-top:2px}
+.of-g-final{margin-top:8px;font-family:var(--disp);font-size:1.1rem;font-weight:500;
+  font-variation-settings:'SOFT' 55,'WONK' 0;color:var(--green-deep)}
+
+.of-cta-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:40px}
+@media(max-width:560px){.of-cta-row{flex-direction:column}}
+`
+
+function Tick() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 8.5L6.5 12L13 4.5" stroke="#1F6B3A" strokeWidth="2"
+        strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 export default function OfferPage() {
   useEffect(() => {
-    document.title = 'KnowCap Pilot Offer: Odoo Partner Edition'
-
-    // Intersection Observer for fade-in animations
-    const observerOptions = { threshold: 0.1 }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible')
-        }
-      })
-    }, observerOptions)
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      observer.observe(el)
-    })
-
-    return () => observer.disconnect()
+    document.title = 'Knowcap Pilot Offer — Odoo Partner Edition'
   }, [])
 
   return (
-    <>
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+    <EditorialShell>
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
 
-        :root {
-          --primary: #005EFF;
-          --primary-dark: #0046bd;
-          --primary-light: rgba(0, 94, 255, 0.08);
-          --dark: #191F2E;
-          --gray-text: #414651;
-          --bg-light: #F5F7FA;
-          --surface-glass: rgba(255, 255, 255, 0.95);
-          --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
-          --shadow-md: 0 12px 24px -6px rgba(0,0,0,0.05);
-          --shadow-lg: 0 20px 40px -10px rgba(0,0,0,0.1);
-          --radius-lg: 16px;
-          --success: #27C93F;
-          --danger: #FF5F56;
-        }
+      <PageHero
+        kicker="Pilot Program · Odoo Partner Edition"
+        title={<>Stop the 180-hour leak. Keep every promise <em>on the record.</em></>}
+        sub="Knowcap is verified work intelligence — the trust layer for your AI agents. It captures the conversations your implementation runs on, turns them into a confirmed record of every decision, and hands your team the SOPs, change-order evidence, and searchable history as outputs. Protect your margins. Automate your documentation."
+      />
 
-        .offer-page * { margin: 0; padding: 0; box-sizing: border-box; }
+      <div className="cl-page-body">
+        <div className="cl-wrap">
 
-        .offer-page {
-          font-family: 'Inter', sans-serif;
-          line-height: 1.6;
-          color: var(--dark);
-          background: var(--bg-light);
-          -webkit-font-smoothing: antialiased;
-          overflow-x: hidden;
-        }
-
-        .offer-page h1, .offer-page h2, .offer-page h3, .offer-page h4, .offer-page h5 {
-          font-family: 'Space Grotesk', sans-serif;
-          font-weight: 700;
-          letter-spacing: -0.02em;
-          line-height: 1.2;
-          color: var(--dark);
-        }
-
-        .offer-page h1 { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; }
-        .offer-page h2 { font-size: 2rem; margin-bottom: 1rem; }
-        .offer-page h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .offer-page h5 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-
-        .offer-page .gradient-text {
-          background: linear-gradient(135deg, #005EFF 0%, #00C6FF 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          display: inline-block;
-        }
-
-        .offer-page p { margin-bottom: 1rem; color: var(--gray-text); font-size: 1rem; }
-        .offer-page .text-center { text-align: center; }
-        .offer-page .font-bold { font-weight: 700; }
-        .offer-page .text-primary { color: var(--primary); }
-        .offer-page .text-white { color: white; }
-        .offer-page .text-sm { font-size: 0.875rem; }
-        .offer-page .text-lg { font-size: 1.125rem; }
-        .offer-page .text-xs { font-size: 0.75rem; }
-        .offer-page .text-gray { color: var(--gray-text); }
-        
-        .offer-page section { padding: 4rem 1.5rem; position: relative; }
-        .offer-page .container { max-width: 1000px; margin: 0 auto; }
-        .offer-page .max-w-3xl { max-width: 768px; }
-        .offer-page .mx-auto { margin-left: auto; margin-right: auto; }
-        .offer-page .mb-12 { margin-bottom: 3rem; }
-        .offer-page .mb-8 { margin-bottom: 2rem; }
-        .offer-page .mb-6 { margin-bottom: 1.5rem; }
-        .offer-page .mb-4 { margin-bottom: 1rem; }
-        .offer-page .mb-2 { margin-bottom: 0.5rem; }
-        .offer-page .mb-1 { margin-bottom: 0.25rem; }
-        .offer-page .mb-0 { margin-bottom: 0; }
-        .offer-page .mt-4 { margin-top: 1rem; }
-        .offer-page .space-y-2 > * + * { margin-top: 0.5rem; }
-
-        .offer-page .slide-label {
-          font-family: 'Space Grotesk', sans-serif;
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: var(--primary);
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          margin-bottom: 1rem;
-          display: inline-block;
-          background: var(--primary-light);
-          padding: 4px 12px;
-          border-radius: 100px;
-        }
-
-        .offer-page .grid { display: grid; gap: 1.5rem; }
-        .offer-page .grid-cols-2 { grid-template-columns: 1fr; }
-        .offer-page .gap-8 { gap: 2rem; }
-        .offer-page .items-center { align-items: center; }
-
-        .offer-page .card {
-          background: var(--surface-glass);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(255, 255, 255, 0.6);
-          border-radius: var(--radius-lg);
-          padding: 2rem;
-          box-shadow: var(--shadow-sm);
-          height: 100%;
-          transition: transform 0.2s;
-        }
-        
-        .offer-page .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-        .offer-page .card-dark {
-          background: var(--dark);
-          color: white;
-          border: 1px solid #333;
-          padding: 2rem;
-          border-radius: var(--radius-lg);
-          text-align: center;
-        }
-        .offer-page .card-dark p { color: #9ca3af; }
-        .offer-page .card-dark .text-white { color: white; }
-
-        .offer-page .hero-bg {
-          background: radial-gradient(circle at 50% 0%, #E3F2FD 0%, #F8FAFC 70%);
-          padding-top: 5rem;
-          padding-bottom: 3rem;
-        }
-
-        .offer-page .price-strike {
-          text-decoration: line-through;
-          color: #9ca3af;
-          font-size: 1.2rem;
-        }
-
-        .offer-page .price-main {
-          font-size: 3rem;
-          font-weight: 700;
-          color: var(--primary);
-          line-height: 1;
-        }
-
-        .offer-page .tag {
-          display: inline-block;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 0.75rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          margin-bottom: 0.5rem;
-        }
-        .offer-page .tag-live { background: #e6f4ea; color: #1e8e3e; }
-        .offer-page .tag-future { background: #fef7e0; color: #b06000; }
-        .offer-page .tag-service { background: #fce8e6; color: #c5221f; }
-
-        .offer-page .btn-primary {
-          display: inline-block;
-          background: var(--primary);
-          color: white;
-          padding: 1rem 2.5rem;
-          border-radius: 8px;
-          font-weight: 600;
-          text-decoration: none;
-          box-shadow: 0 4px 12px rgba(0, 94, 255, 0.3);
-          transition: all 0.2s;
-          margin-top: 1rem;
-          cursor: pointer;
-        }
-        .offer-page .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
-
-        .offer-page .fade-in {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .offer-page .visible { opacity: 1; transform: translateY(0); }
-
-        .offer-page .urgency-badge {
-          background: rgba(255, 95, 86, 0.15);
-          border: 1px solid var(--danger);
-          color: var(--danger);
-          display: inline-block;
-          padding: 6px 16px;
-          border-radius: 6px;
-          font-size: 0.9rem;
-          font-weight: 700;
-          margin-bottom: 1.5rem;
-          animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-          0% { box-shadow: 0 0 0 0 rgba(255, 95, 86, 0.4); }
-          70% { box-shadow: 0 0 0 10px rgba(255, 95, 86, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(255, 95, 86, 0); }
-        }
-
-        @media (min-width: 768px) {
-          .offer-page h1 { font-size: 3.5rem; }
-          .offer-page .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-        }
-      `}</style>
-
-
-      <main className="offer-page" style={{  }}>
-        {/* HERO SECTION */}
-        <section className="hero-bg">
-          <div className="container">
-            <div className="fade-in text-center">
-              <span className="slide-label">Pilot Program Invitation</span>
-              <h1>The KnowCap <span className="gradient-text">Odoo Partner Edition</span></h1>
-              <p className="text-lg" style={{ maxWidth: '600px', margin: '0 auto 2rem auto' }}>
-                Stop the 180-hour leak. Protect your margins. Automate your documentation.
-              </p>
-              
-              <div className="card-dark max-w-3xl mx-auto" style={{ marginTop: '2rem' }}>
-                <h3 className="text-white mb-2">The Cost of Inaction</h3>
-                <p className="text-white text-lg mb-0" style={{ lineHeight: '1.6' }}>
-                  You pay a Senior Consultant ~70k EGP/month ($2k-5k USD), but you bill them at <strong>$75 USD/hr</strong>.
+          {/* COST OF INACTION */}
+          <section className="of-section" style={{ paddingTop: 0 }}>
+            <div className="of-head">
+              <span className="of-reg"><span className="of-reg-n">§01</span> · The cost of inaction</span>
+              <div className="of-cost">
+                <h3>What an unmanaged project actually costs you</h3>
+                <p>
+                  You pay a Senior Consultant ~70k EGP/month ($2k–5k USD), but you bill them at{' '}
+                  <strong>$75 USD/hr</strong>.
                   <br /><br />
-                  When they waste <strong>180 hours</strong> on rework and support, you aren&apos;t losing cheap salaries. You are losing <strong>$13,500 USD</strong> in billable revenue per project.
-                  <br />
-                  <span style={{ color: '#FF5F56', fontSize: '0.9rem' }}>(That is 4-7x their monthly salary burned.)</span>
+                  When they waste <strong>180 hours</strong> on rework and support, you aren&apos;t
+                  losing cheap salaries. You are losing <strong>$13,500 USD</strong> in billable
+                  revenue per project.
+                  <span className="of-burn">That is 4–7× their monthly salary — burned.</span>
                 </p>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* VALUE STACK SECTION */}
-        <section>
-          <div className="container fade-in">
-            <div className="mb-12 text-center">
-              <span className="slide-label">The Value Stack</span>
-              <h2>What You Get (Pilot Access)</h2>
+          {/* VALUE STACK */}
+          <section className="of-section">
+            <div className="of-head">
+              <span className="of-reg"><span className="of-reg-n">§02</span> · The value stack</span>
+              <h2 className="of-h2">What you get with <em>pilot access</em></h2>
+              <p className="of-lead">
+                The system that closes the loop, the upgrades you keep for life, and two
+                done-for-you services to get your team live without lifting a finger.
+              </p>
             </div>
 
-            <div className="grid grid-cols-2">
-              {/* Card 1: Core Software */}
-              <div className="card">
-                <span className="tag tag-live">Live Now</span>
-                <h3 className="text-primary">1. The Core System</h3>
-                <p className="text-sm font-bold mb-4">Unlimited Seats & Magic Links</p>
-                <ul style={{ listStyle: 'none', padding: 0 }} className="text-sm space-y-2">
-                  <li className="mb-2">✓ <strong>Visual Transcription Engine:</strong> Instantly converts video into Step-by-Step SOPs.</li>
-                  <li className="mb-2">✓ <strong>Unlimited &quot;Magic Links&quot;:</strong> Replace Loom for your clients.</li>
-                  <li className="mb-0">✓ <strong>Project Memory:</strong> Searchable proof of every decision.</li>
+            <div className="of-grid">
+              {/* 1 — Core System */}
+              <div className="of-card">
+                <span className="of-tag of-tag--live">Live now</span>
+                <h3 className="of-card-title">1. The core system</h3>
+                <p className="of-card-sub">Unlimited seats &amp; magic links</p>
+                <ul className="of-list">
+                  <li><Tick /><span><strong>Step-by-step SOPs, generated:</strong> capture a walkthrough — a meeting, a call, or a screen recording — and Knowcap turns it into a structured, shareable SOP.</span></li>
+                  <li><Tick /><span><strong>Unlimited magic links:</strong> share any captured walkthrough with a client in one link, branded as yours.</span></li>
+                  <li><Tick /><span><strong>Project memory:</strong> a searchable, confirmed record of every decision — proof you can point to when scope is disputed.</span></li>
                 </ul>
-                <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #eee' }}>
-                  <p className="text-xs text-gray mb-0">Standard Value: <strong>$1,000/mo</strong></p>
+                <div className="of-card-foot">
+                  <p className="of-card-val">Standard value: <strong>$1,000/mo</strong></p>
                 </div>
               </div>
 
-              {/* Card 2: Future Tech */}
-              <div className="card">
-                <span className="tag tag-future">Q1 Future-Lock</span>
-                <h3 className="text-primary">2. Tech Bonuses</h3>
-                <p className="text-sm font-bold mb-4">Lifetime Enterprise Upgrades</p>
-                <ul style={{ listStyle: 'none', padding: 0 }} className="text-sm space-y-2">
-                  <li className="mb-2">✓ <strong>White Labeling:</strong> Your Brand, Your Domain, Your Colors.</li>
-                  <li className="mb-2">✓ <strong>Bilingual Chatbot:</strong> Arabic/English Agent trained on your docs.</li>
-                  <li className="mb-0">✓ <strong>Grandfathered Status:</strong> You never pay extra for these.</li>
+              {/* 2 — Tech Bonuses */}
+              <div className="of-card">
+                <span className="of-tag of-tag--future">Q1 future-lock</span>
+                <h3 className="of-card-title">2. Tech bonuses</h3>
+                <p className="of-card-sub">Lifetime enterprise upgrades</p>
+                <ul className="of-list">
+                  <li><Tick /><span><strong>White labeling:</strong> your brand, your domain, your colors.</span></li>
+                  <li><Tick /><span><strong>Bilingual agent:</strong> an Arabic / English agent trained on your confirmed docs and project memory.</span></li>
+                  <li><Tick /><span><strong>Grandfathered status:</strong> you never pay extra for these.</span></li>
                 </ul>
-                <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #eee' }}>
-                  <p className="text-xs text-gray mb-0">Future Value: <strong>+$500/mo</strong></p>
+                <div className="of-card-foot">
+                  <p className="of-card-val">Future value: <strong>+$500/mo</strong></p>
                 </div>
               </div>
 
-              {/* Card 3: Service 1 */}
-              <div className="card" style={{ border: '1px solid #FFD7D5' }}>
-                <span className="tag tag-service">Done-For-You Service</span>
-                <h3 style={{ color: '#C5221F' }}>3. &quot;White Glove&quot; Ingestion</h3>
-                <p className="text-sm font-bold mb-4">We Do The Work For You</p>
-                <p className="text-sm">Send us your 10 most critical documents (PDFs, Docs, SOPs). My team will <strong>manually upload, tag, and structure them</strong> into KnowCap for you.</p>
-                <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #eee' }}>
-                  <p className="text-xs text-gray mb-0">Service Value: <strong>$1,500 (One-Time)</strong></p>
-                </div>
-              </div>
-
-              {/* Card 4: Service 2 */}
-              <div className="card" style={{ border: '1px solid #FFD7D5' }}>
-                <span className="tag tag-service">Done-For-You Service</span>
-                <h3 style={{ color: '#C5221F' }}>4. On-Prem Strategy</h3>
-                <p className="text-sm font-bold mb-4">60-Day Handholding</p>
-                <p className="text-sm"><strong>8x Strategy Calls</strong> (4/mo for 2 months). We guide your infrastructure, workflow optimization, and team training personally.</p>
-                <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #eee' }}>
-                  <p className="text-xs text-gray mb-0">Consulting Value: <strong>$1,000 (Waived)</strong></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* PRICING SECTION */}
-        <section style={{ background: '#F5F7FA' }}>
-          <div className="container fade-in">
-            <div className="card-dark max-w-3xl mx-auto text-center" style={{ border: '1px solid var(--primary)' }}>
-              <span className="slide-label" style={{ background: 'rgba(255,255,255,0.1)', color: 'white' }}>Limited Pilot Offer</span>
-              <h2 className="text-white mb-2">The Pilot Investment</h2>
-              
-              <div className="urgency-badge">
-                ⚠️ ONLY 2 SPOTS LEFT
-              </div>
-              
-              <div className="grid grid-cols-2 gap-8 items-center mb-8" style={{ maxWidth: '600px', margin: '0 auto' }}>
-                <div style={{ textAlign: 'right', borderRight: '1px solid #333', paddingRight: '2rem' }}>
-                  <p className="text-sm text-gray mb-1">First Month Value</p>
-                  <div className="price-strike">$4,000+</div>
-                </div>
-                <div style={{ textAlign: 'left' }}>
-                  <p className="text-sm text-primary mb-1">Your Pilot Price</p>
-                  <div className="price-main">$350 <span style={{ fontSize: '1rem', color: 'white', fontWeight: '400' }}>USD/mo</span></div>
-                </div>
-              </div>
-
-              <div style={{ background: 'rgba(39, 201, 63, 0.1)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--success)', display: 'inline-block', marginBottom: '2rem' }}>
-                <p className="mb-0" style={{ color: 'var(--success)', fontWeight: '700' }}>
-                  📉 You save $13,800 USD per year
+              {/* 3 — White Glove Ingestion */}
+              <div className="of-card of-card--service">
+                <span className="of-tag of-tag--service">Done-for-you service</span>
+                <h3 className="of-card-title">3. &ldquo;White glove&rdquo; ingestion</h3>
+                <p className="of-card-sub of-card-sub--service">We do the work for you</p>
+                <p className="of-card-text">
+                  Send us your 10 most critical documents (PDFs, Docs, SOPs). My team will{' '}
+                  <strong>manually upload, tag, and structure them</strong> into Knowcap for you —
+                  so your project memory is populated on day one.
                 </p>
+                <div className="of-card-foot">
+                  <p className="of-card-val">Service value: <strong>$1,500 (one-time)</strong></p>
+                </div>
               </div>
 
-              <br />
-              <a href="https://buy.stripe.com/5kQ14n4Tm9STca94bH0co05" className="btn-primary">Activate Pilot License</a>
-              <p className="text-xs text-gray mt-4">Offer expires when the last 2 spots are filled.</p>
+              {/* 4 — On-Prem Strategy */}
+              <div className="of-card of-card--service">
+                <span className="of-tag of-tag--service">Done-for-you service</span>
+                <h3 className="of-card-title">4. On-prem strategy</h3>
+                <p className="of-card-sub of-card-sub--service">60-day handholding</p>
+                <p className="of-card-text">
+                  <strong>8× strategy calls</strong> (4/mo for 2 months). We guide your
+                  infrastructure, workflow optimization, and team training personally.
+                </p>
+                <div className="of-card-foot">
+                  <p className="of-card-val">Consulting value: <strong>$1,000 (waived)</strong></p>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* GUARANTEE SECTION */}
-        <section>
-          <div className="container fade-in">
-            <div className="card text-center max-w-3xl mx-auto" style={{ borderTop: '4px solid var(--primary)' }}>
-              <h3>The Risk-Free Performance Guarantee</h3>
-              <p className="mt-4">We take all the risk. Put KnowCap on your messiest project.</p>
-              <p>If within the first 30 days, KnowCap does not:</p>
-              <ul style={{ listStyle: 'none', padding: 0, marginBottom: '1.5rem' }} className="font-bold space-y-2">
-                <li style={{ marginBottom: '0.5rem' }}>1. Create one complex SOP instantly (Visual Transcription)</li>
-                <li style={{ marginBottom: '0.5rem' }}>2. Resolve a Scope Creep dispute using Video Evidence</li>
-                <li style={{ marginBottom: '0.5rem' }}>3. Demonstrate a path to saving 50 hours per 500-hour project</li>
+          {/* PRICING */}
+          <section className="of-section of-section--tint" style={{ marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)', paddingLeft: 22, paddingRight: 22 }}>
+            <div className="of-price">
+              <span className="of-reg"><span className="of-reg-n">§03</span> · Limited pilot offer</span>
+              <h2 className="of-price-h">The pilot investment</h2>
+              <span className="of-spots">Only 2 spots left</span>
+
+              <div className="of-price-row">
+                <div className="of-price-was">
+                  <span className="of-price-cap">First-month value</span>
+                  <span className="of-price-strike">$4,000+</span>
+                </div>
+                <div className="of-price-now">
+                  <span className="of-price-cap">Your pilot price</span>
+                  <span className="of-price-main">$350 <span>USD/mo</span></span>
+                </div>
+              </div>
+
+              <div className="of-save">You save $13,800 USD per year</div>
+
+              <div>
+                <a href={STRIPE_CHECKOUT} className="cl-btn cl-btn--solid">Activate Pilot License</a>
+              </div>
+              <p className="of-fine">Offer expires when the last 2 spots are filled.</p>
+            </div>
+          </section>
+
+          {/* GUARANTEE */}
+          <section className="of-section">
+            <div className="of-head" style={{ marginBottom: 28 }}>
+              <span className="of-reg"><span className="of-reg-n">§04</span> · Risk-free</span>
+            </div>
+            <div className="of-guarantee">
+              <h3>The risk-free performance guarantee</h3>
+              <p>We take all the risk. Put Knowcap on your messiest project.</p>
+              <p>If within the first 30 days, Knowcap does not:</p>
+              <ul className="of-g-list">
+                <li><span className="of-g-num">01</span><span>Generate one complex SOP from a captured walkthrough, instantly</span></li>
+                <li><span className="of-g-num">02</span><span>Resolve a scope-creep dispute using the confirmed record of what was said</span></li>
+                <li><span className="of-g-num">03</span><span>Demonstrate a path to saving 50 hours per 500-hour project</span></li>
               </ul>
-              <p className="text-primary font-bold">We will refund 100% of your subscription.</p>
+              <p className="of-g-final">We will refund 100% of your subscription.</p>
             </div>
-          </div>
-        </section>
-        
-        <Footer />
-      </main>
-    </>
+
+            <div className="of-cta-row">
+              <a href={STRIPE_CHECKOUT} className="cl-btn cl-btn--solid">Activate Pilot License</a>
+              <Link href="/book" className="cl-btn cl-btn--ghost">Book a Demo</Link>
+            </div>
+            <p className="of-fine" style={{ textAlign: 'center', color: 'var(--sec)', marginTop: 18 }}>
+              Prefer to see it first? <a href={`${APP_URL}/register`} style={{ color: 'var(--green)', textDecoration: 'underline', textUnderlineOffset: 3 }}>Start free</a> — no credit card.
+            </p>
+          </section>
+
+        </div>
+      </div>
+    </EditorialShell>
   )
 }
