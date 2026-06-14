@@ -9,6 +9,7 @@
 import Link from 'next/link'
 import EditorialShell, { PageHero } from '@/components/editorial/shell'
 import { COMPARE_CSS } from '../compare-styles'
+import CompareJsonLd from '@/components/compare/compare-json-ld'
 
 const COMPETITOR = 'Granola.ai'
 const COMPETITOR_SLUG = 'granola'
@@ -60,6 +61,7 @@ export default function ComparePage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: COMPARE_CSS }} />
+      <CompareJsonLd slug="granola" competitor={COMPETITOR} faqs={FAQS} />
       <EditorialShell>
         <PageHero
           kicker={`Comparison · Knowcap vs ${COMPETITOR}`}

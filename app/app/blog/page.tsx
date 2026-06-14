@@ -20,10 +20,31 @@ export const metadata: Metadata = {
 export default function BlogIndexPage() {
   const posts = getAllPosts()
 
+  const blogJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Knowcap Blog',
+    url: 'https://knowcap.ai/blog',
+    description:
+      'Case studies, comparisons, and field notes from the trust layer for AI agents.',
+    publisher: { '@type': 'Organization', name: 'Knowcap', url: 'https://knowcap.ai' },
+    blogPost: posts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.description,
+      datePublished: post.date,
+      url: `https://knowcap.ai/blog/${post.slug}`,
+    })),
+  }
+
   return (
     <EditorialShell>
       <div className="kb-root">
         <style dangerouslySetInnerHTML={{ __html: BLOG_CSS }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+        />
 
         <header className="kb-index-head">
           <div className="kb-index-head-inner">
