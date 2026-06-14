@@ -27,7 +27,7 @@ const COMPARISON_ROWS: { feature: string; them: string; us: string; them_yes: bo
   { feature: 'GitHub PR generation from bug recording', them: 'No', us: 'Yes', them_yes: false, us_yes: true },
   // verified 2026-06-01 source: https://otter.ai/ — Otter shipped an MCP server (ChatGPT/Claude can read meeting knowledge); ours is differentiated by writing verified facts back
   { feature: 'MCP server for AI agent access', them: 'Read-only (query transcripts)', us: 'Read + write verified facts to your stack', them_yes: true, us_yes: true, highlight: true },
-  { feature: 'WhatsApp / Telegram capture', them: 'No', us: 'Yes', them_yes: false, us_yes: true },
+  { feature: 'Telegram capture (WhatsApp coming)', them: 'No', us: 'Yes', them_yes: false, us_yes: true },
   { feature: 'Built for Odoo implementation partners', them: 'No', us: 'Built by an Odoo partner', them_yes: false, us_yes: true },
   { feature: 'MENA market focus (Arabic UI / data residency)', them: 'No', us: 'Yes', them_yes: false, us_yes: true, highlight: true },
   { feature: 'Audit trail for AI agent actions', them: 'No', us: 'Yes', them_yes: false, us_yes: true },
@@ -40,7 +40,7 @@ const FAQS = [
   },
   {
     q: `Does Knowcap work with the same meeting tools as ${COMPETITOR}?`,
-    a: `Yes — Zoom, Google Meet, and Microsoft Teams are all supported. Knowcap also captures WhatsApp voice notes, Telegram audio, in-person mobile recordings, and screen shares, which ${COMPETITOR} doesn't.`,
+    a: `Yes — Zoom, Google Meet, and Microsoft Teams are all supported. Knowcap also captures Telegram messages, in-person mobile recordings, screen recordings, and documents/URLs (WhatsApp, email, and Slack are coming), which ${COMPETITOR} doesn't.`,
   },
   {
     q: `Why is Knowcap better than ${COMPETITOR} for MENA SMEs and Odoo partners?`,
@@ -64,7 +64,7 @@ export default function ComparePage() {
         <PageHero
           kicker={`Comparison · Knowcap vs ${COMPETITOR}`}
           title={<>{COMPETITOR} transcribes. Knowcap <span style={{ color: 'var(--green)' }}>acts.</span></>}
-          sub={`${COMPETITOR} gives you a meeting transcript and an AI summary. Knowcap captures the meeting, extracts every decision / risk / task, lets a human confirm with one tap, then triggers agents that open PRs, create Odoo tickets, and send WhatsApp messages.`}
+          sub={`${COMPETITOR} gives you a meeting transcript and an AI summary. Knowcap captures the work — meetings, messages, and recordings — extracts every decision / risk / task, lets a human confirm with one tap, then triggers agents that open PRs and create Odoo tickets. It's the trust layer for your AI agents: only what a human confirmed ever reaches your stack.`}
         />
         <div className="cl-page-body">
           <div className="cl-wrap">
@@ -121,8 +121,8 @@ export default function ComparePage() {
         </div>
         <div className="cm-close">
           <div className="cl-wrap">
-            <h2>Stop summarizing meetings.<br />Start acting on them.</h2>
-            <p>Knowcap is the AI meeting tool with agents that do the work — under your human-confirmed control.</p>
+            <h2>Stop trusting raw AI summaries.<br />Ship only what a human confirmed.</h2>
+            <p>Knowcap is verified work intelligence — the trust layer for your AI agents, under human-confirmed control.</p>
             <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Get Started Free →</a>
           </div>
         </div>
