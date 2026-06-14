@@ -129,11 +129,14 @@ const CSS = `
 .cl-sub{margin-top:32px;max-width:58ch;font-size:17.5px;line-height:1.7;color:var(--sec)}
 .cl-sub b{color:var(--ink);font-weight:600}
 
-/* rotating source word — kills the "meeting recorder" read */
-.cl-rot{display:inline-block;position:relative;color:var(--green);font-style:italic;
-  font-weight:540;font-variation-settings:'SOFT' 70,'WONK' 1;white-space:nowrap;
-  border-bottom:2px solid rgba(31,107,58,.32);padding-bottom:2px}
-.cl-rot-w{display:inline-block;transition:opacity .34s ease,transform .34s ease}
+/* rotating source word — kills the "meeting recorder" read.
+   A hidden ghost holds the slot at the width of the longest word so a short
+   word ("email") never reflows the line below it. */
+.cl-rot{display:inline-block;position:relative;text-align:left;color:var(--green);
+  font-style:italic;font-weight:540;font-variation-settings:'SOFT' 70,'WONK' 1;
+  white-space:nowrap;border-bottom:2px solid rgba(31,107,58,.32);padding-bottom:2px}
+.cl-rot-ghost{visibility:hidden}
+.cl-rot-w{position:absolute;left:0;top:0;transition:opacity .34s ease,transform .34s ease}
 .cl-rot[data-swap="true"] .cl-rot-w{opacity:0;transform:translateY(-7px)}
 @media(prefers-reduced-motion:reduce){.cl-rot-w{transition:none}}
 
@@ -647,6 +650,8 @@ function RotatingSource() {
   }, [])
   return (
     <span className="cl-rot" data-swap={swap ? 'true' : 'false'} aria-live="polite">
+      {/* ghost = longest word; reserves the slot so the line never reflows */}
+      <span className="cl-rot-ghost" aria-hidden="true">screen recording</span>
       <span className="cl-rot-w">{HERO_SOURCES[i]}</span>
     </span>
   )
