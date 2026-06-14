@@ -32,6 +32,8 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'meta-externalagent', allow: '/' },
       { userAgent: 'Amazonbot', allow: '/' },
       { userAgent: 'PerplexityBot', allow: '/' },
+      { userAgent: 'OAI-SearchBot', allow: '/' },
+      { userAgent: 'ChatGPT-User', allow: '/' },
       { userAgent: 'YouBot', allow: '/' },
       { userAgent: 'cohere-ai', allow: '/' },
     ],
