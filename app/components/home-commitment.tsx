@@ -667,7 +667,8 @@ function Hero() {
           <Reveal>
             <p className="cl-kicker">Knowcap <span className="cl-kdot">·</span> Verified work intelligence</p>
             <h1 className="cl-h1">
-              Knowcap turns every <RotatingSource /><br />
+              Knowcap turns<br />
+              every <RotatingSource /><br />
               into facts your agents can <em>trust</em>.
             </h1>
           </Reveal>
