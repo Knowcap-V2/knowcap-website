@@ -623,7 +623,7 @@ function AppWindow() {
 
 /* ----------------------------------------------------- rotating source */
 
-const HERO_SOURCES = ['meeting', 'screen recording', 'Telegram', 'WhatsApp', 'email']
+const HERO_SOURCES = ['Meeting', 'Screen recording', 'Telegram', 'WhatsApp', 'Email']
 
 function RotatingSource() {
   const [i, setI] = useState(0)
@@ -651,7 +651,7 @@ function RotatingSource() {
   return (
     <span className="cl-rot" data-swap={swap ? 'true' : 'false'} aria-live="polite">
       {/* ghost = longest word; reserves the slot so the line never reflows */}
-      <span className="cl-rot-ghost" aria-hidden="true">screen recording</span>
+      <span className="cl-rot-ghost" aria-hidden="true">Screen recording</span>
       <span className="cl-rot-w">{HERO_SOURCES[i]}</span>
     </span>
   )
