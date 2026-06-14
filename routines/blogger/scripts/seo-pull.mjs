@@ -139,11 +139,15 @@ function isCovered(keyword, slugs) {
 }
 
 // ---- DataForSEO Labs call ----
-async function keywordIdeas(seeds, locationName, languageCode) {
+// Labs keyword_ideas takes language_NAME ("English"/"Arabic"), NOT language_code, and only
+// accepts location+language pairs in its database (e.g. Saudi Arabia = Arabic only — English
+// there returns 40501). Unsupported pairs throw and are skipped by the caller's try/catch.
+const LANG_NAME = { en: 'English', ar: 'Arabic' }
+async function keywordIdeas(seeds, locationName, lang) {
   const body = [{
     keywords: seeds,
     location_name: locationName,
-    language_code: languageCode,
+    language_name: LANG_NAME[lang] || lang,
     limit: LIMIT,
     order_by: ['keyword_info.search_volume,desc'],
     filters: [['keyword_info.search_volume', '>', 0]],
