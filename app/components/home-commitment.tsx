@@ -617,26 +617,25 @@ function Hero() {
       <div className="cl-wrap">
         <div className="cl-hero-main">
           <Reveal>
-            <p className="cl-kicker">Knowcap <span className="cl-kdot">·</span> MCP server for Claude, Codex &amp; Gemini</p>
+            <p className="cl-kicker">Knowcap <span className="cl-kdot">·</span> Verified meeting intelligence</p>
             <h1 className="cl-h1">
-              Your company&rsquo;s deepest knowledge is its commitments and the risks against
-              them. <em>Knowcap makes sure they&rsquo;re kept.</em>
+              Record the meeting. Confirm what was said.{' '}
+              <em>Let your AI agents act on it.</em>
             </h1>
           </Reveal>
           <Reveal delay={120}>
             <p className="cl-sub">
-              Your client was promised delivery by June. Your team lead promised the demo would
-              work. Those promises live in conversations, and they die there. Knowcap captures
-              every commitment spoken aloud, flags every risk against it, and lets your AI agents
-              act on it — after a named human confirms it.
+              Knowcap captures every meeting, call, and voice note, extracts the commitments,
+              decisions, tasks, and risks, and a named human confirms each one — so your agents
+              act on verified facts, not guesses.
             </p>
           </Reveal>
           <Reveal delay={200}>
             <div className="cl-doctrine">
               <span className="cl-kicker">Doctrine</span>
               <blockquote>
-                Most AI agents act on what the AI thinks is true.{' '}
-                <span className="cl-said-true">Knowcap agents act only on what a human said is true.</span>
+                Organizations aren&rsquo;t hierarchies. They&rsquo;re webs of commitments.{' '}
+                <span className="cl-said-true">Knowcap makes sure they&rsquo;re kept.</span>
               </blockquote>
             </div>
           </Reveal>
@@ -990,12 +989,12 @@ function Closer() {
         <Reveal>
           <div className="cl-closer">
             <div className="cl-closer-text">
-              <span className="cl-kicker">Knowcap <span className="cl-kdot">·</span> The thesis</span>
+              <span className="cl-kicker">Knowcap <span className="cl-kdot">·</span> The difference</span>
               <h2>
-                Organizations aren&rsquo;t hierarchies.<br />
-                <em>They&rsquo;re webs of commitments.</em>
+                Most AI acts on what it <em>thinks</em> is true.<br />
+                Knowcap acts on what a human <em>said</em> is true.
               </h2>
-              <p className="cl-closer-sub">AI is finally able to make sure they&rsquo;re kept.</p>
+              <p className="cl-closer-sub">Record. Confirm. Let your agents act on verified facts.</p>
             </div>
             <div className="cl-closer-ctas">
               <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
