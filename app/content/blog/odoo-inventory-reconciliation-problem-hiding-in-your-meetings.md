@@ -28,6 +28,10 @@ Then the heavy lifting: every discrepant item had to be walked back through Odoo
 
 By the end, the meeting had produced a dozen concrete decisions and tasks: what was wrong, what the corrected number was, who fixed it, and by when. The problem is what usually happens to those decisions after the call ends.
 
+![Knowcap verification inbox showing four confirmed claims from the reconciliation meeting — each with its category, the named human who confirmed it, and the timestamp it was said.](/blog/odoo-inventory-reconciliation-problem-hiding-in-your-meetings/verification-inbox.svg)
+
+*The actual claims behind this post — extracted automatically, each promoted to evidence by a named human. Nothing acts until it's confirmed.*
+
 ## What went wrong — and it wasn't the count
 
 The inflection point was a single line: this was the third incorrect inventory sheet the lead had received. The reconciliation itself went fine. The recurring part is the failure — bad data arriving again and again, each round re-litigated from scratch because the last round's corrections lived only in someone's memory and a Telegram thread. The same call also surfaced a quieter cost: a team member had earlier stopped work entirely because he'd been told his output was wrong, with no clear record of what "right" was. Conflicting, unrecorded instructions don't just waste a meeting — they stall the people downstream of it.

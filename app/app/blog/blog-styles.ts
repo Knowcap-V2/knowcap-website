@@ -38,6 +38,8 @@ export const BLOG_CSS = `
 .kb-article blockquote{border-left:3px solid var(--accent);margin:0 0 22px;padding:4px 0 4px 20px}
 .kb-article blockquote p{margin:0;color:var(--ink-2);font-style:italic}
 .kb-article hr{border:0;border-top:1px solid var(--border);margin:36px 0}
+.kb-article img{display:block;width:100%;height:auto;margin:30px 0 8px;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
+.kb-article p>em:only-child{display:block;text-align:center;font-size:13px;color:var(--ink-3);font-style:normal;margin:-2px 0 26px}
 .kb-related{max-width:720px;margin:0 auto;padding:0 40px 56px}
 .kb-related-row{display:flex;gap:10px;flex-wrap:wrap}
 .kb-related a{font-family:var(--font-mono),monospace;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 14px}

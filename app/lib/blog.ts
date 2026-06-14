@@ -40,6 +40,7 @@ function renderInline(s: string): string {
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/(^|[\s(])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>')
+    .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_m, alt, src) => `<img src="${src}" alt="${alt}" loading="lazy" />`)
     .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_m, text, href) => {
       const external = /^https?:\/\//.test(href) && !href.startsWith('https://knowcap.ai')
       const rel = external ? ' target="_blank" rel="noopener noreferrer"' : ''

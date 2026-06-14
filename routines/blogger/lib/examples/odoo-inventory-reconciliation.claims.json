@@ -1,0 +1,35 @@
+{
+  "project": "Odoo Partners",
+  "source": "Outbound Inventory Audit & Reconciliation",
+  "totalConfirmed": 9,
+  "claims": [
+    {
+      "category": "decision",
+      "summary": "Carafe Small quantity corrected 3 → 2 — the entry of 3 was a mistake.",
+      "detail": "Rationale: actual dispatched quantity was 2; the sheet value was a typo.",
+      "confirmer": "Hassan Arslan",
+      "timestamp": "34:13"
+    },
+    {
+      "category": "risk",
+      "summary": "Third incorrect inventory sheet this cycle — a recurring data-accuracy problem.",
+      "detail": "Severity: medium · mitigation: verify before submission, find the root cause.",
+      "confirmer": "Hassan Arslan",
+      "timestamp": "42:54"
+    },
+    {
+      "category": "task",
+      "summary": "Joud → resolve two \"brandy\" items dispatched with no transfer or pick record.",
+      "detail": "Assignee: Joud Aljunaidy · priority: high · due: today",
+      "confirmer": "Hassan Arslan",
+      "timestamp": "33:33"
+    },
+    {
+      "category": "fact",
+      "summary": "128 + ~250 item discrepancy between the warehouse sheet and Odoo.",
+      "detail": "Source: final comparison sheet, warehouse data vs Odoo · sent via Telegram.",
+      "confirmer": "Hassan Arslan",
+      "timestamp": "01:12"
+    }
+  ]
+}
