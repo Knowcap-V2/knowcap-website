@@ -127,6 +127,15 @@ const CSS = `
 .cl-h1 em{font-style:italic;font-weight:540;font-variation-settings:'SOFT' 70,'WONK' 1;
   color:var(--green)}
 .cl-sub{margin-top:32px;max-width:58ch;font-size:17.5px;line-height:1.7;color:var(--sec)}
+.cl-sub b{color:var(--ink);font-weight:600}
+
+/* rotating source word — kills the "meeting recorder" read */
+.cl-rot{display:inline-block;position:relative;color:var(--green);font-style:italic;
+  font-weight:540;font-variation-settings:'SOFT' 70,'WONK' 1;white-space:nowrap;
+  border-bottom:2px solid rgba(31,107,58,.32);padding-bottom:2px}
+.cl-rot-w{display:inline-block;transition:opacity .34s ease,transform .34s ease}
+.cl-rot[data-swap="true"] .cl-rot-w{opacity:0;transform:translateY(-7px)}
+@media(prefers-reduced-motion:reduce){.cl-rot-w{transition:none}}
 
 /* doctrine pull-quote band */
 .cl-doctrine{margin-top:44px;padding:26px 0;border-top:1px solid var(--border);
@@ -609,6 +618,40 @@ function AppWindow() {
   )
 }
 
+/* ----------------------------------------------------- rotating source */
+
+const HERO_SOURCES = ['meeting', 'screen recording', 'Telegram chat', 'WhatsApp message', 'email thread']
+
+function RotatingSource() {
+  const [i, setI] = useState(0)
+  const [swap, setSwap] = useState(false)
+  useEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return
+    }
+    let inner: ReturnType<typeof setTimeout>
+    const outer = setInterval(() => {
+      setSwap(true)
+      inner = setTimeout(() => {
+        setI((p) => (p + 1) % HERO_SOURCES.length)
+        setSwap(false)
+      }, 340)
+    }, 2000)
+    return () => {
+      clearInterval(outer)
+      clearTimeout(inner)
+    }
+  }, [])
+  return (
+    <span className="cl-rot" data-swap={swap ? 'true' : 'false'} aria-live="polite">
+      <span className="cl-rot-w">{HERO_SOURCES[i]}</span>
+    </span>
+  )
+}
+
 /* ----------------------------------------------------------------- hero */
 
 function Hero() {
@@ -617,17 +660,18 @@ function Hero() {
       <div className="cl-wrap">
         <div className="cl-hero-main">
           <Reveal>
-            <p className="cl-kicker">Knowcap <span className="cl-kdot">·</span> Verified meeting intelligence</p>
+            <p className="cl-kicker">Knowcap <span className="cl-kdot">·</span> Verified work intelligence</p>
             <h1 className="cl-h1">
-              Record the meeting. Confirm what was said.{' '}
-              <em>Let your AI agents act on it.</em>
+              Knowcap turns every <RotatingSource /><br />
+              into facts your agents can <em>trust</em>.
             </h1>
           </Reveal>
           <Reveal delay={120}>
             <p className="cl-sub">
-              Knowcap captures every meeting, call, and voice note, extracts the commitments,
-              decisions, tasks, and risks, and a named human confirms each one — so your agents
-              act on verified facts, not guesses.
+              Your <b>meetings, messages &amp; recordings</b> hold the commitments, decisions, and
+              risks that run the business — Meet, screen recordings, Telegram, WhatsApp, Slack,
+              and email. Knowcap extracts them, a named human confirms each one, and your AI agents
+              act on what&rsquo;s verified — never on a guess.
             </p>
           </Reveal>
           <Reveal delay={200}>
