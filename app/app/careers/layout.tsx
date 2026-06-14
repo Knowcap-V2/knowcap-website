@@ -7,6 +7,21 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://knowcap.ai/careers' },
 }
 
+const JSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Careers at Knowcap',
+  url: 'https://knowcap.ai/careers',
+  about: 'Open roles at Knowcap.',
+  isPartOf: { '@type': 'WebSite', name: 'Knowcap', url: 'https://knowcap.ai' },
+  publisher: { '@type': 'Organization', name: 'Knowcap', url: 'https://knowcap.ai' },
+}
+
 export default function CareersLayout({ children }: { children: React.ReactNode }) {
-  return children
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD) }} />
+      {children}
+    </>
+  )
 }

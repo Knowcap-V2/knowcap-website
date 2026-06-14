@@ -7,6 +7,21 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://knowcap.ai/terms' },
 }
 
+const JSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Terms of Service — Knowcap',
+  url: 'https://knowcap.ai/terms',
+  about: 'The terms that govern your use of Knowcap.',
+  isPartOf: { '@type': 'WebSite', name: 'Knowcap', url: 'https://knowcap.ai' },
+  publisher: { '@type': 'Organization', name: 'Knowcap', url: 'https://knowcap.ai' },
+}
+
 export default function TermsLayout({ children }: { children: React.ReactNode }) {
-  return children
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD) }} />
+      {children}
+    </>
+  )
 }

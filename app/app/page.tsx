@@ -1,6 +1,8 @@
 import HomeCommitment from '@/components/home-commitment'
 import { getAllPosts } from '@/lib/blog'
 import type { Metadata } from 'next'
+import SiteJsonLd from '@/components/site/site-json-ld'
+import { HOME_FAQ } from '@/lib/site-schema'
 
 // Homepage — Commitment Ledger edition (full replacement, 2026-06-10).
 // The B-vs-D middleware rotation is retired; /a /b /c /d remain reachable
@@ -16,35 +18,6 @@ export const metadata: Metadata = {
   },
 }
 
-// Organization + WebSite + SoftwareApplication schema for the homepage —
-// gives crawlers and AI search the brand entity, site identity, and product
-// facts that were missing before the 2026-06-14 SEO audit.
-const HOME_JSON_LD = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Knowcap',
-    url: 'https://knowcap.ai',
-    logo: 'https://knowcap.ai/knowcap-logo.png',
-    description: 'The trust layer for AI agents — human-verified meeting and message intelligence.',
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Knowcap',
-    url: 'https://knowcap.ai',
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'Knowcap',
-    applicationCategory: 'BusinessApplication',
-    operatingSystem: 'Web',
-    url: 'https://knowcap.ai',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-  },
-]
-
 export default function Home() {
   const recentPosts = getAllPosts()
     .slice(0, 3)
@@ -57,10 +30,9 @@ export default function Home() {
     }))
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_JSON_LD) }}
-      />
+      {/* Organization + WebSite + SoftwareApplication + FAQ + Speakable —
+          the entity, product facts, and citable Q&A that AI search lifts. */}
+      <SiteJsonLd faqs={HOME_FAQ} speakable />
       <HomeCommitment recentPosts={recentPosts} />
     </>
   )
