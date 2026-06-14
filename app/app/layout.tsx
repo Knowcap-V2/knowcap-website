@@ -12,10 +12,15 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mon
 const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-serif' })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://knowcap.ai'),
   title: 'Knowcap — The Trust Layer for AI Agents',
   description: 'Turn human claims into evidence your AI agents can learn from. Capture meetings, messages, and recordings. Promote the durable parts to evidence. Let agents act on what\'s verified.',
   icons: {
     icon: '/favicon.ico',
+  },
+  openGraph: {
+    siteName: 'Knowcap',
+    type: 'website',
   },
 }
 

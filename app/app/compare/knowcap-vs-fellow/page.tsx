@@ -8,6 +8,7 @@
 import Link from 'next/link'
 import EditorialShell, { PageHero } from '@/components/editorial/shell'
 import { COMPARE_CSS } from '../compare-styles'
+import CompareJsonLd from '@/components/compare/compare-json-ld'
 
 const COMPETITOR = 'Fellow.app'
 const COMPETITOR_SLUG = 'fellow'
@@ -63,6 +64,7 @@ export default function ComparePage() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: COMPARE_CSS }} />
+      <CompareJsonLd slug="fellow" competitor={COMPETITOR} faqs={FAQS} />
       <EditorialShell>
         <PageHero
           kicker={`Comparison · Knowcap vs ${COMPETITOR}`}
