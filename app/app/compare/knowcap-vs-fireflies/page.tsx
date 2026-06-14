@@ -71,7 +71,7 @@ export default function ComparePage() {
           <div className="cl-wrap">
             <div className="cm-cta-row">
               <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Switch from {COMPETITOR} free →</a>
-              <Link className="cl-btn cl-btn--ghost" href="/book">Book a 20-min demo</Link>
+              <Link className="cl-btn cl-btn--ghost" href="/contact-us">Contact us</Link>
             </div>
             <div className="cm-section" id="compare">
               <h2 className="cm-h2">Side by side</h2>
@@ -104,7 +104,7 @@ export default function ComparePage() {
               </div>
               <div className="cm-cta-row cm-cta-center">
                 <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Switch from {COMPETITOR} free →</a>
-                <Link className="cl-btn cl-btn--ghost" href="/book">Book a 20-min demo</Link>
+                <Link className="cl-btn cl-btn--ghost" href="/contact-us">Contact us</Link>
               </div>
             </div>
             <div className="cm-section">
@@ -125,6 +125,7 @@ export default function ComparePage() {
             <h2>Stop trusting raw AI summaries.<br />Ship only what a human confirmed.</h2>
             <p>Knowcap is verified work intelligence — the trust layer for your AI agents, under human-confirmed control.</p>
             <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Get Started Free →</a>
+            <p><a className="cm-close-link" href="/compare">See all comparisons →</a></p>
           </div>
         </div>
       </EditorialShell>

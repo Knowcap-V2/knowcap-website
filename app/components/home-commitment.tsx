@@ -376,6 +376,20 @@ const CSS = `
 .cl-q-sign{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--green);flex:none}
 .cl-faq-a{padding:0 0 24px 34px;font-size:15px;line-height:1.7;color:var(--sec);max-width:60ch}
 
+/* latest writing — 3 newest posts */
+.cl-latest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+@media(max-width:860px){.cl-latest-grid{grid-template-columns:1fr}}
+.cl-latest-card{display:flex;flex-direction:column;gap:10px;background:var(--white);
+  border:1px solid var(--border);border-radius:12px;padding:24px;text-decoration:none;
+  transition:border-color .15s,box-shadow .15s,transform .15s}
+.cl-latest-card:hover{border-color:var(--border-2);box-shadow:0 2px 14px rgba(24,24,27,.06);transform:translateY(-2px)}
+.cl-latest-date{font-family:var(--mono);font-size:11px;color:var(--sec)}
+.cl-latest-card h3{font-weight:520;font-variation-settings:'SOFT' 55,'WONK' 0;font-size:17px;
+  line-height:1.3;letter-spacing:-.01em;color:var(--ink)}
+.cl-latest-card p{font-size:13.5px;line-height:1.6;color:var(--sec);flex:1}
+.cl-latest-read{font-family:var(--mono);font-size:11.5px;color:var(--green)}
+.cl-latest-all{margin-top:32px}
+
 /* closer — compact dark ink band */
 .cl-closer-wrap{padding:110px 0}
 @media(max-width:860px){.cl-closer-wrap{padding:72px 0}}
@@ -404,10 +418,10 @@ const CSS = `
 .cl-closer .cl-btn--ghost{color:var(--cream);border-color:rgba(251,250,248,.45)}
 .cl-closer .cl-btn--ghost:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
 
-/* footer — dark */
-.cl-footer{background:var(--ink);color:rgba(251,250,248,.65);padding:44px 0 52px;font-size:13.5px}
-.cl-footer-grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-  gap:20px 36px}
+/* footer — dark, 4-column sitemap */
+.cl-footer{background:var(--ink);color:rgba(251,250,248,.65);padding:56px 0 44px;font-size:13.5px}
+.cl-footer-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:14px 28px;padding-bottom:30px;margin-bottom:32px;border-bottom:1px solid rgba(251,250,248,.12)}
 .cl-footer-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);
   font-weight:600;font-size:16px;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--cream)}
 .cl-footer-brand img{border-radius:5px}
@@ -415,9 +429,14 @@ const CSS = `
   color:rgba(251,250,248,.65)}
 .cl-footer-line .cl-fl-ink{color:var(--cream)}
 .cl-footer-line .cl-fl-green{color:var(--green-dark)}
-.cl-footer-links{display:flex;flex-wrap:wrap;gap:18px}
-.cl-footer-links a{color:rgba(251,250,248,.65);transition:color .15s}
-.cl-footer-links a:hover{color:var(--cream)}
+.cl-footer-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 36px}
+@media(max-width:720px){.cl-footer-cols{grid-template-columns:repeat(2,1fr);gap:28px 24px}}
+.cl-fcol{display:flex;flex-direction:column;gap:9px}
+.cl-fcol-h{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--green-dark);margin-bottom:3px}
+.cl-fcol a{color:rgba(251,250,248,.65);transition:color .15s;font-size:13px}
+.cl-fcol a:hover{color:var(--cream)}
+.cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
   color:rgba(251,250,248,.55)}
 `
@@ -691,7 +710,7 @@ function Hero() {
           <Reveal delay={280}>
             <div className="cl-cta-row">
               <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
-              <Link className="cl-btn cl-btn--ghost" href="/book">Book a Demo</Link>
+              <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
             </div>
           </Reveal>
           <Reveal delay={360}>
@@ -1031,6 +1050,38 @@ function Faq() {
 
 /* --------------------------------------------------------------- closer */
 
+type PostMeta = { slug: string; title: string; date: string; description: string; readMinutes: number }
+
+function LatestWriting({ posts }: { posts: PostMeta[] }) {
+  return (
+    <section className="cl-section">
+      <div className="cl-wrap">
+        <div className="cl-section-head">
+          <Reveal>
+            <Reg no="§07" label="From the field" />
+            <h2 className="cl-h2">Latest writing.</h2>
+          </Reveal>
+        </div>
+        <Reveal>
+          <div className="cl-latest-grid">
+            {posts.map((p) => (
+              <Link key={p.slug} href={`/blog/${p.slug}`} className="cl-latest-card">
+                <span className="cl-latest-date">{p.date}</span>
+                <h3>{p.title}</h3>
+                <p>{p.description}</p>
+                <span className="cl-latest-read">{p.readMinutes} min read →</span>
+              </Link>
+            ))}
+          </div>
+          <div className="cl-latest-all">
+            <Link className="cl-btn cl-btn--ghost" href="/blog">Read the blog →</Link>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
 function Closer() {
   return (
     <section className="cl-closer-wrap">
@@ -1047,7 +1098,7 @@ function Closer() {
             </div>
             <div className="cl-closer-ctas">
               <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
-              <Link className="cl-btn cl-btn--ghost" href="/book">Book a Demo</Link>
+              <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
             </div>
           </div>
         </Reveal>
@@ -1061,23 +1112,52 @@ function Closer() {
 function Footer() {
   return (
     <footer className="cl-footer">
-      <div className="cl-wrap cl-footer-grid">
-        <div className="cl-footer-brand">
-          <Image src="/logos/logo.jpg" alt="" width={22} height={22} />
-          Knowcap
+      <div className="cl-wrap">
+        <div className="cl-footer-top">
+          <div className="cl-footer-brand">
+            <Image src="/logos/logo.jpg" alt="" width={22} height={22} />
+            Knowcap
+          </div>
+          <p className="cl-footer-line">
+            <span className="cl-fl-ink">Knowcap</span> is verified work intelligence for AI agents.{' '}
+            <span className="cl-fl-green">Humans confirm. Agents act.</span>
+          </p>
         </div>
-        <p className="cl-footer-line">
-          <span className="cl-fl-ink">Knowcap</span> is verified knowledge for AI agents.{' '}
-          <span className="cl-fl-green">Humans confirm. Agents act.</span>
-        </p>
-        <nav className="cl-footer-links" aria-label="Footer">
-          <a href={`${APP_URL}/register`}>Get Started</a>
-          <a href={`${APP_URL}/login`}>Log in</a>
-          <Link href="/book">Book a Demo</Link>
-          <Link href="/policy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
+        <nav className="cl-footer-cols" aria-label="Footer">
+          <div className="cl-fcol">
+            <div className="cl-fcol-h">Product</div>
+            <a href="#loop">How it works</a>
+            <a href="#mcp">For your agents</a>
+            <a href="#faq">FAQ</a>
+            <Link href="/for/odoo-partners">For Odoo partners</Link>
+          </div>
+          <div className="cl-fcol">
+            <div className="cl-fcol-h">Compare</div>
+            <Link href="/compare/knowcap-vs-otter">Knowcap vs Otter</Link>
+            <Link href="/compare/knowcap-vs-fireflies">Knowcap vs Fireflies</Link>
+            <Link href="/compare/knowcap-vs-granola">Knowcap vs Granola</Link>
+            <Link href="/compare/knowcap-vs-fellow">Knowcap vs Fellow</Link>
+            <Link href="/compare/knowcap-vs-read-ai">Knowcap vs Read.ai</Link>
+          </div>
+          <div className="cl-fcol">
+            <div className="cl-fcol-h">Company</div>
+            <Link href="/blog">Blog</Link>
+            <Link href="/team">Team</Link>
+            <Link href="/careers">Careers</Link>
+            <Link href="/meet-us">Meet us</Link>
+            <Link href="/contact-us">Contact</Link>
+          </div>
+          <div className="cl-fcol">
+            <div className="cl-fcol-h">Get started</div>
+            <a href={`${APP_URL}/register`}>Get Started Free</a>
+            <a href={`${APP_URL}/login`}>Log in</a>
+            <Link href="/policy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
+          </div>
         </nav>
-        <span className="cl-footer-copy">© 2026 Knowcap</span>
+        <div className="cl-footer-bottom">
+          <span className="cl-footer-copy">© 2026 Knowcap</span>
+        </div>
       </div>
     </footer>
   )
@@ -1085,7 +1165,7 @@ function Footer() {
 
 /* ----------------------------------------------------------------- page */
 
-export default function HomeCommitment() {
+export default function HomeCommitment({ recentPosts = [] }: { recentPosts?: PostMeta[] }) {
   return (
     <main className="cl-root">
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
@@ -1101,6 +1181,7 @@ export default function HomeCommitment() {
       <Failed />
       <Mcp />
       <Faq />
+      {recentPosts.length > 0 && <LatestWriting posts={recentPosts} />}
       <Closer />
       <Footer />
     </main>

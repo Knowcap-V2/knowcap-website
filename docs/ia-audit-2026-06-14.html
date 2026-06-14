@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>knowcap.ai — information-architecture audit · 2026-06-14</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#FBFAF8;--white:#fff;--border:#E7E4DD;--ink:#18181B;--sec:#4A4F5A;--ink3:#8A8F99;--green:#1F6B3A;--green-deep:#17522C;--green-tint:#E8F5ED;--amber:#B07C28;--red:#B0392B;
+    --disp:'Fraunces',Georgia,serif;--body:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 40px}
+  h1,h2,h3{font-family:var(--disp);margin:0;font-variation-settings:'SOFT' 55,'WONK' 0}
+  .head{border-top:3px solid var(--ink);padding:48px 0 8px}
+  .kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sec)}
+  .kick b{color:var(--green)}
+  .h1{font-weight:480;font-size:clamp(2rem,4vw,2.8rem);letter-spacing:-.02em;line-height:1.1;margin-top:12px}
+  .lead{margin-top:16px;font-size:16px;line-height:1.7;color:var(--sec);max-width:72ch}
+  section{margin:42px 0}
+  .h2{font-weight:460;font-size:1.5rem;letter-spacing:-.015em;border-bottom:1px solid var(--border);padding-bottom:10px}
+  /* compare cols */
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+  @media(max-width:760px){.cmp{grid-template-columns:1fr}}
+  .panel{border:1px solid var(--border);border-radius:12px;background:var(--white);overflow:hidden}
+  .panel.now h3{background:#F4F1EA;color:var(--sec)}
+  .panel.rec{border-color:rgba(31,107,58,.4);box-shadow:0 0 0 1px rgba(31,107,58,.18)}
+  .panel.rec h3{background:var(--green-tint);color:var(--green-deep)}
+  .panel h3{padding:12px 18px;font-size:1rem;font-weight:520;border-bottom:1px solid var(--border)}
+  .panel .body{padding:16px 18px}
+  /* fake nav bar */
+  .navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--sec);border:1px dashed var(--border);border-radius:8px;padding:10px 14px;background:var(--cream)}
+  .navbar .brand{font-family:var(--disp);font-weight:600;color:var(--ink)}
+  .navbar .brand .g{color:var(--green)}
+  .navbar .spacer{flex:1}
+  .navbar .item{color:var(--sec)}
+  .navbar .new{color:var(--green-deep);font-weight:600;background:var(--green-tint);padding:1px 7px;border-radius:5px}
+  .navbar .btn{background:var(--green);color:#fff;padding:4px 12px;border-radius:4px;font-weight:600;font-size:12px}
+  .navbar .muted{color:var(--ink3)}
+  /* footer cols */
+  .fcols{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px}
+  @media(max-width:760px){.fcols{grid-template-columns:repeat(2,1fr)}}
+  .fcol .ft{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:6px}
+  .fcol a,.fcol span{display:block;font-size:12.5px;color:var(--sec);margin-bottom:4px;text-decoration:none}
+  .new-dot{color:var(--green-deep);font-weight:600}
+  .flat{font-size:13px;color:var(--sec);line-height:2}
+  .flat .strike{text-decoration:line-through;color:var(--red)}
+  /* table */
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+  th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--sec);font-weight:500}
+  td.r{font-family:var(--mono);font-size:12px;white-space:nowrap}
+  .disp{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px}
+  .d-nav{background:var(--green-tint);color:var(--green-deep)}
+  .d-foot{background:#EDF1F6;color:#3A5A8A}
+  .d-gate{background:#F6ECD9;color:var(--amber)}
+  .d-ret{background:#EDEAE3;color:var(--ink3)}
+  .flag{border:1px solid var(--border);border-left:4px solid var(--amber);background:var(--white);border-radius:10px;padding:14px 18px;margin:10px 0}
+  .flag.red{border-left-color:var(--red)}
+  .flag b{color:var(--ink)}
+  .qa{border:1px solid var(--border);border-radius:12px;background:var(--white);padding:6px 22px;margin-top:12px}
+  .qa .q{font-family:var(--disp);font-weight:560;font-size:16px;margin:18px 0 4px;color:var(--ink)}
+  .qa .a{font-size:14px;color:var(--sec);margin-bottom:6px}
+  .qa .a b{color:var(--green-deep)}
+  .foot{margin:48px 0 70px;font-family:var(--mono);font-size:12px;color:var(--sec);border-top:1px solid var(--border);padding-top:18px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="kick">Knowcap <b>·</b> information-architecture audit · 2026-06-14 · SEO + conversion + gating lenses</div>
+    <h1 class="h1">The nav is a homepage table-of-contents, not a site map.</h1>
+    <p class="lead">Three of four top-nav items are same-page anchors (<code>/#loop</code>, <code>/#mcp</code>, <code>/#faq</code>); the footer is a 5-link CTA strip. So <b>the blog, all 5 compare pages, and the Odoo-partners LP have zero internal links from the homepage</b> — Google reaches them only via the sitemap, and a visitor can't reach them at all. <b>Verdict: change it.</b> Keep the nav lean (add only <b>Blog</b>), turn the footer into a real 4-column sitemap, and pull the public links to <code>/book</code> so your "send-on-request" rule actually holds.</p>
+  </div>
+
+  <!-- TOP NAV -->
+  <section>
+    <h2 class="h2">Top menu</h2>
+    <div class="cmp">
+      <div class="panel now"><h3>Now</h3><div class="body">
+        <div class="navbar">
+          <span class="brand">Know<span class="g">cap</span></span>
+          <span class="item">How it works</span><span class="item">For your agents</span><span class="item">FAQ</span><span class="item">Contact</span>
+          <span class="spacer"></span><span class="muted">Log in</span><span class="btn">Get Started Free</span>
+        </div>
+        <p style="font-size:13px;color:var(--sec);margin:12px 0 0">No path to Blog or anything else. Lean, but a dead end for discovery.</p>
+      </div></div>
+      <div class="panel rec"><h3>Recommended — add one link</h3><div class="body">
+        <div class="navbar">
+          <span class="brand">Know<span class="g">cap</span></span>
+          <span class="item">How it works</span><span class="item">For your agents</span><span class="item">FAQ</span><span class="new">Blog</span><span class="item">Contact</span>
+          <span class="spacer"></span><span class="muted">Log in</span><span class="btn">Get Started Free</span>
+        </div>
+        <p style="font-size:13px;color:var(--sec);margin:12px 0 0"><b>Blog</b> added as a plain text link (never a button — nothing competes with the one green CTA). Answers "no way to reach the blog" head-on. Compare stays in the footer to keep the nav lean.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <section>
+    <h2 class="h2">Footer</h2>
+    <div class="cmp">
+      <div class="panel now"><h3>Now — 5-link CTA strip</h3><div class="body">
+        <div class="flat">
+          Get Started<br>Log in<br><span class="strike">Book a Demo</span> ← gated page, linked publicly<br>Privacy<br>Terms
+        </div>
+        <p style="font-size:13px;color:var(--sec);margin:12px 0 0">Every orphan page has nowhere to live. And it links <code>/book</code>, which you said is send-on-request only.</p>
+      </div></div>
+      <div class="panel rec"><h3>Recommended — 4-column sitemap</h3><div class="body">
+        <div class="fcols">
+          <div class="fcol"><div class="ft">Product</div><span>How it works</span><span>For your agents</span><span>FAQ</span><span>For Odoo partners</span></div>
+          <div class="fcol"><div class="ft">Compare</div><span>vs Otter</span><span>vs Fireflies</span><span>vs Granola</span><span>vs Fellow</span><span>vs Read.ai</span></div>
+          <div class="fcol"><div class="ft">Company</div><span class="new-dot">Blog</span><span>Team</span><span>Careers</span><span>Meet us</span><span>Contact</span></div>
+          <div class="fcol"><div class="ft">Get started</div><span>Get Started Free</span><span>Log in</span><span>Privacy</span><span>Terms</span></div>
+        </div>
+        <p style="font-size:13px;color:var(--sec);margin:14px 0 0">Every public page now reachable + crawlable. <b>Book a Demo removed</b> (honors your gating). Gated pages (/invest, /partner, /vendor, /offer) stay unlinked.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- DISPOSITION -->
+  <section>
+    <h2 class="h2">Where every page goes</h2>
+    <table>
+      <thead><tr><th>Disposition</th><th>Pages</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><span class="disp d-nav">TOP-NAV</span></td><td class="r">/ · How it works · For your agents · FAQ · <b>Blog</b> · Contact</td><td>Lean, conversion-first. Blog is the only addition.</td></tr>
+        <tr><td><span class="disp d-foot">FOOTER</span></td><td class="r">/compare ×5 · /for/odoo-partners · /team · /careers · /meet-us · /policy · /terms</td><td>Reachable + crawlable from every page, without cluttering the nav.</td></tr>
+        <tr><td><span class="disp d-gate">GATED</span></td><td class="r">/book · /offer · /invest · /partner · /vendor</td><td>Send-on-request by design — stay live but unlinked. (/book is the fix below.)</td></tr>
+        <tr><td><span class="disp d-ret">RETIRED</span></td><td class="r">/a /b /c /d · /mvp · /partners /vendors /teams · /hr · /career</td><td>A/B clones + redirects. Not public-nav. (/a-/d have an SEO bug — below.)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- FLAGS -->
+  <section>
+    <h2 class="h2">3 things the audit surfaced beyond the nav</h2>
+    <div class="flag red">
+      <b>1. /book contradicts itself.</b> You said it's send-on-request only — but it's the most-linked private URL on the site: the footer, both CTAs on all 5 compare pages, homepage CTAs, and the sitemap. Gating and these links can't both be true.
+      <b>Fix:</b> pull every public link; route demo requests through Contact, you send /book manually. (Compare-page CTAs become "Contact us".)
+    </div>
+    <div class="flag">
+      <b>2. /a /b /c /d are duplicate homepages in your sitemap with no canonical.</b> Four near-copies of the homepage submitted to Google competing with <code>/</code> for its own keywords. <b>Fix:</b> remove from sitemap + add a canonical to <code>/</code> (or noindex).
+    </div>
+    <div class="flag">
+      <b>3. The 5 compare pages are 5 islands.</b> No /compare hub, no cross-links between them — the weakest structure for a "knowcap vs X" keyword cluster. <b>Fix:</b> build a /compare index + sibling links (hub-and-spoke). Bonus: a "Latest writing" block on the homepage linking the 3 newest posts.
+    </div>
+  </section>
+
+  <!-- ANSWERS -->
+  <section>
+    <h2 class="h2">Your questions, answered</h2>
+    <div class="qa">
+      <div class="q">Is there a way to reach the blog from the main page?</div>
+      <div class="a">No — that's the core defect. <b>Fix: Blog in the top nav + footer.</b></div>
+      <div class="q">What should be in the top menu?</div>
+      <div class="a">Keep it lean + conversion-first. <b>How it works · For your agents · FAQ · Blog · Contact</b> + Log in + the one Get Started Free button. Add only Blog.</div>
+      <div class="q">What should be in the footer?</div>
+      <div class="a"><b>A 4-column sitemap:</b> Product · Compare · Company (incl. Blog) · Get started. This is where the orphans get homes.</div>
+      <div class="q">Leave as-is, or change?</div>
+      <div class="a"><b>Change.</b> The blog/compare/vertical pages are invisible to both visitors and crawlers right now.</div>
+      <div class="q">Blog in the footer or the top?</div>
+      <div class="a"><b>Both.</b> Top nav = answers your complaint + feeds crawl equity; footer = catch-all. A plain text link, so it never competes with the CTA.</div>
+      <div class="q">Pages with no hyperlinks (like /book)?</div>
+      <div class="a">Right call to gate them — but make it consistent. <b>/book is currently linked everywhere;</b> pull those links so "send-on-request" is actually true. /invest, /partner, /vendor, /offer are already correctly unlinked.</div>
+    </div>
+  </section>
+
+  <div class="foot">
+    Method: 3 parallel lens agents (SEO/crawlability · conversion/UX · IA-gating) over the verified route inventory + link graph, then synthesis.<br>
+    Everything checked against the live code (shell.tsx, sitemap.ts, app/app/page.tsx). The footer/nav fix is one edit to shell.tsx (sitewide); the rest are separate follow-ups.
+  </div>
+
+</div>
+</body>
+</html>

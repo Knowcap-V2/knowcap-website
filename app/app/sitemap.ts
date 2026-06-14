@@ -35,18 +35,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/compare/knowcap-vs-fireflies`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/compare/knowcap-vs-fellow`,    lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/compare/knowcap-vs-granola`,   lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/compare`,                      lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
 
-    // A/B variants (canonicalized in metadata, but still indexable)
-    { url: `${base}/a`, lastModified: now, changeFrequency: 'weekly', priority: 0.3 },
-    { url: `${base}/b`, lastModified: now, changeFrequency: 'weekly', priority: 0.3 },
-    { url: `${base}/c`, lastModified: now, changeFrequency: 'weekly', priority: 0.3 },
-    { url: `${base}/d`, lastModified: now, changeFrequency: 'weekly', priority: 0.3 },
+    // (A/B variants /a /b /c /d intentionally excluded — they canonical → / and are not public nav)
 
     // Legal / utility
     { url: `${base}/policy`,      lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
     { url: `${base}/terms`,       lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
     { url: `${base}/contact-us`,  lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
-    { url: `${base}/book`,        lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${base}/careers`,     lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
   ]
 }
