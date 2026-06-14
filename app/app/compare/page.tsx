@@ -6,15 +6,15 @@ import { faqJsonLd } from '@/lib/site-schema'
 const COMPARE_FAQ = [
   {
     q: 'How does Knowcap compare to Otter, Fireflies, Read AI, Fellow, and Granola?',
-    a: 'Those tools transcribe meetings and write AI summaries; several auto-push action items into your stack with no human gate. Knowcap is the layer after the transcript: a named human confirms each extracted claim with one tap, then AI agents act only on confirmed facts — opening Odoo SH tickets, drafting GitHub PRs, and sending follow-ups — with a full audit trail back to the timestamp and speaker. It also detects language per utterance, so Arabic/English code-switching meetings are captured intact.',
+    a: 'Tools like Otter.ai, Fireflies.ai, Read AI, Fellow, and Granola transcribe meetings and write AI summaries, and several auto-push action items into your stack with no human gate. Knowcap is the layer after the transcript: it extracts every decision, task, and risk as a claim card pinned to the exact timestamp and speaker quote, a named human confirms or rejects each one with a single tap, and only then do AI agents act — opening Odoo SH tickets, drafting GitHub PRs, and sending follow-ups — with a full audit trail back to who confirmed what and when. It also detects language per utterance, so a meeting that switches between Arabic and English mid-sentence is captured intact, where single-language-per-recording tools drop lines. The practical difference: the other tools hand you notes to trust; Knowcap hands your agents facts a human already verified, which is what makes it safe to automate real actions.',
   },
   {
     q: 'Which AI meeting tool is best for MENA teams and Odoo partners?',
-    a: 'For MENA SMEs, Odoo implementation partners, agencies, and audit firms, Knowcap is purpose-built: per-utterance Arabic/English handling, EU/MENA data residency, and agents that open Odoo SH tickets and GitHub PRs from a confirmed client call. Otter, Fireflies, Read AI, Fellow, and Granola are general meeting-notes tools that force one language per recording and stop at notes.',
+    a: 'For MENA SMEs, Odoo implementation partners, agencies, and audit firms, Knowcap is purpose-built rather than retrofitted. It detects language per utterance, so Arabic/English code-switching meetings — the everyday reality of Gulf and Egyptian teams — are captured intact instead of forced into one language per recording. It can run in EU/MENA regions for data residency. And it goes past notes: a confirmed client call can open an Odoo SH ticket and draft a GitHub PR before the meeting ends, with every action traced to a human-confirmed claim. Otter, Fireflies, Read AI, Fellow, and Granola are strong general meeting-notes tools, but they force a single language per recording, have no human verification gate, and stop at the summary. If your work is bilingual, Odoo-shaped, or audited, that gap is the whole decision.',
   },
   {
     q: 'Do these meeting tools verify what was said before acting on it?',
-    a: 'Most do not — they generate an AI summary and, in several cases, push action items straight into your CRM or task board. Knowcap requires a one-tap human confirmation on each claim before any agent acts, so a misheard line never becomes a wrong ticket. The confirmation, timestamp, and speaker quote are kept as the record.',
+    a: 'Mostly they do not. Otter, Fireflies, Read AI, Fellow, and Granola generate an AI summary and, in several cases, push action items straight into your CRM, Jira, or task board the moment the AI hears them — with no human in the loop. If the AI mishears a number, a name, or a scope decision, the wrong task lands in your stack and nobody notices until it breaks. Knowcap requires a one-tap human confirmation on each extracted claim before any agent acts, so a misheard line never becomes a wrong ticket or a wrong PR. The confirmation, the exact timestamp, and the speaker quote are kept as the permanent record. That human verification step is the trust layer — it is what lets you safely automate Odoo tickets, GitHub PRs, and client follow-ups instead of just reading a summary and hoping the AI got it right.',
   },
 ]
 
@@ -39,6 +39,18 @@ const COMPARISONS = [
   { slug: 'knowcap-vs-read-ai', name: 'Read.ai', blurb: 'Read.ai analyzes the meeting. Knowcap acts only on what a human said is true.' },
 ]
 
+const COMPARE_ITEMLIST = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Knowcap comparisons',
+  itemListElement: COMPARISONS.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `Knowcap vs ${c.name}`,
+    url: `https://knowcap.ai/compare/${c.slug}`,
+  })),
+}
+
 const REGISTER_URL = 'https://app.knowcap.ai/register?utm_source=compare_hub'
 
 const CSS = `
@@ -58,7 +70,7 @@ export default function CompareHubPage() {
   return (
     <EditorialShell>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(COMPARE_FAQ)) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([faqJsonLd(COMPARE_FAQ), COMPARE_ITEMLIST]) }} />
       <PageHero
         kicker="Compare"
         title={<>Knowcap vs the meeting-AI tools</>}

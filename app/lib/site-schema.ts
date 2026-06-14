@@ -18,6 +18,7 @@ export const ORGANIZATION_JSONLD = {
   logo: 'https://knowcap.ai/knowcap-logo.png',
   description:
     'Knowcap is verified work intelligence — the trust layer for AI agents. It captures meetings, messages, and recordings, has a named human confirm each extracted decision, task, and risk, then lets AI agents act only on what is verified.',
+  sameAs: ['https://www.instagram.com/knowcap.ai'],
   founder: {
     '@type': 'Person',
     name: 'Hassan Arslan',
@@ -118,10 +119,10 @@ export const ODOO_FAQ: Faq[] = [
   },
   {
     q: 'Can Knowcap open an Odoo SH ticket from a meeting?',
-    a: 'Yes. When a human confirms a captured claim — a bug, a scope change, a follow-up — Knowcap can create the matching Odoo SH ticket automatically, linked back to the exact timestamp and speaker quote in the recording. The ticket carries its provenance, so anyone reviewing it can jump straight to the moment in the meeting where the client asked for it, instead of trusting a paraphrased summary.',
+    a: 'Yes. When a named human confirms a captured claim — a bug, a scope change, a new requirement, a follow-up — Knowcap can create the matching Odoo SH ticket automatically, linked back to the exact timestamp and speaker quote in the recording. The ticket carries its full provenance, so anyone reviewing it later can jump straight to the moment in the meeting where the client asked for it, instead of trusting a paraphrased summary. That matters most when scope is disputed: the ticket is not "someone thought the client wanted X," it is "the client said X at 14:32, and a named person confirmed it." For an Odoo implementation partner juggling many clients and change requests, this turns the meeting itself into the source of truth for the backlog, with no manual ticket-writing step in between.',
   },
   {
     q: 'Does Knowcap create GitHub PRs from client calls?',
-    a: 'Yes. A confirmed bug report or change request can trigger a GitHub PR, so the fix is staged for review with the client conversation as its provenance. The developer sees what was asked, by whom, and when — tied to the recording — rather than a second-hand ticket. Combined with Odoo SH ticket creation, this is how Knowcap turns a single client call into reviewable, traceable work before the meeting wraps.',
+    a: 'Yes. A confirmed bug report or change request can trigger a GitHub PR, so the fix is staged for review with the client conversation as its provenance. The developer opening the PR sees exactly what was asked, by whom, and when — tied to the recording — rather than a second-hand ticket that lost detail in translation. Combined with Odoo SH ticket creation, this is how Knowcap turns a single client call into reviewable, traceable work before the meeting even wraps: the scope is captured, a human confirms it, the ticket opens, and the PR is staged. For a MENA Odoo partner whose clients often switch between Arabic and English mid-call, the per-utterance capture means nothing in that scope discussion is lost before it becomes code.',
   },
 ]
