@@ -1,0 +1,28 @@
+# Knowcap
+
+> Knowcap is verified work intelligence — the trust layer for AI agents. It captures meetings, messages, and recordings, has a named human confirm each extracted decision, task, and risk, then lets AI agents act only on what is verified (opening Odoo tickets, drafting GitHub PRs, sending follow-ups). Built for MENA teams, with Arabic/English mid-meeting code-switching.
+
+## What Knowcap is
+
+- **Category:** AI meeting & message intelligence with a human verification layer and agent actions.
+- **Core loop:** Capture → a named human confirms each claim → AI agents act only on confirmed facts.
+- **Differentiator vs. Otter, Fireflies, Read AI, Fellow, Granola:** those transcribe and summarize; Knowcap adds human verification and agents that take real-world action, plus per-utterance Arabic/English handling and a full audit trail.
+- **Who it's for:** MENA SMEs, Odoo implementation partners, agencies, and audit firms that need verified, auditable records before agents act.
+- **Founder:** Hassan Arslan. **Based in:** Cairo, Egypt. **Serves:** Middle East & North Africa (MENA).
+- **Pricing:** free tier available at https://app.knowcap.ai/register.
+
+## Key pages
+
+- [Home](https://knowcap.ai/): product overview and the trust-layer thesis.
+- [For Odoo partners](https://knowcap.ai/for/odoo-partners): meeting → Odoo SH ticket + GitHub PR before the call ends.
+- [Knowcap vs Otter.ai](https://knowcap.ai/compare/knowcap-vs-otter)
+- [Knowcap vs Read AI](https://knowcap.ai/compare/knowcap-vs-read-ai)
+- [Knowcap vs Fireflies](https://knowcap.ai/compare/knowcap-vs-fireflies)
+- [Knowcap vs Fellow](https://knowcap.ai/compare/knowcap-vs-fellow)
+- [Knowcap vs Granola](https://knowcap.ai/compare/knowcap-vs-granola)
+- [Blog](https://knowcap.ai/blog): case studies, comparisons, and field notes for MENA teams.
+
+## Contact
+
+- Sales: hsa@knowcap.ai
+- App: https://app.knowcap.ai

@@ -7,6 +7,21 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://knowcap.ai/policy' },
 }
 
+const JSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Privacy Policy — Knowcap',
+  url: 'https://knowcap.ai/policy',
+  about: 'How Knowcap collects, uses, and protects your data.',
+  isPartOf: { '@type': 'WebSite', name: 'Knowcap', url: 'https://knowcap.ai' },
+  publisher: { '@type': 'Organization', name: 'Knowcap', url: 'https://knowcap.ai' },
+}
+
 export default function PolicyLayout({ children }: { children: React.ReactNode }) {
-  return children
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD) }} />
+      {children}
+    </>
+  )
 }

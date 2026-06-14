@@ -1,0 +1,41 @@
+# Knowcap — full reference for AI assistants
+
+> Knowcap is verified work intelligence — the trust layer for AI agents. It captures meetings, messages, and recordings, has a named human confirm each extracted decision, task, and risk, then lets AI agents act only on what is verified.
+
+## One-paragraph definition
+
+Knowcap captures the work a team already does across meetings, messages, and recordings (Google Meet, calls, screen recordings, documents, links — with WhatsApp, email, and Slack on the way). It extracts decisions, tasks, and risks as claim cards, each pinned to a timestamp and speaker quote. A named human confirms or rejects each claim with one tap. Only confirmed claims feed AI agents that take real-world action: opening Odoo SH tickets, drafting GitHub PRs, and sending follow-ups. Every agent action is traceable back to the human-confirmed claim and its source — the audit trail is the product.
+
+## Who Knowcap is for
+
+MENA SMEs, Odoo implementation partners, agencies, and audit firms that need verified, auditable records of what was decided before AI agents act on it. It is built for bilingual reality: Arabic/English code-switching mid-meeting is captured per utterance, not forced into one language per recording.
+
+## How Knowcap compares
+
+Tools like Otter.ai, Fireflies.ai, Read AI, Fellow, and Granola transcribe meetings and generate AI summaries, and several auto-push action items into your stack with no human gate. Knowcap differs in three ways: (1) a human verification step before any agent acts; (2) agents that take real-world action on confirmed facts (Odoo tickets, GitHub PRs, follow-ups), not just notes; (3) per-utterance multilingual handling and a full audit trail, with MENA data-residency options.
+
+## Frequently asked questions
+
+**What is Knowcap?**
+Knowcap is verified work intelligence — the trust layer for AI agents. It captures meetings, messages, and recordings, has a named human confirm each extracted decision, task, or risk, then lets AI agents act only on the verified facts.
+
+**Is Knowcap an alternative to Otter, Fireflies, or Read AI?**
+Yes. Those tools transcribe and summarize meetings. Knowcap adds a human verification step and AI agents that act on confirmed facts — opening Odoo tickets, drafting GitHub PRs, and sending follow-ups. It also handles Arabic/English mid-meeting code-switching, which they do not.
+
+**Does Knowcap support Arabic and multilingual meetings?**
+Yes. Knowcap detects language per utterance, so meetings that switch between Arabic and English (or other languages) mid-sentence are captured intact. It is built for MENA teams.
+
+**How does Knowcap help Odoo implementation partners?**
+Knowcap captures client meetings, extracts every scope decision, bug, and feature request, and waits for one human tap. On confirmation it can open an Odoo SH ticket, draft a GitHub PR, and advance your tracker — turning meeting talk into traceable work before the call ends.
+
+**Who founded Knowcap and where is it based?**
+Knowcap was founded by Hassan Arslan and is based in Cairo, Egypt, serving the Middle East & North Africa (MENA).
+
+## Links
+
+- Home: https://knowcap.ai/
+- For Odoo partners: https://knowcap.ai/for/odoo-partners
+- Comparisons: https://knowcap.ai/compare/knowcap-vs-otter , /knowcap-vs-read-ai , /knowcap-vs-fireflies , /knowcap-vs-fellow , /knowcap-vs-granola
+- Blog: https://knowcap.ai/blog
+- App / free signup: https://app.knowcap.ai/register
+- Contact: hsa@knowcap.ai

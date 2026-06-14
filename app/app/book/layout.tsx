@@ -7,6 +7,21 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://knowcap.ai/book' },
 }
 
+const JSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Book a Knowcap Demo',
+  url: 'https://knowcap.ai/book',
+  about: 'Book a 20-minute Knowcap demo.',
+  isPartOf: { '@type': 'WebSite', name: 'Knowcap', url: 'https://knowcap.ai' },
+  publisher: { '@type': 'Organization', name: 'Knowcap', url: 'https://knowcap.ai' },
+}
+
 export default function BookLayout({ children }: { children: React.ReactNode }) {
-  return children
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD) }} />
+      {children}
+    </>
+  )
 }
