@@ -24,10 +24,10 @@ target_persona: odoo-partners | mena-audit-firms | mena-agencies | regulated-ver
 target_keyword: "<string>"
 target_keyword_5y_mena_interest: <0-100 OR null if Trends unavailable>
 
-# Always required
-vision_md: "<text>"             # from docs/brand/VISION.md
-positioning_md: "<text>"        # from docs/brand/POSITIONING.md
-persona_section_md: "<text>"    # the persona's section from PRODUCT-PERSONAS.md
+# Always required (brand DNA lives in the claude-knowcap hub — sibling repo, NOT this repo's docs/)
+vision_md: "<text>"             # from ../claude-knowcap/knowledge/strategies/VISION.md
+positioning_md: "<text>"        # from ../claude-knowcap/knowledge/strategies/POSITIONING.md
+persona_section_md: "<text>"    # the persona's section from ../claude-knowcap/knowledge/people/PRODUCT-PERSONAS.md
 recent_shipped_slugs: [...]     # last 20 slugs from app/content/blog/
 recent_drafts_in_pipeline: [...] # to avoid double-drafting
 
@@ -43,14 +43,14 @@ knowcap_sources:
       facts: [...]
 
 # Required only when mode = comparison
-competitor_positioning_md: "<text>"  # from docs/research/competitors/<name>/positioning.md
+competitor_positioning_md: "<text>"  # from ../claude-knowcap/knowledge/topics/research/competitors/<name>/positioning.md
 
 # Optional enhancement (any mode)
 available_screenshots:
   - slug: "verification-inbox"
     alt: "<alt text>"
     caption: "<caption>"
-    file: "docs/brand/screenshots/verification-inbox/full.png"
+    file: "../claude-knowcap/knowledge/product/screenshots/verification-inbox/full.png"
     features: [verification, inbox]
     personas: [odoo-partners, mena-audit-firms]
 ```
@@ -165,6 +165,8 @@ For each match, insert markdown image tag at the END of the relevant section:
 ![{alt_text}](../../{file})
 *{caption}*
 ```
+
+> **Web-serving caveat:** screenshot files live in the hub (`../claude-knowcap/.../screenshots/`), which is NOT deployed. Before embedding, COPY the chosen image into the web app's public assets (e.g. `app/public/blog/<slug>/`) and reference THAT URL in the draft — a hub-relative path 404s on the live site. (Moot until the screenshot index is populated; it is currently empty.)
 
 Maximum 4 screenshots per post. If more match, pick the 4 most-aligned with the persona.
 

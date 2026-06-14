@@ -15,26 +15,51 @@ Calls [`_skills/write-blog-draft/SKILL.md`](../_skills/write-blog-draft/SKILL.md
 ## Mode selection (runtime)
 
 ```
-1. Pick persona via round-robin from state.json
+1. Pick persona via round-robin from state.json (if absent → default index 0 = odoo-partners, then create it — see "Persona rotation state")
 2. Try `case-study` mode:
    - Query Knowcap MCP (Demo org → persona project) for sources
    - For each candidate source, pull confirmed memories (>= 3 required)
    - If 1+ candidate qualifies → mode = case-study, pick the most recent
 3. If no case-study candidate, try `comparison` mode:
-   - Check docs/research/competitors/<name>/positioning.md mtime
+   - Check ../claude-knowcap/knowledge/topics/research/competitors/<name>/positioning.md mtime
    - If freshest competitor doc is < 30 days old AND not covered in last 5 shipped → mode = comparison
 4. Default to `thesis` mode
 ```
 
 The first dry-run picked `thesis` mode (Demo org empty, no fresh competitor doc < 30d). That's the expected path until Demo org gets seeded.
 
+## Knowledge base (hub) — paths
+
+Brand DNA, personas, research, and screenshots migrated to the `claude-knowcap` hub (PR #40, 2026-06-11). They are NO LONGER under this repo's `docs/`. Hub paths below are written relative to this repo root (`knowcap-website/`) — the hub is a sibling repo under `knowcap/`:
+
+| Input | Hub path (relative to repo root) |
+|---|---|
+| Personas | `../claude-knowcap/knowledge/people/PRODUCT-PERSONAS.md` |
+| Vision | `../claude-knowcap/knowledge/strategies/VISION.md` |
+| Positioning | `../claude-knowcap/knowledge/strategies/POSITIONING.md` |
+| SEO audits | `../claude-knowcap/knowledge/topics/research/audits/SEO-AUDIT-*.md` |
+| Competitors | `../claude-knowcap/knowledge/topics/research/competitors/<name>/positioning.md` |
+| Screenshots index | `../claude-knowcap/knowledge/product/screenshots/_index.json` |
+
+Outputs stay in THIS repo: drafts → `docs/content-pipeline/drafts/`, shipped → `app/content/blog/`.
+
+## Persona rotation state
+
+`routines/blogger/state.json` (gitignored) holds the round-robin cursor. Shape:
+
+```json
+{ "personas": ["odoo-partners", "mena-audit-firms", "mena-agencies", "regulated-verticals"], "cursor": 0 }
+```
+
+Each run reads `cursor`, picks `personas[cursor]`, then advances `cursor = (cursor + 1) % personas.length` and writes back. **If the file is absent (fresh clone / cloud routine), default to `cursor: 0` (`odoo-partners`) and create it** — never fail on missing state. The persona set is the research-gated ICP roster (see personas study); the cursor is a blind queue, not a per-run decision.
+
 ## Inputs (in execution order)
 
-1. **Read persona rotation state** from `routines/blogger/state.json` (gitignored)
-2. **Read `docs/brand/personas/PRODUCT-PERSONAS.md`** → pick the persona's section
-3. **Read `docs/brand/VISION.md`** → voice + anti-positioning
-4. **Read `docs/brand/POSITIONING.md`** → three sentences + anti-positioning
-5. **Read most recent `docs/research/audits/SEO-AUDIT-*.md`** → top-3 keyword opportunities (currently: scan for keyword candidates manually; eventually: parse a `keyword_opportunities_by_persona` table)
+1. **Read persona rotation state** from `routines/blogger/state.json` (gitignored; if absent, default to index 0 = `odoo-partners` and create it)
+2. **Read `../claude-knowcap/knowledge/people/PRODUCT-PERSONAS.md`** → pick the persona's section (study segment names map to slugs: "Odoo implementation partners" → `odoo-partners`, "Audit / accounting firms" → `mena-audit-firms`, etc.)
+3. **Read `../claude-knowcap/knowledge/strategies/VISION.md`** → voice + anti-positioning
+4. **Read `../claude-knowcap/knowledge/strategies/POSITIONING.md`** → three sentences + anti-positioning
+5. **Read most recent `../claude-knowcap/knowledge/topics/research/audits/SEO-AUDIT-*.md`** → top-3 keyword opportunities (currently: scan for keyword candidates manually; eventually: parse a `keyword_opportunities_by_persona` table)
 6. **Query Google Trends via pytrends** (urllib3<2.0 required) → validate 5-year MENA interest, pick highest recent growth
 7. **Try `case-study` mode:**
    - Query Knowcap MCP `mcp__knowcap__list_sources` → Demo org, persona project
@@ -42,10 +67,10 @@ The first dry-run picked `thesis` mode (Demo org empty, no fresh competitor doc 
    - Pick source with ≥3 confirmed memories tagged with target_keyword OR persona
    - If found: assemble `knowcap_sources` input array
 8. **If no case-study candidate, try `comparison` mode:**
-   - List `docs/research/competitors/*/positioning.md` mtime
+   - List `../claude-knowcap/knowledge/topics/research/competitors/*/positioning.md` mtime
    - If freshest is < 30 days AND topic not in recent 5 shipped → mode = comparison
 9. **Default to `thesis` mode** if neither condition met
-10. **Pick matching screenshots** from `docs/brand/screenshots/_index.json`:
+10. **Pick matching screenshots** from `../claude-knowcap/knowledge/product/screenshots/_index.json`:
     - Match `features` in index against keywords from the draft hook + main thesis
     - Filter by `personas` matching target_persona
     - Cap at 4 candidates
