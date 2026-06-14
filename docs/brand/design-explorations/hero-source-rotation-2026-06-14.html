@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Knowcap hero — kill "meeting recorder" · source-rotation explorations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBFAF8; --white:#fff; --border:#E7E4DD; --border-2:#DCD7CB;
+    --ink:#18181B; --ink-soft:#2A2A2F; --sec:#4A4F5A;
+    --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#7ED39B;
+    --amber:#B07C28;
+    --disp:'Fraunces',Georgia,serif; --body:'Inter',-apple-system,sans-serif;
+    --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 40px}
+  h1,h2,h3{font-family:var(--disp);margin:0}
+  .doc-head{border-top:3px solid var(--ink);padding:54px 0 10px}
+  .doc-kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sec)}
+  .doc-kick b{color:var(--green)}
+  .doc-h{font-weight:460;font-variation-settings:'SOFT' 55,'WONK' 0;font-size:clamp(1.8rem,3.4vw,2.6rem);
+    letter-spacing:-.02em;line-height:1.12;margin-top:14px;max-width:24ch}
+  .doc-lead{margin-top:18px;font-size:16px;line-height:1.7;color:var(--sec);max-width:64ch}
+
+  /* legend */
+  .legend{margin:34px 0 8px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;
+    font-family:var(--mono);font-size:12px}
+  .legend .lbl{color:var(--sec);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px;margin-right:4px}
+  .chip{padding:4px 11px;border-radius:999px;border:1px solid var(--border);background:var(--white);
+    color:var(--ink);display:inline-flex;align-items:center;gap:7px}
+  .chip .dot{width:7px;height:7px;border-radius:50%}
+  .chip.live .dot{background:var(--green)}
+  .chip.now .dot{background:var(--green)}
+  .chip.soon{color:var(--ink)}
+  .chip.soon .dot{background:var(--amber)}
+
+  /* variant card = a hero canvas */
+  .variant{margin:30px 0;border:1px solid var(--border);border-radius:14px;background:var(--white);
+    overflow:hidden;box-shadow:0 1px 2px rgba(24,24,27,.04),0 12px 34px rgba(24,24,27,.06)}
+  .variant.reco{border-color:rgba(31,107,58,.4);box-shadow:0 0 0 1px rgba(31,107,58,.25),0 14px 40px rgba(31,107,58,.10)}
+  .v-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;
+    border-bottom:1px solid var(--border);background:#FAF9F5}
+  .v-name{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink)}
+  .v-tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--green-deep);background:var(--green-tint);border:1px solid rgba(31,107,58,.25);
+    border-radius:4px;padding:3px 9px}
+  .v-tag.neutral{color:var(--sec);background:transparent;border-color:var(--border)}
+  .v-note{padding:10px 20px 0;font-family:var(--mono);font-size:11.5px;color:var(--sec);line-height:1.65}
+  .hero{padding:46px 40px 52px}
+  .hero .kick{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--sec)}
+  .hero .kick b{color:var(--green)}
+  .h1{font-family:var(--disp);font-weight:480;font-variation-settings:'SOFT' 55,'WONK' 0;
+    font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.06;letter-spacing:-.022em;margin-top:22px;max-width:20ch}
+  .h1 em,.h1 .grn{font-style:italic;font-weight:540;font-variation-settings:'SOFT' 70,'WONK' 1;color:var(--green);font-family:var(--disp)}
+  .sub{margin-top:24px;max-width:56ch;font-size:17px;line-height:1.65;color:var(--sec)}
+  .sub b{color:var(--ink);font-weight:600}
+
+  /* rotating word */
+  .rot{display:inline-block;position:relative;color:var(--green);font-style:italic;
+    font-variation-settings:'SOFT' 70,'WONK' 1;white-space:nowrap;
+    border-bottom:2px solid rgba(31,107,58,.32);padding-bottom:1px}
+  .rot .w{display:inline-block;transition:opacity .34s ease,transform .34s ease}
+  .rot.swap .w{opacity:0;transform:translateY(-7px)}
+  .cap{margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--sec)}
+  .cap .pin{color:var(--green)}
+
+  .foot{margin:50px 0 70px;font-family:var(--mono);font-size:12px;color:var(--sec);line-height:1.8;
+    border-top:1px solid var(--border);padding-top:20px}
+  .foot b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="doc-head">
+    <div class="doc-kick">Knowcap <b>·</b> hero exploration · 2026-06-14</div>
+    <h1 class="doc-h">Stop sounding like a meeting recorder.</h1>
+    <p class="doc-lead">The hero says "Record the meeting" — too narrow, and in MENA "meeting recorder" isn't a category anyone shops for. Knowcap ingests every channel your team actually works in. Read.ai solved the same problem by <b>rotating the source word</b> and bucketing inputs into three umbrella nouns. Below: the same trick in your V6b cream theme, across the full launch source set.</p>
+
+    <div class="legend">
+      <span class="lbl">Sources at launch — all in the header</span>
+      <span class="chip now"><span class="dot"></span>Meetings · Google Meet</span>
+      <span class="chip now"><span class="dot"></span>Calls &amp; recordings</span>
+      <span class="chip now"><span class="dot"></span>Screen recordings (Loom-style)</span>
+      <span class="chip now"><span class="dot"></span>Documents &amp; links</span>
+      <span class="chip now"><span class="dot"></span>Telegram</span>
+      <span class="chip soon"><span class="dot"></span>WhatsApp</span>
+      <span class="chip soon"><span class="dot"></span>Email</span>
+      <span class="chip soon"><span class="dot"></span>Slack</span>
+    </div>
+    <div class="legend" style="margin-top:4px">
+      <span class="lbl" style="margin:0"><span style="color:var(--green)">●</span> shipping &nbsp;·&nbsp; <span style="color:var(--amber)">●</span> building before launch — included in the header per your call</span>
+    </div>
+  </div>
+
+  <!-- VARIANT A — rotating noun in the triad H1 -->
+  <div class="variant">
+    <div class="v-bar">
+      <span class="v-name">A — Rotating source word (closest to Read.ai)</span>
+      <span class="v-tag neutral">dynamic</span>
+    </div>
+    <div class="v-note">Keeps your shipped triad rhythm. The first word cycles through every channel, so no single input owns the headline. Second line generalized off "what was said" so chat/screen sources fit.</div>
+    <div class="hero">
+      <div class="kick">Knowcap <b>·</b> Verified work intelligence</div>
+      <h2 class="h1">Capture every <span class="rot" data-rot="A"><span class="w">meeting</span></span>.<br>Confirm what's true. <em>Let your agents act on it.</em></h2>
+      <p class="sub">Knowcap captures the work your team already does — <b>meetings, calls, screen recordings, Telegram, WhatsApp, Slack &amp; email</b> — extracts every decision, task, and risk, and a named human confirms each one before your AI agents touch it.</p>
+      <div class="cap"><span class="pin">▸</span> the word swaps every 1.8s</div>
+    </div>
+  </div>
+
+  <!-- VARIANT B — Read.ai 3-bucket umbrella, static -->
+  <div class="variant">
+    <div class="v-bar">
+      <span class="v-name">B — Three-bucket umbrella (Read.ai's other move)</span>
+      <span class="v-tag neutral">static · future-proof</span>
+    </div>
+    <div class="v-note">No animation. Three roomy nouns hold every channel — "messages" carries Telegram, WhatsApp, Slack &amp; email; "recordings" carries voice notes + screen/Loom. Add a channel later, no copy change. Calmest, most editorial.</div>
+    <div class="hero">
+      <div class="kick">Knowcap <b>·</b> Verified work intelligence</div>
+      <h2 class="h1">From your <span class="grn">meetings, messages &amp; recordings</span> — to facts your agents can act on.</h2>
+      <p class="sub">Capture every channel your team works in — Meet, screen recordings, Telegram, WhatsApp, Slack, email. Knowcap extracts every commitment, decision, task, and risk, and a named human confirms each one — so your agents work from <b>verified facts, not guesses</b>.</p>
+    </div>
+  </div>
+
+  <!-- VARIANT C — hybrid (recommended) -->
+  <div class="variant reco">
+    <div class="v-bar">
+      <span class="v-name">C — Hybrid: rotating H1 + 3-bucket sub</span>
+      <span class="v-tag">recommended</span>
+    </div>
+    <div class="v-note">The rotation kills "meeting recorder" on sight (motion draws the eye); the umbrella sub names every channel without overwording the headline. Best of both — dynamic up top, durable underneath.</div>
+    <div class="hero">
+      <div class="kick">Knowcap <b>·</b> Verified work intelligence</div>
+      <h2 class="h1">Knowcap turns every <span class="rot" data-rot="C"><span class="w">meeting</span></span><br>into facts your agents can <em>trust</em>.</h2>
+      <p class="sub">Your <b>meetings, messages &amp; recordings</b> hold the commitments, decisions, and risks that run the business — Meet, screen recordings, Telegram, WhatsApp, Slack, email. Knowcap extracts them, a named human confirms each one, and your AI agents act on what's verified — never on a guess.</p>
+      <div class="cap"><span class="pin">▸</span> rotates: meeting · screen recording · Telegram chat · WhatsApp message · email thread</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <b>Decision for you:</b> pick A / B / C (or a mix) and I wire it into the live homepage hero.<br><br>
+    <b>Honesty guard (cheap insurance):</b> WhatsApp / email / Slack are building before launch. The umbrella nouns ("messages")<br>
+    carry them with zero overclaim. The only thing I'd avoid is a hard <i>"available now"</i> badge on a channel that isn't wired<br>
+    the day the site goes live — the rotation + buckets sidestep that entirely.<br><br>
+    <b>Next, once locked:</b> "meeting recorder" narrowness also lives in the compare pages, blog, /for/odoo-partners,<br>
+    and skills (knowcap-analyzer, knowcap-blogger). I'll run a copy sweep across all of it on the same framing.
+  </div>
+
+</div>
+
+<script>
+  var SETS = {
+    A: ['meeting','screen recording','Telegram chat','WhatsApp message','email thread'],
+    C: ['meeting','screen recording','Telegram chat','WhatsApp message','email thread']
+  };
+  document.querySelectorAll('.rot').forEach(function(el){
+    var key = el.getAttribute('data-rot');
+    var words = SETS[key]; var i = 0;
+    var w = el.querySelector('.w');
+    setInterval(function(){
+      el.classList.add('swap');
+      setTimeout(function(){
+        i = (i + 1) % words.length;
+        w.textContent = words[i];
+        el.classList.remove('swap');
+      }, 340);
+    }, 1800);
+  });
+</script>
+</body>
+</html>
