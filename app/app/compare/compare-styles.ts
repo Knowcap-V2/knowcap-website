@@ -32,5 +32,7 @@ export const COMPARE_CSS = `
 .cm-close{background:var(--ink);color:rgba(251,250,248,.7);text-align:center;padding:clamp(56px,6vw,80px) 40px}
 .cm-close h2{font-family:var(--disp);font-size:clamp(1.7rem,3vw,2.4rem);font-weight:460;font-variation-settings:'SOFT' 55,'WONK' 0;color:#fff;margin-bottom:18px;letter-spacing:-.02em;line-height:1.15}
 .cm-close p{font-size:15px;margin-bottom:28px}
+.cm-close-link{display:inline-block;margin-top:18px;font-family:var(--mono);font-size:12.5px;color:var(--green-dark);text-decoration:none;border-bottom:1px solid rgba(126,211,155,.4);padding-bottom:1px}
+.cm-close-link:hover{color:#fff;border-bottom-color:#fff}
 @media(max-width:640px){.cm-cta-row{flex-direction:column}.cm-close{padding:48px 22px}}
 `

@@ -107,10 +107,10 @@ const CSS = `
 .cl-input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-tint)}
 .cl-label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
 
-/* footer — dark */
-.cl-footer{background:var(--ink);color:rgba(251,250,248,.65);padding:44px 0 52px;font-size:13.5px}
-.cl-footer-grid{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-  gap:20px 36px}
+/* footer — dark, 4-column sitemap */
+.cl-footer{background:var(--ink);color:rgba(251,250,248,.65);padding:56px 0 44px;font-size:13.5px}
+.cl-footer-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:14px 28px;padding-bottom:30px;margin-bottom:32px;border-bottom:1px solid rgba(251,250,248,.12)}
 .cl-footer-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);
   font-weight:600;font-size:16px;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--cream)}
 .cl-footer-brand img{border-radius:5px}
@@ -118,9 +118,14 @@ const CSS = `
   color:rgba(251,250,248,.65)}
 .cl-footer-line .cl-fl-ink{color:var(--cream)}
 .cl-footer-line .cl-fl-green{color:var(--green-dark)}
-.cl-footer-links{display:flex;flex-wrap:wrap;gap:18px}
-.cl-footer-links a{color:rgba(251,250,248,.65);transition:color .15s}
-.cl-footer-links a:hover{color:var(--cream)}
+.cl-footer-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 36px}
+@media(max-width:720px){.cl-footer-cols{grid-template-columns:repeat(2,1fr);gap:28px 24px}}
+.cl-fcol{display:flex;flex-direction:column;gap:9px}
+.cl-fcol-h{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--green-dark);margin-bottom:3px}
+.cl-fcol a{color:rgba(251,250,248,.65);transition:color .15s;font-size:13px}
+.cl-fcol a:hover{color:var(--cream)}
+.cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
   color:rgba(251,250,248,.55)}
 `
@@ -158,23 +163,52 @@ export function EditorialHeader() {
 export function EditorialFooter() {
   return (
     <footer className="cl-footer">
-      <div className="cl-wrap cl-footer-grid">
-        <div className="cl-footer-brand">
-          <Image src="/logos/logo.jpg" alt="" width={22} height={22} />
-          Knowcap
+      <div className="cl-wrap">
+        <div className="cl-footer-top">
+          <div className="cl-footer-brand">
+            <Image src="/logos/logo.jpg" alt="" width={22} height={22} />
+            Knowcap
+          </div>
+          <p className="cl-footer-line">
+            <span className="cl-fl-ink">Knowcap</span> is verified work intelligence for AI agents.{' '}
+            <span className="cl-fl-green">Humans confirm. Agents act.</span>
+          </p>
         </div>
-        <p className="cl-footer-line">
-          <span className="cl-fl-ink">Knowcap</span> is verified knowledge for AI agents.{' '}
-          <span className="cl-fl-green">Humans confirm. Agents act.</span>
-        </p>
-        <nav className="cl-footer-links" aria-label="Footer">
-          <a href={`${APP_URL}/register`}>Get Started</a>
-          <a href={`${APP_URL}/login`}>Log in</a>
-          <Link href="/book">Book a Demo</Link>
-          <Link href="/policy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
+        <nav className="cl-footer-cols" aria-label="Footer">
+          <div className="cl-fcol">
+            <div className="cl-fcol-h">Product</div>
+            <a href="/#loop">How it works</a>
+            <a href="/#mcp">For your agents</a>
+            <a href="/#faq">FAQ</a>
+            <Link href="/for/odoo-partners">For Odoo partners</Link>
+          </div>
+          <div className="cl-fcol">
+            <div className="cl-fcol-h">Compare</div>
+            <Link href="/compare/knowcap-vs-otter">Knowcap vs Otter</Link>
+            <Link href="/compare/knowcap-vs-fireflies">Knowcap vs Fireflies</Link>
+            <Link href="/compare/knowcap-vs-granola">Knowcap vs Granola</Link>
+            <Link href="/compare/knowcap-vs-fellow">Knowcap vs Fellow</Link>
+            <Link href="/compare/knowcap-vs-read-ai">Knowcap vs Read.ai</Link>
+          </div>
+          <div className="cl-fcol">
+            <div className="cl-fcol-h">Company</div>
+            <Link href="/blog">Blog</Link>
+            <Link href="/team">Team</Link>
+            <Link href="/careers">Careers</Link>
+            <Link href="/meet-us">Meet us</Link>
+            <Link href="/contact-us">Contact</Link>
+          </div>
+          <div className="cl-fcol">
+            <div className="cl-fcol-h">Get started</div>
+            <a href={`${APP_URL}/register`}>Get Started Free</a>
+            <a href={`${APP_URL}/login`}>Log in</a>
+            <Link href="/policy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
+          </div>
         </nav>
-        <span className="cl-footer-copy">© 2026 Knowcap</span>
+        <div className="cl-footer-bottom">
+          <span className="cl-footer-copy">© 2026 Knowcap</span>
+        </div>
       </div>
     </footer>
   )
