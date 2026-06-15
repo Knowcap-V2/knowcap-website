@@ -24,6 +24,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
+      locale: post.dir === 'rtl' ? 'ar_AR' : 'en_US',
     },
   }
 }
@@ -62,6 +63,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       publisher: { '@type': 'Organization', name: 'Knowcap', url: 'https://knowcap.ai' },
       mainEntityOfPage: `https://knowcap.ai/blog/${post.slug}`,
       keywords: post.tags.join(', '),
+      inLanguage: post.lang,
     },
   ]
   if (post.faqs.length > 0) {
@@ -97,7 +99,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 ))}
               </div>
             )}
-            <h1 className="kb-h1">{post.title}</h1>
+            <h1 className="kb-h1" dir="auto">{post.title}</h1>
             <div className="kb-meta">
               <span><b>{post.date}</b></span>
               <span><b>{post.author}</b></span>
@@ -115,7 +117,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           </div>
         )}
 
-        <article className="kb-article" dangerouslySetInnerHTML={{ __html: post.html }} />
+        <article className="kb-article" dir={post.dir} lang={post.lang} dangerouslySetInnerHTML={{ __html: post.html }} />
 
         {post.relatedPages.length > 0 && (
           <div className="kb-related">

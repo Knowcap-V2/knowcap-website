@@ -23,6 +23,8 @@ export interface BlogPostMeta {
   relatedPages: string[]
   sourceKnowcapIds: string[]
   readMinutes: number
+  lang: string
+  dir: 'ltr' | 'rtl'
 }
 
 export interface BlogPost extends BlogPostMeta {
@@ -108,9 +110,9 @@ export function renderMarkdown(md: string): string {
   return out.join('\n')
 }
 
-/** Extract FAQ q/a pairs (### headings under a "## FAQ" section) for FAQPage JSON-LD. */
+/** Extract FAQ q/a pairs (### headings under a "## FAQ" / Arabic section) for FAQPage JSON-LD. */
 function extractFaqs(md: string): { q: string; a: string }[] {
-  const faqMatch = md.match(/^##\s+FAQ\s*$/m)
+  const faqMatch = md.match(/^##\s+(?:FAQ|الأسئلة الشائعة)\s*$/m)
   if (!faqMatch || faqMatch.index === undefined) return []
   const after = md.slice(faqMatch.index)
   const section = after.split(/\r?\n##\s+(?!#)/)[0]
@@ -126,6 +128,8 @@ function extractFaqs(md: string): { q: string; a: string }[] {
 
 function toMeta(slug: string, data: Record<string, any>, body: string): BlogPostMeta {
   const words = body.split(/\s+/).length
+  const lang = String(data.lang ?? 'en')
+  const dir: 'ltr' | 'rtl' = data.dir === 'rtl' || data.dir === 'ltr' ? data.dir : lang === 'ar' ? 'rtl' : 'ltr'
   return {
     slug,
     title: String(data.title ?? slug),
@@ -137,6 +141,8 @@ function toMeta(slug: string, data: Record<string, any>, body: string): BlogPost
     relatedPages: Array.isArray(data.related_pages) ? data.related_pages.map(String) : [],
     sourceKnowcapIds: Array.isArray(data.source_knowcap_ids) ? data.source_knowcap_ids.map(String) : [],
     readMinutes: Math.max(1, Math.round(words / 220)),
+    lang,
+    dir,
   }
 }
 
