@@ -61,8 +61,8 @@ export default function BlogIndexPage() {
           {posts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} className="kb-card">
               <span className="kb-card-date">{post.date}</span>
-              <h2>{post.title}</h2>
-              <p>{post.description}</p>
+              <h2 dir="auto">{post.title}</h2>
+              <p dir="auto">{post.description}</p>
               <div className="kb-card-tags">
                 {post.tags.slice(0, 3).map((t) => (
                   <span key={t} className="kb-card-tag">{t}</span>
