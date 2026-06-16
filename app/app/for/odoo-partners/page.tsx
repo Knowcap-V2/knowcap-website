@@ -6,7 +6,7 @@ import { ODOO_FAQ } from '@/lib/site-schema'
 // Audience: Odoo implementation partners (StratDev Meta-Ads target).
 // Tracks variant "odoo-partners".
 export const metadata = {
-  title: 'Knowcap for Odoo implementation partners — From client meeting to Odoo SH PR before the meeting ends',
+  title: 'Knowcap for Odoo Partners — Meeting to Odoo SH PR',
   description:
     'Your client mentions a bug mid-meeting. Knowcap captures it, waits for one human tap, then opens an Odoo SH ticket and drafts a GitHub PR — before the call ends.',
   alternates: { canonical: 'https://knowcap.ai/for/odoo-partners' },

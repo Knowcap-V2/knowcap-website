@@ -50,6 +50,10 @@ const FAQS = [
     a: `${COMPETITOR}'s AI summaries are inputs to a black box — when a regulator or a client asks "who decided this and when," there's no audit trail. Knowcap pairs every agent action to a human-confirmed claim, with timestamp + speaker quote + the named person who confirmed it. The audit ledger is the product, not an afterthought.`,
   },
   {
+    q: `Is Knowcap better than ${COMPETITOR} for MENA teams and Odoo implementation partners?`,
+    a: `Yes — that's exactly who Knowcap is built for. ${COMPETITOR} is a US-built meeting-intelligence tool: one language per recording, sentiment and engagement scores, and an Ada agent that pushes summaries into Slack and your CRM. It has no Arabic UI, no data-residency story, and no concept of an Odoo SH ticket. Knowcap is built by an Odoo partner for MENA delivery teams — it handles Arabic↔English code-switching mid-utterance, captures Telegram (where MENA clients actually talk), and turns a confirmed bug from a client call into an Odoo SH ticket and a GitHub PR before the meeting ends. Where ${COMPETITOR} stops at "here's what was said and how the room felt," Knowcap ships the work — under one-tap human control.`,
+  },
+  {
     q: `How is the verification step different from ${COMPETITOR}'s AI summary?`,
     a: `${COMPETITOR} writes the summary, its Ada agent pushes the action items straight into Slack / Notion / Salesforce, and you trust it. If the AI misheard, the wrong task lands in your stack. Knowcap shows each extracted fact as a claim card — exact timestamp, speaker quote, classification (decision / risk / task) — and a human (you) confirms or rejects it with one tap. Only confirmed claims feed the agents that take real-world actions. Sentiment analytics are a side dish; verified action is the main course.`,
   },
