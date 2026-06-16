@@ -149,6 +149,7 @@ export function EditorialHeader() {
           <a className="cl-navlink" href="/#loop">How it works</a>
           <a className="cl-navlink" href="/#mcp">For your agents</a>
           <a className="cl-navlink" href="/#faq">FAQ</a>
+          <Link className="cl-navlink" href="/compare">Compare</Link>
           <Link className="cl-navlink" href="/contact-us">Contact</Link>
         </nav>
         <div className="cl-navauth">
