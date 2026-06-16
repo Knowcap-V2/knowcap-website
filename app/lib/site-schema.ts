@@ -129,3 +129,41 @@ export const ODOO_FAQ: Faq[] = [
     a: 'Yes. A confirmed bug report or change request can trigger a GitHub PR, so the fix is staged for review with the client conversation as its provenance. The developer opening the PR sees exactly what was asked, by whom, and when — tied to the recording — rather than a second-hand ticket that lost detail in translation. Combined with Odoo SH ticket creation, this is how Knowcap turns a single client call into reviewable, traceable work before the meeting even wraps: the scope is captured, a human confirms it, the ticket opens, and the PR is staged. For a MENA Odoo partner whose clients often switch between Arabic and English mid-call, the per-utterance capture means nothing in that scope discussion is lost before it becomes code.',
   },
 ]
+
+/** KSA landing-page FAQ for /for/saudi-arabia. Targets "AI meeting notes"
+ *  intent for Saudi teams + Arabic محضر اجتماع queries. Claims stay within
+ *  the shipped product story (no invented certifications or dialect lists). */
+export const SAUDI_FAQ: Faq[] = [
+  {
+    q: 'Can Knowcap transcribe meetings that switch between Arabic and English mid-sentence?',
+    a: 'Yes. Knowcap detects language per utterance, so a meeting that switches between Arabic and English mid-sentence — the everyday reality of a Riyadh boardroom — is captured intact instead of forced into one language per recording. Saudi Arabic spoken with English business terms is kept line by line. Tools like Otter, Fireflies, and Read.ai optimize for a single language per recording and lose the switched lines; Knowcap keeps the whole conversation, including the lines where the decisions were made.',
+  },
+  {
+    q: 'Can Knowcap generate the meeting minutes (محضر اجتماع) in Arabic?',
+    a: 'Yes. Knowcap captures the meeting, extracts each decision, task, and risk as a confirmed claim, and exports the decision record — the محضر اجتماع — in either Arabic or English, whichever the file needs. Because a named human confirms each claim before it lands in the record, the محضر reflects what was actually agreed, not what the AI guessed.',
+  },
+  {
+    q: 'Is the Knowcap interface in Arabic, and does it matter for my Saudi team?',
+    a: 'Knowcap is built MENA-first with Arabic in the interface, and it matters because the capture itself is Arabic-native — it keeps Saudi Arabic and English in the same meeting and exports the محضر in either language. The point is not a translated menu; it is that a meeting run in Arabic with English business terms is transcribed accurately line by line, instead of collapsing into one mislabeled block the way single-language tools do.',
+  },
+  {
+    q: 'How does Knowcap help with PDPL compliance and data residency in Saudi Arabia?',
+    a: 'In two specific, honest ways. First, data residency: Knowcap can run in EU/MENA regions, so meeting recordings and the personal data in them need not leave the region. Second, a named-human audit trail: every extracted claim is confirmed or rejected by a named person, and that confirmation, the exact timestamp, and the speaker quote are kept as the permanent record — supporting PDPL accountability and record-keeping. Knowcap is not "PDPL certified" or "SDAIA approved" — no such certification is claimed; the defensible line is that data-residency options plus a named-human audit trail help your team meet PDPL accountability and record-keeping obligations.',
+  },
+  {
+    q: 'What is the best AI meeting notes alternative to Otter, Fireflies, and Read.ai for Saudi and Gulf teams?',
+    a: 'For a Saudi or Gulf team, Knowcap is the differentiated choice on two axes the others miss. One, language: Otter, Fireflies, and Read.ai optimize for a single language per recording and lose Arabic↔English code-switching; Knowcap keeps language per utterance and exports the محضر in either language. Two, trust: those tools stop at an auto-generated AI summary and several auto-push action items with no human gate, while Knowcap has a named person confirm every claim before any agent acts, with a full audit trail. They also have no MENA presence; Knowcap is built MENA-first by an Odoo partner.',
+  },
+  {
+    q: 'Does Knowcap automatically send action items to my tools, or does a human confirm them first?',
+    a: 'A human confirms first — that is the whole point. Knowcap extracts each decision, task, and risk as a claim card, but a named person must approve or reject it with one tap before anything happens. Only confirmed claims feed the agents that open Odoo SH tickets, draft GitHub PRs, or send follow-ups. This is the opposite of tools that auto-push raw AI output into your stack: nothing the AI mis-heard becomes a wrong ticket, because a person signed off first, and every action traces back to who confirmed it and when.',
+  },
+  {
+    q: 'How is Knowcap different from other meeting-transcription tools for Saudi companies?',
+    a: 'Two differences matter most for a Saudi company. First, Knowcap captures Arabic↔English code-switching and exports the محضر in either language, while incumbents optimize for one language per recording and lose the switched lines. Second, Knowcap gates every agent action behind a one-tap confirmation by a named human and keeps a full audit trail — the others stop at an AI summary, and several auto-push action items with no human in the loop. It is built MENA-first by an Odoo implementation partner, not retrofitted for the region.',
+  },
+  {
+    q: 'Does Knowcap work for in-person meetings, not just video calls?',
+    a: 'Yes. Beyond Zoom, Google Meet, and Teams, Knowcap captures voice notes, chat messages, Telegram threads, screen recordings, and uploaded documents or URLs — so an in-person meeting can be recorded without a bot awkwardly joining a call. Each capture runs the same Listen → Extract → Confirm → Act pipeline, so an in-person decision becomes a confirmed, audit-trailed claim just like a video call.',
+  },
+]
