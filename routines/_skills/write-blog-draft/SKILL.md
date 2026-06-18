@@ -12,7 +12,7 @@ Routine picks mode at runtime based on what's available — the routine doesn't 
 |---|---|---|
 | **`thesis`** | Persona + audit + vision + positioning | Default. General positioning posts. NO Knowcap source needed. |
 | **`case-study`** | A specific Knowcap recording + its confirmed memories + persona | When the routine finds at least 1 source in Demo org for the target persona with ≥3 confirmed memories. |
-| **`comparison`** | Competitor research + persona + audit | When `docs/research/competitors/<name>/positioning.md` is fresher than 30 days AND not already covered in last 5 shipped blogs. |
+| **`comparison`** | Competitor research + persona + audit | When `../claude-knowcap/company/docs/research/competitors-*.md` is fresher than 30 days AND not already covered in last 5 shipped blogs. |
 
 Each mode has its own prompt template below.
 
@@ -25,9 +25,9 @@ target_keyword: "<string>"
 target_keyword_5y_mena_interest: <0-100 OR null if Trends unavailable>
 
 # Always required (brand DNA lives in the claude-knowcap hub — sibling repo, NOT this repo's docs/)
-vision_md: "<text>"             # from ../claude-knowcap/knowledge/strategies/VISION.md
-positioning_md: "<text>"        # from ../claude-knowcap/knowledge/strategies/POSITIONING.md
-persona_section_md: "<text>"    # the persona's section from ../claude-knowcap/knowledge/people/PRODUCT-PERSONAS.md
+vision_md: "<text>"             # from ../claude-knowcap/company/docs/strategy/vision.md
+positioning_md: "<text>"        # from ../claude-knowcap/company/docs/strategy/POSITIONING.md
+persona_section_md: "<text>"    # the persona's section from ../claude-knowcap/company/docs/research/product-personas.md
 recent_shipped_slugs: [...]     # last 20 slugs from app/content/blog/
 recent_drafts_in_pipeline: [...] # to avoid double-drafting
 
@@ -43,14 +43,14 @@ knowcap_sources:
       facts: [...]
 
 # Required only when mode = comparison
-competitor_positioning_md: "<text>"  # from ../claude-knowcap/knowledge/topics/research/competitors/<name>/positioning.md
+competitor_positioning_md: "<text>"  # from ../claude-knowcap/company/docs/research/competitors-<name>-positioning.md
 
 # Optional enhancement (any mode)
 available_screenshots:
   - slug: "verification-inbox"
     alt: "<alt text>"
     caption: "<caption>"
-    file: "../claude-knowcap/knowledge/product/screenshots/verification-inbox/full.png"
+    file: "../claude-knowcap/company/docs/product/screenshots/verification-inbox/full.png"
     features: [verification, inbox]
     personas: [odoo-partners, mena-audit-firms]
 ```
@@ -80,11 +80,18 @@ target_keyword_5y_mena_interest: {target_keyword_5y_mena_interest}
 geo_score: <0-100 per GEO-AUDIT rubric, your honest estimate>
 est_word_count: <draft word count>
 draft_date: <today YYYY-MM-DD>
+description: "<SEO meta description — 120-165 chars, plain English, no keyword stuffing>"
+tags: [<5-8 kebab-case tags derived from persona + keyword + topic>]
+author: "Hassan Arslan"
+lang: "en"
+dir: "ltr"
 source_knowcap_ids: [<list only if mode=case-study, else []>]
 embedded_screenshots: [<list of screenshot slugs used, else []>]
 status: draft
 ---
 ```
+
+`description`, `tags`, `author`, `lang`, `dir` are consumed by `scripts/publish-draft.mjs` on PR merge to populate the live blog post's frontmatter. Always include them — the publish script errors if `description` is missing.
 
 ## Mode `thesis` — the prompt
 
