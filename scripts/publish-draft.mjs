@@ -102,7 +102,10 @@ function buildPublishedFrontmatter(meta, body) {
   pub.date   = meta.draft_date || new Date().toISOString().slice(0, 10)
   pub.author = meta.author || 'Hassan Arslan'
 
-  // Description — use meta.description if set, else auto-extract
+  // Description — required field; auto-extract only as last-resort fallback
+  if (!meta.description) {
+    console.warn(`Warning: draft missing description field — auto-extracting from body. Add description to frontmatter for better SEO.`)
+  }
   pub.description = meta.description || extractDescription(body)
 
   // Tags

@@ -22,15 +22,20 @@ hit a quota.
 2. **Digest** — surface the top picks to Hassan in the run window / Claude agents sidebar.
 3. **Burn-state** — read `burn-state.json`; decide if today is a blog-gen day (see ROUTINE.md
    "Daily flow + burn cadence"). If not → done for today (insights only).
-4. **Blog day** — pick the persona's top fresh opportunity as `target_keyword`. Assemble inputs
-   (persona section, VISION, POSITIONING from the hub; shipped slugs; queue row's volume+comp).
-5. **Mode** — Knowcap MCP Demo-org → persona project → source with ≥3 human-confirmed memories?
-   → **case-study** (cite `source_knowcap_ids`, generate the verification panel via
-   `lib/gen-verification-panel.mjs`). Else → **SEO-grounded thesis** (answer the keyword's real
-   SERP / People-Also-Ask demand with a unique Knowcap angle).
+4. **Blog day** — pick the persona's top fresh EN opportunity as `target_keyword`. Assemble inputs
+   (persona section from `../claude-knowcap/company/docs/research/product-personas.md`,
+   VISION from `../claude-knowcap/company/docs/strategy/vision.md`,
+   POSITIONING from `../claude-knowcap/company/docs/strategy/POSITIONING.md`;
+   shipped slugs; queue row's volume+comp).
+5. **Mode** — try in order:
+   (1) **case-study**: Demo-org → persona project → source with ≥3 confirmed memories → cite `source_knowcap_ids`, generate verification panel via `lib/gen-verification-panel.mjs`.
+   (2) **comparison**: freshest `../claude-knowcap/company/docs/research/competitors-*.md` < 30d AND not covered in last 5 shipped → compare.
+   (3) **thesis**: default.
 6. **Write** via write-blog-draft SKILL → run ALL gates (banned words, 1300–1600 words, keyword
    in title+H2+≥3, slug unique, exactly 5 FAQ, frontmatter). Fail → regenerate/skip, never ship thin.
 7. **Output** — draft → `docs/content-pipeline/drafts/<slug>.md`, open `[blog-draft]` PR to main.
+   Always report live URL: `https://knowcap.ai/blog/<slug>` — post goes live automatically on PR merge
+   via `.github/workflows/publish-blog-draft.yml` + `scripts/publish-draft.mjs` (no manual move needed).
    Update `burn-state.json` (total_posts++, posts_this_week++).
 
 ## Hard rules
@@ -51,3 +56,5 @@ hit a quota.
 - `state.json` — persona rotation cursor (gitignored)
 - `lib/gen-verification-panel.mjs` — data-driven Knowcap UI SVG (case-study posts)
 - `runs/<stamp>/` — per-run digest + draft + report (gitignored)
+- `../../.github/workflows/publish-blog-draft.yml` — auto-publish on `[blog-draft]` PR merge
+- `../../scripts/publish-draft.mjs` — frontmatter transform: draft fields → blog fields, moves draft to `app/content/blog/`

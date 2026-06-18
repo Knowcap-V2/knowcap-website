@@ -39,27 +39,26 @@ After each shipped draft PR: `total_posts++`, `posts_this_week++`. Reset `posts_
    - For each candidate source, pull confirmed memories (>= 3 required)
    - If 1+ candidate qualifies → mode = case-study, pick the most recent
 3. If no case-study candidate, try `comparison` mode:
-   - Check ../claude-knowcap/knowledge/topics/research/competitors/<name>/positioning.md mtime
-   - If freshest competitor doc is < 30 days old AND not covered in last 5 shipped → mode = comparison
+   - List ../claude-knowcap/company/docs/research/competitors-*.md, check mtime of each
+   - If freshest competitor doc is < 30 days old AND topic not covered in last 5 shipped → mode = comparison
 4. Default to `thesis` mode
 ```
 
-The first dry-run picked `thesis` mode (Demo org empty, no fresh competitor doc < 30d). That's the expected path until Demo org gets seeded.
+The first few runs pick `thesis` mode (Demo org empty, no fresh competitor doc < 30d). Expected until Demo org gets seeded.
 
 ## Knowledge base (hub) — paths
 
-Brand DNA, personas, research, and screenshots migrated to the `claude-knowcap` hub (PR #40, 2026-06-11). They are NO LONGER under this repo's `docs/`. Hub paths below are written relative to this repo root (`knowcap-website/`) — the hub is a sibling repo under `knowcap/`:
+Brand DNA, personas, research, and screenshots live in the `claude-knowcap` hub (PR #40 2026-06-11, restructured into `company/docs/` 2026-06-15). NOT under this repo's `docs/`. Hub paths below are relative to this repo root (`knowcap-website/`) — the hub is a sibling repo under `knowcap/`:
 
 | Input | Hub path (relative to repo root) |
 |---|---|
-| Personas | `../claude-knowcap/knowledge/people/PRODUCT-PERSONAS.md` |
-| Vision | `../claude-knowcap/knowledge/strategies/VISION.md` |
-| Positioning | `../claude-knowcap/knowledge/strategies/POSITIONING.md` |
-| SEO audits | `../claude-knowcap/knowledge/topics/research/audits/SEO-AUDIT-*.md` |
-| Competitors | `../claude-knowcap/knowledge/topics/research/competitors/<name>/positioning.md` |
-| Screenshots index | `../claude-knowcap/knowledge/product/screenshots/_index.json` |
+| Personas | `../claude-knowcap/company/docs/research/product-personas.md` |
+| Vision | `../claude-knowcap/company/docs/strategy/vision.md` |
+| Positioning | `../claude-knowcap/company/docs/strategy/POSITIONING.md` |
+| Competitors | `../claude-knowcap/company/docs/research/competitors-*.md` (one file per competitor, e.g. `competitors-read-ai-positioning.md`) |
+| Screenshots index | `../claude-knowcap/company/docs/product/screenshots/_index.json` |
 
-Outputs stay in THIS repo: drafts → `docs/content-pipeline/drafts/`, shipped → `app/content/blog/`.
+Outputs stay in THIS repo: drafts → `docs/content-pipeline/drafts/`, shipped → `app/content/blog/` (auto-moved on PR merge).
 
 ## Persona rotation state
 
@@ -74,18 +73,18 @@ Each run reads `cursor`, picks `personas[cursor]`, then advances `cursor = (curs
 ## Inputs (in execution order)
 
 1. **Read persona rotation state** from `routines/blogger/state.json` (gitignored; if absent, default to index 0 = `odoo-partners` and create it)
-2. **Read `../claude-knowcap/knowledge/people/PRODUCT-PERSONAS.md`** → pick the persona's section (study segment names map to slugs: "Odoo implementation partners" → `odoo-partners`, "Audit / accounting firms" → `mena-audit-firms`, etc.)
-3. **Read `../claude-knowcap/knowledge/strategies/VISION.md`** → voice + anti-positioning
-4. **Read `../claude-knowcap/knowledge/strategies/POSITIONING.md`** → three sentences + anti-positioning
-5. **Run `node routines/blogger/scripts/seo-pull.mjs`** (live SEO engine, replaces the old static SEO-audit scan AND the dead Google Trends step). Pulls DataForSEO Google-Ads keyword demand for MENA (KSA + Egypt + UAE) in EN + AR, expands persona seeds into real related keywords with **search volume + competition**, filters to Knowcap ICP intent, ranks by `volume × competition-weight`, dedups against shipped posts, and writes `routines/blogger/opportunity-queue.json` + a digest. **`target_keyword` = the persona's top fresh (uncovered) opportunity** from the queue. Auth: DataForSEO creds in `~/.claude/secrets/blogger.md`.
-6. **(Google Trends removed.)** DataForSEO volume + competition from step 5 is the demand signal — Trends was near-zero for this B2B ICP. Record the chosen keyword's `search_volume` + `competition` in frontmatter.
+2. **Read `../claude-knowcap/company/docs/research/product-personas.md`** → pick the persona's section (study segment names map to slugs: "Odoo implementation partners" → `odoo-partners`, "Audit / accounting firms" → `mena-audit-firms`, etc.)
+3. **Read `../claude-knowcap/company/docs/strategy/vision.md`** → voice + anti-positioning
+4. **Read `../claude-knowcap/company/docs/strategy/POSITIONING.md`** → three sentences + anti-positioning
+5. **Run `node routines/blogger/scripts/seo-pull.mjs`** (live SEO engine). Pulls DataForSEO Google-Ads keyword demand for MENA (KSA + Egypt + UAE) in EN + AR, expands persona seeds into real related keywords with **search volume + competition**, filters to Knowcap ICP intent, ranks by `volume × competition-weight`, dedups against shipped posts, and writes `routines/blogger/opportunity-queue.json` + a digest. **`target_keyword` = the persona's top fresh (uncovered) EN opportunity** from the queue. Auth: DataForSEO creds in `~/.claude/secrets/blogger.md`.
+6. DataForSEO volume + competition from step 5 is the demand signal. Record the chosen keyword's `search_volume` + `competition` in frontmatter.
 7. **Try `case-study` mode:**
    - Query Knowcap MCP `mcp__knowcap__list_sources` → Demo org, persona project
    - For each source, `mcp__knowcap__list_memories` filtered to source via `metadata.source_id`
    - Pick source with ≥3 confirmed memories tagged with target_keyword OR persona
    - If found: assemble `knowcap_sources` input array
 8. **If no case-study candidate, try `comparison` mode:**
-   - List `../claude-knowcap/knowledge/topics/research/competitors/*/positioning.md` mtime
+   - List `../claude-knowcap/company/docs/research/competitors-*.md`, check mtime of each
    - If freshest is < 30 days AND topic not in recent 5 shipped → mode = comparison
 9. **Default to `thesis` mode** if neither condition met
 10. **Pick matching screenshots** from `../claude-knowcap/knowledge/product/screenshots/_index.json`:
@@ -102,7 +101,7 @@ Each run reads `cursor`, picks `personas[cursor]`, then advances `cursor = (curs
 | `mcp__knowcap__list_sources` | List Demo org sources for persona | `KNOWCAP_API_KEY` in `~/.claude.json` mcpServers.knowcap.env | read |
 | `mcp__knowcap__list_memories` | Pull verified claims from picked sources | same | read |
 | `mcp__knowcap__get_source` | Get source title + duration + metadata | same | read |
-| Google Trends via `pytrends` | Keyword sizing (MENA-only, 5-year) | none (free) | read |
+| DataForSEO Google Ads | Keyword volume + competition (replaces Trends) | creds in `~/.claude/secrets/blogger.md` | read |
 | Filesystem | Read docs/, write `docs/content-pipeline/drafts/<slug>.md` | OS perms | read + write |
 | `gh` CLI (or GitHub MCP when re-loaded) | Open PR | `gh auth` | write |
 
@@ -112,15 +111,15 @@ A single markdown file at `docs/content-pipeline/drafts/<slug>.md` with frontmat
 
 PR body includes:
 - Mode picked + why
-- Persona + keyword + Google Trends signal
+- Persona + keyword + volume/competition
 - If case-study: source_knowcap_ids cited
 - If screenshots embedded: which slugs from `_index.json`
 - Validation gate pass/fail summary
-- Link to `runs/<timestamp>/REPORT.md`
+- Live URL: `https://knowcap.ai/blog/<slug>`
 
 ## Human confirms
 
-- **Merge PR** = approve; next routine (`content-curator` or manual edit pass) handles polish before publish-to-blog (move from `docs/content-pipeline/drafts/` to `app/content/blog/`)
+- **Merge PR** = approve → `.github/workflows/publish-blog-draft.yml` fires automatically, runs `scripts/publish-draft.mjs` to transform draft frontmatter and move the file to `app/content/blog/<slug>.md`, then commits to main. Vercel redeploys. Post is live within ~2 min. No manual move needed.
 - **Close PR** = reject; routine logs the rejection reason to `runs/<timestamp>/rejected.txt` for future prompt-tuning
 
 ## Constraints
