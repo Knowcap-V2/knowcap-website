@@ -32,7 +32,8 @@ const DROP_KEYS = [
   'geo_score', 'est_word_count', 'embedded_screenshots', 'status',
 ]
 
-function parseFrontmatter(raw) {
+function parseFrontmatter(rawInput) {
+  const raw = rawInput.replace(/\r\n/g, '\n')
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/m)
   if (!match) throw new Error('No frontmatter found')
   const yamlBlock = match[1]
