@@ -8,6 +8,11 @@ target_keyword_5y_mena_interest: null
 geo_score: 74
 est_word_count: 1599
 draft_date: 2026-06-18
+description: "ISACA's Global Technology Audit Guide assumes interview evidence is documented. For MENA audit firms under PDPL enforcement, Knowcap's human-confirmation layer makes every finding traceable."
+tags: ["mena-audit-firms", "internal-audit", "isaca", "pdpl", "evidence-documentation", "audit-trail", "technology-audit"]
+author: "Hassan Arslan"
+lang: "en"
+dir: "ltr"
 source_knowcap_ids: []
 embedded_screenshots: []
 status: draft
