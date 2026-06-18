@@ -1,21 +1,27 @@
 ---
 title: "Global Technology Audit Guide: The Evidence Gap MENA Audit Firms Face"
 slug: global-technology-audit-guide-evidence-gap-mena
-mode: thesis
-persona: mena-audit-firms
-target_keyword: "global technology audit guide"
-target_keyword_5y_mena_interest: null
-geo_score: 74
-est_word_count: 1599
-draft_date: 2026-06-18
+date: 2026-06-18
+author: Hassan Arslan
 description: "ISACA's Global Technology Audit Guide assumes interview evidence is documented. For MENA audit firms under PDPL enforcement, Knowcap's human-confirmation layer makes every finding traceable."
-tags: ["mena-audit-firms", "internal-audit", "isaca", "pdpl", "evidence-documentation", "audit-trail", "technology-audit"]
-author: "Hassan Arslan"
-lang: "en"
-dir: "ltr"
+tags:
+  - "mena-audit-firms"
+  - "internal-audit"
+  - "isaca"
+  - "pdpl"
+  - "evidence-documentation"
+  - "audit-trail"
+  - "technology-audit"
+geo_audiences:
+  - "UAE"
+  - "KSA"
+  - "Egypt"
+target_persona: mena-audit-firms
+related_pages: []
 source_knowcap_ids: []
-embedded_screenshots: []
-status: draft
+read_minutes: 8
+lang: en
+dir: ltr
 ---
 
 ## Global Technology Audit Guide: The Evidence Gap in Every ISACA-Based Audit
