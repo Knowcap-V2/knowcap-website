@@ -1,21 +1,28 @@
 ---
 title: "AI Note Taking for MENA Consulting Agencies: What the Summary Gets Wrong"
 slug: ai-note-taking-mena-agencies-summary-gap
-mode: thesis
-persona: mena-agencies
-target_keyword: "ai note taking"
-target_keyword_5y_mena_interest: null
-geo_score: 72
-est_word_count: 1487
-draft_date: 2026-06-22
-description: "MENA consulting agencies relying on AI note taking apps are solving the wrong problem. The summary is accurate — the unconfirmed claim inside it is the liability."
-tags: [ai-note-taking, mena-agencies, consulting, verified-facts, audit-trail, uae, scope-management, human-confirmation]
-author: "Hassan Arslan"
-lang: "en"
-dir: "ltr"
+date: 2026-06-22
+author: Hassan Arslan
+description: MENA consulting agencies relying on AI note taking apps are solving the wrong problem. The summary is accurate — the unconfirmed claim inside it is the liability.
+tags:
+  - "ai-note-taking"
+  - "mena-agencies"
+  - "consulting"
+  - "verified-facts"
+  - "audit-trail"
+  - "uae"
+  - "scope-management"
+  - "human-confirmation"
+geo_audiences:
+  - "UAE"
+  - "KSA"
+  - "Egypt"
+target_persona: mena-agencies
+related_pages: []
 source_knowcap_ids: []
-embedded_screenshots: []
-status: draft
+read_minutes: 8
+lang: en
+dir: ltr
 ---
 
 Strategy consulting partners across the UAE and Saudi Arabia bill at $200–500 per hour. One disputed client deliverable typically costs four to six of those hours — and in most MENA boutique firms, the only record of what was agreed is an AI-generated summary that nobody confirmed.
