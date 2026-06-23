@@ -1,6 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Inter, Space_Grotesk, JetBrains_Mono, Fraunces } from 'next/font/google'
 import { Toaster } from '@/components/ui/toaster'
 import { Toaster as Sonner } from 'sonner'
 import PostHogProvider from '@/components/posthog-provider'
@@ -9,6 +9,16 @@ import Script from 'next/script'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' })
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
+// Display font for the homepage headings (the LCP element). Self-hosted via
+// next/font (preloaded, no render-blocking third-party @import). Variable font:
+// full wght range + opsz/SOFT/WONK axes + italic, matching the prior @import.
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  axes: ['opsz', 'SOFT', 'WONK'],
+  variable: '--font-fraunces',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://knowcap.ai'),
@@ -29,11 +39,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}>
       <head>
         {/* Warm the Google Fonts connections early — globals.css + the homepage
-            load Fraunces/Inter/Space Grotesk/JetBrains Mono via CSS @import, which
-            is render-blocking; preconnect shaves the connection setup off the LCP path. */}
+            still load Inter / Space Grotesk / JetBrains Mono via CSS @import, which
+            is render-blocking; preconnect shaves the connection setup off the path.
+            (Fraunces now self-hosts via next/font — no longer in the @import.) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
