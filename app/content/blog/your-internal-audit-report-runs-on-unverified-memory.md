@@ -1,21 +1,28 @@
 ---
-title: "Your Internal Audit Report Runs on Unverified Memory"
+title: Your Internal Audit Report Runs on Unverified Memory
 slug: your-internal-audit-report-runs-on-unverified-memory
-mode: thesis
-persona: mena-audit-firms
-target_keyword: "internal audit report"
-target_keyword_5y_mena_interest: null
-geo_score: 84
-est_word_count: 1597
-draft_date: 2026-06-23
-description: "An internal audit report is only as defensible as the evidence behind it. Why MENA audit firms need verified, named-human-confirmed facts — not AI summaries."
-tags: [internal-audit-report, mena-audit-firms, saudi-pdpl, audit-evidence, verified-facts, audit-trail, ai-governance, regulated-verticals]
-author: "Hassan Arslan"
-lang: "en"
-dir: "ltr"
+date: 2026-06-23
+author: Hassan Arslan
+description: An internal audit report is only as defensible as the evidence behind it. Why MENA audit firms need verified, named-human-confirmed facts — not AI summaries.
+tags:
+  - "internal-audit-report"
+  - "mena-audit-firms"
+  - "saudi-pdpl"
+  - "audit-evidence"
+  - "verified-facts"
+  - "audit-trail"
+  - "ai-governance"
+  - "regulated-verticals"
+geo_audiences:
+  - "UAE"
+  - "KSA"
+  - "Egypt"
+target_persona: mena-audit-firms
+related_pages: []
 source_knowcap_ids: []
-embedded_screenshots: []
-status: draft
+read_minutes: 8
+lang: en
+dir: ltr
 ---
 
 A Saudi audit firm's internal audit report once cited a control failure the client's finance director swore he never described that way. The note behind it came from a junior associate's memory of a 40-minute walkthrough — and nobody could point to where the client actually said it.
