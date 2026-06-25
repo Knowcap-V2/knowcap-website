@@ -542,7 +542,7 @@ export default function BetaTypeform() {
       {/* Question area */}
       <div className="flex-1 flex items-center justify-center px-8 py-12">
         <div
-          className="w-full transition-all duration-200"
+          className="w-full max-w-xl mx-auto transition-all duration-200"
           style={{ opacity: animating ? 0 : 1, transform: animating ? 'translateY(12px)' : 'translateY(0)' }}
         >
           {currentStep === 'welcome' && (
