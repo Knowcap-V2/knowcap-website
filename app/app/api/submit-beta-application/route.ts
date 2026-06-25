@@ -51,7 +51,7 @@ async function sendEmail(to: string, subject: string, htmlBody: string) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, company, role, motivation, teamSize, topChallenge, meetingPlatforms } = body
+    const { name, email, company, role, motivation, teamSize, topChallenge, meetingPlatforms, aiUsage, region } = body
 
     // Validate required fields
     if (!name || !email || !company || !role || !motivation) {
@@ -81,6 +81,8 @@ export async function POST(request: NextRequest) {
         teamSize: teamSize || null,
         topChallenge: topChallenge || null,
         meetingPlatforms: meetingPlatforms || null,
+        aiUsage: aiUsage || null,
+        region: region || null,
       }
     })
 
@@ -103,10 +105,11 @@ export async function POST(request: NextRequest) {
             <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
             <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
             <p style="margin: 10px 0;"><strong>Company:</strong> ${company}</p>
-            <p style="margin: 10px 0;"><strong>Role:</strong> ${role}</p>
-            ${teamSize ? `<p style="margin: 10px 0;"><strong>Team Size:</strong> ${teamSize}</p>` : ''}
-            ${topChallenge ? `<p style="margin: 10px 0;"><strong>Top Challenge:</strong> ${topChallenge}</p>` : ''}
-            ${meetingPlatforms ? `<p style="margin: 10px 0;"><strong>Meeting Platforms:</strong> ${meetingPlatforms}</p>` : ''}
+            <p style="margin: 10px 0;"><strong>Segment:</strong> ${role}</p>
+            ${region ? `<p style="margin: 10px 0;"><strong>Region:</strong> ${region}</p>` : ''}
+            ${topChallenge ? `<p style="margin: 10px 0;"><strong>What breaks:</strong> ${topChallenge}</p>` : ''}
+            ${meetingPlatforms ? `<p style="margin: 10px 0;"><strong>Channels:</strong> ${meetingPlatforms}</p>` : ''}
+            ${aiUsage ? `<p style="margin: 10px 0;"><strong>Uses AI agents:</strong> ${aiUsage}</p>` : ''}
           </div>
 
           <div style="margin: 20px 0;">

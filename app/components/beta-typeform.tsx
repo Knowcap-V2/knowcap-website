@@ -7,26 +7,42 @@ import Image from 'next/image'
 
 /* ─── Question definitions ─────────────────────────────────── */
 
-const CHALLENGES = [
-  'Decisions get made verbally and then forgotten',
-  'AI agents act on assumptions, not verified facts',
-  'No audit trail of what was agreed and by whom',
-  'Meeting follow-ups are scattered across emails and chats',
+const SEGMENTS = [
+  'Odoo / ERP implementation partner',
+  'Consulting, audit, or law firm',
+  'Regulated business (finance, health, edtech)',
+  'I build with AI agents',
+  'Agency / marketing',
+  'Something else',
 ]
 
-const PLATFORMS = [
-  'Zoom', 'Google Meet', 'Microsoft Teams', 'Slack Huddles',
-  'Phone Calls', 'In-Person', 'WhatsApp', 'Webex',
+const PAINS = [
+  'Scope creep — "we agreed X" but there\'s no record',
+  'Our AI agents act on assumptions, not verified facts',
+  'No audit trail of who agreed what, and when',
+  'Follow-ups scatter across email, WhatsApp, and chat',
 ]
 
-const TEAM_SIZES = ['Just me', '2–10', '11–50', '50+']
+const CHANNELS = [
+  'Meetings (Zoom / Meet / Teams)', 'WhatsApp', 'Phone calls',
+  'Email', 'Telegram', 'Inside Odoo / a CRM',
+]
+
+const AI_USAGE = [
+  'Yes — daily (Claude, ChatGPT, Cursor...)',
+  'Sometimes, still exploring',
+  'Not yet, but I want to',
+]
+
+const REGIONS = ['Egypt', 'Saudi Arabia', 'UAE', 'Elsewhere in MENA', 'Outside MENA']
 
 type Step =
   | 'welcome'
-  | 'challenge'
-  | 'platforms'
-  | 'role'
-  | 'teamSize'
+  | 'segment'
+  | 'pain'
+  | 'channels'
+  | 'aiUsage'
+  | 'region'
   | 'contact'
   | 'motivation'
   | 'consent'
@@ -45,17 +61,18 @@ const SOURCES = [
 const KEYS = 'ABCDEFGH'
 
 const STEP_ORDER: Step[] = [
-  'challenge', 'platforms', 'role', 'teamSize', 'contact', 'motivation', 'consent',
+  'segment', 'pain', 'channels', 'aiUsage', 'region', 'contact', 'motivation', 'consent',
 ]
 
 const STEP_LABELS: Record<Step, string> = {
   welcome: 'welcome',
-  challenge: 'What\'s your biggest challenge with meetings?',
-  platforms: 'Where do your team meetings happen?',
-  role: 'What is your job title?',
-  teamSize: 'How large is your team?',
+  segment: 'Which best describes your work?',
+  pain: 'When something gets "agreed" in a meeting or chat, what goes wrong?',
+  channels: 'Where do your important conversations actually live?',
+  aiUsage: 'Do you already run AI agents?',
+  region: 'Where\'s your team based?',
   contact: 'Share your contact details',
-  motivation: 'What do you hope to solve with Knowcap?',
+  motivation: 'What would make Knowcap a must-have for you?',
   consent: 'One last thing',
   success: 'success',
 }
@@ -288,7 +305,7 @@ function MotivationStep({
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-xl">
-      <QuestionLabel stepNum={stepNum} question="What do you hope to solve with Knowcap?" />
+      <QuestionLabel stepNum={stepNum} question="What would make Knowcap a must-have for you?" />
       <textarea
         ref={ref}
         value={value}
@@ -446,10 +463,11 @@ export default function BetaTypeform() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const [challenge, setChallenge] = useState('')
-  const [platforms, setPlatforms] = useState<string[]>([])
-  const [role, setRole] = useState('')
-  const [teamSize, setTeamSize] = useState('')
+  const [segment, setSegment] = useState('')
+  const [pain, setPain] = useState('')
+  const [channels, setChannels] = useState<string[]>([])
+  const [aiUsage, setAiUsage] = useState('')
+  const [region, setRegion] = useState('')
   const [contact, setContact] = useState({ name: '', email: '', company: '' })
   const [motivation, setMotivation] = useState('')
 
@@ -487,11 +505,12 @@ export default function BetaTypeform() {
           name: contact.name,
           email: contact.email,
           company: contact.company,
-          role,
+          role: segment,
           motivation,
-          teamSize,
-          topChallenge: challenge,
-          meetingPlatforms: platforms.join(', '),
+          topChallenge: pain,
+          meetingPlatforms: channels.join(', '),
+          aiUsage,
+          region,
         }),
       })
       const data = await res.json()
@@ -546,52 +565,62 @@ export default function BetaTypeform() {
           style={{ opacity: animating ? 0 : 1, transform: animating ? 'translateY(12px)' : 'translateY(0)' }}
         >
           {currentStep === 'welcome' && (
-            <WelcomeStep onStart={() => goTo('challenge')} />
+            <WelcomeStep onStart={() => goTo('segment')} />
           )}
-          {currentStep === 'challenge' && (
+          {currentStep === 'segment' && (
             <SingleChoice
               stepNum={1}
-              question="What's your biggest challenge with meetings?"
-              choices={CHALLENGES}
-              value={challenge}
-              onChange={setChallenge}
+              question={STEP_LABELS.segment}
+              choices={SEGMENTS}
+              value={segment}
+              onChange={setSegment}
               onNext={next}
             />
           )}
-          {currentStep === 'platforms' && (
-            <MultiChoice
+          {currentStep === 'pain' && (
+            <SingleChoice
               stepNum={2}
-              question="Where do your team meetings happen?"
-              hint="Select your top platforms"
-              choices={PLATFORMS}
-              value={platforms}
-              onChange={setPlatforms}
+              question={STEP_LABELS.pain}
+              choices={PAINS}
+              value={pain}
+              onChange={setPain}
               onNext={next}
             />
           )}
-          {currentStep === 'role' && (
-            <TextInput
+          {currentStep === 'channels' && (
+            <MultiChoice
               stepNum={3}
-              question="What is your job title?"
-              placeholder="e.g. CEO, Product Manager, Consultant"
-              value={role}
-              onChange={setRole}
+              question={STEP_LABELS.channels}
+              hint="Select all that apply"
+              choices={CHANNELS}
+              value={channels}
+              onChange={setChannels}
               onNext={next}
             />
           )}
-          {currentStep === 'teamSize' && (
+          {currentStep === 'aiUsage' && (
             <SingleChoice
               stepNum={4}
-              question="How large is your team?"
-              choices={TEAM_SIZES}
-              value={teamSize}
-              onChange={setTeamSize}
+              question={STEP_LABELS.aiUsage}
+              choices={AI_USAGE}
+              value={aiUsage}
+              onChange={setAiUsage}
+              onNext={next}
+            />
+          )}
+          {currentStep === 'region' && (
+            <SingleChoice
+              stepNum={5}
+              question={STEP_LABELS.region}
+              choices={REGIONS}
+              value={region}
+              onChange={setRegion}
               onNext={next}
             />
           )}
           {currentStep === 'contact' && (
             <ContactStep
-              stepNum={5}
+              stepNum={6}
               values={contact}
               onChange={(k, v) => setContact((c) => ({ ...c, [k]: v }))}
               onNext={next}
@@ -600,7 +629,7 @@ export default function BetaTypeform() {
           )}
           {currentStep === 'motivation' && (
             <MotivationStep
-              stepNum={6}
+              stepNum={7}
               value={motivation}
               onChange={setMotivation}
               onNext={next}
