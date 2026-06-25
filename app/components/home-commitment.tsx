@@ -17,8 +17,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ABTracker from '@/components/ab-tracker'
 
-const APP_URL = 'https://app.knowcap.ai'
-
 /* ---------------------------------------------------------------- styles */
 
 const CSS = `
@@ -535,7 +533,7 @@ function Header() {
           <Link className="cl-navlink" href="/contact-us">Contact</Link>
         </nav>
         <div className="cl-navauth">
-          <a className="cl-login" href={`${APP_URL}/login`}>Log in</a>
+          <a className="cl-login" href="/beta">Log in</a>
           <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join Beta</a>
         </div>
       </div>
@@ -1196,7 +1194,7 @@ function Footer() {
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
             <a href="/beta">Join Beta</a>
-            <a href={`${APP_URL}/login`}>Log in</a>
+            <a href="/beta">Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>
