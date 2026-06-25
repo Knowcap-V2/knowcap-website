@@ -9,15 +9,18 @@ datasource db {
 }
 
 model BetaApplication {
-    id          String   @id @default(cuid())
-    name        String
-    email       String
-    company     String
-    role        String
-    motivation  String   @db.Text
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    
+    id               String   @id @default(cuid())
+    name             String
+    email            String
+    company          String
+    role             String
+    motivation       String   @db.Text
+    teamSize         String?
+    topChallenge     String?
+    meetingPlatforms String?
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+
     @@index([email])
     @@index([createdAt])
 }

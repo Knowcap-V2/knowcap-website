@@ -51,7 +51,7 @@ async function sendEmail(to: string, subject: string, htmlBody: string) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, company, role, motivation } = body
+    const { name, email, company, role, motivation, teamSize, topChallenge, meetingPlatforms } = body
 
     // Validate required fields
     if (!name || !email || !company || !role || !motivation) {
@@ -77,7 +77,10 @@ export async function POST(request: NextRequest) {
         email,
         company,
         role,
-        motivation
+        motivation,
+        teamSize: teamSize || null,
+        topChallenge: topChallenge || null,
+        meetingPlatforms: meetingPlatforms || null,
       }
     })
 
@@ -101,10 +104,13 @@ export async function POST(request: NextRequest) {
             <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
             <p style="margin: 10px 0;"><strong>Company:</strong> ${company}</p>
             <p style="margin: 10px 0;"><strong>Role:</strong> ${role}</p>
+            ${teamSize ? `<p style="margin: 10px 0;"><strong>Team Size:</strong> ${teamSize}</p>` : ''}
+            ${topChallenge ? `<p style="margin: 10px 0;"><strong>Top Challenge:</strong> ${topChallenge}</p>` : ''}
+            ${meetingPlatforms ? `<p style="margin: 10px 0;"><strong>Meeting Platforms:</strong> ${meetingPlatforms}</p>` : ''}
           </div>
 
           <div style="margin: 20px 0;">
-            <h3 style="color: #005EFF;">What brings them to Knowcap:</h3>
+            <h3 style="color: #005EFF;">What they hope to solve with Knowcap:</h3>
             <p style="white-space: pre-wrap; line-height: 1.6;">${motivation}</p>
           </div>
 
