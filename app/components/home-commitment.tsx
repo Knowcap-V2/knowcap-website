@@ -536,7 +536,7 @@ function Header() {
         </nav>
         <div className="cl-navauth">
           <a className="cl-login" href={`${APP_URL}/login`}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href={`${APP_URL}/register`}>Get Started Free</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join Beta</a>
         </div>
       </div>
     </header>
@@ -727,7 +727,7 @@ function Hero() {
           </Reveal>
           <Reveal delay={280}>
             <div className="cl-cta-row">
-              <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
+              <a className="cl-btn cl-btn--solid" href="/beta">Join Beta</a>
               <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
             </div>
           </Reveal>
@@ -1021,7 +1021,7 @@ function Mcp() {
                 <a className="cl-btn cl-btn--solid" href="https://docs.knowcap.ai/#mcp-overview">
                   Connect Your Claude <span aria-hidden="true">→</span>
                 </a>
-                <a className="cl-btn cl-btn--ghost" href={`${APP_URL}/register`}>
+                <a className="cl-btn cl-btn--ghost" href="/beta">
                   Get your API key
                 </a>
               </div>
@@ -1143,7 +1143,7 @@ function Closer() {
               <p className="cl-closer-sub">Capture. Confirm. Let your agents act on verified facts.</p>
             </div>
             <div className="cl-closer-ctas">
-              <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
+              <a className="cl-btn cl-btn--solid" href="/beta">Join Beta</a>
               <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
             </div>
           </div>
@@ -1195,7 +1195,7 @@ function Footer() {
           </div>
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
-            <a href={`${APP_URL}/register`}>Get Started Free</a>
+            <a href="/beta">Join Beta</a>
             <a href={`${APP_URL}/login`}>Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
