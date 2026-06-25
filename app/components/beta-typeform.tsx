@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, ArrowRight, Loader2, ChevronUp, ChevronDown } from 'lucide-react'
+import { Check, ArrowRight, Loader2, ChevronUp, ChevronDown, Mic, Disc3, FileUp, Link2, Send, Clock } from 'lucide-react'
 import Image from 'next/image'
 
 /* ─── Question definitions ─────────────────────────────────── */
@@ -22,6 +22,7 @@ const PLATFORMS = [
 const TEAM_SIZES = ['Just me', '2–10', '11–50', '50+']
 
 type Step =
+  | 'welcome'
   | 'challenge'
   | 'platforms'
   | 'role'
@@ -31,11 +32,24 @@ type Step =
   | 'consent'
   | 'success'
 
+/* the five Knowcap capture sources shown as floating icons on the welcome screen */
+const SOURCES = [
+  { Icon: Mic, label: 'Meetings' },
+  { Icon: Disc3, label: 'Recordings' },
+  { Icon: FileUp, label: 'Uploads' },
+  { Icon: Link2, label: 'URLs' },
+  { Icon: Send, label: 'Telegram' },
+]
+
+/* letter key badges (kinso-style A/B/C shortcuts) */
+const KEYS = 'ABCDEFGH'
+
 const STEP_ORDER: Step[] = [
   'challenge', 'platforms', 'role', 'teamSize', 'contact', 'motivation', 'consent',
 ]
 
 const STEP_LABELS: Record<Step, string> = {
+  welcome: 'welcome',
   challenge: 'What\'s your biggest challenge with meetings?',
   platforms: 'Where do your team meetings happen?',
   role: 'What is your job title?',
@@ -73,18 +87,39 @@ function KeyHint({ label = 'press Enter' }: { label?: string }) {
 
 /* ─── Individual step renderers ────────────────────────────── */
 
+function KeyBadge({ k, active }: { k: string; active: boolean }) {
+  return (
+    <span className={`ml-auto w-5 h-5 rounded flex items-center justify-center flex-shrink-0 text-[11px] font-semibold transition-all ${
+      active ? 'bg-[#005EFF] text-white' : 'bg-gray-800 text-gray-500'
+    }`} style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+      {k}
+    </span>
+  )
+}
+
 function SingleChoice({
   stepNum, question, choices, value, onChange, onNext,
 }: {
   stepNum: number; question: string; choices: string[];
   value: string; onChange: (v: string) => void; onNext: () => void;
 }) {
+  /* kinso-style: A/B/C selects a choice, Enter advances */
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && value) { e.preventDefault(); onNext(); return }
+      const idx = KEYS.indexOf(e.key.toUpperCase())
+      if (idx >= 0 && idx < choices.length) { e.preventDefault(); onChange(choices[idx]) }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [choices, value, onChange, onNext])
+
   return (
     <div className="flex flex-col gap-6 w-full max-w-xl">
       <QuestionLabel stepNum={stepNum} question={question} />
       <p className="text-xs text-gray-500 -mt-4">Choose 1</p>
       <div className="flex flex-col gap-3">
-        {choices.map((c) => (
+        {choices.map((c, i) => (
           <button
             key={c}
             onClick={() => { onChange(c); }}
@@ -100,6 +135,7 @@ function SingleChoice({
               {value === c && <Check className="w-3 h-3 text-white" />}
             </span>
             {c}
+            <KeyBadge k={KEYS[i]} active={value === c} />
           </button>
         ))}
       </div>
@@ -118,20 +154,31 @@ function MultiChoice({
   hint?: string; max?: number; value: string[];
   onChange: (v: string[]) => void; onNext: () => void;
 }) {
-  const toggle = (c: string) => {
+  const toggle = useCallback((c: string) => {
     if (value.includes(c)) {
       onChange(value.filter((x) => x !== c))
     } else if (!max || value.length < max) {
       onChange([...value, c])
     }
-  }
+  }, [value, max, onChange])
+
+  /* kinso-style: A/B/C toggles a choice, Enter advances */
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && value.length > 0) { e.preventDefault(); onNext(); return }
+      const idx = KEYS.indexOf(e.key.toUpperCase())
+      if (idx >= 0 && idx < choices.length) { e.preventDefault(); toggle(choices[idx]) }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [choices, value, toggle, onNext])
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-xl">
       <QuestionLabel stepNum={stepNum} question={question} />
       {hint && <p className="text-xs text-gray-500 -mt-4">{hint}</p>}
       <div className="flex flex-col gap-3">
-        {choices.map((c) => (
+        {choices.map((c, i) => (
           <button
             key={c}
             onClick={() => toggle(c)}
@@ -147,6 +194,7 @@ function MultiChoice({
               {value.includes(c) && <Check className="w-3 h-3 text-white" />}
             </span>
             {c}
+            <KeyBadge k={KEYS[i]} active={value.includes(c)} />
           </button>
         ))}
       </div>
@@ -326,6 +374,58 @@ function SuccessStep() {
   )
 }
 
+function WelcomeStep({ onStart }: { onStart: () => void }) {
+  /* Enter starts the form (kinso-style) */
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Enter') { e.preventDefault(); onStart() } }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onStart])
+
+  return (
+    <div className="flex flex-col items-center text-center gap-7 w-full max-w-xl mx-auto">
+      {/* floating source icons */}
+      <div className="flex items-center justify-center gap-3 flex-wrap">
+        {SOURCES.map(({ Icon, label }, i) => (
+          <div
+            key={label}
+            title={label}
+            className="w-12 h-12 rounded-xl bg-gray-900 border border-gray-800 flex items-center justify-center text-[#005EFF] shadow-lg"
+            style={{ animation: `float 3s ease-in-out ${i * 0.2}s infinite` }}
+          >
+            <Icon className="w-5 h-5" />
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+          Apply for Knowcap Invite-Only Access
+        </h1>
+        <p className="text-gray-400 text-base leading-relaxed max-w-md mx-auto">
+          We&apos;re rolling out Knowcap gradually starting June 2026.
+          Join the queue for exclusive, invite-only access.
+        </p>
+      </div>
+
+      <div className="flex flex-col items-center gap-3">
+        <button
+          onClick={onStart}
+          className="flex items-center gap-2 px-7 py-3 rounded-lg font-semibold text-white text-sm transition-all hover:opacity-90 hover:scale-105"
+          style={{ backgroundColor: '#005EFF' }}
+        >
+          Start <ArrowRight className="w-4 h-4" />
+        </button>
+        <span className="flex items-center gap-1.5 text-xs text-gray-500">
+          <Clock className="w-3.5 h-3.5" /> Takes 30 sec
+        </span>
+      </div>
+
+      <style>{`@keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }`}</style>
+    </div>
+  )
+}
+
 function QuestionLabel({ stepNum, question }: { stepNum: number; question: string }) {
   return (
     <div className="flex items-start gap-3">
@@ -341,7 +441,7 @@ function QuestionLabel({ stepNum, question }: { stepNum: number; question: strin
 
 export default function BetaTypeform() {
   const router = useRouter()
-  const [currentStep, setCurrentStep] = useState<Step>('challenge')
+  const [currentStep, setCurrentStep] = useState<Step>('welcome')
   const [animating, setAnimating] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -422,7 +522,7 @@ export default function BetaTypeform() {
         <a href="https://knowcap.ai" className="flex items-center gap-2">
           <img src="/knowcap-logo.png" alt="Knowcap" className="h-7" />
         </a>
-        {currentStep !== 'success' && (
+        {currentStep !== 'success' && currentStep !== 'welcome' && (
           <span className="text-gray-500 text-sm">
             {stepIndex + 1} / {totalVisible}
           </span>
@@ -430,7 +530,7 @@ export default function BetaTypeform() {
       </div>
 
       {/* Progress bar */}
-      {currentStep !== 'success' && (
+      {currentStep !== 'success' && currentStep !== 'welcome' && (
         <div className="h-0.5 bg-gray-800 mx-0">
           <div
             className="h-full bg-[#005EFF] transition-all duration-500"
@@ -445,6 +545,9 @@ export default function BetaTypeform() {
           className="w-full transition-all duration-200"
           style={{ opacity: animating ? 0 : 1, transform: animating ? 'translateY(12px)' : 'translateY(0)' }}
         >
+          {currentStep === 'welcome' && (
+            <WelcomeStep onStart={() => goTo('challenge')} />
+          )}
           {currentStep === 'challenge' && (
             <SingleChoice
               stepNum={1}
@@ -511,7 +614,7 @@ export default function BetaTypeform() {
       </div>
 
       {/* Bottom nav (prev / next arrows) */}
-      {currentStep !== 'success' && (
+      {currentStep !== 'success' && currentStep !== 'welcome' && (
         <div className="flex items-center justify-end gap-2 px-8 py-4">
           {error && <span className="text-red-400 text-sm mr-auto">{error}</span>}
           <button
