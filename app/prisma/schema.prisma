@@ -18,6 +18,8 @@ model BetaApplication {
     teamSize         String?
     topChallenge     String?
     meetingPlatforms String?
+    aiUsage          String?
+    region           String?
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
 
