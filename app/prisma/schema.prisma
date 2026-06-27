@@ -20,6 +20,8 @@ model BetaApplication {
     meetingPlatforms String?
     aiUsage          String?
     region           String?
+    approvedAt       DateTime?
+    approvedBy       String?
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
 
