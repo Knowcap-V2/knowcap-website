@@ -16,10 +16,12 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import ABTracker from '@/components/ab-tracker'
+import IngestionGlobe from '@/components/ingestion-globe'
 
 /* ---------------------------------------------------------------- styles */
 
 const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 /* Fraunces now loads via next/font (self-hosted + preloaded, see app/layout.tsx) — removed from this render-blocking @import. Inter + JetBrains Mono stay (referenced by literal family name below). */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap');
 
@@ -28,6 +30,7 @@ const CSS = `
   --ink:#18181B; --ink-soft:#2A2A2F; --sec:#4A4F5A;
   --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#7ED39B;
   --amber:#B07C28;
+  --disp:'Space Grotesk',system-ui,sans-serif;
   --disp:var(--font-fraunces),'Fraunces',Georgia,serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --mono:'JetBrains Mono','SFMono-Regular',monospace;
@@ -454,6 +457,29 @@ const CSS = `
 .cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
   color:rgba(251,250,248,.55)}
+
+/* ===== globe hero — faithful port of globe-prototype.html (headline overlay) ===== */
+.cl-header{border-top:0 !important}
+.cl-brand{font-family:'Space Grotesk',sans-serif !important;font-variation-settings:normal !important;font-weight:700;letter-spacing:-.02em}
+.cl-navauth .cl-btn,.clh-cta .cl-btn{border-radius:999px}
+@media(max-width:900px){.cl-navlinks{display:none}}
+.clh-hero{position:relative;height:calc(100vh - 64px);min-height:760px;overflow:hidden;
+  background:radial-gradient(circle at 50% 58%,#fff 0%,var(--cream) 78%)}
+.clh-head{position:absolute;left:0;right:0;top:84px;z-index:4;text-align:center;padding:0 20px;pointer-events:none}
+.clh-eye{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--green);margin-bottom:10px}
+.clh-h1{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em;line-height:1.04;
+  font-size:clamp(28px,4.2vw,46px);color:var(--ink);margin:0}
+.clh-h1 .clh-em{color:var(--green)}
+.clh-sub{margin:12px auto 0;color:var(--sec);font-size:clamp(14px,1.7vw,16.5px);font-weight:500;max-width:52ch}
+.clh-cta{margin-top:18px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center}
+@media(max-width:640px){
+  .clh-hero{height:auto;min-height:0;padding:84px 0 24px}
+  .clh-head{position:static;padding:0 18px}
+  .clh-h1{font-size:clamp(26px,7vw,36px)}
+  .clh-sub{font-size:14px;max-width:42ch}
+  .clh-cta{display:flex}
+}
 `
 
 /* ------------------------------------------------------------- utilities */
@@ -696,6 +722,21 @@ function RotatingSource() {
 
 function Hero() {
   return (
+    <section className="clh-hero">
+      <div className="clh-head">
+        <Reveal>
+          <p className="clh-eye">Verified memory for your AI agents</p>
+          <h1 className="clh-h1">
+            Your company says a lot.<br />
+            Knowcap remembers <span className="clh-em">what matters</span>.
+          </h1>
+        </Reveal>
+        <Reveal delay={120}>
+          <p className="clh-sub">
+            Not another note-taker. The verified memory your agents &mdash; and your
+            clients &mdash; can actually trust.
+          </p>
+        </Reveal>
     <section className="cl-hero">
       <div className="cl-wrap">
         <div className="cl-hero-main">
@@ -747,9 +788,13 @@ function Hero() {
         </div>
 
         <Reveal delay={200}>
-          <AppWindow />
+          <div className="clh-cta">
+            <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
+            <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
+          </div>
         </Reveal>
       </div>
+      <IngestionGlobe />
     </section>
   )
 }
