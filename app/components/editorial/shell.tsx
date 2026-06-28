@@ -17,14 +17,14 @@ import Link from 'next/link'
 const APP_URL = 'https://app.knowcap.ai'
 
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 .cl-root{
   --cream:#FBFAF8; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
   --ink:#18181B; --ink-soft:#2A2A2F; --sec:#4A4F5A;
   --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#7ED39B;
   --amber:#B07C28;
-  --disp:'Fraunces',Georgia,serif;
+  --disp:'Space Grotesk',system-ui,sans-serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --mono:'JetBrains Mono','SFMono-Regular',monospace;
   background:var(--cream); color:var(--ink); font-family:var(--body);
