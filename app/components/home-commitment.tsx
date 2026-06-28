@@ -21,9 +21,8 @@ import IngestionGlobe from '@/components/ingestion-globe'
 /* ---------------------------------------------------------------- styles */
 
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-/* Fraunces now loads via next/font (self-hosted + preloaded, see app/layout.tsx) — removed from this render-blocking @import. Inter + JetBrains Mono stay (referenced by literal family name below). */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap');
+/* Fraunces loads via next/font (app/layout.tsx). Homepage display is Space Grotesk; Inter + JetBrains Mono + Space Grotesk by literal family below. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 .cl-root{
   --cream:#FBFAF8; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
@@ -31,7 +30,6 @@ const CSS = `
   --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#7ED39B;
   --amber:#B07C28;
   --disp:'Space Grotesk',system-ui,sans-serif;
-  --disp:var(--font-fraunces),'Fraunces',Georgia,serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --mono:'JetBrains Mono','SFMono-Regular',monospace;
   background:var(--cream); color:var(--ink); font-family:var(--body);
@@ -737,59 +735,9 @@ function Hero() {
             clients &mdash; can actually trust.
           </p>
         </Reveal>
-    <section className="cl-hero">
-      <div className="cl-wrap">
-        <div className="cl-hero-main">
-          <Reveal>
-            <p className="cl-kicker">Knowcap <span className="cl-kdot">·</span> Verified work intelligence</p>
-            <h1 className="cl-h1">
-              Knowcap turns every <RotatingSource /><br />
-              into verified facts your agents can <em>act on</em>.
-            </h1>
-          </Reveal>
-          <Reveal delay={120}>
-            <p className="cl-sub">
-              Your <b>meetings, messages &amp; recordings</b> hold the commitments, decisions, and
-              risks that run the business — Meet, screen recordings, Telegram, WhatsApp, Slack,
-              and email. Knowcap extracts them, a named human confirms each one, and your AI agents
-              act on what&rsquo;s verified — never on a guess.
-            </p>
-          </Reveal>
-          <Reveal delay={200}>
-            <div className="cl-doctrine">
-              <span className="cl-kicker">Doctrine</span>
-              <blockquote>
-                Organizations aren&rsquo;t hierarchies. They&rsquo;re webs of commitments.{' '}
-                <span className="cl-said-true">Knowcap makes sure they&rsquo;re kept.</span>
-              </blockquote>
-            </div>
-          </Reveal>
-          <Reveal delay={280}>
-            <div className="cl-cta-row">
-              <a className="cl-btn cl-btn--solid" href="/beta">Join Beta</a>
-              <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
-            </div>
-          </Reveal>
-          <Reveal delay={360}>
-            <div className="cl-trust">
-              <span>Built by an Odoo partner</span>
-              <span className="cl-sep" aria-hidden="true">·</span>
-              <span>MCP-native</span>
-              <span className="cl-sep" aria-hidden="true">·</span>
-              <span>Full audit trail on every action</span>
-            </div>
-            <div className="cl-trust cl-trust--2">
-              <span>Captures Meet · recordings · screen recordings · documents · URLs · Telegram</span>
-            </div>
-            <div className="cl-trust cl-trust--2 cl-trust--privacy">
-              <span>Your data stays yours · never used to train models · built for Saudi PDPL &amp; GDPR Article&nbsp;22</span>
-            </div>
-          </Reveal>
-        </div>
-
         <Reveal delay={200}>
           <div className="clh-cta">
-            <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
+            <a className="cl-btn cl-btn--solid" href="/beta">Get Started Free</a>
             <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
           </div>
         </Reveal>
