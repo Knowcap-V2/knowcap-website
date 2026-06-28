@@ -16,13 +16,14 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import ABTracker from '@/components/ab-tracker'
+import IngestionGlobe from '@/components/ingestion-globe'
 
 const APP_URL = 'https://app.knowcap.ai'
 
 /* ---------------------------------------------------------------- styles */
 
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 .cl-root{
   --cream:#FBFAF8; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
@@ -455,6 +456,37 @@ const CSS = `
 .cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
   color:rgba(251,250,248,.55)}
+
+/* ===== globe hero (V7) — example layout: centred headline + ingestion globe ===== */
+.cl-header{border-top:0 !important}
+.cl-brand{font-family:'Space Grotesk',sans-serif !important;font-variation-settings:normal !important;font-weight:700;letter-spacing:-.02em}
+.cl-navauth .cl-btn,.clh-cta .cl-btn{border-radius:999px}
+.clh-hero{padding:150px 0 0;text-align:center;overflow:hidden;
+  background:radial-gradient(circle at 50% 30%,#fff 0%,var(--cream) 70%)}
+@media(max-width:720px){.clh-hero{padding:112px 0 0}}
+.clh-eye{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--sec)}
+.clh-eye .clh-d{color:var(--green)}
+.clh-h1{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.025em;
+  line-height:1.06;font-size:clamp(2.3rem,5.2vw,3.9rem);margin:18px auto 0;max-width:20ch}
+.clh-h1,.clh-h1 em,.clh-h1 .cl-rot,.clh-h1 .cl-rot-w,.clh-h1 .cl-rot-ghost{
+  font-family:'Space Grotesk',sans-serif !important;font-variation-settings:normal !important}
+.clh-h1 em{font-style:italic;color:var(--green)}
+.clh-h1 .cl-rot{font-style:italic;font-weight:600}
+.clh-sub{margin:22px auto 0;max-width:60ch;font-size:clamp(15px,1.7vw,17.5px);
+  color:var(--sec);line-height:1.65}
+.clh-sub b{color:var(--ink);font-weight:600}
+.clh-cta{margin-top:26px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.clh-strip{border-top:1px solid var(--border);background:var(--white);margin-top:52px}
+.clh-strip-in{display:grid;grid-template-columns:110px 1fr;gap:30px;align-items:baseline;padding:22px 0}
+@media(max-width:760px){.clh-strip-in{grid-template-columns:1fr;gap:10px}}
+.clh-strip blockquote{font-family:var(--mono);font-size:clamp(.95rem,1.7vw,1.15rem);
+  line-height:1.55;color:var(--ink);font-weight:400}
+.clh-strip blockquote .cl-said-true{color:var(--green)}
+.clh-trust{border-top:1px solid var(--border);font-family:var(--mono);font-size:12px;
+  color:var(--sec);padding:14px 0;display:flex;flex-wrap:wrap}
+.clh-trust .cl-sep{color:var(--border-2);padding:0 14px}
+.clh-trust .clh-pv{color:var(--green-deep)}
 `
 
 /* ------------------------------------------------------------- utilities */
@@ -697,59 +729,55 @@ function RotatingSource() {
 
 function Hero() {
   return (
-    <section className="cl-hero">
+    <section className="clh-hero">
       <div className="cl-wrap">
-        <div className="cl-hero-main">
-          <Reveal>
-            <p className="cl-kicker">Knowcap <span className="cl-kdot">·</span> Verified work intelligence</p>
-            <h1 className="cl-h1">
-              Knowcap turns every <RotatingSource /><br />
-              into verified facts your agents can <em>act on</em>.
-            </h1>
-          </Reveal>
-          <Reveal delay={120}>
-            <p className="cl-sub">
-              Your <b>meetings, messages &amp; recordings</b> hold the commitments, decisions, and
-              risks that run the business — Meet, screen recordings, Telegram, WhatsApp, Slack,
-              and email. Knowcap extracts them, a named human confirms each one, and your AI agents
-              act on what&rsquo;s verified — never on a guess.
-            </p>
-          </Reveal>
-          <Reveal delay={200}>
-            <div className="cl-doctrine">
-              <span className="cl-kicker">Doctrine</span>
-              <blockquote>
-                Organizations aren&rsquo;t hierarchies. They&rsquo;re webs of commitments.{' '}
-                <span className="cl-said-true">Knowcap makes sure they&rsquo;re kept.</span>
-              </blockquote>
-            </div>
-          </Reveal>
-          <Reveal delay={280}>
-            <div className="cl-cta-row">
-              <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
-              <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
-            </div>
-          </Reveal>
-          <Reveal delay={360}>
-            <div className="cl-trust">
-              <span>Built by an Odoo partner</span>
-              <span className="cl-sep" aria-hidden="true">·</span>
-              <span>MCP-native</span>
-              <span className="cl-sep" aria-hidden="true">·</span>
-              <span>Full audit trail on every action</span>
-            </div>
-            <div className="cl-trust cl-trust--2">
-              <span>Captures Meet · recordings · screen recordings · documents · URLs · Telegram</span>
-            </div>
-            <div className="cl-trust cl-trust--2 cl-trust--privacy">
-              <span>Your data stays yours · never used to train models · built for Saudi PDPL &amp; GDPR Article&nbsp;22</span>
-            </div>
-          </Reveal>
-        </div>
-
-        <Reveal delay={200}>
-          <AppWindow />
+        <Reveal>
+          <p className="clh-eye">Knowcap <span className="clh-d">·</span> Verified work intelligence</p>
+          <h1 className="clh-h1">
+            Knowcap turns every <RotatingSource /><br />
+            into verified facts your agents can <em>act on</em>.
+          </h1>
         </Reveal>
+        <Reveal delay={120}>
+          <p className="clh-sub">
+            Your <b>meetings, messages &amp; recordings</b> hold the commitments, decisions, and
+            risks that run the business. Knowcap extracts them, a named human confirms each one,
+            and your AI agents act on what&rsquo;s verified — never on a guess.
+          </p>
+        </Reveal>
+        <Reveal delay={200}>
+          <div className="clh-cta">
+            <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
+            <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
+          </div>
+        </Reveal>
+      </div>
+
+      <div className="cl-wrap">
+        <Reveal delay={260}>
+          <IngestionGlobe />
+        </Reveal>
+      </div>
+
+      <div className="clh-strip">
+        <div className="cl-wrap">
+          <div className="clh-strip-in">
+            <span className="cl-kicker">Doctrine</span>
+            <blockquote>
+              Organizations aren&rsquo;t hierarchies. They&rsquo;re webs of commitments.{' '}
+              <span className="cl-said-true">Knowcap makes sure they&rsquo;re kept.</span>
+            </blockquote>
+          </div>
+          <div className="clh-trust">
+            <span>Built by an Odoo partner</span>
+            <span className="cl-sep" aria-hidden="true">·</span>
+            <span>MCP-native</span>
+            <span className="cl-sep" aria-hidden="true">·</span>
+            <span>Full audit trail on every action</span>
+            <span className="cl-sep" aria-hidden="true">·</span>
+            <span className="clh-pv">Your data stays yours — never used to train models</span>
+          </div>
+        </div>
       </div>
     </section>
   )
