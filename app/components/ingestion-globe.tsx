@@ -12,7 +12,7 @@
 import { useEffect, useRef } from 'react'
 
 const CSS = `
-.ig-flow{position:relative;height:720px;margin-top:34px;
+.ig-flow{position:relative;height:760px;margin-top:34px;
   --ink1:#18181B;--ink2:#4A4F5A;--ink3:#8A8F99;--cream:#FBFAF8;--border:#E7E4DD;--green:#1F6B3A;
   font-family:'Space Grotesk',system-ui,sans-serif}
 @media(max-width:900px){.ig-flow{height:560px}}
@@ -34,7 +34,7 @@ const CSS = `
 .ig-story .ig-sd{width:8px;height:8px;border-radius:50%;margin-right:8px;display:inline-block}
 .ig-stage{position:absolute;z-index:2;transform:translate(-50%,0);font:700 10.5px 'Space Grotesk',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
 .ig-stage b{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:var(--green);color:#fff;font:700 9px 'JetBrains Mono',monospace;margin-right:6px;vertical-align:middle}
-.ig-legend{position:absolute;left:0;bottom:6px;z-index:3;display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--ink2);background:rgba(255,255,255,.7);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.ig-legend{position:absolute;left:24px;bottom:6px;z-index:3;display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--ink2);background:rgba(255,255,255,.7);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:10px;padding:8px 12px}
 .ig-legend .ig-chip{display:inline-flex;align-items:center;gap:6px;font-weight:600}
 .ig-legend .ig-ld{width:9px;height:9px;border-radius:50%}
 `
@@ -94,8 +94,8 @@ export default function IngestionGlobe() {
     let W = 0, H = 0, DPR = 1
     function layout() {
       DPR = Math.min(2, window.devicePixelRatio || 1); const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
-      const top = H * 0.15, bot = H * 0.86, bh = bot - top; GX = W * 0.44; GY = top + bh * 0.50; GR = Math.min(W * 0.205, bh * 0.46)
-      HX = W * 0.69; HY = GY; const lx = W * 0.10, rx = W * 0.90
+      const top = H * 0.14, bot = H * 0.90, bh = bot - top; GX = W * 0.42; GY = top + bh * 0.50; GR = Math.min(W * 0.20, bh * 0.52)
+      HX = W * 0.68; HY = GY; const lx = W * 0.07, rx = W * 0.93
       srcA.forEach((o, i) => { const y = top + bh * ((i + 0.5) / SOURCES.length); o.x = lx; o.y = y; o.el.style.left = lx + 'px'; o.el.style.top = y + 'px' })
       agA.forEach((o, i) => { const y = top + bh * ((i + 0.5) / AGENTS.length); o.x = rx; o.y = y; o.el.style.left = rx + 'px'; o.el.style.top = y + 'px' })
       const hu = $('.ig-human'); if (hu) { hu.style.left = HX + 'px'; hu.style.top = HY + 'px' }

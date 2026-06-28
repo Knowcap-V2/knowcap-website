@@ -468,7 +468,9 @@ const CSS = `
   text-transform:uppercase;color:var(--sec)}
 .clh-eye .clh-d{color:var(--green)}
 .clh-h1{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.025em;
-  line-height:1.06;font-size:clamp(2.3rem,5.2vw,3.9rem);margin:18px auto 0;max-width:20ch}
+  line-height:1.05;font-size:clamp(2.6rem,5.8vw,4.6rem);margin:18px auto 0;max-width:26ch}
+.clh-flow-bleed{width:100%;padding:0 28px}
+@media(max-width:720px){.clh-flow-bleed{padding:0 8px}}
 .clh-h1,.clh-h1 em,.clh-h1 .cl-rot,.clh-h1 .cl-rot-w,.clh-h1 .cl-rot-ghost{
   font-family:'Space Grotesk',sans-serif !important;font-variation-settings:normal !important}
 .clh-h1 em{font-style:italic;color:var(--green)}
@@ -752,7 +754,7 @@ function Hero() {
         </Reveal>
       </div>
 
-      <div className="cl-wrap">
+      <div className="clh-flow-bleed">
         <Reveal delay={260}>
           <IngestionGlobe />
         </Reveal>
