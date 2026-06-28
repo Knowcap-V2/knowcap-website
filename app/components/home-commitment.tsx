@@ -734,15 +734,14 @@ function Hero() {
         <Reveal>
           <p className="clh-eye">Knowcap <span className="clh-d">·</span> Verified work intelligence</p>
           <h1 className="clh-h1">
-            Knowcap turns every <RotatingSource /><br />
-            into verified facts your agents can <em>act on</em>.
+            Your company says a lot.<br />
+            Knowcap remembers <em>what matters</em>.
           </h1>
         </Reveal>
         <Reveal delay={120}>
           <p className="clh-sub">
-            Your <b>meetings, messages &amp; recordings</b> hold the commitments, decisions, and
-            risks that run the business. Knowcap extracts them, a named human confirms each one,
-            and your AI agents act on what&rsquo;s verified — never on a guess.
+            Not another note-taker. The <b>verified memory</b> your agents &mdash; and your
+            clients &mdash; can actually trust.
           </p>
         </Reveal>
         <Reveal delay={200}>
