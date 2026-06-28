@@ -85,7 +85,7 @@ function OkButton({ onClick, disabled, loading }: { onClick: () => void; disable
       onClick={onClick}
       disabled={disabled || loading}
       className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-all"
-      style={{ backgroundColor: disabled ? '#334155' : '#005EFF', cursor: disabled ? 'not-allowed' : 'pointer' }}
+      style={{ backgroundColor: disabled ? '#334155' : '#1F6B3A', cursor: disabled ? 'not-allowed' : 'pointer' }}
     >
       {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : (
         <>
@@ -107,7 +107,7 @@ function KeyHint({ label = 'press Enter' }: { label?: string }) {
 function KeyBadge({ k, active }: { k: string; active: boolean }) {
   return (
     <span className={`ml-auto w-5 h-5 rounded flex items-center justify-center flex-shrink-0 text-[11px] font-semibold transition-all ${
-      active ? 'bg-[#005EFF] text-white' : 'bg-gray-800 text-gray-500'
+      active ? 'bg-[#1F6B3A] text-white' : 'bg-gray-800 text-gray-500'
     }`} style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
       {k}
     </span>
@@ -142,12 +142,12 @@ function SingleChoice({
             onClick={() => { onChange(c); }}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg border text-left text-sm transition-all ${
               value === c
-                ? 'border-[#005EFF] bg-[#005EFF]/10 text-white'
+                ? 'border-[#1F6B3A] bg-[#1F6B3A]/10 text-white'
                 : 'border-gray-700 text-gray-300 hover:border-gray-500'
             }`}
           >
             <span className={`w-5 h-5 rounded border flex items-center justify-center flex-shrink-0 transition-all ${
-              value === c ? 'bg-[#005EFF] border-[#005EFF]' : 'border-gray-600'
+              value === c ? 'bg-[#1F6B3A] border-[#1F6B3A]' : 'border-gray-600'
             }`}>
               {value === c && <Check className="w-3 h-3 text-white" />}
             </span>
@@ -201,12 +201,12 @@ function MultiChoice({
             onClick={() => toggle(c)}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg border text-left text-sm transition-all ${
               value.includes(c)
-                ? 'border-[#005EFF] bg-[#005EFF]/10 text-white'
+                ? 'border-[#1F6B3A] bg-[#1F6B3A]/10 text-white'
                 : 'border-gray-700 text-gray-300 hover:border-gray-500'
             }`}
           >
             <span className={`w-5 h-5 rounded border flex items-center justify-center flex-shrink-0 transition-all ${
-              value.includes(c) ? 'bg-[#005EFF] border-[#005EFF]' : 'border-gray-600'
+              value.includes(c) ? 'bg-[#1F6B3A] border-[#1F6B3A]' : 'border-gray-600'
             }`}>
               {value.includes(c) && <Check className="w-3 h-3 text-white" />}
             </span>
@@ -238,7 +238,7 @@ function TextInput({
   return (
     <div className="flex flex-col gap-6 w-full max-w-xl">
       <QuestionLabel stepNum={stepNum} question={question} />
-      <div className="border-b border-gray-600 focus-within:border-[#005EFF] transition-colors">
+      <div className="border-b border-gray-600 focus-within:border-[#1F6B3A] transition-colors">
         <input
           ref={inputRef}
           type="text"
@@ -276,7 +276,7 @@ function ContactStep({
       <QuestionLabel stepNum={stepNum} question="Share your contact details" />
       <p className="text-xs text-gray-500 -mt-4">So we can reach you when your spot opens</p>
       {(['name', 'email', 'company'] as const).map((field, i) => (
-        <div key={field} className="border-b border-gray-600 focus-within:border-[#005EFF] transition-colors">
+        <div key={field} className="border-b border-gray-600 focus-within:border-[#1F6B3A] transition-colors">
           <input
             ref={field === 'name' ? nameRef : undefined}
             type={field === 'email' ? 'email' : 'text'}
@@ -312,7 +312,7 @@ function MotivationStep({
         onChange={(e) => onChange(e.target.value)}
         placeholder="Tell us about your meeting challenges, what you're building, or what you hope to achieve..."
         rows={4}
-        className="w-full bg-transparent border border-gray-700 focus:border-[#005EFF] rounded-lg text-white p-3 outline-none placeholder:text-gray-600 resize-none transition-colors text-sm"
+        className="w-full bg-transparent border border-gray-700 focus:border-[#1F6B3A] rounded-lg text-white p-3 outline-none placeholder:text-gray-600 resize-none transition-colors text-sm"
       />
       <div className="flex items-center">
         <OkButton onClick={onNext} disabled={!value.trim()} />
@@ -343,12 +343,12 @@ function ConsentStep({ onSubmit, loading }: { onSubmit: () => void; loading: boo
             onClick={() => setAccepted(opt === 'I accept')}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg border text-left text-sm transition-all ${
               (opt === 'I accept' ? accepted : !accepted && accepted !== undefined)
-                ? 'border-[#005EFF] bg-[#005EFF]/10 text-white'
+                ? 'border-[#1F6B3A] bg-[#1F6B3A]/10 text-white'
                 : 'border-gray-700 text-gray-300 hover:border-gray-500'
             }`}
           >
             <span className={`w-5 h-5 rounded border flex items-center justify-center flex-shrink-0 ${
-              (opt === 'I accept' && accepted) ? 'bg-[#005EFF] border-[#005EFF]' : 'border-gray-600'
+              (opt === 'I accept' && accepted) ? 'bg-[#1F6B3A] border-[#1F6B3A]' : 'border-gray-600'
             }`}>
               {opt === 'I accept' && accepted && <Check className="w-3 h-3 text-white" />}
             </span>
@@ -360,7 +360,7 @@ function ConsentStep({ onSubmit, loading }: { onSubmit: () => void; loading: boo
         onClick={onSubmit}
         disabled={!accepted || loading}
         className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white text-sm transition-all w-40"
-        style={{ backgroundColor: !accepted || loading ? '#334155' : '#005EFF', cursor: !accepted || loading ? 'not-allowed' : 'pointer' }}
+        style={{ backgroundColor: !accepted || loading ? '#334155' : '#1F6B3A', cursor: !accepted || loading ? 'not-allowed' : 'pointer' }}
       >
         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Submit'}
       </button>
@@ -383,7 +383,7 @@ function SuccessStep() {
       <a
         href="https://knowcap.ai"
         className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white text-sm transition-all hover:opacity-90"
-        style={{ backgroundColor: '#005EFF' }}
+        style={{ backgroundColor: '#1F6B3A' }}
       >
         Explore Knowcap <ArrowRight className="w-4 h-4" />
       </a>
@@ -407,7 +407,7 @@ function WelcomeStep({ onStart }: { onStart: () => void }) {
           <div
             key={label}
             title={label}
-            className="w-12 h-12 rounded-xl bg-gray-900 border border-gray-800 flex items-center justify-center text-[#005EFF] shadow-lg"
+            className="w-12 h-12 rounded-xl bg-gray-900 border border-gray-800 flex items-center justify-center text-[#1F6B3A] shadow-lg"
             style={{ animation: `float 3s ease-in-out ${i * 0.2}s infinite` }}
           >
             <Icon className="w-5 h-5" />
@@ -429,7 +429,7 @@ function WelcomeStep({ onStart }: { onStart: () => void }) {
         <button
           onClick={onStart}
           className="flex items-center gap-2 px-7 py-3 rounded-lg font-semibold text-white text-sm transition-all hover:opacity-90 hover:scale-105"
-          style={{ backgroundColor: '#005EFF' }}
+          style={{ backgroundColor: '#1F6B3A' }}
         >
           Start <ArrowRight className="w-4 h-4" />
         </button>
@@ -446,9 +446,9 @@ function WelcomeStep({ onStart }: { onStart: () => void }) {
 function QuestionLabel({ stepNum, question }: { stepNum: number; question: string }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="text-[#005EFF] text-sm font-semibold mt-1 flex-shrink-0">{stepNum}</span>
+      <span className="text-[#1F6B3A] text-sm font-semibold mt-1 flex-shrink-0">{stepNum}</span>
       <p className="text-xl font-semibold text-white leading-snug" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-        {question} <span className="text-[#005EFF]">*</span>
+        {question} <span className="text-[#1F6B3A]">*</span>
       </p>
     </div>
   )
@@ -552,7 +552,7 @@ export default function BetaTypeform() {
       {currentStep !== 'success' && currentStep !== 'welcome' && (
         <div className="h-0.5 bg-gray-800 mx-0">
           <div
-            className="h-full bg-[#005EFF] transition-all duration-500"
+            className="h-full bg-[#1F6B3A] transition-all duration-500"
             style={{ width: `${progress}%` }}
           />
         </div>
