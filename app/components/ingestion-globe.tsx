@@ -18,7 +18,9 @@ const CSS = `
 .ig-flow canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
 .ig-tile{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;transform:translate(-50%,-50%);width:84px;pointer-events:none}
 .ig-tile .ig-ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;box-shadow:0 5px 14px rgba(24,24,27,.12)}
-.ig-tile .ig-ico img{width:24px;height:24px;display:block;filter:brightness(0) invert(1)}
+.ig-tile .ig-ico img{width:27px;height:27px;display:block}
+.ig-tile:not(.ig-agent) .ig-ico{background:#fff;border:1px solid var(--border)}
+.ig-tile:not(.ig-agent) .ig-nm{display:none}
 .ig-tile .ig-nm{font:600 11px 'Space Grotesk',sans-serif;color:var(--ink2);text-align:center;white-space:nowrap}
 .ig-tile.ig-agent .ig-ico{font-size:18px;border:1px solid var(--border)}
 .ig-human{position:absolute;z-index:2;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}
@@ -94,7 +96,7 @@ export default function IngestionGlobe() {
     function hexa(h: string, a: number) { const n = parseInt(h.slice(1), 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')' }
     function buildTiles() {
       tilesEl.innerHTML = ''; srcA = []; agA = []
-      SOURCES.forEach(s => { const el = document.createElement('div'); el.className = 'ig-tile'; el.innerHTML = `<div class="ig-ico" style="background:${s.c}"><img src="/globe-icons/${s.f}" alt=""></div><div class="ig-nm">${s.n}</div>`; tilesEl.appendChild(el); srcA.push({ el, ty: s.ty }) })
+      SOURCES.forEach(s => { const el = document.createElement('div'); el.className = 'ig-tile'; el.innerHTML = `<div class="ig-ico"><img src="/globe-icons/${s.f}" alt="${s.n}"></div><div class="ig-nm">${s.n}</div>`; tilesEl.appendChild(el); srcA.push({ el, ty: s.ty }) })
       AGENTS.forEach(a => { const c = TYPES[a.ty].c; const el = document.createElement('div'); el.className = 'ig-tile ig-agent'; el.innerHTML = `<div class="ig-ico" style="background:${hexa(c, 0.12)};color:${c};border-color:${hexa(c, 0.35)}">${a.e}</div><div class="ig-nm">${a.n}</div>`; tilesEl.appendChild(el); agA.push({ el, ty: a.ty }) })
       const hu = document.createElement('div'); hu.className = 'ig-human'; hu.dataset.h = '1'; hu.innerHTML = `<div class="ig-avs">${HUMANS.map(h => `<span class="ig-av" style="background:${h.c}">${h.i}</span>`).join('')}</div><div class="ig-lab">You + team</div><div class="ig-sub">Approve</div>`; tilesEl.appendChild(hu)
       const cap = document.createElement('div'); cap.className = 'ig-gcap'; cap.dataset.cap = '1'; cap.innerHTML = 'Knowledge layer · <b>decisions · tasks · commitments · risks · notes</b>'; tilesEl.appendChild(cap)
