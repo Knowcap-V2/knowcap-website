@@ -457,38 +457,20 @@ const CSS = `
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
   color:rgba(251,250,248,.55)}
 
-/* ===== globe hero (V7) — example layout: centred headline + ingestion globe ===== */
+/* ===== globe hero — faithful port of globe-prototype.html (headline overlay) ===== */
 .cl-header{border-top:0 !important}
 .cl-brand{font-family:'Space Grotesk',sans-serif !important;font-variation-settings:normal !important;font-weight:700;letter-spacing:-.02em}
 .cl-navauth .cl-btn,.clh-cta .cl-btn{border-radius:999px}
-.clh-hero{padding:150px 0 0;text-align:center;overflow:hidden;
-  background:radial-gradient(circle at 50% 30%,#fff 0%,var(--cream) 70%)}
-@media(max-width:720px){.clh-hero{padding:112px 0 0}}
-.clh-eye{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--sec)}
-.clh-eye .clh-d{color:var(--green)}
-.clh-h1{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.025em;
-  line-height:1.05;font-size:clamp(2.6rem,5.8vw,4.6rem);margin:18px auto 0;max-width:26ch}
-.clh-flow-bleed{width:100%;padding:0 28px}
-@media(max-width:720px){.clh-flow-bleed{padding:0 8px}}
-.clh-h1,.clh-h1 em,.clh-h1 .cl-rot,.clh-h1 .cl-rot-w,.clh-h1 .cl-rot-ghost{
-  font-family:'Space Grotesk',sans-serif !important;font-variation-settings:normal !important}
-.clh-h1 em{font-style:italic;color:var(--green)}
-.clh-h1 .cl-rot{font-style:italic;font-weight:600}
-.clh-sub{margin:22px auto 0;max-width:60ch;font-size:clamp(15px,1.7vw,17.5px);
-  color:var(--sec);line-height:1.65}
-.clh-sub b{color:var(--ink);font-weight:600}
-.clh-cta{margin-top:26px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.clh-strip{border-top:1px solid var(--border);background:var(--white);margin-top:52px}
-.clh-strip-in{display:grid;grid-template-columns:110px 1fr;gap:30px;align-items:baseline;padding:22px 0}
-@media(max-width:760px){.clh-strip-in{grid-template-columns:1fr;gap:10px}}
-.clh-strip blockquote{font-family:var(--mono);font-size:clamp(.95rem,1.7vw,1.15rem);
-  line-height:1.55;color:var(--ink);font-weight:400}
-.clh-strip blockquote .cl-said-true{color:var(--green)}
-.clh-trust{border-top:1px solid var(--border);font-family:var(--mono);font-size:12px;
-  color:var(--sec);padding:14px 0;display:flex;flex-wrap:wrap}
-.clh-trust .cl-sep{color:var(--border-2);padding:0 14px}
-.clh-trust .clh-pv{color:var(--green-deep)}
+.clh-hero{position:relative;height:calc(100vh - 64px);min-height:760px;overflow:hidden;
+  background:radial-gradient(circle at 50% 58%,#fff 0%,var(--cream) 78%)}
+.clh-head{position:absolute;left:0;right:0;top:84px;z-index:4;text-align:center;padding:0 20px;pointer-events:none}
+.clh-eye{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--green);margin-bottom:10px}
+.clh-h1{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em;line-height:1.04;
+  font-size:clamp(28px,4.2vw,46px);color:var(--ink);margin:0}
+.clh-h1 .clh-em{color:var(--green)}
+.clh-sub{margin:12px auto 0;color:var(--sec);font-size:clamp(14px,1.7vw,16.5px);font-weight:500;max-width:52ch}
+.clh-cta{margin-top:18px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center}
 `
 
 /* ------------------------------------------------------------- utilities */
@@ -732,17 +714,17 @@ function RotatingSource() {
 function Hero() {
   return (
     <section className="clh-hero">
-      <div className="cl-wrap">
+      <div className="clh-head">
         <Reveal>
-          <p className="clh-eye">Knowcap <span className="clh-d">·</span> Verified work intelligence</p>
+          <p className="clh-eye">Verified memory for your AI agents</p>
           <h1 className="clh-h1">
             Your company says a lot.<br />
-            Knowcap remembers <em>what matters</em>.
+            Knowcap remembers <span className="clh-em">what matters</span>.
           </h1>
         </Reveal>
         <Reveal delay={120}>
           <p className="clh-sub">
-            Not another note-taker. The <b>verified memory</b> your agents &mdash; and your
+            Not another note-taker. The verified memory your agents &mdash; and your
             clients &mdash; can actually trust.
           </p>
         </Reveal>
@@ -753,33 +735,7 @@ function Hero() {
           </div>
         </Reveal>
       </div>
-
-      <div className="clh-flow-bleed">
-        <Reveal delay={260}>
-          <IngestionGlobe />
-        </Reveal>
-      </div>
-
-      <div className="clh-strip">
-        <div className="cl-wrap">
-          <div className="clh-strip-in">
-            <span className="cl-kicker">Doctrine</span>
-            <blockquote>
-              Organizations aren&rsquo;t hierarchies. They&rsquo;re webs of commitments.{' '}
-              <span className="cl-said-true">Knowcap makes sure they&rsquo;re kept.</span>
-            </blockquote>
-          </div>
-          <div className="clh-trust">
-            <span>Built by an Odoo partner</span>
-            <span className="cl-sep" aria-hidden="true">·</span>
-            <span>MCP-native</span>
-            <span className="cl-sep" aria-hidden="true">·</span>
-            <span>Full audit trail on every action</span>
-            <span className="cl-sep" aria-hidden="true">·</span>
-            <span className="clh-pv">Your data stays yours — never used to train models</span>
-          </div>
-        </div>
-      </div>
+      <IngestionGlobe />
     </section>
   )
 }
