@@ -109,7 +109,7 @@ export default function IngestionGlobe() {
     function layout() {
       DPR = Math.min(2, window.devicePixelRatio || 1); const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
       const narrow = W < 640
-      const top = H * 0.45, bot = H * 0.99, bh = bot - top
+      const top = Math.max(H * 0.40, 410), bot = H * 0.99, bh = bot - top
       if (narrow) { GX = W * 0.5; GY = H * 0.52; GR = Math.min(W * 0.42, H * 0.42) }
       else { GX = W * 0.44; GY = top + bh * 0.50; GR = Math.min(W * 0.21, bh * 0.50) }
       HX = W * 0.69; HY = GY; const lx = W * 0.11, rx = W * 0.90
