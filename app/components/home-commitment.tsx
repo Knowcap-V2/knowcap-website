@@ -30,7 +30,7 @@ const CSS = `
   --ink:#18181B; --ink-soft:#2A2A2F; --sec:#4A4F5A;
   --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#7ED39B;
   --amber:#B07C28;
-  --disp:'Fraunces',Georgia,serif;
+  --disp:'Space Grotesk',system-ui,sans-serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --mono:'JetBrains Mono','SFMono-Regular',monospace;
   background:var(--cream); color:var(--ink); font-family:var(--body);
