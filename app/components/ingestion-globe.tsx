@@ -36,6 +36,19 @@ const CSS = `
 .ig-legend{position:absolute;left:24px;bottom:18px;z-index:3;display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--ink2);background:rgba(255,255,255,.7);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:10px;padding:8px 12px}
 .ig-legend .ig-chip{display:inline-flex;align-items:center;gap:6px;font-weight:600}
 .ig-legend .ig-ld{width:9px;height:9px;border-radius:50%}
+/* tablet — shrink tiles so 4 columns still fit */
+@media(max-width:1000px){
+  .ig-tile{width:72px}
+  .ig-tile .ig-ico{width:40px;height:40px}
+  .ig-tile .ig-ico img{width:21px;height:21px}
+  .ig-tile .ig-nm{font-size:10px}
+}
+/* phone — globe only, stacked under the headline */
+@media(max-width:640px){
+  .ig-flow{position:relative;inset:auto;height:340px}
+  .ig-tile,.ig-human,.ig-stage,.ig-story{display:none}
+  .ig-legend{left:50%;transform:translateX(-50%);bottom:6px;justify-content:center;max-width:calc(100% - 24px)}
+}
 `
 
 export default function IngestionGlobe() {
@@ -93,7 +106,10 @@ export default function IngestionGlobe() {
     let W = 0, H = 0, DPR = 1
     function layout() {
       DPR = Math.min(2, window.devicePixelRatio || 1); const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
-      const top = H * 0.45, bot = H * 0.99, bh = bot - top; GX = W * 0.44; GY = top + bh * 0.50; GR = Math.min(W * 0.21, bh * 0.50)
+      const narrow = W < 640
+      const top = H * 0.45, bot = H * 0.99, bh = bot - top
+      if (narrow) { GX = W * 0.5; GY = H * 0.52; GR = Math.min(W * 0.42, H * 0.42) }
+      else { GX = W * 0.44; GY = top + bh * 0.50; GR = Math.min(W * 0.21, bh * 0.50) }
       HX = W * 0.69; HY = GY; const lx = W * 0.11, rx = W * 0.90
       const colH = H * 0.92 - top
       srcA.forEach((o, i) => { const y = top + colH * ((i + 0.5) / SOURCES.length); o.x = lx; o.y = y; o.el.style.left = lx + 'px'; o.el.style.top = y + 'px' })
@@ -142,6 +158,8 @@ export default function IngestionGlobe() {
       const rgb = B.rgb; ctx.clearRect(0, 0, W, H)
       const tox = over ? ((mx - GX) / W) * 0.7 : 0, toy = over ? ((my - GY) / H) * 0.6 : 0; ox += (tox - ox) * 0.06; oy += (toy - oy) * 0.06
       const ry = ang + ox, rx = -0.30 + oy; const now = t * 0.00045
+      const narrow = W < 640
+      if (!narrow) {
       srcA.forEach((o, i) => {
         const ep = edgePoint(o.x, o.y); const tc = o.ty != null ? TYPES[o.ty].c : null
         ctx.strokeStyle = tc ? hexa(tc, 0.18) : 'rgba(138,143,153,0.16)'; ctx.lineWidth = 1.3; ctx.setLineDash([2, 8]); ctx.beginPath(); ctx.moveTo(o.x + 24, o.y); ctx.lineTo(ep.x, ep.y); ctx.stroke(); ctx.setLineDash([])
@@ -157,6 +175,7 @@ export default function IngestionGlobe() {
       const ap = (now * 1.0) % 1; ctx.strokeStyle = hexa(B.a, (1 - ap) * 0.4); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(HX, HY, 10 + ap * 22, 0, 7); ctx.stroke()
       if (t - lastPop > 500) { lastPop = t; const cs = srcA.filter(o => o.ty != null && o.ty !== 4); const s = cs[(Math.random() * cs.length) | 0]; if (s) { const ep = edgePoint(s.x, s.y); pops.push({ x: ep.x, y: ep.y, ty: TYPES[s.ty], age: 0 }) } }
       pops = pops.filter(o => o.age < 1); pops.forEach(o => { o.age += 0.02; const al = 1 - o.age; ctx.strokeStyle = hexa(o.ty.c, al * 0.6); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(o.x, o.y, 4 + o.age * 16, 0, 7); ctx.stroke(); ctx.fillStyle = hexa(o.ty.c, al); ctx.font = '700 9.5px "Space Grotesk",sans-serif'; ctx.fillText(o.ty.k, o.x + 7, o.y - 6) })
+      }
       const P = pts.map(p => { let x = p.x * Math.cos(ry) - p.z * Math.sin(ry), z = p.x * Math.sin(ry) + p.z * Math.cos(ry), y = p.y; const y2 = y * Math.cos(rx) - z * Math.sin(rx), z2 = y * Math.sin(rx) + z * Math.cos(rx); const sc = 1 / (1.8 - z2 * 0.6); return { sx: GX + x * GR * sc, sy: GY + y2 * GR * sc, z: z2 } })
       const near = P.map(p => { if (!over) return 9999; return Math.hypot(p.sx - mx, p.sy - my) })
       edges.forEach(([a, b]) => { const A = P[a], Bp = P[b], depth = (A.z + Bp.z) / 2; let al = Math.max(0, 0.05 + (depth + 1) / 2 * 0.13); const nf = Math.min(near[a], near[b]); if (nf < 150) al += (1 - nf / 150) * 0.4; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = nf < 150 ? 1 : 0.6; ctx.beginPath(); ctx.moveTo(A.sx, A.sy); ctx.lineTo(Bp.sx, Bp.sy); ctx.stroke() })
@@ -167,7 +186,7 @@ export default function IngestionGlobe() {
         ctx.beginPath(); ctx.arc(p.sx, p.sy, rad, 0, 7); ctx.fillStyle = hexa(col, al); ctx.fill()
         if (pts[i].lab && pts[i].ty !== 4 && p.z > -0.1) { ctx.fillStyle = 'rgba(24,24,27,' + (0.4 + t2 * 0.5) + ')'; ctx.font = '600 10.5px "Space Grotesk",sans-serif'; ctx.fillText(TYPES[pts[i].ty].k, p.sx + rad + 5, p.sy + 4) }
       })
-      drawStory(t)
+      if (!narrow) drawStory(t)
       ang += 0.0008; raf = requestAnimationFrame(frame)
     }
 

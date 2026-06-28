@@ -461,6 +461,7 @@ const CSS = `
 .cl-header{border-top:0 !important}
 .cl-brand{font-family:'Space Grotesk',sans-serif !important;font-variation-settings:normal !important;font-weight:700;letter-spacing:-.02em}
 .cl-navauth .cl-btn,.clh-cta .cl-btn{border-radius:999px}
+@media(max-width:900px){.cl-navlinks{display:none}}
 .clh-hero{position:relative;height:calc(100vh - 64px);min-height:760px;overflow:hidden;
   background:radial-gradient(circle at 50% 58%,#fff 0%,var(--cream) 78%)}
 .clh-head{position:absolute;left:0;right:0;top:84px;z-index:4;text-align:center;padding:0 20px;pointer-events:none}
@@ -471,6 +472,13 @@ const CSS = `
 .clh-h1 .clh-em{color:var(--green)}
 .clh-sub{margin:12px auto 0;color:var(--sec);font-size:clamp(14px,1.7vw,16.5px);font-weight:500;max-width:52ch}
 .clh-cta{margin-top:18px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center}
+@media(max-width:640px){
+  .clh-hero{height:auto;min-height:0;padding:84px 0 24px}
+  .clh-head{position:static;padding:0 18px}
+  .clh-h1{font-size:clamp(26px,7vw,36px)}
+  .clh-sub{font-size:14px;max-width:42ch}
+  .clh-cta{display:flex}
+}
 `
 
 /* ------------------------------------------------------------- utilities */
