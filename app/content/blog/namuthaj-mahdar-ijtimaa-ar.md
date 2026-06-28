@@ -1,23 +1,27 @@
 ---
-title: "نموذج محضر اجتماع جاهز وكيف تكتب محضراً احترافياً"
-slug: "namuthaj-mahdar-ijtimaa-ar"
-mode: "money-page"
-intent: "commercial"
-persona: "mena-audit-firms"
-target_keyword: "محضر اجتماع"
-target_keyword_5y_mena_interest: null
-geo_score: 88
-est_word_count: 1520
-draft_date: "2026-06-28"
+title: نموذج محضر اجتماع جاهز وكيف تكتب محضراً احترافياً
+slug: namuthaj-mahdar-ijtimaa-ar
+date: 2026-06-28
+author: Hassan Arslan
 description: "نموذج محضر اجتماع جاهز للنسخ، مع شرح كيف تكتب محضر اجتماع في سبع خطوات: من يكتبه، ومتى، وما العناصر التي يجب أن يتضمنها كل محضر رسمي."
-tags: ["محضر-اجتماع", "نموذج-محضر-اجتماع", "محاضر-الاجتماعات", "تدقيق", "حوكمة", "mena", "mena-audit-firms"]
-author: "Hassan Arslan"
-lang: "ar"
-dir: "rtl"
-hreflang_pair: "/blog/meeting-minutes-template-how-to-write"
+tags:
+  - "محضر-اجتماع"
+  - "نموذج-محضر-اجتماع"
+  - "محاضر-الاجتماعات"
+  - "تدقيق"
+  - "حوكمة"
+  - "mena"
+  - "mena-audit-firms"
+geo_audiences:
+  - "UAE"
+  - "KSA"
+  - "Egypt"
+target_persona: mena-audit-firms
+related_pages: []
 source_knowcap_ids: []
-embedded_screenshots: []
-status: draft
+read_minutes: 8
+lang: ar
+dir: rtl
 ---
 
 محضر الاجتماع هو الوثيقة الرسمية التي تُدوَّن فيها أحداث الاجتماع: مكانه وزمانه، وأسماء الحاضرين والغائبين، والبنود التي نوقشت، والقرارات التي اتُّخذت، والمهام المُسندة لكل شخص. الغرض منه ليس تلخيص ما قيل، بل إثبات ما تم الاتفاق عليه حتى لا تختلف الذاكرة حوله بعد فترة. محضرٌ مكتوب جيداً يجيب عن ثلاثة أسئلة بوضوح: ماذا قرّرنا؟ ومن المسؤول عن كل قرار؟ وما الموعد النهائي؟ أما المحاضر الضعيفة فتسجّل النقاش وتغفل القرار، فتصبح بلا قيمة عند أول خلاف. في هذا الدليل نموذج محضر اجتماع جاهز يمكنك نسخه واستخدامه فوراً، ثم شرح عملي لكيفية كتابة محضر اجتماع خطوة بخطوة، ومن يكتبه ومتى، والعناصر التي يجب أن يتضمنها كل محضر رسمي.
