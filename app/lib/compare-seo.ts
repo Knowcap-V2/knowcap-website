@@ -22,33 +22,33 @@ export interface CompareSeo {
 export const COMPARE_SEO: Record<CompareSlug, CompareSeo> = {
   otter: {
     competitor: 'Otter.ai',
-    title: 'Knowcap vs Otter.ai — AI Meeting Notes That Take Action',
+    title: 'Otter.ai Alternative for Odoo & MENA Teams | Knowcap',
     description:
-      'Otter.ai transcribes meetings. Knowcap captures them, verifies every decision with a human, then triggers agents that open Odoo tickets and GitHub PRs.',
+      'Otter.ai transcribes meetings. Knowcap goes further: every decision is confirmed by a named human and timestamped to the source. Built for MENA Odoo teams.',
   },
   'read-ai': {
     competitor: 'Read AI',
-    title: 'Knowcap vs Read AI — Verified Meeting Intelligence',
+    title: 'Read AI Alternative - Verified Meeting Records | Knowcap',
     description:
-      'Read AI scores meetings. Knowcap turns them into verified evidence your AI agents can act on — built for MENA Odoo partners, agencies, and audit firms.',
+      'Read AI scores and summarizes meetings. Knowcap turns them into verified records - each decision confirmed by a named human, attributed and timestamped.',
   },
   fireflies: {
     competitor: 'Fireflies.ai',
-    title: 'Knowcap vs Fireflies — Meeting AI That Acts on Decisions',
+    title: 'Fireflies Alternative for MENA & Odoo Teams | Knowcap',
     description:
-      'Fireflies records and summarizes meetings. Knowcap adds a human trust layer plus agents that open tickets, draft PRs, and message clients on verified facts.',
+      'Fireflies records and summarizes meetings. Knowcap adds the layer they skip: a named human confirms every decision before it counts. MENA-ready, Odoo-native.',
   },
   fellow: {
     competitor: 'Fellow',
-    title: 'Knowcap vs Fellow — From Meeting Notes to Agent Actions',
+    title: 'Fellow Alternative - Meeting Notes You Can Defend | Knowcap',
     description:
-      'Fellow organizes meeting notes and agendas. Knowcap captures the meeting, verifies each claim, and lets agents execute the follow-ups automatically.',
+      'Fellow organizes notes and agendas. Knowcap has a named human confirm each decision, so the scope is a record both sides agreed to - not a recollection.',
   },
   granola: {
     competitor: 'Granola',
-    title: 'Knowcap vs Granola — AI Notes With a Human Trust Layer',
+    title: 'Granola Alternative for MENA & Odoo Teams | Knowcap',
     description:
-      'Granola gives you AI meeting notes. Knowcap adds human verification and agents that act on confirmed decisions — multilingual, MENA-ready, Odoo-native.',
+      'Granola gives you clean AI meeting notes. Knowcap adds human verification - every confirmed decision attributed and timestamped. Arabic-English, MENA-built.',
   },
 }
 

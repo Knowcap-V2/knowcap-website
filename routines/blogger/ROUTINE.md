@@ -32,19 +32,30 @@ After each shipped draft PR: `total_posts++`, `posts_this_week++`. Reset `posts_
 
 ## Mode selection (runtime)
 
+> Governed by `../claude-knowcap/marketing/digital-employees/seo/PLAYBOOK.md`. Intent + language + the
+> SERP-steal come BEFORE the content-spine choice.
+
 ```
 1. Pick persona via round-robin from state.json (if absent → default index 0 = odoo-partners, then create it — see "Persona rotation state")
-2. Try `case-study` mode:
-   - Query Knowcap MCP (Demo org → persona project) for sources
-   - For each candidate source, pull confirmed memories (>= 3 required)
-   - If 1+ candidate qualifies → mode = case-study, pick the most recent
-3. If no case-study candidate, try `comparison` mode:
-   - List ../claude-knowcap/company/docs/research/competitors-*.md, check mtime of each
-   - If freshest competitor doc is < 30 days old AND topic not covered in last 5 shipped → mode = comparison
-4. Default to `thesis` mode
+2. CLASSIFY INTENT (Law 2) on target_keyword:
+   - navigational / tool (login, download, تسجيل دخول, تحميل, bare brand) → SKIP keyword, advance
+   - commercial (best, software, tool, vs, for-<persona>, pricing)        → mode = money-page (Law 3)
+   - informational (how, what, why, template, نموذج, دليل)                → continue to step 4
+3. PICK LANGUAGE (Law 4) from the keyword's demand:
+   - Arabic-demand keyword → lang=ar, dir=rtl, slug `-ar` suffix, EN hreflang pair noted
+   - English-demand keyword → lang=en, dir=ltr
+4. STEAL THE SERP (Law 1 — mandatory):
+   - brief exists at ../claude-knowcap/knowledge/topics/research/seo/content-briefs/<keyword-slug>.md?
+       → inherit it (it carries intent, the beat-top-10 H2 outline, PAA, word-count target, GEO passages)
+   - else pull live top-3 via serp_organic_live_advanced (keyword's market) → derive structure
+   - neither obtainable → REFUSE (no invented essays)
+5. PICK SPINE (informational only):
+   a. `case-study`: Demo org → persona project → source with ≥3 confirmed memories → most recent
+   b. `comparison`: freshest ../claude-knowcap/company/docs/research/competitors-*.md < 30d AND not in last 5 shipped
+   c. `thesis` (default): SERP-grounded answer, beat the top-10 — NOT a free-form essay
 ```
 
-The first few runs pick `thesis` mode (Demo org empty, no fresh competitor doc < 30d). Expected until Demo org gets seeded.
+For **money-page** mode, build a `/compare/*` or use-case "zipper" landing page (`[use-case] × [persona|language]`), not a blog post — that is the only format ranking #1 for us (Law 3). The first few *informational* runs pick `thesis` (Demo org empty, no fresh competitor doc < 30d) — but now SERP-grounded, never invented.
 
 ## Knowledge base (hub) — paths
 
@@ -76,8 +87,10 @@ Each run reads `cursor`, picks `personas[cursor]`, then advances `cursor = (curs
 2. **Read `../claude-knowcap/company/docs/research/product-personas.md`** → pick the persona's section (study segment names map to slugs: "Odoo implementation partners" → `odoo-partners`, "Audit / accounting firms" → `mena-audit-firms`, etc.)
 3. **Read `../claude-knowcap/company/docs/strategy/vision.md`** → voice + anti-positioning
 4. **Read `../claude-knowcap/company/docs/strategy/POSITIONING.md`** → three sentences + anti-positioning
-5. **Run `node routines/blogger/scripts/seo-pull.mjs`** (live SEO engine). Pulls DataForSEO Google-Ads keyword demand for MENA (KSA + Egypt + UAE) in EN + AR, expands persona seeds into real related keywords with **search volume + competition**, filters to Knowcap ICP intent, ranks by `volume × competition-weight`, dedups against shipped posts, and writes `routines/blogger/opportunity-queue.json` + a digest. **`target_keyword` = the persona's top fresh (uncovered) EN opportunity** from the queue. Auth: DataForSEO creds in `~/.claude/secrets/blogger.md`.
+5. **Run `node routines/blogger/scripts/seo-pull.mjs`** (live SEO engine). Pulls DataForSEO Google-Ads keyword demand for MENA (KSA + Egypt + UAE) in EN + AR, expands persona seeds into real related keywords with **search volume + competition**, filters to Knowcap ICP intent, ranks by `volume × competition-weight`, dedups against shipped posts, and writes `routines/blogger/opportunity-queue.json` + a digest. **`target_keyword` = the persona's top fresh (uncovered) opportunity** from the queue **by score — EN or AR** (Arabic is in play; Law 4). Auth: DataForSEO creds in `~/.claude/secrets/blogger.md`.
 6. DataForSEO volume + competition from step 5 is the demand signal. Record the chosen keyword's `search_volume` + `competition` in frontmatter.
+6a. **Classify intent + pick language (Laws 2 & 4):** navigational/tool → skip the keyword, take the next; commercial → money-page mode (Law 3); informational → continue. Arabic-demand keyword → `lang: ar`, `dir: rtl`, `-ar` slug.
+6b. **Steal the SERP (Law 1 — mandatory):** read the matching brief at `../claude-knowcap/knowledge/topics/research/seo/content-briefs/<keyword-slug>.md` if present (inherit its outline/PAA/word-count/GEO callouts); else pull live top-3 via `serp_organic_live_advanced` in the keyword's market. No brief + no SERP → REFUSE.
 7. **Try `case-study` mode:**
    - Query Knowcap MCP `mcp__knowcap__list_sources` → Demo org, persona project
    - For each source, `mcp__knowcap__list_memories` filtered to source via `metadata.source_id`
@@ -125,8 +138,11 @@ PR body includes:
 ## Constraints
 
 - ICP-aligned only — Odoo partners, MENA audit firms, MENA agencies, regulated verticals. If selected persona signal is ambiguous, refuse (don't write).
-- 1,300–1,600 words (body, not frontmatter)
-- GEO-optimized passages
+- **SERP-steal is a gate (Law 1)** — inherit the brief or pull the live SERP first; no draft from imagination.
+- **Intent-match or skip (Law 2)** — navigational → skip; commercial → money page; only informational → post.
+- **Bilingual, demand-driven (Law 4)** — language follows the keyword's demand; native Arabic post for Arabic demand, hreflang pair. EN-only retired.
+- **Word count = the SERP/brief target** (beat the top-10), not a fixed range. Absent a SERP signal, default 1,300–1,600 body words.
+- **GEO citation layer (Law 5)** — 134–167-word self-contained passages, JSON-LD schema, 5-question FAQ.
 - NEVER duplicate a topic from last 20 shipped slugs
 - ALWAYS cite the source Knowcap recording in frontmatter `source_knowcap_ids` (only when mode=case-study)
 - Screenshots ENHANCE, don't gate — if no match in library, ship text-only and flag for hand-add

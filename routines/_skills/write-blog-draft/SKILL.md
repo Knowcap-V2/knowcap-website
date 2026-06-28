@@ -4,25 +4,43 @@ Generate a Knowcap blog post draft. Adapts to what's available — Knowcap sourc
 
 ## Status: P1 spec (real prompt, ready to run manually)
 
-## Three modes
+> **Governed by the PLAYBOOK** (`../claude-knowcap/marketing/digital-employees/seo/PLAYBOOK.md`). Every
+> mode below is SERP-STOLEN — the routine passes either an inherited SEO content-brief or a live top-3
+> SERP digest as `serp_steal`. **No `serp_steal` → REFUSE.** No more invented essays (16 of them = 0 clicks).
 
-Routine picks mode at runtime based on what's available — the routine doesn't fail when a Knowcap source isn't available, it shifts mode.
+## Modes
+
+Routine picks mode at runtime: first by INTENT (Law 2), then — for informational intent — by what spine is available.
 
 | Mode | Spine of the post | When the routine uses it |
 |---|---|---|
-| **`thesis`** | Persona + audit + vision + positioning | Default. General positioning posts. NO Knowcap source needed. |
-| **`case-study`** | A specific Knowcap recording + its confirmed memories + persona | When the routine finds at least 1 source in Demo org for the target persona with ≥3 confirmed memories. |
-| **`comparison`** | Competitor research + persona + audit | When `../claude-knowcap/company/docs/research/competitors-*.md` is fresher than 30 days AND not already covered in last 5 shipped blogs. |
+| **`money-page`** | A `/compare/*` or use-case "zipper" landing page | **Commercial** intent (best/software/tool/vs/for-persona/pricing). The only format ranking #1 for us (Law 3). NOT a blog post. |
+| **`thesis`** | SERP-stolen answer + persona + vision + positioning | Default for informational intent. Answers the query the way the winning results do, beats their depth. NO Knowcap source needed. |
+| **`case-study`** | A specific Knowcap recording + its confirmed memories + persona | When the routine finds ≥1 Demo-org source for the persona with ≥3 confirmed memories. |
+| **`comparison`** | Competitor research + persona + audit | When `../claude-knowcap/company/docs/research/competitors-*.md` is < 30 days AND not covered in last 5 shipped. |
 
-Each mode has its own prompt template below.
+Each mode is shaped by `serp_steal` (beat the top-10 structure). Each has its own prompt template below.
 
 ## Inputs (the routine assembles before calling the skill)
 
 ```yaml
-mode: thesis | case-study | comparison
+mode: money-page | thesis | case-study | comparison
+intent: informational | commercial          # navigational was skipped upstream (Law 2)
+lang: en | ar                                # follows the keyword's demand (Law 4)
+dir: ltr | rtl                               # ltr for en, rtl for ar
+hreflang_pair: "<url-or-slug of the other-language equivalent, or null>"
 target_persona: odoo-partners | mena-audit-firms | mena-agencies | regulated-verticals
 target_keyword: "<string>"
 target_keyword_5y_mena_interest: <0-100 OR null if Trends unavailable>
+
+# SERP steal — REQUIRED (Law 1). Either an inherited brief or a live top-3 digest. Absent → REFUSE.
+serp_steal:
+  source: brief | live-serp
+  top_results: [ { title, type, approx_word_count, h2s: [...] }, ... ]   # the ranked competition
+  avg_word_count: <int>            # the target to BEAT
+  shared_h2s: [...]                # sub-topics every top result covers — must cover all
+  paa: [...]                       # People-Also-Ask → become FAQ + H2s
+  citable_passages: [...]          # 1-2 passages to write as 134-167w answer blocks (Law 5)
 
 # Always required (brand DNA lives in the claude-knowcap hub — sibling repo, NOT this repo's docs/)
 vision_md: "<text>"             # from ../claude-knowcap/company/docs/strategy/vision.md
@@ -62,29 +80,35 @@ available_screenshots:
 - USE: "the team", "the partner", "the client", "the meeting", "the recording", "the call", "the routine"
 - Active voice. Short sentences when the claim is sharp.
 - GEO structure: 134-167 word self-contained passages, FAQ section, schema-friendly H2/H3 hierarchy.
+- **Arabic posts (`lang: ar`)** — write NATIVELY in Modern Standard Arabic for the searcher, NOT a translation of an English draft. Knowcap voice carries over (founder/expert, concrete, no consultant-speak); use the Arabic product terms (محاضر الاجتماعات، توثيق، تدقيق، تأكيد بشري) and `dir: rtl`. The banned-words list is English; for Arabic apply the same spirit (no filler/buzzwords).
 
-## ICP gate (enforced at skill entry, all modes)
+## Entry gates (enforced at skill entry, all modes)
 
-If `target_persona` ∉ {odoo-partners, mena-audit-firms, mena-agencies, audit-and-legal, regulated-verticals} → emit `REFUSED` with reason `out-of-ICP`. Do NOT write the draft.
+1. **ICP gate** — `target_persona` ∉ {odoo-partners, mena-audit-firms, mena-agencies, audit-and-legal, regulated-verticals} → `REFUSED`, reason `out-of-ICP`.
+2. **SERP-steal gate (Law 1)** — `serp_steal` missing/empty → `REFUSED`, reason `no-serp-steal`. We never write from imagination.
+3. **Intent gate (Law 2)** — if upstream passed a navigational/tool keyword → `REFUSED`, reason `navigational-intent`. Commercial intent must be `mode: money-page`, not a blog.
+Do NOT write the draft if any gate fails.
 
 ## Frontmatter (emitted first, all modes, exact shape)
 
 ```yaml
 ---
-title: "<title — max 70 chars, must include target_keyword OR close synonym>"
-slug: <slug-form-of-title>
-mode: thesis | case-study | comparison
+title: "<title — max 70 chars, must include target_keyword OR close synonym; in {lang}>"
+slug: <slug-form-of-title; append "-ar" when lang=ar>
+mode: money-page | thesis | case-study | comparison
+intent: {intent}
 persona: {target_persona}
 target_keyword: "{target_keyword}"
 target_keyword_5y_mena_interest: {target_keyword_5y_mena_interest}
 geo_score: <0-100 per GEO-AUDIT rubric, your honest estimate>
 est_word_count: <draft word count>
 draft_date: <today YYYY-MM-DD>
-description: "<SEO meta description — 120-165 chars, plain English, no keyword stuffing>"
+description: "<SEO meta description — 120-165 chars, in {lang}, no keyword stuffing>"
 tags: [<5-8 kebab-case tags derived from persona + keyword + topic>]
 author: "Hassan Arslan"
-lang: "en"
-dir: "ltr"
+lang: "{lang}"        # en | ar — follows the keyword's demand (Law 4)
+dir: "{dir}"          # ltr | rtl
+hreflang_pair: "{hreflang_pair}"   # the other-language equivalent URL/slug, or null
 source_knowcap_ids: [<list only if mode=case-study, else []>]
 embedded_screenshots: [<list of screenshot slugs used, else []>]
 status: draft
@@ -96,9 +120,16 @@ status: draft
 ## Mode `thesis` — the prompt
 
 ```
-You are writing a positioning post for Knowcap, persona-targeted. The post is GROUND-LEVEL THESIS — it doesn't cite a specific recording, it builds the argument from market + persona + vision.
+You are writing a SERP-GROUNDED answer post for Knowcap, persona-targeted. This is NOT a free-form
+opinion essay — that format earned 0 clicks across 16 posts. You are answering {target_keyword} the way
+the winning results answer it, then beating their depth and adding Knowcap's honest angle.
 
-Body structure (locked, 1,300-1,600 words total):
+BEFORE structuring, obey `serp_steal`: cover EVERY heading in `serp_steal.shared_h2s`, answer every
+`serp_steal.paa` question (these seed the FAQ + H2s), and write at least `serp_steal.avg_word_count`
+words (beat the top-10, don't merely match). Lead each major section with a self-contained 134-167-word
+answer block (the AI-citation sweet spot, Law 5).
+
+Body structure (target = serp_steal.avg_word_count, beat the top-10; the outline below is the floor):
 
 1. HOOK — 1-2 sentences with a sharp persona-specific opener. Cite a real-world surface fact (e.g., "187 Odoo partners in Egypt sell at $40-80 per consulting hour. The first scope dispute of the year costs the average partner 4-6 days they don't bill for.")
 2. THE PAIN — 134-167 words. Why {target_persona} specifically. Use one bullet from persona_section_md as the load-bearing claim.
@@ -151,6 +182,28 @@ Body structure (locked, 1,300-1,600 words total):
 7. CLOSING — 1-2 sentences.
 ```
 
+## Mode `money-page` — the prompt
+
+```
+You are writing a COMMERCIAL landing page, not a blog post — the keyword has buyer intent (Law 2/3).
+This is the only format that ranks #1 for us (the /compare/* pages). Build a `/compare/*` or use-case
+"zipper" page: [use-case] × [persona | language] (e.g. "best AI meeting-minutes software for audit
+firms", "أفضل برنامج محاضر اجتماعات"). The output is still a markdown draft, but its shape is a
+conversion page, and the routine routes it to a money-page route, NOT /blog (flag in the PR body).
+
+Obey `serp_steal`: match the page TYPE that ranks (comparison table / feature page / listicle), cover
+every `serp_steal.shared_h2s`, beat `serp_steal.avg_word_count`.
+
+Structure:
+1. H1 with the exact commercial keyword + a one-line value promise.
+2. A 134-167-word self-contained answer block directly answering the query (AI-citation; Law 5).
+3. The comparison/feature substance the SERP demands (table if competitors rank with one).
+4. Honest Knowcap differentiation (verified-facts / human-confirmation / audit-trail).
+5. One clear conversion action (NOT "book a demo" copy-slop — a plain, specific next step).
+6. FAQ — 5 questions from serp_steal.paa, 134-167 words each, FAQPage schema.
+7. JSON-LD schema appropriate to the page type.
+```
+
 ## Screenshot integration (any mode, optional)
 
 After draft generation, scan the body for trigger keywords:
@@ -181,11 +234,14 @@ Add the used screenshot slugs to frontmatter `embedded_screenshots: [...]`.
 
 ## Validation gates (post-generation, all modes)
 
-1. Banned words → regex scan body. If any present, REGENERATE that paragraph (max 2 retries) or REFUSE.
-2. Word count → 1,300-1,600 (body only, not frontmatter). If outside, retry once with tightening/expansion guidance.
-3. Target keyword → must appear in title AND H2-section-one AND ≥3 times in body.
-4. Slug uniqueness → must not match any slug in `recent_shipped_slugs` or `recent_drafts_in_pipeline`.
-5. FAQ count → exactly 5 H3 questions in the FAQ section.
+1. Banned words → regex scan body (English posts). If any present, REGENERATE that paragraph (max 2 retries) or REFUSE. Arabic posts → apply the same no-buzzword spirit.
+2. Word count → **≥ `serp_steal.avg_word_count`** (beat the top-10). Absent a SERP signal, 1,300-1,600 body words. Under target → retry once with expansion guidance.
+3. SERP coverage (Law 1) → every `serp_steal.shared_h2s` heading is covered and every `serp_steal.paa` question is answered. Missing any → retry once.
+4. Citable passages (Law 5) → at least 2 self-contained 134-167-word blocks present.
+5. Target keyword → must appear in title AND H2-section-one AND ≥3 times in body (in the post's language).
+6. Language → body language matches `lang`; `dir` correct; `hreflang_pair` set (or explicitly null).
+7. Slug uniqueness → must not match any slug in `recent_shipped_slugs` or `recent_drafts_in_pipeline` (AR slug carries `-ar`).
+8. FAQ count → exactly 5 H3 questions in the FAQ section.
 6. Frontmatter shape → all required keys present, types correct.
 
 ## REFUSED output shape
