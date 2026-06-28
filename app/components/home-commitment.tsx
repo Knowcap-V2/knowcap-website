@@ -18,12 +18,11 @@ import Link from 'next/link'
 import ABTracker from '@/components/ab-tracker'
 import IngestionGlobe from '@/components/ingestion-globe'
 
-const APP_URL = 'https://app.knowcap.ai'
-
 /* ---------------------------------------------------------------- styles */
 
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Fraunces loads via next/font (app/layout.tsx). Homepage display is Space Grotesk; Inter + JetBrains Mono + Space Grotesk by literal family below. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 .cl-root{
   --cream:#FBFAF8; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
@@ -558,8 +557,8 @@ function Header() {
           <Link className="cl-navlink" href="/contact-us">Contact</Link>
         </nav>
         <div className="cl-navauth">
-          <a className="cl-login" href={`${APP_URL}/login`}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href={`${APP_URL}/register`}>Get Started Free</a>
+          <a className="cl-login" href="/beta">Log in</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join Beta</a>
         </div>
       </div>
     </header>
@@ -738,7 +737,7 @@ function Hero() {
         </Reveal>
         <Reveal delay={200}>
           <div className="clh-cta">
-            <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
+            <a className="cl-btn cl-btn--solid" href="/beta">Get Started Free</a>
             <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
           </div>
         </Reveal>
@@ -1013,7 +1012,7 @@ function Mcp() {
                 <a className="cl-btn cl-btn--solid" href="https://docs.knowcap.ai/#mcp-overview">
                   Connect Your Claude <span aria-hidden="true">→</span>
                 </a>
-                <a className="cl-btn cl-btn--ghost" href={`${APP_URL}/register`}>
+                <a className="cl-btn cl-btn--ghost" href="/beta">
                   Get your API key
                 </a>
               </div>
@@ -1135,7 +1134,7 @@ function Closer() {
               <p className="cl-closer-sub">Capture. Confirm. Let your agents act on verified facts.</p>
             </div>
             <div className="cl-closer-ctas">
-              <a className="cl-btn cl-btn--solid" href={`${APP_URL}/register`}>Get Started Free</a>
+              <a className="cl-btn cl-btn--solid" href="/beta">Join Beta</a>
               <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
             </div>
           </div>
@@ -1187,8 +1186,8 @@ function Footer() {
           </div>
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
-            <a href={`${APP_URL}/register`}>Get Started Free</a>
-            <a href={`${APP_URL}/login`}>Log in</a>
+            <a href="/beta">Join Beta</a>
+            <a href="/beta">Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>

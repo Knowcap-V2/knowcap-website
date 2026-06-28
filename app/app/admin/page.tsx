@@ -176,6 +176,33 @@ export default function BetaAppDashboard() {
     }
   }
 
+  const handleApproveBeta = async (id: string, name: string, email: string) => {
+    if (!confirm(`Approve ${name} (${email})?\n\nThis adds them to the app allowlist so they can sign up, and emails them an invite.`)) return
+
+    try {
+      const response = await fetch('/api/approve-beta-application', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      })
+      const result = await response.json()
+
+      if (response.ok) {
+        setBetaApplications(betaApplications.map(app =>
+          app.id === id ? { ...app, approvedAt: result.approvedAt } : app
+        ))
+        alert(result.emailed
+          ? `Approved ${name} — they can sign up now and an invite email was sent.`
+          : `Approved ${name} — they can sign up now. (Invite email NOT sent — set GMAIL_APP_PASSWORD.)`)
+      } else {
+        throw new Error(result.error || 'Failed to approve')
+      }
+    } catch (error: any) {
+      console.error('Approve error:', error)
+      alert(error.message || 'Failed to approve application')
+    }
+  }
+
   const handleDeleteContact = async (id: string) => {
     if (!confirm('Are you sure you want to delete this contact submission?')) return
     
@@ -922,7 +949,23 @@ export default function BetaAppDashboard() {
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
-                        <div className="grid md:grid-cols-2 gap-6">
+                        {app.approvedAt ? (
+                          <span
+                            className="absolute top-4 left-4 flex items-center gap-1 px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium"
+                            title={`Approved ${new Date(app.approvedAt).toLocaleString()}`}
+                          >
+                            <CheckCircle className="w-4 h-4" /> Approved
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => handleApproveBeta(app.id, app.name, app.email)}
+                            className="absolute top-4 left-4 flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors text-sm"
+                            title="Approve — adds to allowlist + emails them to sign up"
+                          >
+                            <CheckCircle className="w-4 h-4" /> Approve
+                          </button>
+                        )}
+                        <div className="grid md:grid-cols-2 gap-6" style={{ marginTop: '2.5rem' }}>
                           <div>
                             <p className="text-sm text-gray-500 mb-1">Name</p>
                             <p className="font-semibold">{app.name}</p>
