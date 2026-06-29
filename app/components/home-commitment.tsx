@@ -557,7 +557,7 @@ function Header() {
           <Link className="cl-navlink" href="/contact-us">Contact</Link>
         </nav>
         <div className="cl-navauth">
-          <a className="cl-login" href="/beta">Log in</a>
+          <a className="cl-login" href="https://app.knowcap.ai/login">Log in</a>
           <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join Beta</a>
         </div>
       </div>
@@ -1187,7 +1187,7 @@ function Footer() {
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
             <a href="/beta">Join Beta</a>
-            <a href="/beta">Log in</a>
+            <a href="https://app.knowcap.ai/login">Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>
