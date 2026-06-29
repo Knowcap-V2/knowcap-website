@@ -162,6 +162,7 @@ export default function IngestionGlobe() {
       const tox = over ? ((mx - GX) / W) * 0.7 : 0, toy = over ? ((my - GY) / H) * 0.6 : 0; ox += (tox - ox) * 0.06; oy += (toy - oy) * 0.06
       const ry = ang + ox, rx = -0.30 + oy; const now = t * 0.00045
       const narrow = W < 640
+      const gs = Math.max(0.55, Math.min(1, GR / 280)) // scale dot/edge weight with globe size -> same density at every viewport
       if (!narrow) {
       srcA.forEach((o, i) => {
         const ep = edgePoint(o.x, o.y); const tc = o.ty != null ? TYPES[o.ty].c : null
@@ -181,11 +182,11 @@ export default function IngestionGlobe() {
       }
       const P = pts.map(p => { let x = p.x * Math.cos(ry) - p.z * Math.sin(ry), z = p.x * Math.sin(ry) + p.z * Math.cos(ry), y = p.y; const y2 = y * Math.cos(rx) - z * Math.sin(rx), z2 = y * Math.sin(rx) + z * Math.cos(rx); const sc = 1 / (1.8 - z2 * 0.6); return { sx: GX + x * GR * sc, sy: GY + y2 * GR * sc, z: z2 } })
       const near = P.map(p => { if (!over) return 9999; return Math.hypot(p.sx - mx, p.sy - my) })
-      edges.forEach(([a, b]) => { const A = P[a], Bp = P[b], depth = (A.z + Bp.z) / 2; let al = Math.max(0, 0.05 + (depth + 1) / 2 * 0.13); const nf = Math.min(near[a], near[b]); if (nf < 150) al += (1 - nf / 150) * 0.4; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = nf < 150 ? 1 : 0.6; ctx.beginPath(); ctx.moveTo(A.sx, A.sy); ctx.lineTo(Bp.sx, Bp.sy); ctx.stroke() })
-      if (over) P.forEach((p, i) => { if (near[i] < 170) { const al = (1 - near[i] / 170) * 0.5; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = 0.8; ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(p.sx, p.sy); ctx.stroke() } })
+      edges.forEach(([a, b]) => { const A = P[a], Bp = P[b], depth = (A.z + Bp.z) / 2; let al = Math.max(0, 0.05 + (depth + 1) / 2 * 0.13); const nf = Math.min(near[a], near[b]); if (nf < 150) al += (1 - nf / 150) * 0.4; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = (nf < 150 ? 1 : 0.6) * gs; ctx.beginPath(); ctx.moveTo(A.sx, A.sy); ctx.lineTo(Bp.sx, Bp.sy); ctx.stroke() })
+      if (over) P.forEach((p, i) => { if (near[i] < 170) { const al = (1 - near[i] / 170) * 0.5; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = 0.8 * gs; ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(p.sx, p.sy); ctx.stroke() } })
       P.forEach((p, i) => {
-        const t2 = (p.z + 1) / 2; const col = TYPES[pts[i].ty].c; let al = 0.32 + t2 * 0.6, rad = 1.9 + t2 * 2.7
-        if (near[i] < 150) { const k = 1 - near[i] / 150; al = Math.min(1, al + k * 0.5); rad += k * 2.5 }
+        const t2 = (p.z + 1) / 2; const col = TYPES[pts[i].ty].c; let al = 0.32 + t2 * 0.6, rad = (1.9 + t2 * 2.7) * gs
+        if (near[i] < 150) { const k = 1 - near[i] / 150; al = Math.min(1, al + k * 0.5); rad += k * 2.5 * gs }
         ctx.beginPath(); ctx.arc(p.sx, p.sy, rad, 0, 7); ctx.fillStyle = hexa(col, al); ctx.fill()
         if (pts[i].lab && pts[i].ty !== 4 && p.z > -0.1) { ctx.fillStyle = 'rgba(24,24,27,' + (0.4 + t2 * 0.5) + ')'; ctx.font = '600 10.5px "Space Grotesk",sans-serif'; ctx.fillText(TYPES[pts[i].ty].k, p.sx + rad + 5, p.sy + 4) }
       })
