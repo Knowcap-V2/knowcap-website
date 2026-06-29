@@ -22,6 +22,8 @@ status: draft
 
 # How to Do Meeting Minutes in 2026: Steps + Free Template
 
+![How to do meeting minutes: a structured meeting-minutes template with sections for decisions and action items on a desk beside a video meeting](/blog/how-to-do-meeting-minutes/hero.webp)
+
 Meeting minutes are the written record of what a meeting **decided** and **assigned** — not a transcript of everything said. To do them well, follow four phases: prepare a template from the agenda before the meeting; during it, capture decisions, action items (with an owner and a deadline), and who attended; after it, format the notes into a clean document within 24 hours; then distribute for approval. The single most common mistake is recording discussion instead of decisions. Good minutes answer one question for anyone who reads them later: *what did we decide, who owns what, and by when?* Everything else is noise. This guide gives you the standard format, a step-by-step method, a free copy-paste template, and an honest answer on whether AI can do it for you.
 
 For Arabic-language teams, there is a native Arabic version of this guide: [نموذج محضر اجتماع وطريقة كتابته](/blog/namuthaj-mahdar-ijtimaa-ar).
