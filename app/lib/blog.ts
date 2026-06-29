@@ -27,9 +27,38 @@ export interface BlogPostMeta {
   dir: 'ltr' | 'rtl'
 }
 
+export interface Heading {
+  id: string
+  text: string
+  level: 2 | 3
+}
+
 export interface BlogPost extends BlogPostMeta {
   html: string
   faqs: { q: string; a: string }[]
+  headings: Heading[]
+}
+
+/** Slug for heading ids — preserves Arabic so RTL anchor links + the TOC work. */
+function slugifyHeading(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[*_`]/g, '')
+    .replace(/[^a-z0-9؀-ۿ\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+}
+
+/** Pull h2/h3 headings (excluding the FAQ block) for the table of contents. */
+function extractHeadings(md: string): Heading[] {
+  const out: Heading[] = []
+  for (const raw of md.split(/\r?\n/)) {
+    const m = raw.trim().match(/^(#{2,3})\s+(.*)$/)
+    if (!m) continue
+    const text = m[2].replace(/[*_`]/g, '').trim()
+    out.push({ id: slugifyHeading(m[2]), text, level: m[1].length as 2 | 3 })
+  }
+  return out
 }
 
 function escapeHtml(s: string): string {
@@ -60,6 +89,7 @@ export function renderMarkdown(md: string): string {
   const out: string[] = []
   let para: string[] = []
   let list: { tag: 'ul' | 'ol'; items: string[] } | null = null
+  let callout: { kind: string; lines: string[] } | null = null
   let firstH1Dropped = false
 
   const flushPara = () => {
@@ -77,6 +107,27 @@ export function renderMarkdown(md: string): string {
 
   for (const raw of lines) {
     const line = raw.trimEnd()
+
+    // Callout fences:  :::key  ...  :::   →  styled <aside>. `kind` ∈ key|note|warn (default note).
+    const fenceOpen = line.match(/^:::\s*(\w+)?\s*$/)
+    if (callout) {
+      if (/^:::\s*$/.test(line)) {
+        flushPara(); flushList()
+        const inner = renderMarkdown(callout.lines.join('\n'))
+        out.push(`<aside class="kb-callout kb-callout-${callout.kind}">${inner}</aside>`)
+        callout = null
+      } else {
+        callout.lines.push(raw)
+      }
+      continue
+    }
+    if (fenceOpen) {
+      flushPara(); flushList()
+      const kind = (fenceOpen[1] ?? 'note').toLowerCase()
+      callout = { kind: ['key', 'note', 'warn'].includes(kind) ? kind : 'note', lines: [] }
+      continue
+    }
+
     const heading = line.match(/^(#{1,4})\s+(.*)$/)
     const ulItem = line.match(/^\s*[-*]\s+(.*)$/)
     const olItem = line.match(/^\s*\d+\.\s+(.*)$/)
@@ -86,8 +137,7 @@ export function renderMarkdown(md: string): string {
       const level = heading[1].length
       if (level === 1 && !firstH1Dropped) { firstH1Dropped = true; continue }
       const text = renderInline(escapeHtml(heading[2]))
-      const id = heading[2].toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-')
-      out.push(`<h${level} id="${id}">${text}</h${level}>`)
+      out.push(`<h${level} id="${slugifyHeading(heading[2])}">${text}</h${level}>`)
     } else if (ulItem || olItem) {
       flushPara()
       const tag = ulItem ? 'ul' : 'ol'
@@ -166,7 +216,12 @@ export function getPost(slug: string): BlogPost | null {
     const { data, content } = matter(fs.readFileSync(path.join(BLOG_DIR, f), 'utf8'))
     const fileSlug = String(data.slug ?? f.replace(/\.md$/, ''))
     if (fileSlug === slug) {
-      return { ...toMeta(fileSlug, data, content), html: renderMarkdown(content), faqs: extractFaqs(content) }
+      return {
+        ...toMeta(fileSlug, data, content),
+        html: renderMarkdown(content),
+        faqs: extractFaqs(content),
+        headings: extractHeadings(content),
+      }
     }
   }
   return null

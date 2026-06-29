@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { getAllPosts, getPost } from '@/lib/blog'
 import { BLOG_CSS } from '../blog-styles'
 import EditorialShell from '@/components/editorial/shell'
+import ReadingProgress from '@/components/blog/reading-progress'
+import TableOfContents from '@/components/blog/toc'
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }))
@@ -38,9 +40,15 @@ const RELATED_LABELS: Record<string, string> = {
   '/compare/knowcap-vs-granola': 'Knowcap vs Granola',
 }
 
+function getAuthorInitials(author: string) {
+  if (author === 'Hassan Arslan') return 'HA'
+  return author.trim().charAt(0).toUpperCase()
+}
+
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = getPost(params.slug)
   if (!post) notFound()
+  const authorInitials = getAuthorInitials(post.author)
 
   const jsonLd: Record<string, any>[] = [
     {
@@ -83,6 +91,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       <div className="kb-root">
         <style dangerouslySetInnerHTML={{ __html: BLOG_CSS }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <ReadingProgress />
 
         <header className="kb-hero">
           <div className="kb-hero-inner">
@@ -102,7 +111,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <h1 className="kb-h1" dir="auto">{post.title}</h1>
             <div className="kb-meta">
               <span><b>{post.date}</b></span>
-              <span><b>{post.author}</b></span>
+              <span className="kb-byline"><span className="kb-avatar">{authorInitials}</span><b>{post.author}</b></span>
               <span><b>{post.readMinutes} min</b> read</span>
             </div>
           </div>
@@ -117,7 +126,14 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           </div>
         )}
 
-        <article className="kb-article" dir={post.dir} lang={post.lang} dangerouslySetInnerHTML={{ __html: post.html }} />
+        <div className="kb-article-wrap">
+          <TableOfContents
+            headings={post.headings}
+            dir={post.dir}
+            label={post.dir === 'rtl' ? 'في هذه الصفحة' : 'On this page'}
+          />
+          <article className="kb-article" dir={post.dir} lang={post.lang} dangerouslySetInnerHTML={{ __html: post.html }} />
+        </div>
 
         {post.relatedPages.length > 0 && (
           <div className="kb-related">
