@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { getAllPosts } from '@/lib/blog'
 import { BLOG_CSS } from './blog-styles'
 import EditorialShell from '@/components/editorial/shell'
+import BlogIndexClient from '@/components/blog/blog-index-client'
 
 export const metadata: Metadata = {
   title: 'Blog — Knowcap',
@@ -57,21 +57,7 @@ export default function BlogIndexPage() {
           </div>
         </header>
 
-        <div className="kb-grid">
-          {posts.map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="kb-card">
-              <span className="kb-card-date">{post.date}</span>
-              <h2 dir="auto">{post.title}</h2>
-              <p dir="auto">{post.description}</p>
-              <div className="kb-card-tags">
-                {post.tags.slice(0, 3).map((t) => (
-                  <span key={t} className="kb-card-tag">{t}</span>
-                ))}
-              </div>
-              <span className="kb-card-read">{post.readMinutes} min read →</span>
-            </Link>
-          ))}
-        </div>
+        <BlogIndexClient posts={posts} />
 
         <section className="kb-cta">
           <h2>AI that only acts on truth.</h2>
