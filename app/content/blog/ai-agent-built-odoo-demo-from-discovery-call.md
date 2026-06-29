@@ -1,23 +1,28 @@
 ---
 title: "I Didn't Build the Odoo Demo. My AI Agent Did — From the Call."
-slug: "ai-agent-built-odoo-demo-from-discovery-call"
-mode: "thesis"
-intent: "informational"
-persona: "odoo-partners"
-target_keyword: "AI Odoo demo"
-target_keyword_5y_mena_interest: null
-geo_score: 84
-est_word_count: 1550
-draft_date: "2026-06-29"
-description: "A client wanted a full Odoo demo by the next afternoon, in front of their CEO. An AI agent built it — database, custom code, and sales docs — pulling the discovery call from Knowcap. Here is exactly how, plus the open-source skill."
-tags: ["odoo", "odoo-partners", "ai-agent", "claude-code", "knowcap", "build-in-public", "erp", "mena"]
-author: "Hassan Arslan"
-lang: "en"
-dir: "ltr"
-hreflang_pair: null
+slug: ai-agent-built-odoo-demo-from-discovery-call
+date: 2026-06-29
+author: Hassan Arslan
+description: A client wanted a full Odoo demo by the next afternoon, in front of their CEO. An AI agent built it — database, custom code, and sales docs — pulling the discovery call from Knowcap. Here is exactly how, plus the open-source skill.
+tags:
+  - "odoo"
+  - "odoo-partners"
+  - "ai-agent"
+  - "claude-code"
+  - "knowcap"
+  - "build-in-public"
+  - "erp"
+  - "mena"
+geo_audiences:
+  - "UAE"
+  - "KSA"
+  - "Egypt"
+target_persona: odoo-partners
+related_pages: []
 source_knowcap_ids: []
-embedded_screenshots: []
-status: draft
+read_minutes: 8
+lang: en
+dir: ltr
 ---
 
 A client asked us for a full Odoo demo. The meeting was the next day, 1:30 PM, in front of their CEO. I didn't build it. Claude built it — pulling everything it needed from Knowcap — while I mostly watched. By the time the meeting started there was a live, working Odoo database tailored to their business, a custom feature that doesn't exist natively, and a full sales kit. I open-sourced the whole pipeline as a Claude Code skill ([github.com/Smetools/odoo-demo-architect](https://github.com/Smetools/odoo-demo-architect)) — steal it. Here is exactly what happened, step by step.
