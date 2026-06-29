@@ -11,6 +11,7 @@ import matter from 'gray-matter'
  */
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
+const PUBLIC_DIR = path.join(process.cwd(), 'public')
 
 export interface BlogPostMeta {
   slug: string
@@ -25,6 +26,24 @@ export interface BlogPostMeta {
   readMinutes: number
   lang: string
   dir: 'ltr' | 'rtl'
+  /** Absolute-from-root path to the post's social/OG image, or null. */
+  ogImage: string | null
+}
+
+/**
+ * Resolve a post's OG image. Explicit frontmatter (`og_image`/`ogImage`) wins;
+ * otherwise look for the per-post asset convention `public/blog/<slug>/og.{webp,png}`.
+ * Returns a root-relative path (e.g. `/blog/<slug>/og.webp`) or null when none exists.
+ */
+function resolveOgImage(slug: string, data: Record<string, any>): string | null {
+  const explicit = data.og_image ?? data.ogImage
+  if (explicit) return String(explicit)
+  for (const ext of ['webp', 'png']) {
+    if (fs.existsSync(path.join(PUBLIC_DIR, 'blog', slug, `og.${ext}`))) {
+      return `/blog/${slug}/og.${ext}`
+    }
+  }
+  return null
 }
 
 export interface Heading {
@@ -193,6 +212,7 @@ function toMeta(slug: string, data: Record<string, any>, body: string): BlogPost
     readMinutes: Math.max(1, Math.round(words / 220)),
     lang,
     dir,
+    ogImage: resolveOgImage(slug, data),
   }
 }
 

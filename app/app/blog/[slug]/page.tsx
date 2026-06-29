@@ -15,6 +15,14 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const post = getPost(params.slug)
   if (!post) return {}
   const url = `https://knowcap.ai/blog/${post.slug}`
+  const ogImageUrl = post.ogImage
+    ? post.ogImage.startsWith('http')
+      ? post.ogImage
+      : `https://knowcap.ai${post.ogImage}`
+    : null
+  const ogImages = ogImageUrl
+    ? [{ url: ogImageUrl, width: 1200, height: 675, alt: post.title }]
+    : undefined
   return {
     title: `${post.title} — Knowcap Blog`,
     description: post.description,
@@ -27,6 +35,13 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       publishedTime: post.date,
       authors: [post.author],
       locale: post.dir === 'rtl' ? 'ar_AR' : 'en_US',
+      ...(ogImages ? { images: ogImages } : {}),
+    },
+    twitter: {
+      card: ogImageUrl ? 'summary_large_image' : 'summary',
+      title: post.title,
+      description: post.description,
+      ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
     },
   }
 }
