@@ -461,7 +461,7 @@ const CSS = `
 .cl-brand{font-family:'Space Grotesk',sans-serif !important;font-variation-settings:normal !important;font-weight:700;letter-spacing:-.02em}
 .cl-navauth .cl-btn,.clh-cta .cl-btn{border-radius:999px}
 @media(max-width:900px){.cl-navlinks{display:none}}
-.clh-hero{position:relative;height:calc(100vh - 64px);min-height:760px;overflow:hidden;
+.clh-hero{position:relative;height:calc(100vh - 64px);min-height:940px;overflow:hidden;
   background:radial-gradient(circle at 50% 58%,#fff 0%,var(--cream) 78%)}
 .clh-head{position:absolute;left:0;right:0;top:84px;z-index:4;text-align:center;padding:0 20px;pointer-events:none}
 .clh-eye{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;
