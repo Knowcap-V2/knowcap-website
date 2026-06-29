@@ -534,7 +534,22 @@ function Reg({ no, label }: { no: string; label: string }) {
 
 /* --------------------------------------------------------------- header */
 
+// Route the "Log in" link: returning visitors (who have logged into the app
+// before, flagged by the kc_returning cookie the app sets on .knowcap.ai) go to
+// the app login; brand-new visitors go to the /beta waitlist. Defaults to /beta
+// (the common case) until the cookie is read on mount.
+function useLoginHref() {
+  const [href, setHref] = useState('/beta')
+  useEffect(() => {
+    if (typeof document !== 'undefined' && /(?:^|;\s*)kc_returning=1(?:;|$)/.test(document.cookie)) {
+      setHref('https://app.knowcap.ai/login')
+    }
+  }, [])
+  return href
+}
+
 function Header() {
+  const loginHref = useLoginHref()
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -557,7 +572,7 @@ function Header() {
           <Link className="cl-navlink" href="/contact-us">Contact</Link>
         </nav>
         <div className="cl-navauth">
-          <a className="cl-login" href="https://app.knowcap.ai/login">Log in</a>
+          <a className="cl-login" href={loginHref}>Log in</a>
           <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join Beta</a>
         </div>
       </div>
@@ -1147,6 +1162,7 @@ function Closer() {
 /* --------------------------------------------------------------- footer */
 
 function Footer() {
+  const loginHref = useLoginHref()
   return (
     <footer className="cl-footer">
       <div className="cl-wrap">
@@ -1187,7 +1203,7 @@ function Footer() {
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
             <a href="/beta">Join Beta</a>
-            <a href="https://app.knowcap.ai/login">Log in</a>
+            <a href={loginHref}>Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
           </div>
