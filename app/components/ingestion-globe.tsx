@@ -110,8 +110,9 @@ export default function IngestionGlobe() {
       DPR = Math.min(2, window.devicePixelRatio || 1); const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
       const narrow = W < 640
       const top = Math.max(H * 0.40, 400), bot = H * 0.99, bh = bot - top
-      if (narrow) { GX = W * 0.5; GY = H * 0.52; GR = Math.min(W * 0.42, H * 0.42) }
-      else { GX = W * 0.44; GY = top + bh * 0.52; GR = Math.min(W * 0.24, bh * 0.52) }
+      if (narrow) { GX = W * 0.5; GY = H * 0.52; GR = Math.min(W * 0.42, H * 0.42, 200) }
+      // absolute cap so the globe is the SAME size at every zoom / screen (no ballooning when zoomed out)
+      else { GX = W * 0.44; GY = top + bh * 0.52; GR = Math.min(W * 0.24, bh * 0.52, 280) }
       HX = W * 0.69; HY = GY; const lx = W * 0.11, rx = W * 0.90
       const colH = H * 0.92 - top
       srcA.forEach((o, i) => { const y = top + colH * ((i + 0.5) / SOURCES.length); o.x = lx; o.y = y; o.el.style.left = lx + 'px'; o.el.style.top = y + 'px' })
