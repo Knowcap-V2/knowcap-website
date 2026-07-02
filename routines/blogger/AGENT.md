@@ -41,7 +41,7 @@ hit a quota.
      VISION `…/strategy/vision.md`, POSITIONING `…/strategy/POSITIONING.md`; shipped slugs; queue row's
      volume+comp).
 5. **Steal the SERP / inherit the brief (Law 1 — MANDATORY gate).** Look for the matching SEO brief at
-   `../claude-knowcap/knowledge/topics/research/seo/content-briefs/<keyword-slug>.md`. **If it exists, it
+   `../claude-knowcap/marketing/digital-employees/seo/state/content-briefs/<keyword-slug>.md`. **If it exists, it
    IS the SERP steal** — write TO it (it carries intent, the H2 outline that beats top-10, PAA questions,
    target word count, the citable-passage callouts). If NO brief exists, pull the live top-3 yourself via
    `serp_organic_live_advanced` (keyword's market: AR→KSA/Egypt+Arabic, EN→Egypt/UAE+English); extract the

@@ -45,7 +45,7 @@ After each shipped draft PR: `total_posts++`, `posts_this_week++`. Reset `posts_
    - Arabic-demand keyword → lang=ar, dir=rtl, slug `-ar` suffix, EN hreflang pair noted
    - English-demand keyword → lang=en, dir=ltr
 4. STEAL THE SERP (Law 1 — mandatory):
-   - brief exists at ../claude-knowcap/knowledge/topics/research/seo/content-briefs/<keyword-slug>.md?
+   - brief exists at ../claude-knowcap/marketing/digital-employees/seo/state/content-briefs/<keyword-slug>.md?
        → inherit it (it carries intent, the beat-top-10 H2 outline, PAA, word-count target, GEO passages)
    - else pull live top-3 via serp_organic_live_advanced (keyword's market) → derive structure
    - neither obtainable → REFUSE (no invented essays)
@@ -90,7 +90,7 @@ Each run reads `cursor`, picks `personas[cursor]`, then advances `cursor = (curs
 5. **Run `node routines/blogger/scripts/seo-pull.mjs`** (live SEO engine). Pulls DataForSEO Google-Ads keyword demand for MENA (KSA + Egypt + UAE) in EN + AR, expands persona seeds into real related keywords with **search volume + competition**, filters to Knowcap ICP intent, ranks by `volume × competition-weight`, dedups against shipped posts, and writes `routines/blogger/opportunity-queue.json` + a digest. **`target_keyword` = the persona's top fresh (uncovered) opportunity** from the queue **by score — EN or AR** (Arabic is in play; Law 4). Auth: DataForSEO creds in `~/.claude/secrets/blogger.md`.
 6. DataForSEO volume + competition from step 5 is the demand signal. Record the chosen keyword's `search_volume` + `competition` in frontmatter.
 6a. **Classify intent + pick language (Laws 2 & 4):** navigational/tool → skip the keyword, take the next; commercial → money-page mode (Law 3); informational → continue. Arabic-demand keyword → `lang: ar`, `dir: rtl`, `-ar` slug.
-6b. **Steal the SERP (Law 1 — mandatory):** read the matching brief at `../claude-knowcap/knowledge/topics/research/seo/content-briefs/<keyword-slug>.md` if present (inherit its outline/PAA/word-count/GEO callouts); else pull live top-3 via `serp_organic_live_advanced` in the keyword's market. No brief + no SERP → REFUSE.
+6b. **Steal the SERP (Law 1 — mandatory):** read the matching brief at `../claude-knowcap/marketing/digital-employees/seo/state/content-briefs/<keyword-slug>.md` if present (inherit its outline/PAA/word-count/GEO callouts); else pull live top-3 via `serp_organic_live_advanced` in the keyword's market. No brief + no SERP → REFUSE.
 7. **Try `case-study` mode:**
    - Query Knowcap MCP `mcp__knowcap__list_sources` → Demo org, persona project
    - For each source, `mcp__knowcap__list_memories` filtered to source via `metadata.source_id`
