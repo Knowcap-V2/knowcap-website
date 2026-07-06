@@ -40,3 +40,6 @@ database_export/
 *.sql
 *_dump.json
 all_data_combined.json
+
+# browser-automation scratch (playwright-cli)
+.playwright-cli/

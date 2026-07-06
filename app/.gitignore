@@ -1,2 +1,5 @@
 .vercel
 ruvector.db
+
+# browser-automation scratch (playwright-cli)
+.playwright-cli/
