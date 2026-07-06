@@ -1,0 +1,646 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content":
+    - /url: "#geist-skip-nav"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - generic [ref=e7]:
+            - generic [ref=e10]:
+              - link "knowcap Pro" [ref=e11] [cursor=pointer]:
+                - /url: /knowcap
+                - img [ref=e12]
+                - generic [ref=e13]:
+                  - generic [ref=e14]: knowcap
+                  - generic [ref=e15]: Pro
+              - button [ref=e16] [cursor=pointer]:
+                - img [ref=e18]
+            - button "Find… F" [ref=e21]:
+              - generic [ref=e23]:
+                - img [ref=e25]
+                - generic [ref=e27]: Find…
+                - generic [ref=e29]: F
+          - navigation [ref=e31]:
+            - generic [ref=e34]:
+              - link "Other Overview" [ref=e35] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing
+                - img "Other" [ref=e37]:
+                  - img "Other" [ref=e38]
+                - generic [ref=e40]: Overview
+              - link "Deployments" [ref=e41] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/deployments
+                - img [ref=e43]
+                - generic [ref=e46]: Deployments
+              - link "Logs" [ref=e47] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/logs
+                - img [ref=e49]
+                - generic [ref=e52]: Logs
+              - link "Analytics" [ref=e53] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/analytics
+                - img [ref=e55]
+                - generic [ref=e58]: Analytics
+              - link "Speed Insights" [ref=e59] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/speed-insights
+                - img [ref=e61]
+                - generic [ref=e64]: Speed Insights
+              - link "Observability" [ref=e65] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/observability
+                - img [ref=e67]
+                - generic [ref=e70]: Observability
+                - img [ref=e72]
+              - link "Firewall" [ref=e74] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/firewall
+                - img [ref=e76]
+                - generic [ref=e80]: Firewall
+                - img [ref=e82]
+              - link "CDN" [ref=e84] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/cdn
+                - img [ref=e86]
+                - generic [ref=e89]: CDN
+                - img [ref=e91]
+              - separator [ref=e93]
+              - link "Environment Variables" [ref=e94] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/settings/environment-variables
+                - img [ref=e96]
+                - generic [ref=e99]: Environment Variables
+              - link "Domains" [ref=e100] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/settings/domains
+                - img [ref=e102]
+                - generic [ref=e105]: Domains
+              - link "Connect Beta" [ref=e106] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/connect
+                - img [ref=e108]
+                - generic [ref=e110]:
+                  - generic [ref=e111]: Connect
+                  - generic [ref=e112]: Beta
+              - link "Integrations" [ref=e113] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/settings/integrations
+                - img [ref=e115]
+                - generic [ref=e118]: Integrations
+              - link "Storage" [ref=e119] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/stores
+                - img [ref=e121]
+                - generic [ref=e124]: Storage
+              - link "Flags" [ref=e125] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/flags
+                - img [ref=e127]
+                - generic [ref=e130]: Flags
+                - img [ref=e132]
+              - link "Agent" [ref=e134] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/agent
+                - img [ref=e136]
+                - generic [ref=e139]: Agent
+                - img [ref=e141]
+              - link "AI Gateway" [ref=e143] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/ai-gateway
+                - img [ref=e145]
+                - generic [ref=e148]: AI Gateway
+                - img [ref=e150]
+              - link "Sandboxes" [ref=e152] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/sandboxes
+                - img [ref=e154]
+                - generic [ref=e157]: Sandboxes
+                - img [ref=e159]
+              - link "Workflows" [ref=e161] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/workflows
+                - img [ref=e163]
+                - generic [ref=e166]: Workflows
+              - link "Images Beta" [ref=e167] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/images
+                - img [ref=e169]
+                - generic [ref=e171]:
+                  - generic [ref=e172]: Images
+                  - generic [ref=e173]: Beta
+              - separator [ref=e174]
+              - link "Usage" [ref=e175] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/usage
+                - img [ref=e177]
+                - generic [ref=e180]: Usage
+              - link "Support" [ref=e181] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/support
+                - img [ref=e183]
+                - generic [ref=e186]: Support
+              - link "Settings" [ref=e187] [cursor=pointer]:
+                - /url: /knowcap/knowcap-landing/settings
+                - img [ref=e189]
+                - generic [ref=e192]: Settings
+                - img [ref=e194]
+          - generic [ref=e200]:
+            - button "Avatar for info-11169208 info-11169208" [ref=e201] [cursor=pointer]:
+              - img "Avatar for info-11169208" [ref=e202]:
+                - img "Avatar for info-11169208" [ref=e203]
+              - generic [ref=e205]: info-11169208
+              - img [ref=e207]
+            - button "notifications" [ref=e211] [cursor=pointer]:
+              - generic [ref=e213]:
+                - img
+        - button [ref=e215] [cursor=pointer]:
+          - img [ref=e216]
+      - generic [ref=e219]:
+        - generic [ref=e220]:
+          - generic [ref=e223]:
+            - link "Other knowcap-landing" [ref=e224] [cursor=pointer]:
+              - /url: /knowcap/knowcap-landing
+              - img "Other" [ref=e225]:
+                - img "Other" [ref=e226]
+              - generic [ref=e228]: knowcap-landing
+            - button [ref=e229] [cursor=pointer]:
+              - img [ref=e231]
+            - link "Back to team view" [ref=e235] [cursor=pointer]:
+              - /url: /knowcap/~/settings/environment-variables
+              - img [ref=e237]
+          - generic [ref=e241]: Environment Variables
+        - generic [ref=e249]:
+          - generic [ref=e251]:
+            - generic [ref=e252]:
+              - heading "Environment Variables" [level=2] [ref=e253]
+              - paragraph [ref=e254]:
+                - text: Store API keys, tokens, and config securely.
+                - link "Learn more" [ref=e255] [cursor=pointer]:
+                  - /url: /docs/environment-variables
+                  - text: Learn more
+                  - img [ref=e256]
+            - generic [ref=e258]:
+              - button "Link Shared Variable" [ref=e260] [cursor=pointer]:
+                - generic [ref=e261]: Link Shared Variable
+              - button "Add Environment Variable" [ref=e262] [cursor=pointer]:
+                - generic [ref=e263]: Add Environment Variable
+          - tablist [ref=e264]:
+            - tab "Project" [selected] [ref=e265] [cursor=pointer]
+            - tab "Shared" [ref=e266] [cursor=pointer]
+          - generic [ref=e267]:
+            - generic [ref=e269]:
+              - searchbox "Search" [ref=e270]
+              - img [ref=e272]
+            - combobox [ref=e275]:
+              - generic [ref=e277]:
+                - searchbox [ref=e278]: All Environments
+                - button "Open menu" [ref=e279] [cursor=pointer]:
+                  - img [ref=e280]
+            - combobox [ref=e283]:
+              - generic [ref=e284]:
+                - generic:
+                  - img
+                - searchbox "All Editors…" [ref=e285]
+                - button "Open menu" [ref=e286] [cursor=pointer]:
+                  - img [ref=e287]
+            - generic [ref=e289]:
+              - generic [ref=e291]:
+                - combobox "Filter variables by status" [ref=e292] [cursor=pointer]:
+                  - option "All Variables" [selected]
+                  - option "Needs Attention"
+                - generic:
+                  - img
+              - generic [ref=e294]:
+                - generic:
+                  - img
+                - combobox [ref=e295] [cursor=pointer]:
+                  - option "Sort by…" [disabled]
+                  - option "Last Updated" [selected]
+                  - option "Name"
+                  - option "Type"
+                - generic:
+                  - img
+          - generic [ref=e296]:
+            - generic [ref=e301]:
+              - generic [ref=e303]:
+                - generic [ref=e304]:
+                  - img [ref=e307]
+                  - generic [ref=e309]:
+                    - button "ADMIN_PASSCODE" [ref=e313] [cursor=pointer]:
+                      - generic "ADMIN_PASSCODE" [ref=e314]:
+                        - generic [ref=e316]: ADMIN_PASSCODE
+                    - generic [ref=e320]: All Environments
+                - generic [ref=e324]:
+                  - button "Click to reveal" [ref=e325] [cursor=pointer]:
+                    - img [ref=e327]
+                  - paragraph [ref=e329]: •••••••••••••••
+                - generic [ref=e330]:
+                  - generic [ref=e332]:
+                    - generic [ref=e334] [cursor=pointer]:
+                      - generic [ref=e335]: Updated
+                      - text: 1h ago
+                    - img [ref=e339] [cursor=pointer]
+                  - button "Menu" [ref=e342] [cursor=pointer]:
+                    - img [ref=e347]
+              - generic [ref=e350]:
+                - generic [ref=e351]:
+                  - img [ref=e354]
+                  - generic [ref=e356]:
+                    - button "GMAIL_USER" [ref=e360] [cursor=pointer]:
+                      - generic "GMAIL_USER" [ref=e361]:
+                        - generic [ref=e363]: GMAIL_USER
+                    - generic [ref=e367]: All Environments
+                - generic [ref=e371]:
+                  - button "Click to reveal" [ref=e372] [cursor=pointer]:
+                    - img [ref=e374]
+                  - paragraph [ref=e376]: •••••••••••••••
+                - generic [ref=e377]:
+                  - generic [ref=e379]:
+                    - generic [ref=e381] [cursor=pointer]:
+                      - generic [ref=e382]: Updated
+                      - text: Jun 8
+                    - img [ref=e386] [cursor=pointer]
+                  - button "Menu" [ref=e389] [cursor=pointer]:
+                    - img [ref=e394]
+              - generic [ref=e397]:
+                - generic [ref=e398]:
+                  - img [ref=e401]
+                  - generic [ref=e403]:
+                    - button "GMAIL_APP_PASSWORD" [ref=e407] [cursor=pointer]:
+                      - generic "GMAIL_APP_PASSWORD" [ref=e408]:
+                        - generic [ref=e410]: GMAIL_APP_PASSWORD
+                    - generic [ref=e414]: All Environments
+                - generic [ref=e418]:
+                  - button "Click to reveal" [ref=e419] [cursor=pointer]:
+                    - img [ref=e421]
+                  - paragraph [ref=e423]: •••••••••••••••
+                - generic [ref=e424]:
+                  - generic [ref=e426]:
+                    - generic [ref=e428] [cursor=pointer]:
+                      - generic [ref=e429]: Updated
+                      - text: Jun 8
+                    - img [ref=e433] [cursor=pointer]
+                  - button "Menu" [ref=e436] [cursor=pointer]:
+                    - img [ref=e441]
+              - generic [ref=e444]:
+                - generic [ref=e445]:
+                  - img [ref=e448]
+                  - generic [ref=e450]:
+                    - button "NEXT_PUBLIC_GEMINI_API_KEY" [ref=e454] [cursor=pointer]:
+                      - generic "NEXT_PUBLIC_GEMINI_API_KEY" [ref=e455]:
+                        - generic [ref=e457]: NEXT_PUBLIC_GEMINI_API_KEY
+                    - generic [ref=e461]: Production
+                - generic [ref=e465]:
+                  - button "Click to reveal" [ref=e466] [cursor=pointer]:
+                    - img [ref=e468]
+                  - paragraph [ref=e470]: •••••••••••••••
+                - generic [ref=e471]:
+                  - generic [ref=e473]:
+                    - generic [ref=e475] [cursor=pointer]:
+                      - generic [ref=e476]: Updated
+                      - text: Jun 8
+                    - img [ref=e480] [cursor=pointer]
+                  - button "Menu" [ref=e483] [cursor=pointer]:
+                    - img [ref=e488]
+              - generic [ref=e491]:
+                - generic [ref=e492]:
+                  - img [ref=e495]
+                  - generic [ref=e497]:
+                    - button "DIRECT_URL" [ref=e501] [cursor=pointer]:
+                      - generic "DIRECT_URL" [ref=e502]:
+                        - generic [ref=e504]: DIRECT_URL
+                    - generic [ref=e508]: All Pre-Production Environments
+                - generic [ref=e512]:
+                  - button "Click to reveal" [ref=e513] [cursor=pointer]:
+                    - img [ref=e515]
+                  - paragraph [ref=e517]: •••••••••••••••
+                - generic [ref=e518]:
+                  - generic [ref=e520]:
+                    - generic [ref=e522] [cursor=pointer]:
+                      - generic [ref=e523]: Updated
+                      - text: Jun 8
+                    - img [ref=e527] [cursor=pointer]
+                  - button "Menu" [ref=e530] [cursor=pointer]:
+                    - img [ref=e535]
+              - generic [ref=e538]:
+                - generic [ref=e539]:
+                  - img [ref=e542]
+                  - generic [ref=e544]:
+                    - button "NEXT_PUBLIC_SUPABASE_URL" [ref=e548] [cursor=pointer]:
+                      - generic "NEXT_PUBLIC_SUPABASE_URL" [ref=e549]:
+                        - generic [ref=e551]: NEXT_PUBLIC_SUPABASE_URL
+                    - generic [ref=e555]: All Pre-Production Environments
+                - generic [ref=e559]:
+                  - button "Click to reveal" [ref=e560] [cursor=pointer]:
+                    - img [ref=e562]
+                  - paragraph [ref=e564]: •••••••••••••••
+                - generic [ref=e565]:
+                  - generic [ref=e567]:
+                    - generic [ref=e569] [cursor=pointer]:
+                      - generic [ref=e570]: Updated
+                      - text: Jun 8
+                    - img [ref=e574] [cursor=pointer]
+                  - button "Menu" [ref=e577] [cursor=pointer]:
+                    - img [ref=e582]
+              - generic [ref=e585]:
+                - generic [ref=e586]:
+                  - img [ref=e589]
+                  - generic [ref=e591]:
+                    - button "NEXT_PUBLIC_SUPABASE_ANON_KEY" [ref=e595] [cursor=pointer]:
+                      - generic "NEXT_PUBLIC_SUPABASE_ANON_KEY" [ref=e596]:
+                        - generic [ref=e598]: NEXT_PUBLIC_SUPABASE_ANON_KEY
+                    - generic [ref=e602]: All Pre-Production Environments
+                - generic [ref=e606]:
+                  - button "Click to reveal" [ref=e607] [cursor=pointer]:
+                    - img [ref=e609]
+                  - paragraph [ref=e611]: •••••••••••••••
+                - generic [ref=e612]:
+                  - generic [ref=e614]:
+                    - generic [ref=e616] [cursor=pointer]:
+                      - generic [ref=e617]: Updated
+                      - text: Jun 8
+                    - img [ref=e621] [cursor=pointer]
+                  - button "Menu" [ref=e624] [cursor=pointer]:
+                    - img [ref=e629]
+              - generic [ref=e632]:
+                - generic [ref=e633]:
+                  - img [ref=e636]
+                  - generic [ref=e638]:
+                    - button "SUPABASE_SERVICE_ROLE_KEY" [ref=e642] [cursor=pointer]:
+                      - generic "SUPABASE_SERVICE_ROLE_KEY" [ref=e643]:
+                        - generic [ref=e645]: SUPABASE_SERVICE_ROLE_KEY
+                    - generic [ref=e649]: All Pre-Production Environments
+                - generic [ref=e653]:
+                  - button "Click to reveal" [ref=e654] [cursor=pointer]:
+                    - img [ref=e656]
+                  - paragraph [ref=e658]: •••••••••••••••
+                - generic [ref=e659]:
+                  - generic [ref=e661]:
+                    - generic [ref=e663] [cursor=pointer]:
+                      - generic [ref=e664]: Updated
+                      - text: Jun 8
+                    - img [ref=e668] [cursor=pointer]
+                  - button "Menu" [ref=e671] [cursor=pointer]:
+                    - img [ref=e676]
+              - generic [ref=e679]:
+                - generic [ref=e680]:
+                  - img [ref=e683]
+                  - generic [ref=e685]:
+                    - button "AWS_BUCKET_NAME" [ref=e689] [cursor=pointer]:
+                      - generic "AWS_BUCKET_NAME" [ref=e690]:
+                        - generic [ref=e692]: AWS_BUCKET_NAME
+                    - generic [ref=e696]: Production
+                - generic [ref=e700]:
+                  - button "Click to reveal" [ref=e701] [cursor=pointer]:
+                    - img [ref=e703]
+                  - paragraph [ref=e705]: •••••••••••••••
+                - generic [ref=e706]:
+                  - generic [ref=e708]:
+                    - generic [ref=e710] [cursor=pointer]:
+                      - generic [ref=e711]: Updated
+                      - text: Jun 8
+                    - img [ref=e715] [cursor=pointer]
+                  - button "Menu" [ref=e718] [cursor=pointer]:
+                    - img [ref=e723]
+              - generic [ref=e726]:
+                - generic [ref=e727]:
+                  - img [ref=e730]
+                  - generic [ref=e732]:
+                    - button "AWS_FOLDER_PREFIX" [ref=e736] [cursor=pointer]:
+                      - generic "AWS_FOLDER_PREFIX" [ref=e737]:
+                        - generic [ref=e739]: AWS_FOLDER_PREFIX
+                    - generic [ref=e743]: Production
+                - generic [ref=e747]:
+                  - button "Click to reveal" [ref=e748] [cursor=pointer]:
+                    - img [ref=e750]
+                  - paragraph [ref=e752]: •••••••••••••••
+                - generic [ref=e753]:
+                  - generic [ref=e755]:
+                    - generic [ref=e757] [cursor=pointer]:
+                      - generic [ref=e758]: Updated
+                      - text: Jun 8
+                    - img [ref=e762] [cursor=pointer]
+                  - button "Menu" [ref=e765] [cursor=pointer]:
+                    - img [ref=e770]
+              - generic [ref=e773]:
+                - generic [ref=e774]:
+                  - img [ref=e777]
+                  - generic [ref=e779]:
+                    - button "AWS_REGION" [ref=e783] [cursor=pointer]:
+                      - generic "AWS_REGION" [ref=e784]:
+                        - generic [ref=e786]: AWS_REGION
+                    - generic [ref=e790]: Production
+                - generic [ref=e794]:
+                  - button "Click to reveal" [ref=e795] [cursor=pointer]:
+                    - img [ref=e797]
+                  - paragraph [ref=e799]: •••••••••••••••
+                - generic [ref=e800]:
+                  - generic [ref=e802]:
+                    - generic [ref=e804] [cursor=pointer]:
+                      - generic [ref=e805]: Updated
+                      - text: Jun 8
+                    - img [ref=e809] [cursor=pointer]
+                  - button "Menu" [ref=e812] [cursor=pointer]:
+                    - img [ref=e817]
+              - generic [ref=e820]:
+                - generic [ref=e821]:
+                  - img [ref=e824]
+                  - generic [ref=e826]:
+                    - button "ABACUSAI_API_KEY" [ref=e830] [cursor=pointer]:
+                      - generic "ABACUSAI_API_KEY" [ref=e831]:
+                        - generic [ref=e833]: ABACUSAI_API_KEY
+                    - generic [ref=e837]: Production
+                - generic [ref=e841]:
+                  - button "Click to reveal" [ref=e842] [cursor=pointer]:
+                    - img [ref=e844]
+                  - paragraph [ref=e846]: •••••••••••••••
+                - generic [ref=e847]:
+                  - generic [ref=e849]:
+                    - generic [ref=e851] [cursor=pointer]:
+                      - generic [ref=e852]: Updated
+                      - text: Jun 8
+                    - img [ref=e856] [cursor=pointer]
+                  - button "Menu" [ref=e859] [cursor=pointer]:
+                    - img [ref=e864]
+              - generic [ref=e867]:
+                - generic [ref=e868]:
+                  - img [ref=e871]
+                  - generic [ref=e873]:
+                    - button "NEXT_PUBLIC_SUPABASE_URL" [ref=e877] [cursor=pointer]:
+                      - generic "NEXT_PUBLIC_SUPABASE_URL" [ref=e878]:
+                        - generic [ref=e880]: NEXT_PUBLIC_SUPABASE_URL
+                    - generic [ref=e884]: Production
+                - generic [ref=e888]:
+                  - button "Click to reveal" [ref=e889] [cursor=pointer]:
+                    - img [ref=e891]
+                  - paragraph [ref=e893]: •••••••••••••••
+                - generic [ref=e894]:
+                  - generic [ref=e896]:
+                    - generic [ref=e898] [cursor=pointer]:
+                      - generic [ref=e899]: Updated
+                      - text: Jun 8
+                    - img [ref=e903] [cursor=pointer]
+                  - button "Menu" [ref=e906] [cursor=pointer]:
+                    - img [ref=e911]
+              - generic [ref=e914]:
+                - generic [ref=e915]:
+                  - img [ref=e918]
+                  - generic [ref=e920]:
+                    - button "NEXT_PUBLIC_SUPABASE_ANON_KEY" [ref=e924] [cursor=pointer]:
+                      - generic "NEXT_PUBLIC_SUPABASE_ANON_KEY" [ref=e925]:
+                        - generic [ref=e927]: NEXT_PUBLIC_SUPABASE_ANON_KEY
+                    - generic [ref=e931]: Production
+                - generic [ref=e935]:
+                  - button "Click to reveal" [ref=e936] [cursor=pointer]:
+                    - img [ref=e938]
+                  - paragraph [ref=e940]: •••••••••••••••
+                - generic [ref=e941]:
+                  - generic [ref=e943]:
+                    - generic [ref=e945] [cursor=pointer]:
+                      - generic [ref=e946]: Updated
+                      - text: Jun 8
+                    - img [ref=e950] [cursor=pointer]
+                  - button "Menu" [ref=e953] [cursor=pointer]:
+                    - img [ref=e958]
+              - generic [ref=e961]:
+                - generic [ref=e962]:
+                  - img [ref=e965]
+                  - generic [ref=e967]:
+                    - button "SUPABASE_SERVICE_ROLE_KEY" [ref=e971] [cursor=pointer]:
+                      - generic "SUPABASE_SERVICE_ROLE_KEY" [ref=e972]:
+                        - generic [ref=e974]: SUPABASE_SERVICE_ROLE_KEY
+                    - generic [ref=e978]: Production
+                - generic [ref=e982]:
+                  - button "Click to reveal" [ref=e983] [cursor=pointer]:
+                    - img [ref=e985]
+                  - paragraph [ref=e987]: •••••••••••••••
+                - generic [ref=e988]:
+                  - generic [ref=e990]:
+                    - generic [ref=e992] [cursor=pointer]:
+                      - generic [ref=e993]: Updated
+                      - text: Jun 8
+                    - img [ref=e997] [cursor=pointer]
+                  - button "Menu" [ref=e1000] [cursor=pointer]:
+                    - img [ref=e1005]
+              - generic [ref=e1008]:
+                - generic [ref=e1009]:
+                  - img [ref=e1012]
+                  - generic [ref=e1014]:
+                    - button "DIRECT_URL" [ref=e1018] [cursor=pointer]:
+                      - generic "DIRECT_URL" [ref=e1019]:
+                        - generic [ref=e1021]: DIRECT_URL
+                    - generic [ref=e1025]: Production
+                - generic [ref=e1029]:
+                  - button "Click to reveal" [ref=e1030] [cursor=pointer]:
+                    - img [ref=e1032]
+                  - paragraph [ref=e1034]: •••••••••••••••
+                - generic [ref=e1035]:
+                  - generic [ref=e1037]:
+                    - generic [ref=e1039] [cursor=pointer]:
+                      - generic [ref=e1040]: Updated
+                      - text: Jun 8
+                    - img [ref=e1044] [cursor=pointer]
+                  - button "Menu" [ref=e1047] [cursor=pointer]:
+                    - img [ref=e1052]
+              - generic [ref=e1055]:
+                - generic [ref=e1056]:
+                  - img [ref=e1059]
+                  - generic [ref=e1061]:
+                    - button "DATABASE_URL" [ref=e1065] [cursor=pointer]:
+                      - generic "DATABASE_URL" [ref=e1066]:
+                        - generic [ref=e1068]: DATABASE_URL
+                    - generic [ref=e1072]: All Environments
+                - generic [ref=e1076]:
+                  - button "Click to reveal" [ref=e1077] [cursor=pointer]:
+                    - img [ref=e1079]
+                  - paragraph [ref=e1081]: •••••••••••••••
+                - generic [ref=e1082]:
+                  - generic [ref=e1084]:
+                    - generic [ref=e1086] [cursor=pointer]:
+                      - generic [ref=e1087]: Updated
+                      - text: Jun 8
+                    - img [ref=e1091] [cursor=pointer]
+                  - button "Menu" [ref=e1094] [cursor=pointer]:
+                    - img [ref=e1099]
+              - generic [ref=e1102]:
+                - generic [ref=e1103]:
+                  - img [ref=e1106]
+                  - generic [ref=e1108]:
+                    - button "ADMIN_JWT_SECRET" [ref=e1112] [cursor=pointer]:
+                      - generic "ADMIN_JWT_SECRET" [ref=e1113]:
+                        - generic [ref=e1115]: ADMIN_JWT_SECRET
+                    - generic [ref=e1119]: All Environments
+                - generic [ref=e1123]:
+                  - button "Click to reveal" [ref=e1124] [cursor=pointer]:
+                    - img [ref=e1126]
+                  - paragraph [ref=e1128]: •••••••••••••••
+                - generic [ref=e1129]:
+                  - generic [ref=e1131]:
+                    - generic [ref=e1133] [cursor=pointer]:
+                      - generic [ref=e1134]: Updated
+                      - text: Jun 8
+                    - img [ref=e1138] [cursor=pointer]
+                  - button "Menu" [ref=e1141] [cursor=pointer]:
+                    - img [ref=e1146]
+              - generic [ref=e1149]:
+                - generic [ref=e1150]:
+                  - img [ref=e1153]
+                  - generic [ref=e1155]:
+                    - button "ADMIN_API_TOKEN" [ref=e1159] [cursor=pointer]:
+                      - generic "ADMIN_API_TOKEN" [ref=e1160]:
+                        - generic [ref=e1162]: ADMIN_API_TOKEN
+                    - generic [ref=e1166]: All Environments
+                - generic [ref=e1170]:
+                  - button "Click to reveal" [ref=e1171] [cursor=pointer]:
+                    - img [ref=e1173]
+                  - paragraph [ref=e1175]: •••••••••••••••
+                - generic [ref=e1176]:
+                  - generic [ref=e1178]:
+                    - generic [ref=e1180] [cursor=pointer]:
+                      - generic [ref=e1181]: Updated
+                      - text: Jun 8
+                    - img [ref=e1185] [cursor=pointer]
+                  - button "Menu" [ref=e1188] [cursor=pointer]:
+                    - img [ref=e1193]
+              - generic [ref=e1196]:
+                - generic [ref=e1197]:
+                  - img [ref=e1200]
+                  - generic [ref=e1202]:
+                    - button "NEXT_PUBLIC_POSTHOG_HOST" [ref=e1206] [cursor=pointer]:
+                      - generic "NEXT_PUBLIC_POSTHOG_HOST" [ref=e1207]:
+                        - generic [ref=e1209]: NEXT_PUBLIC_POSTHOG_HOST
+                    - generic [ref=e1213]: All Environments
+                - generic [ref=e1217]:
+                  - button "Click to reveal" [ref=e1218] [cursor=pointer]:
+                    - img [ref=e1220]
+                  - paragraph [ref=e1222]: •••••••••••••••
+                - generic [ref=e1223]:
+                  - generic [ref=e1225]:
+                    - generic [ref=e1227] [cursor=pointer]:
+                      - generic [ref=e1228]: Added
+                      - text: Jun 8
+                    - img [ref=e1232] [cursor=pointer]
+                  - button "Menu" [ref=e1235] [cursor=pointer]:
+                    - img [ref=e1240]
+              - generic [ref=e1243]:
+                - generic [ref=e1244]:
+                  - img [ref=e1247]
+                  - generic [ref=e1249]:
+                    - button "NEXT_PUBLIC_POSTHOG_KEY" [ref=e1253] [cursor=pointer]:
+                      - generic "NEXT_PUBLIC_POSTHOG_KEY" [ref=e1254]:
+                        - generic [ref=e1256]: NEXT_PUBLIC_POSTHOG_KEY
+                    - generic [ref=e1260]: All Environments
+                - generic [ref=e1264]:
+                  - button "Click to reveal" [ref=e1265] [cursor=pointer]:
+                    - img [ref=e1267]
+                  - paragraph [ref=e1269]: •••••••••••••••
+                - generic [ref=e1270]:
+                  - generic [ref=e1272]:
+                    - generic [ref=e1274] [cursor=pointer]:
+                      - generic [ref=e1275]: Added
+                      - text: Jun 8
+                    - img [ref=e1279] [cursor=pointer]
+                  - button "Menu" [ref=e1282] [cursor=pointer]:
+                    - img [ref=e1287]
+            - generic [ref=e1291]:
+              - generic [ref=e1293] [cursor=pointer]:
+                - checkbox [checked] [ref=e1294]
+                - img [ref=e1296]
+              - generic [ref=e1298]:
+                - text: Enable access to
+                - link "System Environment Variables" [ref=e1299] [cursor=pointer]:
+                  - /url: /docs/environment-variables/system-environment-variables
+                  - text: System Environment Variables
+                  - img [ref=e1300]
+  - alert [ref=e1302]
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - img
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - img
