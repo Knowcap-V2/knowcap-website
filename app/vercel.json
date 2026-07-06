@@ -1,4 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "export DIRECT_URL=\"$(node scripts/session-url.mjs)\" && prisma db push --skip-generate && prisma generate && next build"
+  "buildCommand": "node scripts/check-schema-drift.mjs && prisma generate && next build"
 }
