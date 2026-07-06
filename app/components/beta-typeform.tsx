@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { Check, ArrowRight, Loader2, ChevronUp, ChevronDown, Mic, Disc3, FileUp, Link2, Send, Clock } from 'lucide-react'
 import Image from 'next/image'
+import { identifyLead, trackEvent } from '@/components/posthog-provider'
 
 /* ─── Question definitions ─────────────────────────────────── */
 
@@ -494,30 +495,57 @@ export default function BetaTypeform() {
     if (idx > 0) goTo(STEP_ORDER[idx - 1])
   }, [currentStep, goTo])
 
+  // Lead capture (Jun 2026 incident: backend submits failed silently and 2
+  // completed applications were unrecoverable — no email anywhere). Identify
+  // the lead in PostHog the moment they advance past the contact step, so a
+  // later backend failure can never lose their contact info again.
+  const prevStepRef = useRef(currentStep)
+  useEffect(() => {
+    const leftContact = prevStepRef.current === 'contact' && currentStep !== 'contact'
+    prevStepRef.current = currentStep
+    if (!leftContact) return
+    const email = contact.email.trim()
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return
+    identifyLead(email, { name: contact.name, company: contact.company })
+    trackEvent('beta_contact_entered', {
+      name: contact.name,
+      email,
+      company: contact.company,
+    })
+  }, [currentStep, contact])
+
   const submit = async () => {
     setLoading(true)
     setError('')
+    const payload = {
+      name: contact.name,
+      email: contact.email,
+      company: contact.company,
+      role: segment,
+      motivation,
+      topChallenge: pain,
+      meetingPlatforms: channels.join(', '),
+      aiUsage,
+      region,
+    }
+    // Capture BEFORE the network call: the lead + full answers live in
+    // PostHog even if the API dies mid-flight.
+    identifyLead(contact.email, { name: contact.name, company: contact.company })
+    trackEvent('beta_form_submitted', payload)
     try {
       const res = await fetch('/api/submit-beta-application', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: contact.name,
-          email: contact.email,
-          company: contact.company,
-          role: segment,
-          motivation,
-          topChallenge: pain,
-          meetingPlatforms: channels.join(', '),
-          aiUsage,
-          region,
-        }),
+        body: JSON.stringify(payload),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Submission failed')
+      trackEvent('beta_form_success', { email: contact.email })
       goTo('success')
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Something went wrong. Try again.')
+      const message = e instanceof Error ? e.message : 'Something went wrong. Try again.'
+      trackEvent('beta_form_error', { email: contact.email, error: message })
+      setError(message)
     } finally {
       setLoading(false)
     }
