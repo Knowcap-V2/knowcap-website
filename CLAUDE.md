@@ -18,6 +18,7 @@ Brand + marketing + website for Knowcap (knowcap.ai). Renamed `knowcap-landing` 
 | Brand DNA | `docs/brand/` (VISION, POSITIONING, MOAT, STRATEGY, PRODUCT, personas, decisions, design-explorations, legacy) |
 | Marketing research | `docs/research/` (audits/, data/, competitors/) |
 | Campaigns | `docs/campaigns/` (stratdev/, landing-pages/, linkedin-outbound, meta-paid-sprint) |
+| Content & features docs | `docs/content-and-features/` (incl. **utm-links.html** — canonical UTM link set) |
 | Content drafts | `docs/content-pipeline/` (strategy/, drafts/, ideas/, video/) |
 | Strategy | `docs/strategy/` (gtm-strategy.md, june-2026-gtm-game.md) |
 | Design system | `docs/DESIGN.md` + `docs/DESIGN-E.md` |
@@ -28,6 +29,9 @@ Always read `docs/DESIGN.md` (or `docs/DESIGN-E.md` for the /e variant) before m
 
 ## Vision / brand DNA
 `docs/brand/VISION.md` is the source of truth for everything Knowcap means. Cited by every feat() PR body in the main `knowcap` repo via full GitHub URL.
+
+## Sharing links — UTM rule (LOAD-BEARING, locked 2026-07-06)
+When Hassan asks for a knowcap.ai link, or any knowcap.ai URL is going somewhere external (post, DM, email, bio, video description), NEVER hand over a bare URL. Pull the matching tagged link from **`docs/content-and-features/utm-links.html`** (per-channel set for `/` and `/beta`, plus the formula for any path: `?utm_source=<where>&utm_medium=<how>&utm_campaign=<push>`). Born from the Jun 2026 lost-leads incident — both lost /beta submitters were untraceable "direct". Internal knowcap.ai→knowcap.ai links NEVER get UTMs.
 
 ## Branch Rules
 Same as all Knowcap-V2 repos: never push to main. Branch + PR only.
