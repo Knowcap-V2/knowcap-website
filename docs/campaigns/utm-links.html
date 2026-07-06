@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowcap UTM Links — copy-paste attribution set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#005EFF; --blue-dark:#0046bd; --blue-light:rgba(0,94,255,0.08);
+    --cyan:#00C6FF;
+    --navy:#191F2E;
+    --txt:#191F2E; --dim:#414651; --faint:#6b7280;
+    --bg:#F5F7FA;
+    --hero:radial-gradient(circle at 50% 0%, #E3F2FD 0%, #F8FAFC 70%);
+    --surface:#ffffff; --glass:rgba(255,255,255,0.95);
+    --line:#e5e9f0;
+    --ok:#16a34a; --warn:#d97706; --bad:#dc2626; --park:#0284c7;
+    --sh-sm:0 2px 4px rgba(0,0,0,0.02);
+    --sh-md:0 12px 24px -6px rgba(0,0,0,0.05);
+    --sh-lg:0 20px 40px -10px rgba(0,0,0,0.1);
+    --r:16px; --r-sm:10px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font:15px/1.6 Inter,system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:0}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 28px 64px}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;color:var(--navy);
+    letter-spacing:-0.02em;line-height:1.2;text-wrap:balance}
+  h1{font-size:34px;margin:0 0 6px;font-weight:700}
+  h2{font-size:21px;margin:40px 0 14px;font-weight:600;
+    border-bottom:1px solid var(--line);padding-bottom:8px}
+  h3{font-size:16px;margin:22px 0 8px;font-weight:600;color:var(--blue)}
+  p{text-wrap:pretty}
+  .sub{color:var(--dim);margin:0 0 4px;font-size:15.5px}
+  .src{color:var(--faint);font-size:12.5px;margin:0 0 26px}
+  a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+  .label{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;
+    color:var(--blue);text-transform:uppercase;letter-spacing:.1em;
+    background:var(--blue-light);padding:4px 12px;border-radius:100px;
+    display:inline-block;margin-bottom:14px}
+  .lead{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);
+    padding:14px 18px;border-radius:var(--r-sm);margin:16px 0;font-size:15px;
+    box-shadow:var(--sh-sm)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0 10px;
+    background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--faint);font-weight:600;font-size:11.5px;text-transform:uppercase;
+    letter-spacing:.04em;background:#fafbfc}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover td{background:#f8fafd}
+  .pill{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11.5px;
+    font-weight:600;white-space:nowrap}
+  .pill.live{background:#dcfce7;color:#15803d}
+  .pill.note{background:#fef3c7;color:#b45309}
+  .box{background:#fff;border:1px solid var(--line);border-left:4px solid var(--ok);
+    border-radius:var(--r-sm);padding:12px 16px;margin:10px 0;box-shadow:var(--sh-sm)}
+  .box.warn{border-left-color:var(--warn)}
+  .box.info{border-left-color:var(--blue)}
+  .box b{color:var(--navy)} .box .muted{color:var(--faint)}
+  ul{margin:8px 0;padding-left:22px} li{margin:6px 0}
+  code{background:var(--blue-light);border:1px solid #d6e4ff;border-radius:5px;padding:1px 6px;
+    font:12.5px ui-monospace,Consolas,monospace;color:var(--blue-dark);word-break:break-all}
+  .muted{color:var(--faint)}
+  footer{margin-top:44px;color:var(--faint);font-size:12px;
+    border-top:1px solid var(--line);padding-top:16px}
+  @media (max-width:760px){ h1{font-size:27px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="label">Marketing Ops</span>
+  <h1>Knowcap <span style="background:linear-gradient(135deg,#005EFF 0%,#00C6FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block">UTM Links</span></h1>
+  <p class="sub">Copy-paste attribution set — never share a bare <code>knowcap.ai</code> link again.</p>
+  <p class="src">Born from the Jun 2026 lost-leads incident: both /beta submitters showed as "direct" — untraceable. PostHog and GA4 auto-capture UTM parameters; no site change needed.</p>
+
+  <div class="lead"><b>The rule:</b> every link you post or DM carries <code>utm_source</code> (where) + <code>utm_medium</code> (how) + <code>utm_campaign</code> (which push). Attribution then shows up automatically in PostHog (session entry + person profile) and GA4 (Traffic acquisition).</div>
+
+  <h2>Homepage links — knowcap.ai</h2>
+  <table>
+    <thead><tr><th>Channel</th><th>Copy-paste link</th></tr></thead>
+    <tbody>
+      <tr><td>LinkedIn — your posts</td><td><code>https://knowcap.ai/?utm_source=linkedin&amp;utm_medium=social&amp;utm_campaign=hassan-post</code></td></tr>
+      <tr><td>LinkedIn — company page</td><td><code>https://knowcap.ai/?utm_source=linkedin&amp;utm_medium=social&amp;utm_campaign=company-page</code></td></tr>
+      <tr><td>LinkedIn — outbound DMs</td><td><code>https://knowcap.ai/?utm_source=linkedin&amp;utm_medium=dm&amp;utm_campaign=outbound</code></td></tr>
+      <tr><td>X / Twitter</td><td><code>https://knowcap.ai/?utm_source=x&amp;utm_medium=social&amp;utm_campaign=hassan-post</code></td></tr>
+      <tr><td>Instagram — bio</td><td><code>https://knowcap.ai/?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=bio</code></td></tr>
+      <tr><td>Instagram — reels/stories</td><td><code>https://knowcap.ai/?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=reel</code></td></tr>
+      <tr><td>WhatsApp shares</td><td><code>https://knowcap.ai/?utm_source=whatsapp&amp;utm_medium=dm&amp;utm_campaign=share</code></td></tr>
+      <tr><td>Telegram</td><td><code>https://knowcap.ai/?utm_source=telegram&amp;utm_medium=dm&amp;utm_campaign=share</code></td></tr>
+      <tr><td>Email signature</td><td><code>https://knowcap.ai/?utm_source=email&amp;utm_medium=signature&amp;utm_campaign=evergreen</code></td></tr>
+      <tr><td>Newsletter</td><td><code>https://knowcap.ai/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=issue</code></td></tr>
+      <tr><td>YouTube descriptions</td><td><code>https://knowcap.ai/?utm_source=youtube&amp;utm_medium=video&amp;utm_campaign=description</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Beta signup links — knowcap.ai/beta</h2>
+  <table>
+    <thead><tr><th>Channel</th><th>Copy-paste link</th></tr></thead>
+    <tbody>
+      <tr><td>LinkedIn — your posts</td><td><code>https://knowcap.ai/beta?utm_source=linkedin&amp;utm_medium=social&amp;utm_campaign=beta-push</code></td></tr>
+      <tr><td>LinkedIn — outbound DMs</td><td><code>https://knowcap.ai/beta?utm_source=linkedin&amp;utm_medium=dm&amp;utm_campaign=beta-outbound</code></td></tr>
+      <tr><td>X / Twitter</td><td><code>https://knowcap.ai/beta?utm_source=x&amp;utm_medium=social&amp;utm_campaign=beta-push</code></td></tr>
+      <tr><td>WhatsApp</td><td><code>https://knowcap.ai/beta?utm_source=whatsapp&amp;utm_medium=dm&amp;utm_campaign=beta-invite</code></td></tr>
+      <tr><td>Telegram</td><td><code>https://knowcap.ai/beta?utm_source=telegram&amp;utm_medium=dm&amp;utm_campaign=beta-invite</code></td></tr>
+      <tr><td>Email / newsletter</td><td><code>https://knowcap.ai/beta?utm_source=email&amp;utm_medium=email&amp;utm_campaign=beta-invite</code></td></tr>
+      <tr><td>Instagram bio</td><td><code>https://knowcap.ai/beta?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=beta-bio</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Formula for any URL</h2>
+  <div class="box info">
+    <code>https://knowcap.ai/&lt;path&gt;?utm_source=&lt;where&gt;&amp;utm_medium=&lt;how&gt;&amp;utm_campaign=&lt;push-name&gt;</code>
+    <ul>
+      <li><b>utm_source</b> — the platform: <code>linkedin</code> <code>x</code> <code>instagram</code> <code>whatsapp</code> <code>telegram</code> <code>email</code> <code>newsletter</code> <code>youtube</code> <code>producthunt</code></li>
+      <li><b>utm_medium</b> — the mechanism: <code>social</code> <code>dm</code> <code>email</code> <code>video</code> <code>signature</code> <code>paid</code></li>
+      <li><b>utm_campaign</b> — the specific push, kebab-case + date when time-bound: <code>beta-push-jul26</code>, <code>launch-week</code></li>
+      <li>All lowercase, hyphens not spaces. Blog posts too: <code>https://knowcap.ai/blog/&lt;slug&gt;?utm_source=linkedin&amp;utm_medium=social&amp;utm_campaign=blog-share</code></li>
+    </ul>
+  </div>
+
+  <h2>Where attribution shows up</h2>
+  <ul>
+    <li><b>PostHog</b> (project 441003): person profile → initial UTM properties; session entry props on every session. Combined with <code>beta_contact_entered</code> / <code>beta_form_submitted</code> events, every lead now arrives with source + email attached.</li>
+    <li><b>GA4</b>: Reports → Acquisition → Traffic acquisition (session source/medium/campaign).</li>
+  </ul>
+
+  <div class="box warn"><b>Don't</b> add UTMs to internal links (page-to-page on knowcap.ai) — it overwrites the real source mid-session. External shares only.</div>
+
+  <footer>Knowcap marketing ops · generated 2026-07-06 · lives at docs/campaigns/utm-links.html</footer>
+</div>
+</body>
+</html>
