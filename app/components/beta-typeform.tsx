@@ -540,8 +540,8 @@ export default function BetaTypeform() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Submission failed')
+      goTo('success') // navigate first — a capture hiccup must never mask a saved application
       trackEvent('beta_form_success', { email: contact.email })
-      goTo('success')
     } catch (e) {
       const message = e instanceof Error ? e.message : 'Something went wrong. Try again.'
       trackEvent('beta_form_error', { email: contact.email, error: message })

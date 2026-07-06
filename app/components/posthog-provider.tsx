@@ -55,10 +55,19 @@ export function trackLandingCTA(cta: string) {
  */
 export function identifyLead(email: string, props?: Record<string, unknown>) {
   if (!POSTHOG_KEY || typeof window === 'undefined') return
-  posthog.identify(email, { email, ...props })
+  try {
+    posthog.identify(email, { email, ...props })
+  } catch {
+    // analytics must never break the flow it instruments (e.g. Safari ITP /
+    // private-mode localStorage throws)
+  }
 }
 
 export function trackEvent(event: string, props?: Record<string, unknown>) {
   if (!POSTHOG_KEY || typeof window === 'undefined') return
-  posthog.capture(event, props)
+  try {
+    posthog.capture(event, props)
+  } catch {
+    // same: swallow — a failed capture must not fail the caller
+  }
 }
