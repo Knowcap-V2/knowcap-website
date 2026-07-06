@@ -46,3 +46,28 @@ export function trackLandingCTA(cta: string) {
   if (!POSTHOG_KEY || typeof window === 'undefined') return
   posthog.capture('landing_cta_click', { cta_type: cta })
 }
+
+/**
+ * Identify a lead by email as soon as we have it. Makes the lead recoverable
+ * from PostHog even if the backend submit fails (lesson from the Jun 2026
+ * schema-drift incident: 2 completed /beta applications were lost with no
+ * recoverable contact info).
+ */
+export function identifyLead(email: string, props?: Record<string, unknown>) {
+  if (!POSTHOG_KEY || typeof window === 'undefined') return
+  try {
+    posthog.identify(email, { email, ...props })
+  } catch {
+    // analytics must never break the flow it instruments (e.g. Safari ITP /
+    // private-mode localStorage throws)
+  }
+}
+
+export function trackEvent(event: string, props?: Record<string, unknown>) {
+  if (!POSTHOG_KEY || typeof window === 'undefined') return
+  try {
+    posthog.capture(event, props)
+  } catch {
+    // same: swallow — a failed capture must not fail the caller
+  }
+}
