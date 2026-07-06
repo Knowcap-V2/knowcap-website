@@ -4,8 +4,13 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    // directUrl is used ONLY by Prisma CLI (db push / migrate), never by the
+    // runtime client. The build derives it from DATABASE_URL as the Supabase
+    // SESSION pooler (port 5432) — the transaction pooler (:6543) that the
+    // runtime uses cannot run DDL. See app/scripts/session-url.mjs + vercel.json.
+    directUrl = env("DIRECT_URL")
 }
 
 model BetaApplication {
