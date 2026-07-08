@@ -6,6 +6,7 @@ import { BLOG_CSS } from '../blog-styles'
 import EditorialShell from '@/components/editorial/shell'
 import ReadingProgress from '@/components/blog/reading-progress'
 import TableOfContents from '@/components/blog/toc'
+import TemplateDownload from '@/components/blog/template-download'
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }))
@@ -151,6 +152,14 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           />
           <article className="kb-article" dir={post.dir} lang={post.lang} dangerouslySetInnerHTML={{ __html: post.html }} />
         </div>
+
+        {post.templateDownload && (
+          <TemplateDownload
+            href={post.templateDownload.href}
+            label={post.templateDownload.label}
+            slug={post.slug}
+          />
+        )}
 
         {post.relatedPages.length > 0 && (
           <div className="kb-related">

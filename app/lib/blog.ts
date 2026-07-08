@@ -6,8 +6,9 @@ import matter from 'gray-matter'
  * Blog content lib — reads markdown posts from content/blog/ at build time.
  * Posts are produced by the blogger routine (routines/blogger/) and validated
  * by its gates before landing here, so the markdown surface is deliberately
- * small: headings, paragraphs, links, inline code, bold/italic. No external
- * markdown dependency — the renderer below covers exactly that surface.
+ * small: headings, paragraphs, links, inline code, bold/italic, GFM tables,
+ * fenced code blocks. No external markdown dependency — the renderer below
+ * covers exactly that surface.
  */
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
@@ -28,6 +29,8 @@ export interface BlogPostMeta {
   dir: 'ltr' | 'rtl'
   /** Absolute-from-root path to the post's social/OG image, or null. */
   ogImage: string | null
+  /** Free downloadable asset (e.g. a copy-paste template as .docx), or null. */
+  templateDownload: { href: string; label: string } | null
 }
 
 /**
@@ -98,10 +101,21 @@ function renderInline(s: string): string {
     })
 }
 
+/** True if `line` is a GFM table separator row, e.g. `|---|:--:|---|` or `---|---`. */
+function isTableSeparator(line: string): boolean {
+  const cells = line.trim().replace(/^\||\|$/g, '').split('|')
+  return cells.length > 0 && cells.every((c) => /^\s*:?-{3,}:?\s*$/.test(c))
+}
+
+function splitTableRow(line: string): string[] {
+  return line.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim())
+}
+
 /**
  * Block-level markdown → HTML. Covers the post pipeline's surface:
  * h1–h4 (leading h1 dropped — the page renders the frontmatter title),
- * paragraphs, unordered/ordered lists, blockquotes, hr.
+ * paragraphs, unordered/ordered lists, blockquotes, hr, GFM tables,
+ * fenced code blocks, `:::key/note/warn` callouts.
  */
 export function renderMarkdown(md: string): string {
   const lines = md.split(/\r?\n/)
@@ -109,6 +123,7 @@ export function renderMarkdown(md: string): string {
   let para: string[] = []
   let list: { tag: 'ul' | 'ol'; items: string[] } | null = null
   let callout: { kind: string; lines: string[] } | null = null
+  let codeFence: string[] | null = null
   let firstH1Dropped = false
 
   const flushPara = () => {
@@ -124,8 +139,25 @@ export function renderMarkdown(md: string): string {
     }
   }
 
-  for (const raw of lines) {
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i]
     const line = raw.trimEnd()
+
+    // Fenced code blocks: ```[lang]  ...  ```  →  <pre><code>, content preserved verbatim (not reflowed).
+    if (codeFence) {
+      if (/^```\s*$/.test(line)) {
+        out.push(`<pre><code>${escapeHtml(codeFence.join('\n'))}</code></pre>`)
+        codeFence = null
+      } else {
+        codeFence.push(raw)
+      }
+      continue
+    }
+    if (/^```/.test(line)) {
+      flushPara(); flushList()
+      codeFence = []
+      continue
+    }
 
     // Callout fences:  :::key  ...  :::   →  styled <aside>. `kind` ∈ key|note|warn (default note).
     const fenceOpen = line.match(/^:::\s*(\w+)?\s*$/)
@@ -144,6 +176,25 @@ export function renderMarkdown(md: string): string {
       flushPara(); flushList()
       const kind = (fenceOpen[1] ?? 'note').toLowerCase()
       callout = { kind: ['key', 'note', 'warn'].includes(kind) ? kind : 'note', lines: [] }
+      continue
+    }
+
+    // GFM table: a `| a | b |` header row immediately followed by a `|---|---|` separator row.
+    if (line.trim().startsWith('|') && lines[i + 1] && isTableSeparator(lines[i + 1])) {
+      flushPara(); flushList()
+      const headerCells = splitTableRow(line)
+      const bodyRows: string[][] = []
+      let j = i + 2
+      while (j < lines.length && lines[j].trim().startsWith('|')) {
+        bodyRows.push(splitTableRow(lines[j]))
+        j++
+      }
+      const th = headerCells.map((c) => `<th>${renderInline(escapeHtml(c))}</th>`).join('')
+      const rows = bodyRows
+        .map((r) => `<tr>${r.map((c) => `<td>${renderInline(escapeHtml(c))}</td>`).join('')}</tr>`)
+        .join('')
+      out.push(`<table><thead><tr>${th}</tr></thead><tbody>${rows}</tbody></table>`)
+      i = j - 1
       continue
     }
 
@@ -213,6 +264,10 @@ function toMeta(slug: string, data: Record<string, any>, body: string): BlogPost
     lang,
     dir,
     ogImage: resolveOgImage(slug, data),
+    templateDownload:
+      data.template_download_href
+        ? { href: String(data.template_download_href), label: String(data.template_download_label ?? 'Download the template') }
+        : null,
   }
 }
 
