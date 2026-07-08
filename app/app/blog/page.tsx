@@ -14,6 +14,11 @@ export const metadata: Metadata = {
     description: 'Case studies, comparisons, and field notes from the trust layer for AI agents.',
     url: 'https://knowcap.ai/blog',
     type: 'website',
+    images: [{ url: '/og/default.jpg', width: 1376, height: 768, alt: 'Knowcap Blog' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og/default.jpg'],
   },
 }
 

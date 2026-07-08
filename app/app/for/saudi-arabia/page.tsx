@@ -19,6 +19,11 @@ export const metadata: Metadata = {
       'Real Riyadh meetings switch between Arabic and English mid-sentence. Knowcap captures them intact, exports the محضر in either language, and a named human confirms every decision before any agent acts.',
     url: 'https://knowcap.ai/for/saudi-arabia',
     type: 'website',
+    images: [{ url: '/og/default.jpg', width: 1376, height: 768, alt: 'Knowcap — The Trust Layer for AI Agents' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og/default.jpg'],
   },
 }
 

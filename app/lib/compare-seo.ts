@@ -68,11 +68,13 @@ export function compareMetadata(slug: CompareSlug): Metadata {
       description: seo.description,
       url,
       type: 'website',
+      images: [{ url: '/og/default.jpg', width: 1376, height: 768, alt: seo.title }],
     },
     twitter: {
       card: 'summary_large_image',
       title: seo.title,
       description: seo.description,
+      images: ['/og/default.jpg'],
     },
   }
 }
