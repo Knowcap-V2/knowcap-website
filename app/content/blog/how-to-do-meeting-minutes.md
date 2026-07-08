@@ -1,25 +1,27 @@
 ---
 title: "How to Do Meeting Minutes in 2026: Steps + Free Template"
 slug: how-to-do-meeting-minutes
-mode: thesis
-intent: informational
-persona: mena-agencies
-target_keyword: "how to do meeting minutes"
-target_keyword_5y_mena_interest: null
-geo_score: 86
-est_word_count: 2450
-draft_date: 2026-06-29
+date: 2026-06-29
+author: Hassan Arslan
 description: "How to do meeting minutes in 2026: the 7-element format, a step-by-step method, a free copy-paste template, and the honest answer on whether AI can write them."
-tags: ["meeting-minutes", "how-to", "mena", "audit-trail", "ai-meeting-notes", "odoo-partners", "templates"]
-author: "Hassan Arslan"
-lang: "en"
-dir: "ltr"
-hreflang_pair: "/blog/namuthaj-mahdar-ijtimaa-ar"
+tags:
+  - "meeting-minutes"
+  - "how-to"
+  - "mena"
+  - "audit-trail"
+  - "ai-meeting-notes"
+  - "odoo-partners"
+  - "templates"
+geo_audiences:
+  - "UAE"
+  - "KSA"
+  - "Egypt"
+target_persona: mena-agencies
+related_pages: []
 source_knowcap_ids: []
-embedded_screenshots: []
-template_download_href: "/downloads/meeting-minutes-template.docx"
-template_download_label: "Free meeting minutes template (.docx)"
-status: draft
+read_minutes: 13
+lang: en
+dir: ltr
 ---
 
 # How to Do Meeting Minutes in 2026: Steps + Free Template
