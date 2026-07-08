@@ -25,18 +25,42 @@ import sys
 from docx import Document
 from docx.shared import Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.oxml.ns import qn
 
 ACCENT = RGBColor(0x1F, 0x6B, 0x3A)
 INK = RGBColor(0x18, 0x18, 0x1B)
 INK_2 = RGBColor(0x4A, 0x4F, 0x5A)
 
 
+def apply_rtl(paragraph):
+    """Right-align + set bidi paragraph direction (python-docx has no high-level API for this)."""
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    pPr = paragraph._p.get_or_add_pPr()
+    bidi = pPr.makeelement(qn('w:bidi'), {})
+    pPr.append(bidi)
+    for run in paragraph.runs:
+        rPr = run._r.get_or_add_rPr()
+        rtl = rPr.makeelement(qn('w:rtl'), {})
+        rPr.append(rtl)
+
+
 def is_section_heading(line: str) -> bool:
-    letters = [c for c in line if c.isalpha()]
-    return bool(letters) and line == line.upper() and len(line.strip()) > 1
+    s = line.strip()
+    if len(s) <= 1:
+        return False
+    # Bare label ending in a colon (e.g. Arabic "جدول الأعمال:") — no cased
+    # script needed, works for any language.
+    if s.endswith(':') or s.endswith('：'):
+        return True
+    # ALL-CAPS heading in a cased script (e.g. "MEETING MINUTES"). str.isupper()
+    # is False for scripts with no case distinction (Arabic, CJK, digits-only),
+    # so this never false-positives on non-Latin text the way `s == s.upper()`
+    # would (that comparison is a no-op — and therefore always true — on
+    # uncased text).
+    return s.isupper()
 
 
-def build(title: str, subtitle: str, text: str, out_path: str, source_url: str):
+def build(title: str, subtitle: str, text: str, out_path: str, source_url: str, rtl: bool = False):
     doc = Document()
 
     style = doc.styles["Normal"]
@@ -48,6 +72,8 @@ def build(title: str, subtitle: str, text: str, out_path: str, source_url: str):
     run.bold = True
     run.font.size = Pt(22)
     run.font.color.rgb = INK
+    if rtl:
+        apply_rtl(h)
 
     if subtitle:
         sub = doc.add_paragraph()
@@ -55,6 +81,8 @@ def build(title: str, subtitle: str, text: str, out_path: str, source_url: str):
         srun.italic = True
         srun.font.size = Pt(10.5)
         srun.font.color.rgb = INK_2
+        if rtl:
+            apply_rtl(sub)
 
     doc.add_paragraph()
 
@@ -70,13 +98,19 @@ def build(title: str, subtitle: str, text: str, out_path: str, source_url: str):
             r.font.size = Pt(13)
             r.font.color.rgb = ACCENT
             p.space_before = Pt(10)
+            if rtl:
+                apply_rtl(p)
             continue
         if line.strip().startswith("- "):
-            doc.add_paragraph(line.strip()[2:], style="List Bullet")
+            p = doc.add_paragraph(line.strip()[2:], style="List Bullet")
+            if rtl:
+                apply_rtl(p)
             continue
         p = doc.add_paragraph()
         r = p.add_run(line)
         r.font.color.rgb = INK_2
+        if rtl:
+            apply_rtl(p)
 
     doc.add_paragraph()
     foot = doc.add_paragraph()
@@ -97,12 +131,13 @@ def main():
     ap.add_argument("--text-file", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--source-url", default="knowcap.ai/blog")
+    ap.add_argument("--rtl", action="store_true", help="right-align + bidi paragraph direction (Arabic/Hebrew)")
     args = ap.parse_args()
 
     with open(args.text_file, "r", encoding="utf-8") as f:
         text = f.read()
 
-    build(args.title, args.subtitle, text, args.out, args.source_url)
+    build(args.title, args.subtitle, text, args.out, args.source_url, rtl=args.rtl)
 
 
 if __name__ == "__main__":
