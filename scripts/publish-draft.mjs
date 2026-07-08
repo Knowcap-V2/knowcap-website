@@ -125,6 +125,12 @@ function buildPublishedFrontmatter(meta, body) {
   pub.lang               = meta.lang || 'en'
   pub.dir                = meta.dir  || 'ltr'
 
+  // Free downloadable template (tracked TemplateDownload component) — passthrough
+  if (meta.template_download_href) {
+    pub.template_download_href  = meta.template_download_href
+    pub.template_download_label = meta.template_download_label || 'Download the template'
+  }
+
   return pub
 }
 

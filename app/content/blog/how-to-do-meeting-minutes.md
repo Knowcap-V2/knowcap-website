@@ -22,6 +22,8 @@ source_knowcap_ids: []
 read_minutes: 13
 lang: en
 dir: ltr
+template_download_href: "/downloads/meeting-minutes-template.docx"
+template_download_label: "Free meeting minutes template (.docx)"
 ---
 
 # How to Do Meeting Minutes in 2026: Steps + Free Template
