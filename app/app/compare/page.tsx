@@ -28,6 +28,11 @@ export const metadata: Metadata = {
     description: 'Verified work intelligence with agents that act under human-confirmed control — not just transcripts.',
     url: 'https://knowcap.ai/compare',
     type: 'website',
+    images: [{ url: '/og/default.jpg', width: 1376, height: 768, alt: 'Compare Knowcap to the meeting-AI tools' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og/default.jpg'],
   },
 }
 

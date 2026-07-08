@@ -15,14 +15,16 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const post = getPost(params.slug)
   if (!post) return {}
   const url = `https://knowcap.ai/blog/${post.slug}`
+  // Next does not deep-merge openGraph.images from the root layout when a
+  // page defines its own openGraph object - fall back to the site default
+  // explicitly rather than relying on inheritance (confirmed via build: a
+  // page-level openGraph without `images` renders with none at all).
   const ogImageUrl = post.ogImage
     ? post.ogImage.startsWith('http')
       ? post.ogImage
       : `https://knowcap.ai${post.ogImage}`
-    : null
-  const ogImages = ogImageUrl
-    ? [{ url: ogImageUrl, width: 1200, height: 675, alt: post.title }]
-    : undefined
+    : 'https://knowcap.ai/og/default.jpg'
+  const ogImages = [{ url: ogImageUrl, width: post.ogImage ? 1200 : 1376, height: post.ogImage ? 675 : 768, alt: post.title }]
   return {
     title: `${post.title} — Knowcap Blog`,
     description: post.description,
@@ -35,13 +37,13 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       publishedTime: post.date,
       authors: [post.author],
       locale: post.dir === 'rtl' ? 'ar_AR' : 'en_US',
-      ...(ogImages ? { images: ogImages } : {}),
+      images: ogImages,
     },
     twitter: {
-      card: ogImageUrl ? 'summary_large_image' : 'summary',
+      card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
+      images: [ogImageUrl],
     },
   }
 }

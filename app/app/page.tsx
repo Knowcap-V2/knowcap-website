@@ -15,6 +15,11 @@ export const metadata: Metadata = {
       'Turn human claims into evidence your AI agents can act on. Capture meetings, messages, and recordings — promote the verified parts to evidence agents can use.',
     url: 'https://knowcap.ai',
     type: 'website',
+    images: [{ url: '/og/default.jpg', width: 1376, height: 768, alt: 'Knowcap — The Trust Layer for AI Agents' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og/default.jpg'],
   },
 }
 
