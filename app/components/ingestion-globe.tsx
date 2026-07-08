@@ -15,7 +15,9 @@ const CSS = `
 .ig-flow{position:absolute;inset:0;
   --ink1:#18181B;--ink2:#4A4F5A;--ink3:#8A8F99;--cream:#FBFAF8;--border:#E7E4DD;--green:#1F6B3A;
   font-family:'Space Grotesk',system-ui,sans-serif}
-.ig-flow canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.ig-flow canvas{position:absolute;inset:0;width:100%;height:100%}
+.ig-flow canvas.ig-cv-back{z-index:0}
+.ig-flow canvas.ig-cv-front{z-index:2}
 .ig-tile{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;transform:translate(-50%,-50%);width:84px;pointer-events:none}
 .ig-tile .ig-ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;box-shadow:0 5px 14px rgba(24,24,27,.12)}
 .ig-tile .ig-ico img{width:27px;height:27px;display:block}
@@ -38,6 +40,22 @@ const CSS = `
 .ig-legend{position:absolute;left:24px;bottom:18px;z-index:3;display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--ink2);background:rgba(255,255,255,.7);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:10px;padding:8px 12px}
 .ig-legend .ig-chip{display:inline-flex;align-items:center;gap:6px;font-weight:600}
 .ig-legend .ig-ld{width:9px;height:9px;border-radius:50%}
+/* the sleeping book INSIDE the globe (base) — back dots behind it, front dots pass over it */
+.ig-core{position:absolute;z-index:1;transform:translate(-50%,-50%);pointer-events:none;
+  filter:drop-shadow(0 6px 20px rgba(232,163,61,.30))}
+.ig-core svg{display:block;width:100%;height:auto;overflow:visible}
+.ig-core .igc-page{transform-origin:120px 112px;animation:igc-flip 2.1s cubic-bezier(.55,.06,.45,.94) infinite}
+.ig-core .igc-page.igc-p2{animation-delay:.7s}
+.ig-core .igc-page.igc-p3{animation-delay:1.4s}
+@keyframes igc-flip{
+  0%{transform:rotate(-62deg);opacity:0} 6%{transform:rotate(-62deg);opacity:1}
+  58%{transform:rotate(62deg);opacity:1} 66%{transform:rotate(62deg);opacity:0}
+  100%{transform:rotate(-62deg);opacity:0}}
+.ig-core .igc-rec{animation:igc-rec 2.1s ease-in-out infinite}
+@keyframes igc-rec{0%,100%{opacity:.35}50%{opacity:1}}
+.ig-core .igc-body{transform-origin:120px 123px;animation:igc-breathe 4.2s ease-in-out infinite}
+@keyframes igc-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.035)}}
+@media (prefers-reduced-motion:reduce){.ig-core .igc-page,.ig-core .igc-rec,.ig-core .igc-body{animation:none}}
 /* tablet — shrink tiles so 4 columns still fit */
 @media(max-width:1000px){
   .ig-tile{width:72px}
@@ -56,12 +74,14 @@ const CSS = `
 export default function IngestionGlobe() {
   const wrapRef = useRef<HTMLDivElement>(null)
   const cvRef = useRef<HTMLCanvasElement>(null)
+  const cvfRef = useRef<HTMLCanvasElement>(null)
   const tilesRef = useRef<HTMLDivElement>(null)
   const legendRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const cv = cvRef.current!, tilesEl = tilesRef.current!, legendEl = legendRef.current!
-    const ctx = cv.getContext('2d')!
+    const cv = cvRef.current!, cvf = cvfRef.current!, tilesEl = tilesRef.current!, legendEl = legendRef.current!
+    const cb = cv.getContext('2d')!   // BACK layer: behind the core book
+    const cf = cvf.getContext('2d')!  // FRONT layer: over the core book
     let raf = 0
 
     const B = { a: '#1F6B3A', rgb: '31,107,58' }
@@ -100,6 +120,24 @@ export default function IngestionGlobe() {
       AGENTS.forEach(a => { const c = TYPES[a.ty].c; const el = document.createElement('div'); el.className = 'ig-tile ig-agent'; el.innerHTML = `<div class="ig-ico" style="background:${hexa(c, 0.12)};color:${c};border-color:${hexa(c, 0.35)}">${a.e}</div><div class="ig-nm">${a.n}</div>`; tilesEl.appendChild(el); agA.push({ el, ty: a.ty }) })
       const hu = document.createElement('div'); hu.className = 'ig-human'; hu.dataset.h = '1'; hu.innerHTML = `<div class="ig-avs">${HUMANS.map(h => `<span class="ig-av" style="background:${h.c}">${h.i}</span>`).join('')}</div><div class="ig-lab">You + team</div><div class="ig-sub">Approve</div>`; tilesEl.appendChild(hu)
       const cap = document.createElement('div'); cap.className = 'ig-gcap'; cap.dataset.cap = '1'; cap.innerHTML = 'Knowledge layer · <b>decisions · tasks · commitments · risks · notes</b>'; tilesEl.appendChild(cap)
+      // the sleeping book at the core: Kap on his back, turning pages — captures even while you're away
+      const core = document.createElement('div'); core.className = 'ig-core'; core.dataset.core = '1'; core.innerHTML = `
+<svg viewBox="0 0 240 168" aria-hidden="true">
+  <path d="M120,112 C98,106 80,92 70,72 C64,76 62,82 64,87 C74,104 96,112 120,116 Z" fill="#1F6B3A"/>
+  <path d="M116,109 C96,103 82,91 73,76" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  <path d="M120,112 C142,106 160,92 170,72 C176,76 178,82 176,87 C166,104 144,112 120,116 Z" fill="#1F6B3A"/>
+  <path d="M124,109 C144,103 158,91 167,76" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  <g class="igc-page"><path d="M120,112 C136,92 146,70 148,48 C142,44 136,44 132,48 C126,68 122,90 120,112 Z" fill="#fff" stroke="#1F6B3A" stroke-width="2" stroke-linejoin="round"/><path d="M124,96 C128,80 131,64 133,52" fill="none" stroke="#1F6B3A" stroke-width="1.6" stroke-linecap="round" opacity=".5"/></g>
+  <g class="igc-page igc-p2"><path d="M120,112 C136,92 146,70 148,48 C142,44 136,44 132,48 C126,68 122,90 120,112 Z" fill="#fff" stroke="#1F6B3A" stroke-width="2" stroke-linejoin="round"/><path d="M124,96 C128,80 131,64 133,52" fill="none" stroke="#1F6B3A" stroke-width="1.6" stroke-linecap="round" opacity=".5"/></g>
+  <g class="igc-page igc-p3"><path d="M120,112 C136,92 146,70 148,48 C142,44 136,44 132,48 C126,68 122,90 120,112 Z" fill="#fff" stroke="#1F6B3A" stroke-width="2" stroke-linejoin="round"/><path d="M124,96 C128,80 131,64 133,52" fill="none" stroke="#1F6B3A" stroke-width="1.6" stroke-linecap="round" opacity=".5"/></g>
+  <g class="igc-body">
+    <rect x="58" y="118" width="124" height="24" rx="8" fill="#191F2E"/>
+    <path d="M96,128 q4,4 8,0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M114,128 q4,4 8,0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M104,136 q5,3.5 10,0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+    <circle class="igc-rec" cx="174" cy="130" r="4" fill="#E8A33D"/>
+  </g>
+</svg>`; tilesEl.appendChild(core)
       const st = document.createElement('div'); st.className = 'ig-story'; st.dataset.story = '1'; st.innerHTML = '<span class="ig-sd"></span><span class="ig-tx"></span>'; tilesEl.appendChild(st)
       ;[['1', 'Capture'], ['2', 'Knowledge layer'], ['3', 'You approve'], ['4', 'Agents act']].forEach((s, i) => { const el = document.createElement('div'); el.className = 'ig-stage'; el.dataset.stage = String(i); el.innerHTML = '<b>' + s[0] + '</b>' + s[1]; tilesEl.appendChild(el) })
     }
@@ -107,7 +145,9 @@ export default function IngestionGlobe() {
 
     let W = 0, H = 0, DPR = 1
     function layout() {
-      DPR = Math.min(2, window.devicePixelRatio || 1); const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0)
+      DPR = Math.min(2, window.devicePixelRatio || 1); const r = cv.getBoundingClientRect(); W = r.width; H = r.height
+      cv.width = W * DPR; cv.height = H * DPR; cb.setTransform(DPR, 0, 0, DPR, 0, 0)
+      cvf.width = W * DPR; cvf.height = H * DPR; cf.setTransform(DPR, 0, 0, DPR, 0, 0)
       const narrow = W < 640
       const top = Math.max(H * 0.40, 400), bot = H * 0.99, bh = bot - top
       if (narrow) { GX = W * 0.5; GY = H * 0.52; GR = Math.min(W * 0.42, H * 0.42, 200) }
@@ -118,26 +158,28 @@ export default function IngestionGlobe() {
       srcA.forEach((o, i) => { const y = top + colH * ((i + 0.5) / SOURCES.length); o.x = lx; o.y = y; o.el.style.left = lx + 'px'; o.el.style.top = y + 'px' })
       agA.forEach((o, i) => { const y = top + colH * ((i + 0.5) / AGENTS.length); o.x = rx; o.y = y; o.el.style.left = rx + 'px'; o.el.style.top = y + 'px' })
       const hu = $('.ig-human'); if (hu) { hu.style.left = HX + 'px'; hu.style.top = HY + 'px' }
+      const core = $('.ig-core'); if (core) { core.style.left = GX + 'px'; core.style.top = (GY + GR * 0.37) + 'px'; core.style.width = Math.round(GR * 0.5) + 'px' }
       const cap = $('.ig-gcap'); if (cap) { cap.style.left = GX + 'px'; cap.style.top = (GY + GR + 16) + 'px' }
       const st = $('.ig-story'); if (st) { st.style.left = GX + 'px'; st.style.top = (GY + GR + 44) + 'px' }
       ;[lx, GX, HX, rx].forEach((x, i) => { const el = $('.ig-stage[data-stage="' + i + '"]'); if (el) { el.style.left = x + 'px'; el.style.top = (top - 26) + 'px' } })
     }
 
     let mx = -9999, my = -9999, ox = 0, oy = 0, over = false
+    const wrap = wrapRef.current!
     const onMove = (e: MouseEvent) => { const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; over = true }
     const onLeave = () => { over = false; mx = -9999; my = -9999 }
-    cv.addEventListener('mousemove', onMove); cv.addEventListener('mouseleave', onLeave); window.addEventListener('resize', layout)
+    wrap.addEventListener('mousemove', onMove); wrap.addEventListener('mouseleave', onLeave); window.addEventListener('resize', layout)
 
     let ang = 0, pops: any[] = [], lastPop = 0
     function edgePoint(x: number, y: number) { const dx = x - GX, dy = y - GY, d = Math.hypot(dx, dy) || 1; return { x: GX + dx / d * GR, y: GY + dy / d * GR } }
     function lerp(a: number, b: number, e: number) { return a + (b - a) * e }
     function eio(t: number) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2 }
-    function roundRect(x: number, y: number, w: number, h: number, r: number) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath() }
+    function roundRect(g: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath() }
     function drawChip(cx: number, cy: number, label: string, sub: string, col: string, approved: boolean, sc: number) {
-      const w = 158 * sc, h = 42 * sc, x = cx - w / 2, y = cy - h / 2; ctx.fillStyle = '#fff'; ctx.strokeStyle = hexa(col, 0.55); ctx.lineWidth = 1.5; roundRect(x, y, w, h, 11 * sc); ctx.fill(); ctx.stroke()
-      ctx.fillStyle = col; ctx.font = '700 ' + (9.5 * sc) + 'px "Space Grotesk",sans-serif'; ctx.fillText(label, x + 12 * sc, y + 16 * sc)
-      ctx.fillStyle = '#18181B'; ctx.font = '600 ' + (11.5 * sc) + 'px "Space Grotesk",sans-serif'; ctx.fillText(sub, x + 12 * sc, y + 31 * sc)
-      if (approved) { const ax = x + w - 15 * sc, ay = cy; ctx.fillStyle = '#1F6B3A'; ctx.beginPath(); ctx.arc(ax, ay, 8 * sc, 0, 7); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.8 * sc; ctx.beginPath(); ctx.moveTo(ax - 3.2 * sc, ay + .3 * sc); ctx.lineTo(ax - 0.7 * sc, ay + 3 * sc); ctx.lineTo(ax + 3.6 * sc, ay - 3 * sc); ctx.stroke() }
+      const g = cf, w = 158 * sc, h = 42 * sc, x = cx - w / 2, y = cy - h / 2; g.fillStyle = '#fff'; g.strokeStyle = hexa(col, 0.55); g.lineWidth = 1.5; roundRect(g, x, y, w, h, 11 * sc); g.fill(); g.stroke()
+      g.fillStyle = col; g.font = '700 ' + (9.5 * sc) + 'px "Space Grotesk",sans-serif'; g.fillText(label, x + 12 * sc, y + 16 * sc)
+      g.fillStyle = '#18181B'; g.font = '600 ' + (11.5 * sc) + 'px "Space Grotesk",sans-serif'; g.fillText(sub, x + 12 * sc, y + 31 * sc)
+      if (approved) { const ax = x + w - 15 * sc, ay = cy; g.fillStyle = '#1F6B3A'; g.beginPath(); g.arc(ax, ay, 8 * sc, 0, 7); g.fill(); g.strokeStyle = '#fff'; g.lineWidth = 1.8 * sc; g.beginPath(); g.moveTo(ax - 3.2 * sc, ay + .3 * sc); g.lineTo(ax - 0.7 * sc, ay + 3 * sc); g.lineTo(ax + 3.6 * sc, ay - 3 * sc); g.stroke() }
     }
     const STORY_EX = [{ src: 'Gmail', sub: 'Drop the per-seat tier' }, { src: 'WhatsApp', sub: 'Flip 5 capture routes' }, { src: 'Slack', sub: 'SOP by Friday' }, { src: 'Zoom', sub: 'Customs delay risks Sept' }]
     function drawStory(t: number) {
@@ -151,58 +193,63 @@ export default function IngestionGlobe() {
       else if (e < 5800) { const p = eio((e - 3800) / 2000); pos = { x: lerp(gc.x, hu.x, p), y: lerp(gc.y, hu.y, p) }; ok = e > 5200; cap = ok ? 'You approve it' : 'You review' }
       else if (e < 7900) { const p = eio((e - 5800) / 2100); pos = { x: lerp(hu.x, agp.x, p), y: lerp(hu.y, agp.y, p) }; ok = true; cap = 'Routed to ' + agName }
       else { al = 1 - (e - 7900) / 1100; pos = agp; ok = true; cap = TYPES[ty].k + ' closed' }
-      ctx.save(); ctx.globalAlpha = Math.max(0, al)
-      if (mode === 'token') { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(pos.x, pos.y, 6, 0, 7); ctx.fill(); ctx.strokeStyle = hexa(col, 0.4); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(pos.x, pos.y, 11, 0, 7); ctx.stroke() }
+      cf.save(); cf.globalAlpha = Math.max(0, al)
+      if (mode === 'token') { cf.fillStyle = col; cf.beginPath(); cf.arc(pos.x, pos.y, 6, 0, 7); cf.fill(); cf.strokeStyle = hexa(col, 0.4); cf.lineWidth = 1; cf.beginPath(); cf.arc(pos.x, pos.y, 11, 0, 7); cf.stroke() }
       else drawChip(pos.x, pos.y, TYPES[ty].k.toUpperCase(), ex.sub, col, ok, sc)
-      ctx.restore()
+      cf.restore()
       const st = $('.ig-story'); if (st) { st.style.opacity = String(Math.max(0, al)); (st.querySelector('.ig-sd') as HTMLElement).style.background = ok && e >= 3800 && e < 5800 ? '#1F6B3A' : col; (st.querySelector('.ig-tx') as HTMLElement).textContent = cap }
     }
     function frame(t: number) {
-      const rgb = B.rgb; ctx.clearRect(0, 0, W, H)
+      const rgb = B.rgb; cb.clearRect(0, 0, W, H); cf.clearRect(0, 0, W, H)
       const tox = over ? ((mx - GX) / W) * 0.7 : 0, toy = over ? ((my - GY) / H) * 0.6 : 0; ox += (tox - ox) * 0.06; oy += (toy - oy) * 0.06
       const ry = ang + ox, rx = -0.30 + oy; const now = t * 0.00045
       const narrow = W < 640
       const gs = Math.max(0.55, Math.min(1, GR / 280)) // scale dot/edge weight with globe size -> same density at every viewport
+      // ---- flow lines + particles draw on the BACK layer (behind the core book) ----
       if (!narrow) {
       srcA.forEach((o, i) => {
         const ep = edgePoint(o.x, o.y); const tc = o.ty != null ? TYPES[o.ty].c : null
-        ctx.strokeStyle = tc ? hexa(tc, 0.18) : 'rgba(138,143,153,0.16)'; ctx.lineWidth = 1.3; ctx.setLineDash([2, 8]); ctx.beginPath(); ctx.moveTo(o.x + 24, o.y); ctx.lineTo(ep.x, ep.y); ctx.stroke(); ctx.setLineDash([])
-        for (let k = 0; k < 3; k++) { const p = (now + i * 0.13 + k / 3) % 1; const px = (o.x + 24) + (ep.x - (o.x + 24)) * p, py = o.y + (ep.y - o.y) * p; const a = Math.sin(p * Math.PI) * 0.9; ctx.beginPath(); ctx.arc(px, py, 3.4, 0, 7); ctx.fillStyle = tc ? hexa(tc, a) : 'rgba(138,143,153,' + a + ')'; ctx.fill() }
+        cb.strokeStyle = tc ? hexa(tc, 0.18) : 'rgba(138,143,153,0.16)'; cb.lineWidth = 1.3; cb.setLineDash([2, 8]); cb.beginPath(); cb.moveTo(o.x + 24, o.y); cb.lineTo(ep.x, ep.y); cb.stroke(); cb.setLineDash([])
+        for (let k = 0; k < 3; k++) { const p = (now + i * 0.13 + k / 3) % 1; const px = (o.x + 24) + (ep.x - (o.x + 24)) * p, py = o.y + (ep.y - o.y) * p; const a = Math.sin(p * Math.PI) * 0.9; cb.beginPath(); cb.arc(px, py, 3.4, 0, 7); cb.fillStyle = tc ? hexa(tc, a) : 'rgba(138,143,153,' + a + ')'; cb.fill() }
       })
       const hep = edgePoint(HX, HY)
-      ctx.strokeStyle = 'rgba(138,143,153,0.30)'; ctx.lineWidth = 1.6; ctx.setLineDash([2, 8]); ctx.beginPath(); ctx.moveTo(hep.x, hep.y); ctx.lineTo(HX - 44, HY); ctx.stroke(); ctx.setLineDash([])
-      for (let k = 0; k < 4; k++) { const p = (now * 1.1 + k / 4) % 1; const px = hep.x + ((HX - 44) - hep.x) * p, py = hep.y + (HY - hep.y) * p; ctx.beginPath(); ctx.arc(px, py, 3.4, 0, 7); ctx.fillStyle = 'rgba(138,143,153,' + (Math.sin(p * Math.PI) * 0.8) + ')'; ctx.fill() }
+      cb.strokeStyle = 'rgba(138,143,153,0.30)'; cb.lineWidth = 1.6; cb.setLineDash([2, 8]); cb.beginPath(); cb.moveTo(hep.x, hep.y); cb.lineTo(HX - 44, HY); cb.stroke(); cb.setLineDash([])
+      for (let k = 0; k < 4; k++) { const p = (now * 1.1 + k / 4) % 1; const px = hep.x + ((HX - 44) - hep.x) * p, py = hep.y + (HY - hep.y) * p; cb.beginPath(); cb.arc(px, py, 3.4, 0, 7); cb.fillStyle = 'rgba(138,143,153,' + (Math.sin(p * Math.PI) * 0.8) + ')'; cb.fill() }
       agA.forEach((o, i) => {
-        const ac = TYPES[o.ty].c; ctx.strokeStyle = hexa(ac, 0.24); ctx.lineWidth = 1.3; ctx.setLineDash([2, 8]); ctx.beginPath(); ctx.moveTo(HX + 44, HY); ctx.lineTo(o.x - 24, o.y); ctx.stroke(); ctx.setLineDash([])
-        for (let k = 0; k < 2; k++) { const p = (now + i * 0.2 + k / 2) % 1; const px = (HX + 44) + ((o.x - 24) - (HX + 44)) * p, py = HY + (o.y - HY) * p; ctx.beginPath(); ctx.arc(px, py, 3.2, 0, 7); ctx.fillStyle = hexa(ac, Math.sin(p * Math.PI) * 0.82); ctx.fill() }
+        const ac = TYPES[o.ty].c; cb.strokeStyle = hexa(ac, 0.24); cb.lineWidth = 1.3; cb.setLineDash([2, 8]); cb.beginPath(); cb.moveTo(HX + 44, HY); cb.lineTo(o.x - 24, o.y); cb.stroke(); cb.setLineDash([])
+        for (let k = 0; k < 2; k++) { const p = (now + i * 0.2 + k / 2) % 1; const px = (HX + 44) + ((o.x - 24) - (HX + 44)) * p, py = HY + (o.y - HY) * p; cb.beginPath(); cb.arc(px, py, 3.2, 0, 7); cb.fillStyle = hexa(ac, Math.sin(p * Math.PI) * 0.82); cb.fill() }
       })
-      const ap = (now * 1.0) % 1; ctx.strokeStyle = hexa(B.a, (1 - ap) * 0.4); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(HX, HY, 10 + ap * 22, 0, 7); ctx.stroke()
+      const ap = (now * 1.0) % 1; cb.strokeStyle = hexa(B.a, (1 - ap) * 0.4); cb.lineWidth = 1.5; cb.beginPath(); cb.arc(HX, HY, 10 + ap * 22, 0, 7); cb.stroke()
       if (t - lastPop > 500) { lastPop = t; const cs = srcA.filter(o => o.ty != null && o.ty !== 4); const s = cs[(Math.random() * cs.length) | 0]; if (s) { const ep = edgePoint(s.x, s.y); pops.push({ x: ep.x, y: ep.y, ty: TYPES[s.ty], age: 0 }) } }
-      pops = pops.filter(o => o.age < 1); pops.forEach(o => { o.age += 0.02; const al = 1 - o.age; ctx.strokeStyle = hexa(o.ty.c, al * 0.6); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(o.x, o.y, 4 + o.age * 16, 0, 7); ctx.stroke(); ctx.fillStyle = hexa(o.ty.c, al); ctx.font = '700 9.5px "Space Grotesk",sans-serif'; ctx.fillText(o.ty.k, o.x + 7, o.y - 6) })
+      pops = pops.filter(o => o.age < 1); pops.forEach(o => { o.age += 0.02; const al = 1 - o.age; cb.strokeStyle = hexa(o.ty.c, al * 0.6); cb.lineWidth = 1.4; cb.beginPath(); cb.arc(o.x, o.y, 4 + o.age * 16, 0, 7); cb.stroke(); cb.fillStyle = hexa(o.ty.c, al); cb.font = '700 9.5px "Space Grotesk",sans-serif'; cb.fillText(o.ty.k, o.x + 7, o.y - 6) })
       }
       const P = pts.map(p => { let x = p.x * Math.cos(ry) - p.z * Math.sin(ry), z = p.x * Math.sin(ry) + p.z * Math.cos(ry), y = p.y; const y2 = y * Math.cos(rx) - z * Math.sin(rx), z2 = y * Math.sin(rx) + z * Math.cos(rx); const sc = 1 / (1.8 - z2 * 0.6); return { sx: GX + x * GR * sc, sy: GY + y2 * GR * sc, z: z2 } })
       const near = P.map(p => { if (!over) return 9999; return Math.hypot(p.sx - mx, p.sy - my) })
-      edges.forEach(([a, b]) => { const A = P[a], Bp = P[b], depth = (A.z + Bp.z) / 2; let al = Math.max(0, 0.05 + (depth + 1) / 2 * 0.13); const nf = Math.min(near[a], near[b]); if (nf < 150) al += (1 - nf / 150) * 0.4; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = (nf < 150 ? 1 : 0.6) * gs; ctx.beginPath(); ctx.moveTo(A.sx, A.sy); ctx.lineTo(Bp.sx, Bp.sy); ctx.stroke() })
-      if (over) P.forEach((p, i) => { if (near[i] < 170) { const al = (1 - near[i] / 170) * 0.5; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = 0.8 * gs; ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(p.sx, p.sy); ctx.stroke() } })
+      // ---- edges: back half behind the book, front half over it ----
+      edges.forEach(([a, b]) => { const A = P[a], Bp = P[b], depth = (A.z + Bp.z) / 2; const g = depth < 0 ? cb : cf; let al = Math.max(0, 0.05 + (depth + 1) / 2 * 0.13); const nf = Math.min(near[a], near[b]); if (nf < 150) al += (1 - nf / 150) * 0.4; g.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; g.lineWidth = (nf < 150 ? 1 : 0.6) * gs; g.beginPath(); g.moveTo(A.sx, A.sy); g.lineTo(Bp.sx, Bp.sy); g.stroke() })
+      if (over) P.forEach((p, i) => { if (near[i] < 170) { const g = p.z < 0 ? cb : cf; const al = (1 - near[i] / 170) * 0.5; g.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; g.lineWidth = 0.8 * gs; g.beginPath(); g.moveTo(mx, my); g.lineTo(p.sx, p.sy); g.stroke() } })
+      // ---- dots: back half behind the book, front half over it (book sandwiched) ----
       P.forEach((p, i) => {
+        const g = p.z < 0 ? cb : cf
         const t2 = (p.z + 1) / 2; const col = TYPES[pts[i].ty].c; let al = 0.32 + t2 * 0.6, rad = (1.9 + t2 * 2.7) * gs
         if (near[i] < 150) { const k = 1 - near[i] / 150; al = Math.min(1, al + k * 0.5); rad += k * 2.5 * gs }
-        ctx.beginPath(); ctx.arc(p.sx, p.sy, rad, 0, 7); ctx.fillStyle = hexa(col, al); ctx.fill()
-        if (pts[i].lab && pts[i].ty !== 4 && p.z > -0.1) { ctx.fillStyle = 'rgba(24,24,27,' + (0.4 + t2 * 0.5) + ')'; ctx.font = '600 10.5px "Space Grotesk",sans-serif'; ctx.fillText(TYPES[pts[i].ty].k, p.sx + rad + 5, p.sy + 4) }
+        g.beginPath(); g.arc(p.sx, p.sy, rad, 0, 7); g.fillStyle = hexa(col, al); g.fill()
+        if (pts[i].lab && pts[i].ty !== 4 && p.z > -0.1) { g.fillStyle = 'rgba(24,24,27,' + (0.4 + t2 * 0.5) + ')'; g.font = '600 10.5px "Space Grotesk",sans-serif'; g.fillText(TYPES[pts[i].ty].k, p.sx + rad + 5, p.sy + 4) }
       })
       if (!narrow) drawStory(t)
       ang += 0.0008; raf = requestAnimationFrame(frame)
     }
 
     buildTiles(); layout(); raf = requestAnimationFrame(frame)
-    return () => { cancelAnimationFrame(raf); cv.removeEventListener('mousemove', onMove); cv.removeEventListener('mouseleave', onLeave); window.removeEventListener('resize', layout); tilesEl.innerHTML = '' }
+    return () => { cancelAnimationFrame(raf); wrap.removeEventListener('mousemove', onMove); wrap.removeEventListener('mouseleave', onLeave); window.removeEventListener('resize', layout); tilesEl.innerHTML = '' }
   }, [])
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
       <div className="ig-flow" ref={wrapRef} aria-label="How Knowcap works: capture from your tools, structure into a knowledge graph, you approve, agents act">
-        <canvas ref={cvRef} />
+        <canvas ref={cvRef} className="ig-cv-back" />
+        <canvas ref={cvfRef} className="ig-cv-front" />
         <div ref={tilesRef} />
         <div className="ig-legend" ref={legendRef} />
       </div>
