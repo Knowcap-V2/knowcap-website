@@ -17,6 +17,8 @@ dir: "ltr"
 hreflang_pair: "/blog/namuthaj-mahdar-ijtimaa-ar"
 source_knowcap_ids: []
 embedded_screenshots: []
+template_download_href: "/downloads/meeting-minutes-template.docx"
+template_download_label: "Free meeting minutes template (.docx)"
 status: draft
 ---
 
@@ -64,39 +66,7 @@ Here is the method that produces clean minutes every time, broken into before, d
 
 ## Free meeting minutes template (copy-paste)
 
-Copy this into your notes app or document. It works for a board meeting, a client call, or an internal stand-up.
-
-```
-MEETING MINUTES
-Title:        ____________________________
-Date / time:  ____________  ____:____ to ____:____
-Location:     ____________________________ (room / video link)
-Chair:        ____________________________
-Minute-taker: ____________________________
-
-ATTENDEES
-Present:   ____________________________
-Apologies: ____________________________
-
-AGENDA + DISCUSSION
-1. [Topic] — one-line summary of what was discussed
-2. [Topic] — ...
-
-DECISIONS
-- [Decision], because [reason]
-- ...
-
-ACTION ITEMS  (task — owner — deadline)
-- ____________________________ — ______ — __/__/____
-- ...
-
-RISKS / OPEN ITEMS
-- ____________________________
-
-NEXT MEETING
-Date:        __/__/____
-Approved by: ____________________________
-```
+Download the free template below (.docx — opens in Word or Google Docs) and start using it in your next meeting, or copy the field list here: header, attendees, agenda + discussion, decisions, action items (task — owner — deadline), risks / open items, next meeting + approval.
 
 Keep one copy as your master template and start every meeting by duplicating it. Consistency is half the battle — the same structure every time means anyone on the team can read any minute in seconds.
 
