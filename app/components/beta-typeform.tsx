@@ -6,6 +6,12 @@ import { Check, ArrowRight, Loader2, ChevronUp, ChevronDown, Mic, Disc3, FileUp,
 import Image from 'next/image'
 import { identifyLead, trackEvent } from '@/components/posthog-provider'
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void
+  }
+}
+
 /* ─── Question definitions ─────────────────────────────────── */
 
 const SEGMENTS = [
@@ -542,6 +548,10 @@ export default function BetaTypeform() {
       if (!res.ok) throw new Error(data.error || 'Submission failed')
       goTo('success') // navigate first — a capture hiccup must never mask a saved application
       trackEvent('beta_form_success', { email: contact.email })
+      // Mirror to GA4 (PostHog has the rich person/journey data; this makes the
+      // conversion visible in Google's own dashboard too, e.g. for channel reports
+      // that only read GA4 natively). No PII beyond what GA4 already collects.
+      window.gtag?.('event', 'beta_form_success', { event_category: 'beta' })
     } catch (e) {
       const message = e instanceof Error ? e.message : 'Something went wrong. Try again.'
       trackEvent('beta_form_error', { email: contact.email, error: message })
