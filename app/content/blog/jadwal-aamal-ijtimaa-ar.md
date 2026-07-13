@@ -17,7 +17,7 @@ geo_audiences:
   - "KSA"
   - "Egypt"
 target_persona: mena-audit-firms
-related_pages: []
+related_pages: ["/blog/namuthaj-mahdar-ijtimaa-ar"]
 source_knowcap_ids: []
 read_minutes: 8
 lang: ar
