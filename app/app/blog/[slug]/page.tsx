@@ -56,6 +56,8 @@ const RELATED_LABELS: Record<string, string> = {
   '/compare/knowcap-vs-fireflies': 'Knowcap vs Fireflies',
   '/compare/knowcap-vs-fellow': 'Knowcap vs Fellow',
   '/compare/knowcap-vs-granola': 'Knowcap vs Granola',
+  '/blog/namuthaj-mahdar-ijtimaa-ar': 'نموذج محضر اجتماع جاهز',
+  '/blog/jadwal-aamal-ijtimaa-ar': 'نموذج جدول أعمال اجتماع جاهز',
 }
 
 function getAuthorInitials(author: string) {
