@@ -33,7 +33,9 @@ routines/**/runs/
 routines/**/baselines/
 routines/**/state.json
 routines/**/opportunity-queue.json
-routines/**/burn-state.json
+# burn-state.json promoted to tracked 2026-07-16 (growth-manager R5) — same
+# rationale as post-outcomes.json (PR #130): an agent-hand-edited counter with
+# no git diff is how posts_this_week drifted silently in the first place.
 
 # Database exports / PII dumps — never commit (5804)
 database_export/
