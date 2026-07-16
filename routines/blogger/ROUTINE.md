@@ -24,11 +24,18 @@ This routine fires DAILY (07:00 Sun–Thu). Every run:
    - Not a blog-gen day → stop after the digest (insights only, no post).
 4. On a blog-gen day → mode selection + write, using the queue's top fresh opportunity as `target_keyword`.
 
-`burn-state.json` (gitignored runtime state):
+`burn-state.json` (tracked runtime state since 2026-07-16 — was gitignored; promoted for the same reason
+post-outcomes.json was in PR #130, an untracked hand-edited counter is how it drifted silently):
 ```json
 { "phase": "burn", "started": "2026-06-15", "total_posts": 0, "week_start": "2026-06-15", "posts_this_week": 0, "blog_days": ["SUN","TUE","THU"] }
 ```
-After each shipped draft PR: `total_posts++`, `posts_this_week++`. Reset `posts_this_week` on week rollover. Flip `phase→steady` + `blog_days→["SUN"]` when `total_posts >= 24`. If the file is absent, seed burn from today. **Quality bar:** never publish to hit a quota — if no fresh opportunity clears the gates, skip the day (a missed burn post beats a thin one).
+After each shipped draft PR: `total_posts++`. Recompute (never hand-increment) `posts_this_week` by counting
+`post-outcomes.json` entries whose `published` date falls in `[week_start, week_start+6d]` — this is the
+fix for the 2026-07-16 drift (counter read 1 when reality was 2; see `burn-state.json`'s own `_schema_note`).
+Recompute the same way on week rollover (don't just reset to 0 — a post published on the rollover day itself
+must still count). Flip `phase→steady` + `blog_days→["SUN"]` when `total_posts >= 24`. If the file is absent,
+seed burn from today. **Quality bar:** never publish to hit a quota — if no fresh opportunity clears the
+gates, skip the day (a missed burn post beats a thin one).
 
 ## Mode selection (runtime)
 

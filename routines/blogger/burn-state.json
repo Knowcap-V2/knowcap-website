@@ -1,0 +1,13 @@
+{
+  "_schema_note": "posts_this_week MUST ALWAYS be derived by counting routines/blogger/post-outcomes.json entries whose `published` date falls in [week_start, week_start+6 days] (inclusive, 7-day window) -- recompute on EVERY write, NEVER hand-increment (`posts_this_week++`). Root cause of the 2026-07-16 fix: this field was purely agent-narrated (AGENT.md STEP 8 + this repo's ROUTINE.md said `posts_this_week++` with zero code enforcing correctness) and drifted silently -- it read 1 for week_start=2026-07-05 while post-outcomes.json showed 2 real posts published that week (jadwal-aamal-ijtimaa-ar 2026-07-06, how-to-do-meeting-minutes 2026-07-08). Corrected + promoted to tracked-in-git 2026-07-16 (growth-manager R5, Hassan-approved) so future drift shows up in a PR diff instead of vanishing untracked. total_posts (8) is NOT yet reconciled against post-outcomes.json's real published count (20) -- same root cause, separately flagged, out of scope for this fix.",
+  "phase": "burn",
+  "started": "2026-06-14",
+  "total_posts": 8,
+  "week_start": "2026-07-05",
+  "posts_this_week": 2,
+  "blog_days": [
+    "SUN",
+    "TUE",
+    "THU"
+  ]
+}

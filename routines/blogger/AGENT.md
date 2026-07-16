@@ -63,7 +63,10 @@ hit a quota.
 8. **Output** — draft → `docs/content-pipeline/drafts/<slug>.md`, open `[blog-draft]` PR to main.
    Always report live URL: `https://knowcap.ai/blog/<slug>` — post goes live automatically on PR merge
    via `.github/workflows/publish-blog-draft.yml` + `scripts/publish-draft.mjs` (no manual move needed).
-   Update `burn-state.json` (total_posts++, posts_this_week++). After the PR opens, hand the URL to the
+   Update `burn-state.json`: `total_posts++`, and recompute `posts_this_week` by counting
+   `post-outcomes.json` entries whose `published` date falls in the current `[week_start, week_start+6d]`
+   window — **never hand-increment it** (drifted silently 2026-07-16 when hand-incremented; see the
+   file's own `_schema_note`). After the PR opens, hand the URL to the
    `seo` routine's TASK 9 (request-indexing) so it gets indexed in ~1 day, not weeks (Law 6).
 
 ## Hard rules
@@ -82,7 +85,7 @@ hit a quota.
 
 - `scripts/seo-pull.mjs` — the SEO engine (this is what makes it daily + live)
 - `opportunity-queue.json` — ranked queue (gitignored runtime state)
-- `burn-state.json` — cadence tracker (gitignored)
+- `burn-state.json` — cadence tracker (tracked in git since 2026-07-16, was gitignored — see `_schema_note` inside it)
 - `state.json` — persona rotation cursor (gitignored)
 - `lib/gen-verification-panel.mjs` — data-driven Knowcap UI SVG (case-study posts)
 - `runs/<stamp>/` — per-run digest + draft + report (gitignored)
