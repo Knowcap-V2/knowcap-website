@@ -42,14 +42,12 @@
       "published": "2026-06-01",
       "topic_cluster": "mena-agencies",
       "format": "comparison",
-      "impressions_28d": 43,
-      "avg_pos_28d": 8.2,
+      "impressions_28d": 177,
+      "avg_pos_28d": 10.1,
       "clicks_14d": 0,
       "clicks_28d": 0,
       "verdict": "flat",
-      "impressions_28d": 177,
-      "avg_pos_28d": 10.1,
-      "_flag": "Refresh PR #112 MERGED 2026-06-29. Re-scored at 14d-from-refresh (2026-07-13) via live page-filtered GSC: impressions kept climbing post-refresh (65->177) but avg pos stuck ~10 (page 2) and non-brand clicks still 0. The depth pass grew visibility, not clicks — recommend NOT re-refreshing again this soon; let it mature further or treat the ceiling as structural (comparison-post format competing against real review/comparison sites) rather than a content-depth problem. Codex flagged pricing ($30-60 vs docs $20+credits/$50-200) and PDPL/positioning over-claims — left for Hassan (pricing=Type-1, PDPL=strategic).",
+      "_flag": "Refresh PR #112 MERGED 2026-06-29. Re-scored at 14d-from-refresh (2026-07-13) via live page-filtered GSC: impressions kept climbing post-refresh (65->177) but avg pos stuck ~10 (page 2) and non-brand clicks still 0. The depth pass grew visibility, not clicks — recommend NOT re-refreshing again this soon; let it mature further or treat the ceiling as structural (comparison-post format competing against real review/comparison sites) rather than a content-depth problem. Codex flagged pricing ($30-60 vs docs $20+credits/$50-200) and PDPL/positioning over-claims — left for Hassan (pricing=Type-1, PDPL=strategic). [2026-07-19 data hygiene: this entry previously carried duplicate impressions_28d/avg_pos_28d keys left over from the unmerged refresh diff (pre-refresh 43/8.2 + post-refresh 177/10.1 both present) -- JSON parsers silently resolved to the LAST value (177/10.1, already correct) but the duplicate keys made the file technically malformed and were the likely cause of at least one external entry-count miscount this run. Deduped to the single correct post-refresh value; no data changed, only cleanup.]",
       "target_keyword": "knowcap vs read.ai otter fireflies / MENA AI meeting tools comparison",
       "angle": "honest-broker comparison money-page; MENA moat = Arabic + code-switching + PDPL",
       "refreshed": "2026-06-29",
@@ -260,7 +258,9 @@
       "clicks_14d": null,
       "clicks_28d": null,
       "verdict": "pending",
-      "_flag": "SHIPPED 2026-07-06 (PR #117 merged, live at knowcap.ai/blog/jadwal-aamal-ijtimaa-ar). 7d checkpoint (2026-07-13): impressions climbing 19->46, pos improving 7.7->6.9, still 0 clicks — too early to call, on track. Score at 14d (2026-07-20). First ADJACENT-cluster spoke: tests whether an agenda page inherits the namuthaj محضر winner's traction via two-way cross-links. Codex-flagged product over-claim fixed pre-ship. GSC request-indexing pending (Law 6 / seo routine TASK 9)."
+      "refreshed": "2026-07-19",
+      "refresh_pr": "https://github.com/Knowcap-V2/knowcap-website/pull/133",
+      "_flag": "SHIPPED 2026-07-06 (PR #117 merged, live at knowcap.ai/blog/jadwal-aamal-ijtimaa-ar). 7d checkpoint (2026-07-13): impressions climbing 19->46, pos improving 7.7->6.9, still 0 clicks — too early to call, on track. Score at 14d (2026-07-20). First ADJACENT-cluster spoke: tests whether an agenda page inherits the namuthaj محضر winner's traction via two-way cross-links. Codex-flagged product over-claim fixed pre-ship. GSC request-indexing pending (Law 6 / seo routine TASK 9). [2026-07-19 REFRESH: cannibalization-checked (SERP-live via DataForSEO) every uncovered opportunity-queue candidate in the AR meeting-document space before touching this page -- namuthaj's own خضر cluster confirmed still saturated (same conclusion as 07-13), the adjacent 'AI meeting transcription' AR terms (تفريغ اجتماع, تلخيص اجتماع بالذكاء الاصطناعي, etc.) have ZERO measurable KSA search volume, and 'جدول أعمال اجتماع جاهز' (20 vol/mo) + 'محاور اجتماع' (50 vol/mo) are both too thin to clear the volume gate as net-new pages. No net-new page shipped this run. Instead: converted this post's fenced-code-block agenda template into a REAL downloadable .docx (/downloads/jadwal-aamal-ijtimaa-template.docx, generated via scripts/gen-template-docx.py --rtl, same pattern as namuthaj's proven template) -- this post was published 2026-07-06, before the 2026-07-08 STEERING rule banning inline code-fence templates, and had never been brought into compliance. Fixes a real standing-rule violation, adds PostHog/gtag download tracking, and targets the DOWNLOAD-intent share of 'جدول أعمال اجتماع جاهز' (confirmed 20 vol/mo) that prose alone can't win. Does not touch namuthaj (still cooling off per 07-13/07-13 refresh, next re-score 2026-07-26) and does not create a competing page."
     }
   ],
   "last_verified_at": "2026-07-13",
@@ -270,6 +270,7 @@
     "flat": 8,
     "dud": 9,
     "pending": 2,
-    "total_nonbrand_clicks_28d": 0
+    "total_nonbrand_clicks_28d": 0,
+    "_total_nonbrand_clicks_28d_note": "2026-07-19 sanity check: this field sums each post's clicks_28d only where that field is a computed number (nulls excluded, never treated as 0). It legitimately reads 0 as of last_verified_at (2026-07-13) -- NOT a bug, and NOT inconsistent with the one confirmed win's clicks_14d=10 (namuthaj-mahdar-ijtimaa-ar): namuthaj's own clicks_28d is still null, its 28d re-score isn't due until 2026-07-26 (see that entry's _flag). The 0 will change the moment that re-score lands. 2026-07-19 also independently re-verified total_posts(20) against the posts array length (20, via json.load + slug-count + verdict-count, all three agree) -- no discrepancy exists in the file as it stands; an earlier ~19-vs-20 concern (growth-manager negotiation, 2026-07-15) and a separate 17-count this run both appear to be counting-tool artifacts (most likely tripped up by the one entry with duplicate JSON keys, fixed in the same pass, see that entry's _flag) rather than a real missing/extra entry. PR #132 (merged 2026-07-16) fixed burn-state.json's posts_this_week drift and promoted both burn-state.json and this file to git-tracked -- it did NOT touch post-outcomes.json's content, so it did not (and could not have) fixed the duplicate-key issue; that fix landed here instead."
   }
 }
