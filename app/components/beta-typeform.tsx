@@ -552,6 +552,12 @@ export default function BetaTypeform() {
       // conversion visible in Google's own dashboard too, e.g. for channel reports
       // that only read GA4 natively). No PII beyond what GA4 already collects.
       window.gtag?.('event', 'beta_form_success', { event_category: 'beta' })
+      // Google Ads conversion — beta signup is the lead event campaigns optimize toward.
+      window.gtag?.('event', 'conversion', {
+        send_to: 'AW-18263083552/T8BkCM-svMMcEKCUwoRE',
+        value: 1.0,
+        currency: 'EGP',
+      })
     } catch (e) {
       const message = e instanceof Error ? e.message : 'Something went wrong. Try again.'
       trackEvent('beta_form_error', { email: contact.email, error: message })

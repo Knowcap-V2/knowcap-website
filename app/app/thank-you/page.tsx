@@ -109,6 +109,17 @@ function ThankYouContent() {
     document.title = 'Thank You | Knowcap'
   }, [])
 
+  useEffect(() => {
+    // Google Ads conversion — fires once when a real lead form (beta / contact)
+    // lands here. 'application' = a careers/job applicant, not an ad lead — skip.
+    if (type !== 'beta' && type !== 'contact') return
+    ;(window as any).gtag?.('event', 'conversion', {
+      send_to: 'AW-18263083552/T8BkCM-svMMcEKCUwoRE',
+      value: 1.0,
+      currency: 'EGP',
+    })
+  }, [type])
+
   const content = getMessage(type)
 
   return (
