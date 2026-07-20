@@ -42,3 +42,7 @@ database_export/
 *.sql
 *_dump.json
 all_data_combined.json
+
+# Playwright browser-automation debug logs (console + page snapshots)
+.playwright-cli/
+.playwright-mcp/
