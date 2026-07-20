@@ -1,2 +1,4 @@
 .vercel
 ruvector.db
+
+.env*
