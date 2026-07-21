@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="claude-session" content="knowcap-marketing-website">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session Recap — GA tag, website hygiene + /ship command reorder</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+  :root{
+    --blue:#1F6B3A; --blue-dark:#17502b; --blue-light:rgba(31,107,58,0.08);
+    --cyan:#E8A33D;
+    --navy:#191F2E;
+    --txt:#191F2E; --dim:#414651; --faint:#6b7280;
+    --bg:#F5F7FA;
+    --hero:radial-gradient(circle at 50% 0%, #E9F3EC 0%, #F8FAFC 70%);
+    --surface:#ffffff; --glass:rgba(255,255,255,0.95);
+    --line:#e5e9f0;
+    --ok:#16a34a; --warn:#d97706; --bad:#dc2626; --park:#0284c7;
+    --sh-sm:0 2px 4px rgba(0,0,0,0.02);
+    --sh-md:0 12px 24px -6px rgba(0,0,0,0.05);
+    --sh-lg:0 20px 40px -10px rgba(0,0,0,0.1);
+    --r:16px; --r-sm:10px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font:15px/1.6 Inter,system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:0}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 28px 64px}
+
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;color:var(--navy);
+    letter-spacing:-0.02em;line-height:1.2;text-wrap:balance}
+  h1{font-size:34px;margin:0 0 6px;font-weight:700}
+  h2{font-size:21px;margin:40px 0 14px;font-weight:600;
+    border-bottom:1px solid var(--line);padding-bottom:8px}
+  h3{font-size:16px;margin:22px 0 8px;font-weight:600;color:var(--blue)}
+  p{text-wrap:pretty}
+  .sub{color:var(--dim);margin:0 0 4px;font-size:15.5px}
+  .src{color:var(--faint);font-size:12.5px;margin:0 0 26px}
+  a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+  .gradient-text{background:linear-gradient(135deg,var(--blue) 0%,var(--cyan) 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    display:inline-block}
+
+  .label{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;
+    color:var(--blue);text-transform:uppercase;letter-spacing:.1em;
+    background:var(--blue-light);padding:4px 12px;border-radius:100px;
+    display:inline-block;margin-bottom:14px}
+
+  .lead{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);
+    padding:14px 18px;border-radius:var(--r-sm);margin:16px 0;font-size:15px;
+    box-shadow:var(--sh-sm)}
+
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    padding:18px;box-shadow:var(--sh-sm);transition:transform .25s ease,box-shadow .25s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:var(--sh-md)}
+  .card .n{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:var(--navy)}
+  .card .l{color:var(--dim);font-size:13px;margin-top:3px}
+  .card .n.good{color:var(--ok)} .card .n.blue{color:var(--blue)} .card .n.dim{color:var(--faint)}
+
+  .card-dark{background:var(--navy);color:#fff;border-radius:var(--r);padding:20px 22px;
+    box-shadow:var(--sh-md)}
+  .card-dark h3,.card-dark .n{color:#fff}
+  .card-dark p,.card-dark .l{color:#9ca3af}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0 10px;
+    background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--faint);font-weight:600;font-size:11.5px;text-transform:uppercase;
+    letter-spacing:.04em;background:#fafbfc}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover td{background:#f8fafd}
+
+  .pill{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11.5px;
+    font-weight:600;white-space:nowrap}
+  .pill.live{background:#dcfce7;color:#15803d}
+  .pill.fix{background:#dbeafe;color:#1d4ed8}
+  .pill.park{background:#e0f2fe;color:#0369a1}
+  .pill.note{background:#fef3c7;color:#b45309}
+  .pill.bad{background:#fee2e2;color:#b91c1c}
+  .yes{color:var(--ok);font-weight:700}
+  .no{color:var(--bad);font-weight:700}
+  .part{color:var(--warn);font-weight:700}
+
+  .box{background:#fff;border:1px solid var(--line);border-left:4px solid var(--ok);
+    border-radius:var(--r-sm);padding:12px 16px;margin:10px 0;box-shadow:var(--sh-sm)}
+  .box.win{border-left-color:var(--ok)}
+  .box.warn{border-left-color:var(--warn)}
+  .box.info{border-left-color:var(--blue)}
+  .box b{color:var(--navy)} .box .muted{color:var(--faint)}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;
+    position:relative;box-shadow:var(--sh-sm)}
+  .step .num{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--faint);
+    font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .step .ttl{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;
+    color:var(--navy);margin:4px 0 6px}
+  .step .d{font-size:13px;color:var(--dim)}
+  .step.here{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue) inset}
+  .step.here .badge{position:absolute;top:-10px;right:10px;background:var(--blue);color:#fff;
+    font-size:11px;font-weight:700;padding:2px 9px;border-radius:100px}
+
+  ul{margin:8px 0;padding-left:22px} li{margin:6px 0}
+  code{background:var(--blue-light);border:1px solid #d3e5da;border-radius:5px;padding:1px 6px;
+    font:12.5px ui-monospace,Consolas,monospace;color:var(--blue-dark)}
+  .muted{color:var(--faint)}
+
+  footer{margin-top:44px;color:var(--faint);font-size:12px;
+    border-top:1px solid var(--line);padding-top:16px}
+
+  .hero{background:var(--hero);margin:-40px -28px 0;padding:48px 28px 36px}
+  .hero .wrap{padding:0;max-width:1080px}
+
+  @media (max-width:760px){
+    .grid,.steps{grid-template-columns:1fr 1fr}
+    h1{font-size:27px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}
+  }
+</style>
+</head>
+<body>
+<p class="src" style="padding:8px 28px 0;margin:0">C:\Users\Eng.Hassan\Github\knowcap\knowcap-website\docs\content-pipeline\drafts\summarize-2026-07-21-ship-reorder.html</p>
+<div class="hero">
+  <div class="wrap">
+    <span class="label">Session Recap · knowcap-website + AV</span>
+    <h1>GA conversion tag, website hygiene <span class="gradient-text">+ fixing /ship itself</span></h1>
+    <p class="sub">3 PRs merged in knowcap-website, then the session turned the friction it just hit into a fix: /ship's own order got flipped in the AV tool repo.</p>
+  </div>
+</div>
+<div class="wrap">
+
+  <div class="grid">
+    <div class="card"><div class="n good">3</div><div class="l">PRs merged (knowcap-website)</div></div>
+    <div class="card"><div class="n blue">2</div><div class="l">repos touched this session</div></div>
+    <div class="card"><div class="n">1</div><div class="l">/ship command rewritten</div></div>
+    <div class="card"><div class="n dim">1</div><div class="l">open item, still deferred</div></div>
+  </div>
+
+  <h2>The arc</h2>
+  <p>Opened on a Google Analytics tag request (already live, no-op), then a real ask: wire a Google Ads <b>conversion event</b> (a tracking signal telling Google Ads "this visitor became a lead," so ad spend optimizes toward it) into the site's lead forms. Traced the actual submit paths — <code>/beta</code> typeform + the beta-modal/contact-form pair that redirect to <code>/thank-you</code> — and wired both, excluding job applications. PR 135, merged.</p>
+  <p>First <code>/ship</code> run then surfaced 9 stray uncommitted files sitting in the repo. Triaged each: gitignored Playwright debug logs, discarded a bad <code>yarn.lock</code> format rewrite, shipped 3 unwired landing-page variants as WIP. PR 136, merged. A recap HTML got written at the end of that run — and was left uncommitted, because at the time <code>/ship</code>'s order was ship-first-then-recap-last.</p>
+  <p>A second <code>/ship</code> run had to spend its entire turn just committing that leftover recap file (PR 137) — a whole extra shipping cycle for one stray doc. Hassan caught the pattern from the status-bar "1 unsaved" nag and asked: why does this keep happening, and can /ship be fixed so it doesn't. Diagnosis: <code>/ship</code>'s STEP ORDER was the bug — it committed+pushed BEFORE writing the recap, so the recap (written last) never made it into that same commit. Rewrote <code>AV/commands/ship.md</code> and <code>AV/skills/summarize/SKILL.md</code>: new order is interview → do the work → write recap → commit/push, and the recap's save-folder no longer needs asking every time — it now defaults to living inside whichever repo is being shipped. Committed directly to AV (sole-dev repo, push-to-master allowed, no PR needed) at <code>6042f28</code>.</p>
+  <p>This very recap is the first one written under the NEW order — proof of the fix: it's about to land in the same commit as itself, not a follow-up run.</p>
+
+  <h2>Decisions Hassan made</h2>
+  <table>
+    <thead><tr><th>Decision</th><th>Picked</th><th>Why it mattered</th></tr></thead>
+    <tbody>
+      <tr><td>Playwright debug-log folders (earlier run)</td><td>Gitignore, don't commit</td><td>Throwaway logs, not source</td></tr>
+      <tr><td>yarn.lock format-mismatch rewrite (earlier run)</td><td>Discard, keep original</td><td>Avoided a Vercel build-format risk</td></tr>
+      <tr><td>3 unwired landing-page variants (earlier run)</td><td>Commit as WIP</td><td>Safe dead code, preserved the work</td></tr>
+      <tr><td>/ship's step order</td><td>Interview → work → recap → ship</td><td>Recap now always lands in the same commit as the work it describes — kills the "leftover recap" pattern for good</td></tr>
+      <tr><td>Recap's save folder</td><td>Default to current repo, stop asking</td><td>Removes a needless question every single /ship run</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Assets & links</h2>
+  <table>
+    <thead><tr><th>Type</th><th>Item</th><th>Status</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr><td>PR</td><td>[ga-conversion] Google Ads lead-form conversion tag</td><td><span class="pill live">merged</span></td><td><a href="https://github.com/Knowcap-V2/knowcap-website/pull/135">PR 135</a></td></tr>
+      <tr><td>PR</td><td>[ship-cleanup] repo hygiene + stash pending WIP</td><td><span class="pill live">merged</span></td><td><a href="https://github.com/Knowcap-V2/knowcap-website/pull/136">PR 136</a></td></tr>
+      <tr><td>PR</td><td>[recap-commit] session recap doc</td><td><span class="pill live">merged</span></td><td><a href="https://github.com/Knowcap-V2/knowcap-website/pull/137">PR 137</a></td></tr>
+      <tr><td>File edited (AV repo)</td><td>AV/commands/ship.md — reordered to interview → work → recap → ship</td><td><span class="pill live">pushed to master</span></td><td><a href="file:///C:/Users/Eng.Hassan/Github/AV/commands/ship.md">open</a></td></tr>
+      <tr><td>File edited (AV repo)</td><td>AV/skills/summarize/SKILL.md — folder auto-defaults to current repo</td><td><span class="pill live">pushed to master</span></td><td><a href="file:///C:/Users/Eng.Hassan/Github/AV/skills/summarize/SKILL.md">open</a></td></tr>
+      <tr><td>File edited</td><td>app/components/beta-typeform.tsx</td><td><span class="pill live">live</span></td><td><a href="file:///C:/Users/Eng.Hassan/Github/knowcap/knowcap-website/app/components/beta-typeform.tsx">open</a></td></tr>
+      <tr><td>File edited</td><td>app/app/thank-you/page.tsx</td><td><span class="pill live">live</span></td><td><a href="file:///C:/Users/Eng.Hassan/Github/knowcap/knowcap-website/app/app/thank-you/page.tsx">open</a></td></tr>
+      <tr><td>HTML</td><td>summarize-2026-07-20-ga-tag-website-hygiene.html (recap #1, merged via PR 137)</td><td><span class="pill live">merged</span></td><td><a href="file:///C:/Users/Eng.Hassan/Github/knowcap/knowcap-website/docs/content-pipeline/drafts/summarize-2026-07-20-ga-tag-website-hygiene.html">open</a></td></tr>
+      <tr><td>HTML</td><td>summarize-2026-07-21-recap-shipped.html (recap #2, was the leftover — shipping now with this one)</td><td><span class="pill note">shipping now</span></td><td><a href="file:///C:/Users/Eng.Hassan/Github/knowcap/knowcap-website/docs/content-pipeline/drafts/summarize-2026-07-21-recap-shipped.html">open</a></td></tr>
+      <tr><td>HTML</td><td>summarize-2026-07-21-ship-reorder.html (this file — first recap under the new order)</td><td><span class="pill note">shipping now</span></td><td>(this page)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Still open / needs Hassan</h2>
+  <div class="box warn"><b>Watch:</b> GA conversion tag (PR 135) is merged and live but still not verified against a real form submit in Google Ads/GA4's debug view. Deferred across two runs now — check next time you're on the live site, or after the next real beta/contact lead comes in.</div>
+
+  <h2>Suggested skills for the resuming session</h2>
+  <ul>
+    <li><code>/ship</code> — the NEW order is now live; next run in any repo will exercise it end to end</li>
+    <li>Google Ads / GA4 debug view — manual check to close the standing open item above</li>
+  </ul>
+
+  <footer>
+    Generated 2026-07-21, 10:20 AM (Cairo) · C:\Users\Eng.Hassan\Github\knowcap\knowcap-website\docs\content-pipeline\drafts\summarize-2026-07-21-ship-reorder.html<br>
+    Staleness check: node AV/scripts/check-summary-staleness.js "C:\Users\Eng.Hassan\Github\knowcap\knowcap-website\docs\content-pipeline\drafts\summarize-2026-07-21-ship-reorder.html"
+  </footer>
+</div>
+<script type="application/json" id="staleness-data">{"generated_at":"2026-07-21T10:20:19+03:00","repos":[{"path":"C:\\Users\\Eng.Hassan\\Github\\knowcap\\knowcap-website","branch":"main","sha":"a3ad4f36af0aee3aa30ed922c05af4c240d6b3b5"},{"path":"C:\\Users\\Eng.Hassan\\Github\\AV","branch":"master","sha":"d2214fb85295492a380944192960ffeca0d9a194"}]}</script>
+</body>
+</html>
