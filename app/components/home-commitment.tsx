@@ -15,6 +15,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Menu, X } from 'lucide-react'
 import ABTracker from '@/components/ab-tracker'
 import IngestionGlobe from '@/components/ingestion-globe'
 
@@ -83,28 +84,35 @@ const CSS = `
 .cl-brand-cap{color:var(--green)}
 .cl-navlinks{display:flex;gap:26px}
 @media(max-width:760px){.cl-navlinks{display:none}}
-.cl-navlink{font-size:13.5px;font-weight:500;color:var(--sec);transition:color .15s}
+.cl-navlink{font-size:13.5px;font-weight:500;color:var(--sec);transition:color .15s;
+  display:flex;align-items:center;min-height:44px}
 .cl-navlink:hover{color:var(--green)}
 .cl-navauth{display:flex;align-items:center;gap:16px}
-@media(max-width:900px){.cl-navauth{gap:10px}}
-.cl-login{display:inline-flex;align-items:center;min-height:44px;font-size:13.5px;font-weight:500;color:var(--sec);transition:color .15s}
+.cl-login{font-size:13.5px;font-weight:500;color:var(--sec);transition:color .15s;
+  display:flex;align-items:center;min-height:44px}
 .cl-login:hover{color:var(--ink)}
 
-/* mobile nav toggle + dropdown panel — fixes K-2 (no mobile nav mechanism) and,
-   for the panel's own links, part of K-6 (sub-44px tap targets). Native <button>,
-   not a checkbox hack, so it stays keyboard-operable (avoids the P-7 regression
-   class found on hasansamarslan.com 2026-07-12). */
-.cl-navtoggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;
-  flex-shrink:0;margin:0 -8px 0 -2px;background:transparent;border:0;border-radius:8px;
-  cursor:pointer;color:var(--ink)}
-.cl-navtoggle:hover{background:rgba(24,24,27,.06)}
-@media(max-width:900px){.cl-navtoggle{display:inline-flex}}
-.cl-mobilepanel{display:none;flex-direction:column;background:var(--cream);
-  border-top:1px solid var(--border);box-shadow:0 16px 32px rgba(24,24,27,.10)}
-.cl-mobilepanel[data-open="true"]{display:flex}
-@media(min-width:901px){.cl-mobilepanel{display:none !important}}
-.cl-mobilepanel .cl-navlink{display:flex;align-items:center;min-height:44px;
-  padding:0 22px;font-size:15px;border-bottom:1px solid var(--border)}
+/* K-2 fix (2026-07-21): real mobile nav — mirrors the same breakpoint the globe-hero
+   override (below, .clh-hero block) uses for .cl-navlinks, so the toggle appears
+   exactly where the desktop links disappear (900px), no dead gap in between. */
+.cl-mobile-toggle{display:none;align-items:center;justify-content:center;
+  width:44px;height:44px;background:transparent;border:0;border-radius:6px;
+  color:var(--ink);cursor:pointer;flex-shrink:0}
+.cl-mobile-toggle:hover{background:var(--border)}
+@media(max-width:900px){
+  .cl-mobile-toggle{display:flex}
+  .cl-navauth{display:none}
+}
+.cl-mobile-panel{display:none;flex-direction:column;background:var(--cream);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cl-mobile-panel[data-open="true"]{display:flex}
+.cl-mobile-link{display:flex;align-items:center;min-height:44px;padding:0 22px;
+  font-size:14.5px;font-weight:500;color:var(--sec);border-bottom:1px solid var(--border)}
+.cl-mobile-link:hover{color:var(--green);background:var(--green-tint)}
+.cl-mobile-auth{display:flex;flex-direction:column;gap:10px;padding:16px 22px 20px}
+.cl-mobile-auth .cl-login{justify-content:center;border:1px solid var(--border);
+  border-radius:3px;min-height:44px}
+.cl-mobile-auth .cl-btn--sm{width:100%;text-align:center}
 
 /* buttons */
 .cl-btn{display:inline-block;font-family:var(--body);font-size:15px;font-weight:600;
@@ -116,7 +124,8 @@ const CSS = `
   transform:translateY(-1px);box-shadow:0 6px 18px rgba(31,107,58,.22)}
 .cl-btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
 .cl-btn--ghost:hover{background:var(--ink);color:var(--cream);transform:translateY(-1px)}
-.cl-btn--sm{padding:12px 18px;font-size:13.5px}
+.cl-btn--sm{padding:12px 20px;font-size:13.5px;min-height:44px;box-sizing:border-box;
+  display:inline-flex;align-items:center;justify-content:center}
 .cl-cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:42px}
 
 /* section register marginalia — V6b mono kicker style */
@@ -464,10 +473,11 @@ const CSS = `
 .cl-footer-line .cl-fl-green{color:var(--green-dark)}
 .cl-footer-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 36px}
 @media(max-width:720px){.cl-footer-cols{grid-template-columns:repeat(2,1fr);gap:28px 24px}}
-.cl-fcol{display:flex;flex-direction:column;gap:9px}
+.cl-fcol{display:flex;flex-direction:column;gap:2px}
 .cl-fcol-h{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.12em;
   text-transform:uppercase;color:var(--green-dark);margin-bottom:3px}
-.cl-fcol a{display:inline-flex;align-items:center;min-height:44px;color:rgba(251,250,248,.65);transition:color .15s;font-size:13px}
+.cl-fcol a{color:rgba(251,250,248,.65);transition:color .15s;font-size:13px;
+  display:flex;align-items:center;min-height:44px}
 .cl-fcol a:hover{color:var(--cream)}
 .cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
@@ -575,18 +585,21 @@ function Header() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-  // Close the mobile panel if the viewport grows past the breakpoint while
-  // it's open (matches the CSS @media(min-width:901px) safety rule).
+  // K-2 fix (2026-07-21): below 900px (where .cl-navlinks/.cl-navauth hide via
+  // CSS) close the panel on route-hash navigation and Escape so it never gets
+  // stuck open — real <button>, not a checkbox hack, so Tab/Enter/Space work
+  // for free (see hasansamarslan.com/P-7 regression note in ui-audit STEERING.md).
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth > 900) setMobileOpen(false) }
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [])
+    if (!mobileOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMobileOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [mobileOpen])
   const closeMobile = () => setMobileOpen(false)
   return (
     <header className="cl-header" data-scrolled={scrolled}>
       <div className="cl-wrap cl-nav">
-        <Link href="/" className="cl-brand">
+        <Link href="/" className="cl-brand" onClick={closeMobile}>
           <Image src="/logos/logo.jpg" alt="" width={28} height={28} priority />
           <span>Know<span className="cl-brand-cap">cap</span></span>
         </Link>
@@ -619,18 +632,32 @@ function Header() {
             )}
           </button>
         </div>
+        <button
+          type="button"
+          className="cl-mobile-toggle"
+          aria-expanded={mobileOpen}
+          aria-controls="cl-mobile-panel"
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => setMobileOpen((v) => !v)}
+        >
+          {mobileOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+        </button>
       </div>
       <nav
-        id="cl-mobile-nav"
-        className="cl-mobilepanel"
+        id="cl-mobile-panel"
+        className="cl-mobile-panel"
         data-open={mobileOpen}
-        aria-label="Primary, mobile"
+        aria-label="Mobile"
       >
-        <a className="cl-navlink" href="#loop" onClick={closeMobile}>How it works</a>
-        <a className="cl-navlink" href="#mcp" onClick={closeMobile}>For your agents</a>
-        <a className="cl-navlink" href="#faq" onClick={closeMobile}>FAQ</a>
-        <Link className="cl-navlink" href="/compare" onClick={closeMobile}>Compare</Link>
-        <Link className="cl-navlink" href="/contact-us" onClick={closeMobile}>Contact</Link>
+        <a className="cl-mobile-link" href="#loop" onClick={closeMobile}>How it works</a>
+        <a className="cl-mobile-link" href="#mcp" onClick={closeMobile}>For your agents</a>
+        <a className="cl-mobile-link" href="#faq" onClick={closeMobile}>FAQ</a>
+        <Link className="cl-mobile-link" href="/compare" onClick={closeMobile}>Compare</Link>
+        <Link className="cl-mobile-link" href="/contact-us" onClick={closeMobile}>Contact</Link>
+        <div className="cl-mobile-auth">
+          <a className="cl-login" href={loginHref} onClick={closeMobile}>Log in</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta" onClick={closeMobile}>Join Beta</a>
+        </div>
       </nav>
     </header>
   )
