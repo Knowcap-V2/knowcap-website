@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Conversion sub-pages (paid traffic destinations)
     { url: `${base}/for/odoo-partners`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/for/saudi-arabia`,  lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${base}/developers`,        lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
 
     // Blog (index + posts)
     ...blogEntries,

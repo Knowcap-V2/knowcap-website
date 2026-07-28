@@ -182,6 +182,7 @@ export function EditorialFooter() {
             <a href="/#mcp">For your agents</a>
             <a href="/#faq">FAQ</a>
             <Link href="/for/odoo-partners">For Odoo partners</Link>
+            <Link href="/developers">Developers</Link>
           </div>
           <div className="cl-fcol">
             <div className="cl-fcol-h">Compare</div>

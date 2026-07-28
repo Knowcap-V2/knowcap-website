@@ -613,6 +613,24 @@ function Header() {
         <div className="cl-navauth">
           <a className="cl-login" href={loginHref}>Log in</a>
           <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join Beta</a>
+          <button
+            type="button"
+            className="cl-navtoggle"
+            aria-expanded={mobileOpen}
+            aria-controls="cl-mobile-nav"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            {mobileOpen ? (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M3 5.5h14M3 10h14M3 14.5h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            )}
+          </button>
         </div>
         <button
           type="button"
