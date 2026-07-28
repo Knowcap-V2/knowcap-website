@@ -37,7 +37,6 @@ const CONNECT_CMD = 'claude mcp add --transport http knowcap https://mcp.knowcap
 const STATS = [
   { n: '79', l: 'Tools' },
   { n: '12', l: 'Tool areas' },
-  { n: '13', l: 'Marked destructive' },
   { n: '8', l: 'Resources' },
   { n: '8', l: 'Slash prompts' },
 ]
@@ -182,9 +181,9 @@ export default function DevelopersPage() {
               <h2 className="dv-h2">One server, twelve tool areas.</h2>
               <p className="dv-lead">
                 79 tools cover projects, sources, memories, artifacts, folders, chats, speakers,
-                sharing, search, digest, hierarchy, and workflow. 13 are marked destructive, so a
-                client can warn before running them. There are also 8 resources and 8 slash
-                prompts.
+                sharing, search, digest, hierarchy, and workflow. Every tool declares what it does
+                before it runs, so your agent asks before making a change it cannot take back.
+                There are also 8 resources and 8 slash prompts.
               </p>
             </div>
             <div className="dv-stats">
