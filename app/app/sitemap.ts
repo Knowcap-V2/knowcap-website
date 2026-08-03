@@ -24,9 +24,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/`,           lastModified: now, changeFrequency: 'weekly',  priority: 1.0 },
 
     // Conversion sub-pages (paid traffic destinations)
+    { url: `${base}/pricing`,           lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/for/odoo-partners`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/for/saudi-arabia`,  lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/developers`,        lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+
+    // /get-started intentionally excluded — noindex ad-landing fallback (EPIC 24 #7670),
+    // same treatment as /beta: an ad destination, not an SEO surface.
 
     // Blog (index + posts)
     ...blogEntries,
