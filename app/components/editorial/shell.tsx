@@ -130,7 +130,7 @@ const CSS = `
   color:rgba(251,250,248,.55)}
 `
 
-export function EditorialHeader() {
+export function EditorialHeader({ registerHref }: { registerHref?: string } = {}) {
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -148,20 +148,21 @@ export function EditorialHeader() {
         <nav className="cl-navlinks" aria-label="Primary">
           <a className="cl-navlink" href="/#loop">How it works</a>
           <a className="cl-navlink" href="/#mcp">For your agents</a>
+          <Link className="cl-navlink" href="/pricing">Pricing</Link>
           <a className="cl-navlink" href="/#faq">FAQ</a>
           <Link className="cl-navlink" href="/compare">Compare</Link>
           <Link className="cl-navlink" href="/contact-us">Contact</Link>
         </nav>
         <div className="cl-navauth">
           <a className="cl-login" href={`${APP_URL}/login`}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href={`${APP_URL}/register`}>Get Started Free</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href={registerHref || `${APP_URL}/register`}>Get Started Free</a>
         </div>
       </div>
     </header>
   )
 }
 
-export function EditorialFooter() {
+export function EditorialFooter({ registerHref }: { registerHref?: string } = {}) {
   return (
     <footer className="cl-footer">
       <div className="cl-wrap">
@@ -180,6 +181,7 @@ export function EditorialFooter() {
             <div className="cl-fcol-h">Product</div>
             <a href="/#loop">How it works</a>
             <a href="/#mcp">For your agents</a>
+            <Link href="/pricing">Pricing</Link>
             <a href="/#faq">FAQ</a>
             <Link href="/for/odoo-partners">For Odoo partners</Link>
             <Link href="/developers">Developers</Link>
@@ -202,7 +204,7 @@ export function EditorialFooter() {
           </div>
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
-            <a href={`${APP_URL}/register`}>Get Started Free</a>
+            <a href={registerHref || `${APP_URL}/register`}>Get Started Free</a>
             <a href={`${APP_URL}/login`}>Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
@@ -240,13 +242,22 @@ export function PageHero({
   )
 }
 
-export default function EditorialShell({ children }: { children: React.ReactNode }) {
+export default function EditorialShell({
+  children,
+  registerHref,
+}: {
+  children: React.ReactNode
+  /** Override the shared header/footer "Get Started Free" link — used by
+   * campaign-landing pages (e.g. /get-started) so a paid-ad tag survives even
+   * if the visitor taps the generic nav CTA instead of the page's own button. */
+  registerHref?: string
+}) {
   return (
     <div className="cl-root">
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <EditorialHeader />
+      <EditorialHeader registerHref={registerHref} />
       <main className="cl-page-main">{children}</main>
-      <EditorialFooter />
+      <EditorialFooter registerHref={registerHref} />
     </div>
   )
 }
