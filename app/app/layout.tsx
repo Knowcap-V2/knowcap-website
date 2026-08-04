@@ -4,6 +4,7 @@ import { Inter, Space_Grotesk, JetBrains_Mono, Fraunces } from 'next/font/google
 import { Toaster } from '@/components/ui/toaster'
 import { Toaster as Sonner } from 'sonner'
 import PostHogProvider from '@/components/posthog-provider'
+import MetaPixel from '@/components/meta-pixel'
 import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -85,6 +86,10 @@ export default function RootLayout({
             `,
           }}
         />
+
+        {/* Meta Pixel — EPIC 31 S4, Odoo #7650. No-op (renders nothing) until
+            NEXT_PUBLIC_META_PIXEL_ID is set — see components/meta-pixel.tsx. */}
+        <MetaPixel />
       </head>
       <body className={`${inter.className} bg-[#F5F4F1] text-[#1a1a1a] antialiased`}>
         <PostHogProvider />
