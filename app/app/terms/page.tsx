@@ -108,7 +108,7 @@ export default function TermsPage() {
               Knowcap offers free and paid plans. Current pricing, features, and limits are listed on our pricing page.
             </p>
             <ul>
-              <li><strong>Billing cycles.</strong> Paid plans are billed in advance on a monthly or annual basis, depending on the plan you select. Fees are non-refundable except as required by law or as expressly stated in these Terms.</li>
+              <li><strong>Billing cycles.</strong> Paid plans are billed in advance on a monthly or annual basis, depending on the plan you select. Fees are non-refundable except as required by law, as expressly stated in these Terms, or under a refund guarantee published in our <a href="/refund-policy">Refund Policy</a>.</li>
               <li><strong>Renewals.</strong> Subscriptions automatically renew at the end of each billing cycle at the then-current price unless you cancel before the renewal date.</li>
               <li><strong>Cancellation.</strong> You may cancel your subscription at any time from your account settings or by emailing <a href="mailto:hsa@smetools.io">hsa@smetools.io</a>. Cancellation takes effect at the end of your current billing period; you retain access to paid features until then.</li>
               <li><strong>Changes to pricing.</strong> We may change pricing or plan features with at least 30 days&apos; advance notice for existing subscribers. Changes take effect at your next renewal.</li>

@@ -208,6 +208,7 @@ export function EditorialFooter({ registerHref }: { registerHref?: string } = {}
             <a href={`${APP_URL}/login`}>Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
+            <Link href="/refund-policy">Refund Policy</Link>
           </div>
         </nav>
         <div className="cl-footer-bottom">

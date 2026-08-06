@@ -287,6 +287,7 @@ export default function OfferPage() {
                 <li><span className="of-g-num">03</span><span>Demonstrate a path to saving 50 hours per 500-hour project</span></li>
               </ul>
               <p className="of-g-final">We will refund 100% of your subscription.</p>
+              <p className="of-fine"><Link href="/refund-policy">Full refund policy</Link></p>
             </div>
 
             <div className="of-cta-row">
