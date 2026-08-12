@@ -84,6 +84,7 @@ export default function PolicyPage() {
               <li><strong>To Organize Your Content:</strong> To associate your recordings with the projects you designate on app.knowcap.ai.</li>
               <li><strong>For Communication:</strong> To send important notices about your account or changes to our services.</li>
               <li><strong>For Security and Improvement:</strong> To secure our services, prevent abuse, and analyze usage patterns to improve the Extension.</li>
+              <li><strong>For Advertising Measurement:</strong> We use the Meta Pixel on our marketing site to measure the performance of our advertising campaigns — for example, whether a visit or signup resulted from a specific ad. This may involve sharing limited technical information about your visit with Meta. See Meta&apos;s Data Policy for details.</li>
             </ul>
 
             <h2 id="data-sharing" style={h2Anchor}>5. Data Sharing and Disclosure</h2>
