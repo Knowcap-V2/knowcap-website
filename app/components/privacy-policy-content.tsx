@@ -209,6 +209,13 @@ export default function PrivacyPolicyContent() {
                   <span className="text-muted-foreground"> To secure our services, prevent abuse, and analyze usage patterns to improve the Extension.</span>
                 </div>
               </li>
+              <li className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
+                <div>
+                  <span className="font-semibold text-[#0052CC]">For Advertising Measurement:</span>
+                  <span className="text-muted-foreground"> We use the Meta Pixel on our marketing site to measure the performance of our advertising campaigns — for example, whether a visit or signup resulted from a specific ad. This may involve sharing limited technical information about your visit with Meta. See Meta&apos;s Data Policy for details.</span>
+                </div>
+              </li>
             </ul>
           </motion.div>
 
