@@ -88,8 +88,6 @@ export async function POST(request: NextRequest) {
             <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
           </div>
 
-          <p>In the meantime, feel free to explore our <a href="https://knowcap.ai/pitch" style="color: #005EFF;">pitch deck</a> or check out the <a href="https://knowcap.ai/MVP" style="color: #005EFF;">Knowcap MVP</a>.</p>
-
           <p>Best regards,<br/>The Knowcap Team</p>
           
           <hr style="border: 1px solid #E5E7EB; margin: 20px 0;" />
