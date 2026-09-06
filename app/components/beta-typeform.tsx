@@ -427,7 +427,7 @@ function WelcomeStep({ onStart }: { onStart: () => void }) {
           Apply for Knowcap Invite-Only Access
         </h1>
         <p className="text-gray-400 text-base leading-relaxed max-w-md mx-auto">
-          We&apos;re rolling out Knowcap gradually starting June 2026.
+          We&apos;re rolling out Knowcap gradually.
           Join the queue for exclusive, invite-only access.
         </p>
       </div>
