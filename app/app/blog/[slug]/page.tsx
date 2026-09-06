@@ -6,7 +6,7 @@ import { BLOG_CSS } from '../blog-styles'
 import EditorialShell from '@/components/editorial/shell'
 import ReadingProgress from '@/components/blog/reading-progress'
 import TableOfContents from '@/components/blog/toc'
-import TemplateDownload from '@/components/blog/template-download'
+import TemplateDownload, { type PostDownloadOffer } from '@/components/blog/template-download'
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }))
@@ -47,6 +47,19 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       images: [ogImageUrl],
     },
   }
+}
+
+// Conversion test (Hassan, 2026-08-04 ruling): a post-download offer for the one page that
+// carries the site's blog traffic. Scoped per-slug on purpose — do not extend to other posts
+// without a fresh decision; this is a one-page test, not a new site-wide pattern.
+const POST_DOWNLOAD_OFFERS: Record<string, PostDownloadOffer> = {
+  'namuthaj-mahdar-ijtimaa-ar': {
+    headline: 'حمّلت النموذج؟ جرّب الطريقة الأسرع.',
+    body: 'بدل ما تعبّي هذا النموذج يدوياً بعد كل اجتماع، خلّي Knowcap يسجّل الاجتماع ويكتب محضره تلقائياً — وكل قرار يتأكّد باسم صاحبه.',
+    ctaLabel: 'جرّب Knowcap مجاناً',
+    ctaHref:
+      'https://app.knowcap.ai/register?utm_source=blog_namuthaj-mahdar-ijtimaa-ar&utm_medium=post_download_offer&utm_campaign=blog_conversion_test',
+  },
 }
 
 const RELATED_LABELS: Record<string, string> = {
@@ -160,6 +173,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             href={post.templateDownload.href}
             label={post.templateDownload.label}
             slug={post.slug}
+            dir={post.dir}
+            offer={POST_DOWNLOAD_OFFERS[post.slug]}
           />
         )}
 

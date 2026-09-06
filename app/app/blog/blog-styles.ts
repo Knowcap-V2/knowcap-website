@@ -60,6 +60,16 @@ export const BLOG_CSS = `
 .kb-template-dl-btn{flex-shrink:0;background:var(--accent);color:#fff;text-decoration:none;padding:10px 20px;border-radius:8px;font-weight:600;font-size:14px;white-space:nowrap}
 .kb-template-dl-btn:hover{opacity:.9}
 @media(max-width:640px){.kb-template-dl{padding:0 20px}.kb-template-dl-card{flex-wrap:wrap}.kb-template-dl-btn{width:100%;text-align:center}}
+.kb-post-offer{max-width:720px;margin:14px auto 0;padding:0 40px;animation:kbPostOfferIn .3s ease}
+.kb-post-offer-card{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 24px}
+.kb-post-offer-body{flex:1;min-width:0}
+.kb-post-offer-head{font-family:var(--font-space-grotesk),sans-serif;font-weight:600;font-size:14.5px;color:var(--ink);margin-bottom:4px}
+.kb-post-offer-sub{font-size:13.5px;line-height:1.55;color:var(--ink-2)}
+.kb-post-offer-btn{flex-shrink:0;background:var(--ink);color:#fff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:600;font-size:13.5px;white-space:nowrap}
+.kb-post-offer-btn:hover{opacity:.88}
+.kb-post-offer[dir="rtl"] .kb-post-offer-card{text-align:right}
+@keyframes kbPostOfferIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.kb-post-offer{padding:0 20px}.kb-post-offer-card{flex-wrap:wrap}.kb-post-offer-btn{width:100%;text-align:center}}
 .kb-related{max-width:720px;margin:0 auto;padding:0 40px 56px}
 .kb-related-row{display:flex;gap:10px;flex-wrap:wrap}
 .kb-related a{font-family:var(--font-mono),monospace;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 14px}
