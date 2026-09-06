@@ -46,3 +46,5 @@ all_data_combined.json
 # Playwright browser-automation debug logs (console + page snapshots)
 .playwright-cli/
 .playwright-mcp/
+.vercel
+.env*
