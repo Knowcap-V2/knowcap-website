@@ -1,3 +1,14 @@
+<!-- github-project-provenance-2026-09-27 -->
+## GitHub report identity (Hassan, 27 September 2026)
+
+This rule supersedes older GitHub issue provenance/title/label instructions below or elsewhere. Applies to every organization's GitHub projects and every reporting person, including Hassan, Shady, Sara and customers.
+- Every project item carries two TEXT fields: **Source chat** = the actual originating chat title, including its date/run when present; **Reported by** = the actual reporting person. A shared GitHub account, assignee, department abbreviation or filing agent is not evidence of the person's identity. For an autonomous report, record the actual agent/routine; never invent a human or chat title. Unknown values stay blank and are disclosed.
+- Issue title: `[<actual source chat title>][<reporting person>][<type>][P<n>][<area>] <specific title>`, keeping only applicable type/priority/area brackets. Example: `[AV Techstack-Watch 9/27 #32][Hassan][bug][P2][security] Email reservation function permits anonymous execution without checking user ownership`.
+- Store these identities in the project fields, **not identity labels** (`found-by:`, `reported-by:`, or source-chat labels). Preserve the actual discovery/verification history in the body; the reporting person and discovering agent can differ. Other type, priority, area and method labels remain valid. Existing Odoo requirements are unchanged.
+- Discover/reuse each project's field IDs; create missing fields as TEXT. After adding the issue to each destination project, set both fields and read the item back. A title/body or label alone is not completion. New projects get the same fields. Do not guess IDs or silently claim success when permissions prevent setting them.
+- Historical backfill uses evidence only; never substitute today's chat/person for an old report. Remove an identity label from an item only after its information is preserved in fields or the body; do not delete repository-wide labels as a shortcut.
+<!-- /github-project-provenance-2026-09-27 -->
+
 # HyperFrames Composition Project
 
 ## Skills — USE THESE FIRST
