@@ -42,9 +42,12 @@ export default function PostHogProvider() {
         'a[href*="/register"], a[href*="/beta"]',
       )
       if (!link) return
-      const href = link.getAttribute('href') || ''
-      trackLandingCTA(href.includes('/register') ? 'register' : 'beta', {
-        href: href.split('?')[0],
+      // Classify by destination path, not the raw href, so /login?next=/register
+      // or /beta?next=/register never count as the wrong CTA.
+      const cta = link.pathname === '/register' ? 'register' : link.pathname === '/beta' ? 'beta' : null
+      if (!cta) return
+      trackLandingCTA(cta, {
+        href: (link.getAttribute('href') || '').split('?')[0],
         page: window.location.pathname,
       })
     }
