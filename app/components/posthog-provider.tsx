@@ -31,6 +31,25 @@ export default function PostHogProvider() {
         }
       },
     })
+
+    // trackLandingCTA was never called from any button, so 'landing_cta_click'
+    // read 0 for months while ~35 people a quarter clicked Register. One
+    // delegated capture-phase listener (same pattern as meta-pixel.tsx) covers
+    // every current and future signup link: the app's /register door and the
+    // /beta waitlist. Capture phase fires before the browser leaves the page.
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement | null)?.closest<HTMLAnchorElement>(
+        'a[href*="/register"], a[href*="/beta"]',
+      )
+      if (!link) return
+      const href = link.getAttribute('href') || ''
+      trackLandingCTA(href.includes('/register') ? 'register' : 'beta', {
+        href: href.split('?')[0],
+        page: window.location.pathname,
+      })
+    }
+    document.addEventListener('click', onClick, true)
+    return () => document.removeEventListener('click', onClick, true)
   }, [])
 
   return null
@@ -42,9 +61,13 @@ function getCookie(name: string): string | null {
   return match ? match[2] : null
 }
 
-export function trackLandingCTA(cta: string) {
+export function trackLandingCTA(cta: string, props?: Record<string, unknown>) {
   if (!POSTHOG_KEY || typeof window === 'undefined') return
-  posthog.capture('landing_cta_click', { cta_type: cta })
+  try {
+    posthog.capture('landing_cta_click', { cta_type: cta, ...props })
+  } catch {
+    // analytics must never block the click it instruments
+  }
 }
 
 /**
