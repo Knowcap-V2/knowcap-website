@@ -22,6 +22,12 @@ model BetaApplication {
     region           String?
     approvedAt       DateTime?
     approvedBy       String?
+    // Outcome of the "you're in" invite email (issue #158). Null = approved
+    // before tracking existed. Status is 'sent' | 'failed'; error holds the
+    // SMTP error message of the last failed attempt; sentAt is the last success.
+    approvalEmailStatus String?
+    approvalEmailError  String?   @db.Text
+    approvalEmailSentAt DateTime?
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
 

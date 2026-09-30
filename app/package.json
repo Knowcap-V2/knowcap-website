@@ -6,6 +6,7 @@
     "build": "prisma db push --skip-generate && prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "tsx --test lib/betaApprovalEmail.test.ts",
     "postinstall": "prisma generate"
   },
   "prisma": {

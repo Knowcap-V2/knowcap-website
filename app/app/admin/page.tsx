@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Lock, LogOut, Download, Trash2, RefreshCw, FileDown, Sparkles, TrendingUp, Users, Briefcase, Star, Award, AlertCircle, CheckCircle, Clock, Filter, ArrowUpDown, Eye, X, Mail, Search, Link as LinkIcon, Loader, MessageSquare, Save } from 'lucide-react'
 import AIAssistantWidget from '@/components/ai-assistant-widget'
+import BetaApprovalEmailStatus, { approvalEmailFields } from '@/components/beta-approval-email-status'
 
 export default function BetaAppDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -15,6 +16,7 @@ export default function BetaAppDashboard() {
   const [recruitmentApplications, setRecruitmentApplications] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [scoringInProgress, setScoringInProgress] = useState(false)
+  const [resendingEmailId, setResendingEmailId] = useState<string | null>(null)
   
   // Dashboard filters and state
   const [selectedRole, setSelectedRole] = useState<string>('all')
@@ -189,17 +191,42 @@ export default function BetaAppDashboard() {
 
       if (response.ok) {
         setBetaApplications(betaApplications.map(app =>
-          app.id === id ? { ...app, approvedAt: result.approvedAt } : app
+          app.id === id ? { ...app, approvedAt: result.approvedAt, ...approvalEmailFields(result) } : app
         ))
         alert(result.emailed
           ? `Approved ${name} — they can sign up now and an invite email was sent.`
-          : `Approved ${name} — they can sign up now. (Invite email NOT sent — set GMAIL_APP_PASSWORD.)`)
+          : `Approved ${name} — they can sign up now, but the invite email FAILED: ${result.approvalEmailError || 'unknown error'}. Use "Resend invite" once fixed.`)
       } else {
         throw new Error(result.error || 'Failed to approve')
       }
     } catch (error: any) {
       console.error('Approve error:', error)
       alert(error.message || 'Failed to approve application')
+    }
+  }
+
+  const handleResendApprovalEmail = async (id: string, name: string, email: string) => {
+    if (!confirm(`Resend the invite email to ${name} (${email})?`)) return
+    setResendingEmailId(id)
+    try {
+      const response = await fetch('/api/resend-beta-approval-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'Failed to resend invite email')
+      setBetaApplications(prev => prev.map(app =>
+        app.id === id ? { ...app, ...approvalEmailFields(result) } : app
+      ))
+      alert(result.emailed
+        ? `Invite email re-sent to ${name}.`
+        : `Invite email to ${name} FAILED: ${result.approvalEmailError || 'unknown error'}`)
+    } catch (error: any) {
+      console.error('Resend invite error:', error)
+      alert(error.message || 'Failed to resend invite email')
+    } finally {
+      setResendingEmailId(null)
     }
   }
 
@@ -986,6 +1013,13 @@ export default function BetaAppDashboard() {
                             <p className="text-sm text-gray-500 mb-1">Motivation</p>
                             <p className="text-gray-700">{app.motivation}</p>
                           </div>
+                          {app.approvedAt && (
+                            <BetaApprovalEmailStatus
+                              app={app}
+                              resending={resendingEmailId === app.id}
+                              onResend={() => handleResendApprovalEmail(app.id, app.name, app.email)}
+                            />
+                          )}
                           <div className="md:col-span-2">
                             <p className="text-sm text-gray-500">Submitted: {new Date(app.createdAt).toLocaleString()}</p>
                           </div>
