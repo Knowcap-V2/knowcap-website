@@ -170,7 +170,9 @@
       "_flag": "14d: 0 impressions. EN-thesis dead."
     },
     {
-      "slug": "odoo-software-projects-fail-in-the-meeting-ar",
+      "slug": "why-odoo-projects-fail-in-the-meeting-not-the-code-ar",
+      "file": "odoo-software-projects-fail-in-the-meeting-ar.md",
+      "_slug_fix": "2026-10-04 growth-manager run 18: was recorded under its FILE name, which 404s; the live URL is the frontmatter slug. Rechecked at the real URL (GSC 15 Jun-1 Oct): 4 impressions, all from a site: operator query, 0 clicks - dud verdict stands.",
       "published": "2026-06-15",
       "topic_cluster": "odoo-partners",
       "format": "thesis",
