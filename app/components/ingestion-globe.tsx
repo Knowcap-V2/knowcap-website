@@ -64,7 +64,7 @@ export default function IngestionGlobe() {
   useEffect(() => {
     const cv = cvRef.current!, tilesEl = tilesRef.current!, legendEl = legendRef.current!
     const ctx = cv.getContext('2d')!
-    let raf = 0
+    let raf = 0, vis = true
     const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches /* reduced motion: draw once and hold still, no pointer effects */
 
     const B = { a: '#1F6B3A', rgb: '31,107,58' }
@@ -217,6 +217,8 @@ export default function IngestionGlobe() {
       else { roundRect(-s, -0.7 * s, 2 * s, 1.4 * s, 0.7 * s); ctx.fill(); ctx.stroke(); ctx.fillStyle = col; const hs = [0.3, 0.7, 1, 0.6, 0.35]; for (let i = 0; i < 5; i++) { const h = hs[i] * s * 0.9; ctx.fillRect((-0.8 + i * 0.4) * s - 0.7, -h / 2, 1.5, h) } }
     }
     function frame(t: number) {
+      /* out of view: keep the clock, skip the drawing (it used to redraw for the whole page scroll) */
+      if (!vis && !RM) { (frame as any).last = t; raf = requestAnimationFrame(frame); return }
       const rgb = B.rgb; ctx.clearRect(0, 0, W, H)
       const dt = Math.min(0.05, Math.max(0, (t - (frame as any).last) / 1000) || 0.016); (frame as any).last = t
       const bm = (window as unknown as { __bm?: { vel: number; hp: number } }).__bm
@@ -298,8 +300,10 @@ export default function IngestionGlobe() {
     }
 
     buildTiles(); layout()
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => { vis = es[es.length - 1].isIntersecting }, { rootMargin: '160px' }) : null
+    io?.observe(cv)
     if (RM) frame(0); else raf = requestAnimationFrame(frame)
-    return () => { cancelAnimationFrame(raf); cv.removeEventListener('mousemove', onMove); cv.removeEventListener('mouseleave', onLeave); cv.removeEventListener('pointerdown', onDown); window.removeEventListener('resize', onResize); tilesEl.innerHTML = '' }
+    return () => { cancelAnimationFrame(raf); io?.disconnect(); cv.removeEventListener('mousemove', onMove); cv.removeEventListener('mouseleave', onLeave); cv.removeEventListener('pointerdown', onDown); window.removeEventListener('resize', onResize); tilesEl.innerHTML = '' }
   }, [])
 
   return (

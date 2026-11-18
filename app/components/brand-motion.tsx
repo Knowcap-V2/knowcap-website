@@ -111,7 +111,8 @@ const CSS = `
 .cl-q-sign{display:inline-block;transition:transform .6s ${EASE}}
 .cl-faq details:hover .cl-q-sign{transform:rotate(360deg) scale(1.15)}
 
-/* works-with names */
+/* works-with names (the moving line is its own layer, so its slide and lean cost no repaint) */
+.bm-js .cl-marq-track{will-change:transform}
 .cl-works-item{display:inline-block;transition:transform .35s ${EASE},color .25s ease,opacity .25s ease;transform-origin:50% 60%}
 .cl-marq-set:hover .cl-works-item{opacity:.5}
 .cl-marq-set .cl-works-item:hover{opacity:1;color:#1F6B3A;transform:scale(1.22)}
@@ -314,7 +315,8 @@ export default function BrandMotion() {
     const marqSet = marq ? (marq.querySelector('.cl-marq-set') as HTMLElement | null) : null
     const words: Wd[] = []
     if (!RM && FINE) headings.forEach((h) => { if (h !== closerH) h.querySelectorAll('.bm-wi').forEach((el) => words.push({ el: el as HTMLElement, cx: 0, cy: 0, lean: false })) })
-    const geo = { stepsTop: 0, stepsH: 0, closerTop: 0, closerH: 0, closerWords: [] as HTMLElement[], marqW: 0, heroH: 1 }
+    const geo = { stepsTop: 0, stepsH: 0, closerTop: 0, closerH: 0, closerWords: [] as HTMLElement[], marqW: 0, marqTop: 0, marqH: 0, heroH: 1 }
+    let flowParked = false
     if (closerH) geo.closerWords = [...closerH.querySelectorAll('.bm-wi')] as HTMLElement[]
     const hero = root.querySelector('.clh-hero') as HTMLElement | null
     const flow = hero ? (hero.querySelector('.ig-flow') as HTMLElement | null) : null
@@ -331,6 +333,7 @@ export default function BrandMotion() {
       if (steps) { const r = steps.getBoundingClientRect(); geo.stepsTop = r.top + y; geo.stepsH = r.height }
       if (closer) { const r = closer.getBoundingClientRect(); geo.closerTop = r.top + y; geo.closerH = r.height }
       if (marqSet) geo.marqW = marqSet.offsetWidth + 18
+      if (marq && marq.parentElement) { const r = marq.parentElement.getBoundingClientRect(); geo.marqTop = r.top + y; geo.marqH = r.height }
       if (hero) geo.heroH = Math.max(1, hero.offsetHeight * 0.9)
       words.forEach((w) => { const r = w.el.getBoundingClientRect(); w.cx = r.left + r.width / 2; w.cy = r.top + y + r.height / 2 })
     }
@@ -399,9 +402,10 @@ export default function BrandMotion() {
           const p = pars[i]
           const c = p.top + p.h / 2 - y
           if (c < -vh || c > 2 * vh) continue
-          const k = clamp((c - vh / 2) / (vh / 2), -1, 1)
-          p.off = -k * p.sp
-          p.el.style.translate = `0 ${p.off.toFixed(1)}px`
+          const k = clamp((c - vh / 2) / (vh / 2), -1, 1), off = -k * p.sp
+          if (Math.abs(off - p.off) < 0.05) continue /* beyond the screen edges the value holds: write nothing */
+          p.off = off
+          p.el.style.translate = `0 ${off.toFixed(1)}px`
         }
         /* steps: light up in order, a line drawn along them (runs backwards when scrolling up) */
         if (steps) {
@@ -421,11 +425,17 @@ export default function BrandMotion() {
         if (marq && geo.marqW) {
           if (!marqHover) marqX -= (dt / 1000) * (geo.marqW / 40 + Math.min(900, Math.abs(vel)) * 0.9) * (vel < -30 ? -1 : 1)
           marqX = ((marqX % geo.marqW) + geo.marqW) % geo.marqW
-          marq.style.animation = 'none'
-          marq.style.transform = `translateX(${(-marqX).toFixed(1)}px) skewX(${clamp(vel * -0.012, -14, 14).toFixed(2)}deg)`
+          /* written only while the line is on screen */
+          if (geo.marqTop - y < vh + 80 && geo.marqTop + geo.marqH - y > -80) {
+            marq.style.animation = 'none'
+            marq.style.transform = `translateX(${(-marqX).toFixed(1)}px) skewX(${clamp(vel * -0.012, -14, 14).toFixed(2)}deg)`
+          }
         }
-        /* hero: the globe spins up (read by the globe), grows slightly and drifts as you scroll away */
-        if (flow) flow.style.transform = heroP > 0.001 ? `translateY(${(y * 0.1).toFixed(1)}px) scale(${(1 + 0.06 * heroP).toFixed(3)})` : ''
+        /* hero: the globe spins up (read by the globe), grows slightly and drifts as you scroll away; parked once it has left the screen */
+        if (flow) {
+          if (heroP >= 1) { if (!flowParked) { flow.style.transform = `translateY(${(geo.heroH * 0.1).toFixed(1)}px) scale(1.06)`; flowParked = true } }
+          else { flowParked = false; flow.style.transform = heroP > 0.001 ? `translateY(${(y * 0.1).toFixed(1)}px) scale(${(1 + 0.06 * heroP).toFixed(3)})` : '' }
+        }
         /* headline words lean away from the pointer (every other frame, rects cached) */
         if (words.length && (nTick & 1) === 0) {
           const hasP = px > -9000
