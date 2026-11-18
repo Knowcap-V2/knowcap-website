@@ -139,9 +139,11 @@ export default function IngestionGlobe() {
       const p = freePiece(); if (!p) return
       const dx = x - GX, dy = y - GY, d = Math.hypot(dx, dy) || 1, ex = GX + (dx / d) * GR * 0.5, ey = GY + (dy / d) * GR * 0.5
       const bend = (Math.random() - 0.5) * 0.5
-      p.on = true; p.out = false; p.k = (Math.random() * 5) | 0; p.x0 = x; p.y0 = y; p.x1 = ex; p.y1 = ey
+      /* a page a little more often than the other four kinds */
+      p.on = true; p.out = false; p.k = Math.random() < 0.36 ? 0 : 1 + ((Math.random() * 4) | 0); p.x0 = x; p.y0 = y; p.x1 = ex; p.y1 = ey
       p.cx = x + (ex - x) * 0.5 - (ey - y) * bend; p.cy = y + (ey - y) * 0.5 + (ex - x) * bend
-      p.u = 0; p.dur = 0.3 + Math.random() * 0.3; p.col = TYPES[ty].c; p.rot = (Math.random() - 0.5) * 1.2; p.spin = (Math.random() - 0.5) * 5; p.s = 8 + Math.random() * 3
+      /* big enough (about 21 to 28 px) and slow enough (0.42 to 0.75 s) to be read as pages and messages, not dots */
+      p.u = 0; p.dur = 0.42 + Math.random() * 0.33; p.col = TYPES[ty].c; p.rot = (Math.random() - 0.5) * 1.2; p.spin = (Math.random() - 0.5) * 4; p.s = 10.5 + Math.random() * 3.5
     }
     function spawnOut(a: any) {
       const p = freePiece(); if (!p) return
@@ -168,7 +170,7 @@ export default function IngestionGlobe() {
       agA.forEach((o, i) => { if (Math.hypot(mx - o.x, my - o.y) < 34) ai = i })
       setHot(si, ai)
       const now = performance.now(), moved = Math.abs(mx - spX) + Math.abs(my - spY)
-      if (si < 0 && ai < 0 && Math.hypot(mx - GX, my - GY) > GR * 1.03 && now - lastSpawn > 34 && moved > 3) { spawnIn(mx, my, (Math.random() * TYPES.length) | 0); lastSpawn = now; spX = mx; spY = my }
+      if (si < 0 && ai < 0 && Math.hypot(mx - GX, my - GY) > GR * 1.03 && now - lastSpawn > 40 && moved > 3) { spawnIn(mx, my, (Math.random() * TYPES.length) | 0); lastSpawn = now; spX = mx; spY = my }
     }
     const onLeave = () => { over = false; mx = -9999; my = -9999; setHot(-1, -1) }
     const onDown = (e: PointerEvent) => { const r = cv.getBoundingClientRect(); burst((e.clientX - r.left) * (W / (r.width || 1)), (e.clientY - r.top) * (H / (r.height || 1)), 5) }
@@ -207,7 +209,7 @@ export default function IngestionGlobe() {
     }
     /* the five kinds of information, drawn small (about 14 to 20 px) */
     function drawPiece(k: number, s: number, col: string) {
-      ctx.lineWidth = 1.3; ctx.strokeStyle = col; ctx.fillStyle = '#fff'; ctx.lineCap = 'round'
+      ctx.lineWidth = 1.5; ctx.strokeStyle = col; ctx.fillStyle = '#fff'; ctx.lineCap = 'round'
       if (k === 0) { roundRect(-0.7 * s, -s, 1.4 * s, 2 * s, 2); ctx.fill(); ctx.stroke(); ctx.beginPath(); for (let i = 0; i < 3; i++) { ctx.moveTo(-0.4 * s, (-0.45 + i * 0.5) * s); ctx.lineTo((i === 2 ? 0.1 : 0.4) * s, (-0.45 + i * 0.5) * s) } ctx.stroke() }
       else if (k === 1) { roundRect(-s, -0.75 * s, 2 * s, 1.4 * s, 4); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.moveTo(-0.6 * s, 0.65 * s); ctx.lineTo(-0.7 * s, s); ctx.lineTo(-0.15 * s, 0.65 * s); ctx.fillStyle = '#fff'; ctx.fill(); ctx.stroke(); ctx.fillStyle = col; for (let i = -1; i <= 1; i++) { ctx.beginPath(); ctx.arc(i * 0.5 * s, -0.05 * s, 1.2, 0, 7); ctx.fill() } }
       else if (k === 2) { ctx.fillStyle = hexa(col, 0.16); roundRect(-0.9 * s, -0.9 * s, 1.8 * s, 1.8 * s, 2); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0.35 * s, 0.9 * s); ctx.lineTo(0.9 * s, 0.35 * s); ctx.lineTo(0.35 * s, 0.35 * s); ctx.closePath(); ctx.fillStyle = col; ctx.fill(); ctx.beginPath(); ctx.moveTo(-0.55 * s, -0.4 * s); ctx.lineTo(0.5 * s, -0.4 * s); ctx.moveTo(-0.55 * s, 0); ctx.lineTo(0.2 * s, 0); ctx.stroke() }
