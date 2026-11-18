@@ -5,7 +5,7 @@
  * Injected as a <style> string (same pattern the compare pages use).
  */
 export const BLOG_CSS = `
-.kb-root{--bg:#FBFAF8;--surface:#FFFFFF;--bg-muted:#F5F4F1;--border:#E7E4DD;--ink:#18181B;--ink-2:#4A4F5A;--ink-3:#8A8F99;--accent:#1F6B3A;--accent-light:#E8F5ED;
+.kb-root{--bg:#F5F7FA;--surface:#FFFFFF;--bg-muted:rgba(25,31,46,.05);--border:#E7E4DD;--ink:#191F2E;--ink-2:#4A4F5A;--ink-3:#8A8F99;--accent:#1F6B3A;--accent-light:#E8F5ED;
   background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6}
 .kb-grotesk{font-family:var(--font-space-grotesk),sans-serif}
 .kb-mono{font-family:var(--font-mono),monospace}
@@ -74,7 +74,7 @@ export const BLOG_CSS = `
 .kb-related-row{display:flex;gap:10px;flex-wrap:wrap}
 .kb-related a{font-family:var(--font-mono),monospace;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 14px}
 .kb-related a:hover{border-color:var(--accent)}
-.kb-cta{background:linear-gradient(135deg,#18181B,#0A0A0A);padding:72px 40px;text-align:center;color:#fff}
+.kb-cta{background:linear-gradient(135deg,#191F2E,#1B3C6C);padding:72px 40px;text-align:center;color:#fff}
 .kb-cta h2{font-family:var(--font-space-grotesk),sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-.02em;margin:0 0 14px;color:#fff}
 .kb-cta p{color:rgba(255,255,255,.55);font-size:15px;margin:0 0 28px}
 .kb-btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:15px}
@@ -83,7 +83,7 @@ export const BLOG_CSS = `
 .kb-index-sub{color:var(--ink-2);font-size:16px;max-width:560px;margin:0}
 .kb-grid{max-width:1100px;margin:0 auto;padding:48px 40px 72px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .kb-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:var(--ink);transition:border-color .15s,box-shadow .15s}
-.kb-card:hover{border-color:#D9D5CC;box-shadow:0 2px 12px rgba(24,24,27,.06)}
+.kb-card:hover{border-color:#D9D5CC;box-shadow:0 2px 12px rgba(25,31,46,.06)}
 .kb-card-date{font-family:var(--font-mono),monospace;font-size:11px;color:var(--ink-3)}
 .kb-card h2{font-family:var(--font-space-grotesk),sans-serif;font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.35;margin:0}
 .kb-card p{font-size:13px;line-height:1.6;color:var(--ink-2);margin:0;flex:1}

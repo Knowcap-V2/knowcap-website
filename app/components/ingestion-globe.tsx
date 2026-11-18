@@ -13,11 +13,11 @@ import { useEffect, useRef } from 'react'
 
 const CSS = `
 .ig-flow{position:absolute;inset:0;
-  --ink1:#18181B;--ink2:#4A4F5A;--ink3:#8A8F99;--cream:#FBFAF8;--border:#E7E4DD;--green:#1F6B3A;
+  --ink1:#191F2E;--ink2:#4A4F5A;--ink3:#8A8F99;--cream:#F5F7FA;--border:#E7E4DD;--green:#1F6B3A;
   font-family:'Space Grotesk',system-ui,sans-serif}
 .ig-flow canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
 .ig-tile{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;transform:translate(-50%,-50%);width:84px;pointer-events:none}
-.ig-tile .ig-ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;box-shadow:0 5px 14px rgba(24,24,27,.12)}
+.ig-tile .ig-ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;box-shadow:0 5px 14px rgba(25,31,46,.12)}
 .ig-tile .ig-ico img{width:27px;height:27px;display:block}
 .ig-tile:not(.ig-agent) .ig-ico{background:#fff;border:1px solid var(--border)}
 .ig-tile:not(.ig-agent) .ig-nm{display:none}
@@ -25,13 +25,13 @@ const CSS = `
 .ig-tile.ig-agent .ig-ico{font-size:18px;border:1px solid var(--border)}
 .ig-human{position:absolute;z-index:2;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}
 .ig-human .ig-avs{display:flex}
-.ig-human .ig-av{width:36px;height:36px;border-radius:50%;border:2.5px solid var(--cream);margin-left:-9px;display:grid;place-items:center;color:#fff;font:700 12px 'Space Grotesk',sans-serif;box-shadow:0 3px 10px rgba(24,24,27,.14)}
+.ig-human .ig-av{width:36px;height:36px;border-radius:50%;border:2.5px solid var(--cream);margin-left:-9px;display:grid;place-items:center;color:#fff;font:700 12px 'Space Grotesk',sans-serif;box-shadow:0 3px 10px rgba(25,31,46,.14)}
 .ig-human .ig-av:first-child{margin-left:0}
-.ig-human .ig-lab{font:600 11.5px 'Space Grotesk',sans-serif;color:var(--ink1);background:#fff;border:1px solid var(--border);border-radius:999px;padding:4px 12px;white-space:nowrap;box-shadow:0 2px 6px rgba(24,24,27,.06)}
+.ig-human .ig-lab{font:600 11.5px 'Space Grotesk',sans-serif;color:var(--ink1);background:#fff;border:1px solid var(--border);border-radius:999px;padding:4px 12px;white-space:nowrap;box-shadow:0 2px 6px rgba(25,31,46,.06)}
 .ig-human .ig-sub{font:700 9px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--green)}
 .ig-gcap{display:none;position:absolute;z-index:2;transform:translate(-50%,0);font:600 12px 'Space Grotesk',sans-serif;color:var(--ink3);white-space:nowrap;text-align:center}
 .ig-gcap b{color:var(--ink1);font-weight:600}
-.ig-story{position:absolute;z-index:3;transform:translate(-50%,0);font:600 12.5px 'Space Grotesk',sans-serif;color:var(--ink1);background:#fff;border:1px solid var(--border);border-radius:999px;padding:7px 15px;box-shadow:0 4px 14px rgba(24,24,27,.08);white-space:nowrap;display:flex;align-items:center}
+.ig-story{position:absolute;z-index:3;transform:translate(-50%,0);font:600 12.5px 'Space Grotesk',sans-serif;color:var(--ink1);background:#fff;border:1px solid var(--border);border-radius:999px;padding:7px 15px;box-shadow:0 4px 14px rgba(25,31,46,.08);white-space:nowrap;display:flex;align-items:center}
 .ig-story .ig-sd{width:8px;height:8px;border-radius:50%;margin-right:8px;display:inline-block}
 .ig-stage{position:absolute;z-index:2;transform:translate(-50%,0);font:700 10.5px 'Space Grotesk',sans-serif;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
 .ig-stage b{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:var(--green);color:#fff;font:700 9px 'JetBrains Mono',monospace;margin-right:6px;vertical-align:middle}
@@ -136,7 +136,7 @@ export default function IngestionGlobe() {
     function drawChip(cx: number, cy: number, label: string, sub: string, col: string, approved: boolean, sc: number) {
       const w = 158 * sc, h = 42 * sc, x = cx - w / 2, y = cy - h / 2; ctx.fillStyle = '#fff'; ctx.strokeStyle = hexa(col, 0.55); ctx.lineWidth = 1.5; roundRect(x, y, w, h, 11 * sc); ctx.fill(); ctx.stroke()
       ctx.fillStyle = col; ctx.font = '700 ' + (9.5 * sc) + 'px "Space Grotesk",sans-serif'; ctx.fillText(label, x + 12 * sc, y + 16 * sc)
-      ctx.fillStyle = '#18181B'; ctx.font = '600 ' + (11.5 * sc) + 'px "Space Grotesk",sans-serif'; ctx.fillText(sub, x + 12 * sc, y + 31 * sc)
+      ctx.fillStyle = '#191F2E'; ctx.font = '600 ' + (11.5 * sc) + 'px "Space Grotesk",sans-serif'; ctx.fillText(sub, x + 12 * sc, y + 31 * sc)
       if (approved) { const ax = x + w - 15 * sc, ay = cy; ctx.fillStyle = '#1F6B3A'; ctx.beginPath(); ctx.arc(ax, ay, 8 * sc, 0, 7); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.8 * sc; ctx.beginPath(); ctx.moveTo(ax - 3.2 * sc, ay + .3 * sc); ctx.lineTo(ax - 0.7 * sc, ay + 3 * sc); ctx.lineTo(ax + 3.6 * sc, ay - 3 * sc); ctx.stroke() }
     }
     const STORY_EX = [{ src: 'Gmail', sub: 'Drop the per-seat tier' }, { src: 'WhatsApp', sub: 'Flip 5 capture routes' }, { src: 'Slack', sub: 'SOP by Friday' }, { src: 'Zoom', sub: 'Customs delay risks Sept' }]
@@ -188,7 +188,7 @@ export default function IngestionGlobe() {
         const t2 = (p.z + 1) / 2; const col = TYPES[pts[i].ty].c; let al = 0.32 + t2 * 0.6, rad = (1.9 + t2 * 2.7) * gs
         if (near[i] < 150) { const k = 1 - near[i] / 150; al = Math.min(1, al + k * 0.5); rad += k * 2.5 * gs }
         ctx.beginPath(); ctx.arc(p.sx, p.sy, rad, 0, 7); ctx.fillStyle = hexa(col, al); ctx.fill()
-        if (pts[i].lab && pts[i].ty !== 4 && p.z > -0.1) { ctx.fillStyle = 'rgba(24,24,27,' + (0.4 + t2 * 0.5) + ')'; ctx.font = '600 10.5px "Space Grotesk",sans-serif'; ctx.fillText(TYPES[pts[i].ty].k, p.sx + rad + 5, p.sy + 4) }
+        if (pts[i].lab && pts[i].ty !== 4 && p.z > -0.1) { ctx.fillStyle = 'rgba(25,31,46,' + (0.4 + t2 * 0.5) + ')'; ctx.font = '600 10.5px "Space Grotesk",sans-serif'; ctx.fillText(TYPES[pts[i].ty].k, p.sx + rad + 5, p.sy + 4) }
       })
       if (!narrow) drawStory(t)
       ang += 0.0008; raf = requestAnimationFrame(frame)

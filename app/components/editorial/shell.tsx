@@ -20,9 +20,9 @@ const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 .cl-root{
-  --cream:#FBFAF8; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
-  --ink:#18181B; --ink-soft:#2A2A2F; --sec:#4A4F5A;
-  --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#7ED39B;
+  --cream:#F5F7FA; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
+  --ink:#191F2E; --ink-soft:rgba(25,31,46,.88); --sec:#4A4F5A;
+  --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#34D399;
   --amber:#B07C28;
   --disp:'Space Grotesk',system-ui,sans-serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -51,7 +51,7 @@ const CSS = `
 /* header — light editorial masthead */
 .cl-header{position:fixed;inset:0 0 auto 0;z-index:50;border-top:3px solid var(--ink);
   background:transparent;transition:background-color .25s,border-color .25s}
-.cl-header[data-scrolled="true"]{background:rgba(251,250,248,.92);backdrop-filter:blur(8px);
+.cl-header[data-scrolled="true"]{background:rgba(245,247,250,.92);backdrop-filter:blur(8px);
   border-bottom:1px solid var(--border)}
 .cl-nav{display:flex;align-items:center;justify-content:space-between;height:64px}
 .cl-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;
@@ -108,14 +108,14 @@ const CSS = `
 .cl-label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
 
 /* footer — dark, 4-column sitemap */
-.cl-footer{background:var(--ink);color:rgba(251,250,248,.65);padding:56px 0 44px;font-size:13.5px}
+.cl-footer{background:linear-gradient(135deg,#191F2E,#1B3C6C);color:rgba(232,238,249,.65);padding:56px 0 44px;font-size:13.5px}
 .cl-footer-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-  gap:14px 28px;padding-bottom:30px;margin-bottom:32px;border-bottom:1px solid rgba(251,250,248,.12)}
+  gap:14px 28px;padding-bottom:30px;margin-bottom:32px;border-bottom:1px solid rgba(232,238,249,.12)}
 .cl-footer-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);
   font-weight:600;font-size:16px;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--cream)}
 .cl-footer-brand img{border-radius:5px}
 .cl-footer-line{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
-  color:rgba(251,250,248,.65)}
+  color:rgba(232,238,249,.65)}
 .cl-footer-line .cl-fl-ink{color:var(--cream)}
 .cl-footer-line .cl-fl-green{color:var(--green-dark)}
 .cl-footer-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 36px}
@@ -123,15 +123,15 @@ const CSS = `
 .cl-fcol{display:flex;flex-direction:column;gap:9px}
 .cl-fcol-h{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.12em;
   text-transform:uppercase;color:var(--green-dark);margin-bottom:3px}
-.cl-fcol a{color:rgba(251,250,248,.65);transition:color .15s;font-size:13px}
+.cl-fcol a{color:rgba(232,238,249,.65);transition:color .15s;font-size:13px}
 .cl-fcol a:hover{color:var(--cream)}
-.cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
+.cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(232,238,249,.12)}
 .cl-footer-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 24px}
-.cl-footer-fam{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 16px;font-size:13px;color:rgba(251,250,248,.5)}
-.cl-footer-fam a{display:inline-flex;align-items:center;min-height:44px;color:rgba(251,250,248,.65);transition:color .15s}
+.cl-footer-fam{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 16px;font-size:13px;color:rgba(232,238,249,.5)}
+.cl-footer-fam a{display:inline-flex;align-items:center;min-height:44px;color:rgba(232,238,249,.65);transition:color .15s}
 .cl-footer-fam a:hover{color:var(--cream)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
-  color:rgba(251,250,248,.55)}
+  color:rgba(232,238,249,.55)}
 `
 
 export function EditorialHeader({ registerHref }: { registerHref?: string } = {}) {
