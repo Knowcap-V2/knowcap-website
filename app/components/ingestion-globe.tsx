@@ -19,6 +19,8 @@ const CSS = `
 .ig-tile{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;transform:translate(-50%,-50%);width:84px;pointer-events:none}
 .ig-tile .ig-ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;box-shadow:0 5px 14px rgba(25,31,46,.12)}
 .ig-tile .ig-ico img{width:27px;height:27px;display:block}
+.ig-tile .ig-ico{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
+.ig-tile.ig-hot .ig-ico{transform:translateY(-5px) scale(1.1);box-shadow:0 12px 26px rgba(31,107,58,.32),0 0 0 3px rgba(31,107,58,.18)}
 .ig-tile:not(.ig-agent) .ig-ico{background:#fff;border:1px solid var(--border)}
 .ig-tile:not(.ig-agent) .ig-nm{display:none}
 .ig-tile .ig-nm{font:600 11px 'Space Grotesk',sans-serif;color:var(--ink2);text-align:center;white-space:nowrap}
@@ -63,6 +65,7 @@ export default function IngestionGlobe() {
     const cv = cvRef.current!, tilesEl = tilesRef.current!, legendEl = legendRef.current!
     const ctx = cv.getContext('2d')!
     let raf = 0
+    const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches /* reduced motion: draw once and hold still, no pointer effects */
 
     const B = { a: '#1F6B3A', rgb: '31,107,58' }
     const TYPES = [
@@ -124,9 +127,54 @@ export default function IngestionGlobe() {
     }
 
     let mx = -9999, my = -9999, ox = 0, oy = 0, over = false
-    const onMove = (e: MouseEvent) => { const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; over = true }
-    const onLeave = () => { over = false; mx = -9999; my = -9999 }
-    cv.addEventListener('mousemove', onMove); cv.addEventListener('mouseleave', onLeave); window.addEventListener('resize', layout)
+    /* pieces of information: a pool of 40 that fly from the pointer (or a tool tile) into the globe, tumbling and shrinking.
+       Each one that lands turns into a lit dot of its claim colour on the sphere that fades back in about a second. */
+    const NP = 40
+    type Piece = { on: boolean; out: boolean; k: number; x0: number; y0: number; cx: number; cy: number; x1: number; y1: number; u: number; dur: number; col: string; rot: number; spin: number; s: number }
+    const pcs: Piece[] = Array.from({ length: NP }, () => ({ on: false, out: false, k: 0, x0: 0, y0: 0, cx: 0, cy: 0, x1: 0, y1: 0, u: 0, dur: 0.4, col: '#000', rot: 0, spin: 0, s: 8 }))
+    let pNext = 0, lastSpawn = 0, lastStream = 0, lastOut = 0, spX = 0, spY = 0, hotSrc = -1, hotAg = -1, hg = 0, swellK = 0, ripG = 9, wasInG = false, lastP: { sx: number; sy: number; z: number }[] = []
+    const lit = new Float32Array(N), litc: string[] = new Array(N).fill('#1F6B3A')
+    function freePiece() { for (let n = 0; n < NP; n++) { const j = (pNext + n) % NP; if (!pcs[j].on) { pNext = (j + 1) % NP; return pcs[j] } } return null }
+    function spawnIn(x: number, y: number, ty: number) {
+      const p = freePiece(); if (!p) return
+      const dx = x - GX, dy = y - GY, d = Math.hypot(dx, dy) || 1, ex = GX + (dx / d) * GR * 0.5, ey = GY + (dy / d) * GR * 0.5
+      const bend = (Math.random() - 0.5) * 0.5
+      p.on = true; p.out = false; p.k = (Math.random() * 5) | 0; p.x0 = x; p.y0 = y; p.x1 = ex; p.y1 = ey
+      p.cx = x + (ex - x) * 0.5 - (ey - y) * bend; p.cy = y + (ey - y) * 0.5 + (ex - x) * bend
+      p.u = 0; p.dur = 0.3 + Math.random() * 0.3; p.col = TYPES[ty].c; p.rot = (Math.random() - 0.5) * 1.2; p.spin = (Math.random() - 0.5) * 5; p.s = 8 + Math.random() * 3
+    }
+    function spawnOut(a: any) {
+      const p = freePiece(); if (!p) return
+      const ep = edgePoint(a.x, a.y), x1 = a.x - 24, y1 = a.y, bend = (Math.random() - 0.5) * 0.3
+      p.on = true; p.out = true; p.k = 0; p.x0 = ep.x; p.y0 = ep.y; p.x1 = x1; p.y1 = y1
+      p.cx = ep.x + (x1 - ep.x) * 0.5 - (y1 - ep.y) * bend; p.cy = ep.y + (y1 - ep.y) * 0.5 + (x1 - ep.x) * bend
+      p.u = 0; p.dur = 0.5 + Math.random() * 0.3; p.col = TYPES[a.ty].c; p.rot = 0; p.spin = 0; p.s = 4.5
+    }
+    function burst(x: number, y: number, n: number) {
+      for (let i = 0; i < n; i++) {
+        if (Math.hypot(x - GX, y - GY) < GR * 1.6) { const a = Math.random() * 6.283, r = GR * (1.7 + Math.random() * 0.5); spawnIn(GX + Math.cos(a) * r, GY + Math.sin(a) * r, (Math.random() * TYPES.length) | 0) }
+        else spawnIn(x + (Math.random() - 0.5) * 16, y + (Math.random() - 0.5) * 16, (Math.random() * TYPES.length) | 0)
+      }
+    }
+    function setHot(si: number, ai: number) {
+      if (si !== hotSrc) { if (hotSrc >= 0) srcA[hotSrc].el.classList.remove('ig-hot'); hotSrc = si; if (si >= 0) srcA[si].el.classList.add('ig-hot') }
+      if (ai !== hotAg) { if (hotAg >= 0) agA[hotAg].el.classList.remove('ig-hot'); hotAg = ai; if (ai >= 0) agA[ai].el.classList.add('ig-hot') }
+    }
+    const onMove = (e: MouseEvent) => {
+      const r = cv.getBoundingClientRect(); mx = (e.clientX - r.left) * (W / (r.width || 1)); my = (e.clientY - r.top) * (H / (r.height || 1)); over = true
+      if (W < 640) return
+      let si = -1, ai = -1
+      srcA.forEach((o, i) => { if (Math.hypot(mx - o.x, my - o.y) < 34) si = i })
+      agA.forEach((o, i) => { if (Math.hypot(mx - o.x, my - o.y) < 34) ai = i })
+      setHot(si, ai)
+      const now = performance.now(), moved = Math.abs(mx - spX) + Math.abs(my - spY)
+      if (si < 0 && ai < 0 && Math.hypot(mx - GX, my - GY) > GR * 1.03 && now - lastSpawn > 34 && moved > 3) { spawnIn(mx, my, (Math.random() * TYPES.length) | 0); lastSpawn = now; spX = mx; spY = my }
+    }
+    const onLeave = () => { over = false; mx = -9999; my = -9999; setHot(-1, -1) }
+    const onDown = (e: PointerEvent) => { const r = cv.getBoundingClientRect(); burst((e.clientX - r.left) * (W / (r.width || 1)), (e.clientY - r.top) * (H / (r.height || 1)), 5) }
+    const onResize = () => { layout(); if (RM) frame(0) }
+    if (!RM) { cv.addEventListener('mousemove', onMove); cv.addEventListener('mouseleave', onLeave); cv.addEventListener('pointerdown', onDown) }
+    window.addEventListener('resize', onResize)
 
     let ang = 0, pops: any[] = [], lastPop = 0
     function edgePoint(x: number, y: number) { const dx = x - GX, dy = y - GY, d = Math.hypot(dx, dy) || 1; return { x: GX + dx / d * GR, y: GY + dy / d * GR } }
@@ -157,8 +205,43 @@ export default function IngestionGlobe() {
       ctx.restore()
       const st = $('.ig-story'); if (st) { st.style.opacity = String(Math.max(0, al)); (st.querySelector('.ig-sd') as HTMLElement).style.background = ok && e >= 3800 && e < 5800 ? '#1F6B3A' : col; (st.querySelector('.ig-tx') as HTMLElement).textContent = cap }
     }
+    /* the five kinds of information, drawn small (about 14 to 20 px) */
+    function drawPiece(k: number, s: number, col: string) {
+      ctx.lineWidth = 1.3; ctx.strokeStyle = col; ctx.fillStyle = '#fff'; ctx.lineCap = 'round'
+      if (k === 0) { roundRect(-0.7 * s, -s, 1.4 * s, 2 * s, 2); ctx.fill(); ctx.stroke(); ctx.beginPath(); for (let i = 0; i < 3; i++) { ctx.moveTo(-0.4 * s, (-0.45 + i * 0.5) * s); ctx.lineTo((i === 2 ? 0.1 : 0.4) * s, (-0.45 + i * 0.5) * s) } ctx.stroke() }
+      else if (k === 1) { roundRect(-s, -0.75 * s, 2 * s, 1.4 * s, 4); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.moveTo(-0.6 * s, 0.65 * s); ctx.lineTo(-0.7 * s, s); ctx.lineTo(-0.15 * s, 0.65 * s); ctx.fillStyle = '#fff'; ctx.fill(); ctx.stroke(); ctx.fillStyle = col; for (let i = -1; i <= 1; i++) { ctx.beginPath(); ctx.arc(i * 0.5 * s, -0.05 * s, 1.2, 0, 7); ctx.fill() } }
+      else if (k === 2) { ctx.fillStyle = hexa(col, 0.16); roundRect(-0.9 * s, -0.9 * s, 1.8 * s, 1.8 * s, 2); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0.35 * s, 0.9 * s); ctx.lineTo(0.9 * s, 0.35 * s); ctx.lineTo(0.35 * s, 0.35 * s); ctx.closePath(); ctx.fillStyle = col; ctx.fill(); ctx.beginPath(); ctx.moveTo(-0.55 * s, -0.4 * s); ctx.lineTo(0.5 * s, -0.4 * s); ctx.moveTo(-0.55 * s, 0); ctx.lineTo(0.2 * s, 0); ctx.stroke() }
+      else if (k === 3) { roundRect(-s, -0.8 * s, 2 * s, 1.6 * s, 3); ctx.fill(); ctx.stroke(); ctx.fillStyle = col; roundRect(-s, -0.8 * s, 2 * s, 0.55 * s, 3); ctx.fill(); for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.arc((-0.5 + i * 0.5) * s, 0.35 * s, 1.1, 0, 7); ctx.fill() } }
+      else { roundRect(-s, -0.7 * s, 2 * s, 1.4 * s, 0.7 * s); ctx.fill(); ctx.stroke(); ctx.fillStyle = col; const hs = [0.3, 0.7, 1, 0.6, 0.35]; for (let i = 0; i < 5; i++) { const h = hs[i] * s * 0.9; ctx.fillRect((-0.8 + i * 0.4) * s - 0.7, -h / 2, 1.5, h) } }
+    }
     function frame(t: number) {
       const rgb = B.rgb; ctx.clearRect(0, 0, W, H)
+      const dt = Math.min(0.05, Math.max(0, (t - (frame as any).last) / 1000) || 0.016); (frame as any).last = t
+      const bm = (window as unknown as { __bm?: { vel: number; hp: number } }).__bm
+      const spin = bm ? 1 + 3 * bm.hp + Math.min(4, Math.abs(bm.vel) * 0.003) : 1 /* the page's scroll spins the globe up */
+      const inG = !RM && over && Math.hypot(mx - GX, my - GY) < GR * 1.03
+      hg += ((inG ? 1 : 0) - hg) * 0.08
+      if (inG && !wasInG) ripG = 0; wasInG = inG
+      swellK *= Math.exp(-dt * 6)
+      const swell = 1 + 0.04 * hg + 0.025 * swellK
+      /* the pieces: fly, then land as a lit dot on the sphere */
+      if (!RM) {
+        if (hotSrc >= 0 && t - lastStream > 110) { lastStream = t; const o = srcA[hotSrc]; spawnIn(o.x + 24, o.y, o.ty != null ? o.ty : ((Math.random() * TYPES.length) | 0)) }
+        if (hotAg >= 0 && t - lastOut > 150) { lastOut = t; spawnOut(agA[hotAg]) }
+        for (let i = 0; i < NP; i++) {
+          const p = pcs[i]; if (!p.on) continue
+          p.u += dt / p.dur
+          if (p.u >= 1) {
+            p.on = false
+            if (!p.out && lastP.length) {
+              let bi = -1, bd = 1e9; for (let j = 0; j < lastP.length; j++) { if (lastP[j].z < -0.05) continue; const d = Math.hypot(lastP[j].sx - p.x1, lastP[j].sy - p.y1); if (d < bd) { bd = d; bi = j } }
+              if (bi >= 0) { lit[bi] = 1; litc[bi] = p.col; swellK = Math.min(1, swellK + 0.35) }
+            }
+          }
+        }
+        for (let j = 0; j < N; j++) if (lit[j] > 0) lit[j] = Math.max(0, lit[j] - dt)
+        if (ripG < 1) ripG += dt * 1.1
+      }
       const tox = over ? ((mx - GX) / W) * 0.7 : 0, toy = over ? ((my - GY) / H) * 0.6 : 0; ox += (tox - ox) * 0.06; oy += (toy - oy) * 0.06
       const ry = ang + ox, rx = -0.30 + oy; const now = t * 0.00045
       const narrow = W < 640
@@ -180,22 +263,41 @@ export default function IngestionGlobe() {
       if (t - lastPop > 500) { lastPop = t; const cs = srcA.filter(o => o.ty != null && o.ty !== 4); const s = cs[(Math.random() * cs.length) | 0]; if (s) { const ep = edgePoint(s.x, s.y); pops.push({ x: ep.x, y: ep.y, ty: TYPES[s.ty], age: 0 }) } }
       pops = pops.filter(o => o.age < 1); pops.forEach(o => { o.age += 0.02; const al = 1 - o.age; ctx.strokeStyle = hexa(o.ty.c, al * 0.6); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(o.x, o.y, 4 + o.age * 16, 0, 7); ctx.stroke(); ctx.fillStyle = hexa(o.ty.c, al); ctx.font = '700 9.5px "Space Grotesk",sans-serif'; ctx.fillText(o.ty.k, o.x + 7, o.y - 6) })
       }
-      const P = pts.map(p => { let x = p.x * Math.cos(ry) - p.z * Math.sin(ry), z = p.x * Math.sin(ry) + p.z * Math.cos(ry), y = p.y; const y2 = y * Math.cos(rx) - z * Math.sin(rx), z2 = y * Math.sin(rx) + z * Math.cos(rx); const sc = 1 / (1.8 - z2 * 0.6); return { sx: GX + x * GR * sc, sy: GY + y2 * GR * sc, z: z2 } })
+      const P = pts.map(p => { let x = p.x * Math.cos(ry) - p.z * Math.sin(ry), z = p.x * Math.sin(ry) + p.z * Math.cos(ry), y = p.y; const y2 = y * Math.cos(rx) - z * Math.sin(rx), z2 = y * Math.sin(rx) + z * Math.cos(rx); const sc = 1 / (1.8 - z2 * 0.6); return { sx: GX + x * GR * swell * sc, sy: GY + y2 * GR * swell * sc, z: z2 } })
+      lastP = P
       const near = P.map(p => { if (!over) return 9999; return Math.hypot(p.sx - mx, p.sy - my) })
       edges.forEach(([a, b]) => { const A = P[a], Bp = P[b], depth = (A.z + Bp.z) / 2; let al = Math.max(0, 0.05 + (depth + 1) / 2 * 0.13); const nf = Math.min(near[a], near[b]); if (nf < 150) al += (1 - nf / 150) * 0.4; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = (nf < 150 ? 1 : 0.6) * gs; ctx.beginPath(); ctx.moveTo(A.sx, A.sy); ctx.lineTo(Bp.sx, Bp.sy); ctx.stroke() })
       if (over) P.forEach((p, i) => { if (near[i] < 170) { const al = (1 - near[i] / 170) * 0.5; ctx.strokeStyle = 'rgba(' + rgb + ',' + al + ')'; ctx.lineWidth = 0.8 * gs; ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(p.sx, p.sy); ctx.stroke() } })
       P.forEach((p, i) => {
         const t2 = (p.z + 1) / 2; const col = TYPES[pts[i].ty].c; let al = 0.32 + t2 * 0.6, rad = (1.9 + t2 * 2.7) * gs
         if (near[i] < 150) { const k = 1 - near[i] / 150; al = Math.min(1, al + k * 0.5); rad += k * 2.5 * gs }
+        if (lit[i] > 0 && p.z > -0.05) { const L = lit[i]; ctx.beginPath(); ctx.arc(p.sx, p.sy, rad + 5 * L * gs, 0, 7); ctx.fillStyle = hexa(litc[i], 0.22 * L); ctx.fill(); ctx.beginPath(); ctx.arc(p.sx, p.sy, rad + 2.6 * L * gs, 0, 7); ctx.fillStyle = hexa(litc[i], Math.min(1, 0.4 + 0.6 * L)); ctx.fill(); return }
         ctx.beginPath(); ctx.arc(p.sx, p.sy, rad, 0, 7); ctx.fillStyle = hexa(col, al); ctx.fill()
         if (pts[i].lab && pts[i].ty !== 4 && p.z > -0.1) { ctx.fillStyle = 'rgba(25,31,46,' + (0.4 + t2 * 0.5) + ')'; ctx.font = '600 10.5px "Space Grotesk",sans-serif'; ctx.fillText(TYPES[pts[i].ty].k, p.sx + rad + 5, p.sy + 4) }
       })
       if (!narrow) drawStory(t)
-      ang += 0.0008; raf = requestAnimationFrame(frame)
+      /* one ripple ring leaves the globe when the pointer arrives on it */
+      if (!RM && ripG < 1) { ctx.strokeStyle = hexa(B.a, (1 - ripG) * 0.5); ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(GX, GY, GR * 0.57 * swell * (1.02 + 0.55 * ripG), 0, 7); ctx.stroke() }
+      /* pieces of information in flight: tumbling, shrinking as they near the globe */
+      if (!RM) for (let i = 0; i < NP; i++) {
+        const p = pcs[i]; if (!p.on) continue
+        const u = Math.min(1, p.u), e = u * u * (3 - 2 * u), v = 1 - e
+        const x = v * v * p.x0 + 2 * v * e * p.cx + e * e * p.x1, y = v * v * p.y0 + 2 * v * e * p.cy + e * e * p.y1
+        if (p.out) { ctx.fillStyle = p.col; ctx.globalAlpha = Math.min(1, (1 - u) * 2.2); ctx.beginPath(); ctx.arc(x, y, p.s, 0, 7); ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(x - 2, y + 0.2); ctx.lineTo(x - 0.5, y + 1.8); ctx.lineTo(x + 2.4, y - 1.8); ctx.stroke(); ctx.globalAlpha = 1; continue }
+        ctx.save(); ctx.translate(x, y); ctx.rotate(p.rot + p.spin * u); ctx.globalAlpha = Math.min(1, (1 - u) * 4 + 0.1)
+        const sc = 1 - 0.62 * e * e; drawPiece(p.k, p.s * sc, p.col); ctx.restore()
+      }
+      if (!RM) {
+        /* what is in flight and lit, for the tests */
+        let live = 0, litN = 0; for (let i = 0; i < NP; i++) if (pcs[i].on) live++; for (let j = 0; j < N; j++) if (lit[j] > 0) litN++
+        const tag = live + '/' + litN + '/' + hg.toFixed(1) + '/' + (hotSrc >= 0 ? 's' + hotSrc : hotAg >= 0 ? 'a' + hotAg : '-'); if (cv.dataset.pc !== tag) cv.dataset.pc = tag
+        ang += 0.0008 * (1 + 3.5 * hg) * spin; raf = requestAnimationFrame(frame)
+      }
     }
 
-    buildTiles(); layout(); raf = requestAnimationFrame(frame)
-    return () => { cancelAnimationFrame(raf); cv.removeEventListener('mousemove', onMove); cv.removeEventListener('mouseleave', onLeave); window.removeEventListener('resize', layout); tilesEl.innerHTML = '' }
+    buildTiles(); layout()
+    if (RM) frame(0); else raf = requestAnimationFrame(frame)
+    return () => { cancelAnimationFrame(raf); cv.removeEventListener('mousemove', onMove); cv.removeEventListener('mouseleave', onLeave); cv.removeEventListener('pointerdown', onDown); window.removeEventListener('resize', onResize); tilesEl.innerHTML = '' }
   }, [])
 
   return (

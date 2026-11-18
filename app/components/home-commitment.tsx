@@ -57,21 +57,21 @@ const CSS = `
 .cl-kicker .cl-kdot{color:var(--green)}
 
 /* reveal — opacity/transform only */
-.cl-reveal{opacity:0;transform:translateY(28px);
-  transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
-.cl-reveal.is-in{opacity:1;transform:none}
-/* staggered children (claim cards, problem cols, loop steps, proof items) */
-.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:0;transform:translateY(28px);
-  transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
-.cl-reveal.is-in :where(.cl-claim,.cl-step,.cl-pcol,.cl-proof-item){opacity:1;transform:none}
+.cl-reveal{opacity:0;transform:perspective(900px) translateY(60px) scale(.94) rotateX(8deg);transform-origin:50% 100%;filter:blur(8px);
+  transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1),filter .9s cubic-bezier(.2,.7,.2,1)}
+.cl-reveal.is-in{opacity:1;transform:none;filter:none}
+/* staggered children (claim cards, problem cols, loop steps, proof items), 90ms apart */
+.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:0;transform:perspective(900px) translateY(60px) scale(.94) rotateX(8deg);filter:blur(6px);
+  transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1),filter .9s cubic-bezier(.2,.7,.2,1)}
+.cl-reveal.is-in :where(.cl-claim,.cl-step,.cl-pcol,.cl-proof-item){opacity:1;transform:none;filter:none}
 .cl-reveal.is-in .cl-claim:nth-of-type(1){transition-delay:.35s}
-.cl-reveal.is-in .cl-claim:nth-of-type(2){transition-delay:.51s}
-.cl-reveal.is-in .cl-claim:nth-of-type(3){transition-delay:.67s}
-.cl-reveal.is-in :where(.cl-step,.cl-pcol,.cl-proof-item):nth-child(2){transition-delay:.12s}
-.cl-reveal.is-in :where(.cl-step,.cl-pcol,.cl-proof-item):nth-child(3){transition-delay:.24s}
-.cl-reveal.is-in .cl-step:nth-child(4){transition-delay:.36s}
+.cl-reveal.is-in .cl-claim:nth-of-type(2){transition-delay:.44s}
+.cl-reveal.is-in .cl-claim:nth-of-type(3){transition-delay:.53s}
+.cl-reveal.is-in :where(.cl-step,.cl-pcol,.cl-proof-item):nth-child(2){transition-delay:.09s}
+.cl-reveal.is-in :where(.cl-step,.cl-pcol,.cl-proof-item):nth-child(3){transition-delay:.18s}
+.cl-reveal.is-in .cl-step:nth-child(4){transition-delay:.27s}
 @media(prefers-reduced-motion:reduce){
-  .cl-reveal,.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:1;transform:none;transition:none}
+  .cl-reveal,.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:1;transform:none;filter:none;transition:none}
 }
 
 /* header — light editorial masthead */
