@@ -480,6 +480,10 @@ const CSS = `
   display:flex;align-items:center;min-height:44px}
 .cl-fcol a:hover{color:var(--cream)}
 .cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
+.cl-footer-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 24px}
+.cl-footer-fam{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 16px;font-size:13px;color:rgba(251,250,248,.5)}
+.cl-footer-fam a{display:inline-flex;align-items:center;min-height:44px;color:rgba(251,250,248,.65);transition:color .15s}
+.cl-footer-fam a:hover{color:var(--cream)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
   color:rgba(251,250,248,.55)}
 
@@ -1293,6 +1297,12 @@ function Footer() {
         </nav>
         <div className="cl-footer-bottom">
           <span className="cl-footer-copy">© 2026 Knowcap</span>
+          <span className="cl-footer-fam">
+            <span>Also by Hasan Arslan:</span>
+            <a href="https://www.smetools.io/" target="_blank" rel="noopener">SMEtools</a>
+            <a href="https://sortedos.com/" target="_blank" rel="noopener">Sorted</a>
+            <a href="https://hasansamarslan.com/" target="_blank" rel="noopener">hasansamarslan.com</a>
+          </span>
         </div>
       </div>
     </footer>
