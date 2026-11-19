@@ -530,15 +530,18 @@ const CSS = `
   background:radial-gradient(circle at 50% 58%,#fff 0%,var(--cream) 78%)}
 .clh-head{position:absolute;left:0;right:0;top:84px;z-index:4;text-align:center;padding:0 20px;pointer-events:none}
 .clh-eye{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--green);margin-bottom:10px}
+  text-transform:uppercase;color:var(--green);margin-bottom:8px}
 .clh-h1{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em;line-height:1.04;
   font-size:clamp(28px,4.2vw,46px);color:var(--ink);margin:0}
 .clh-h1 .clh-em{color:var(--green)}
-.clh-sub{margin:12px auto 0;color:var(--sec);font-size:clamp(14px,1.7vw,16.5px);font-weight:500;max-width:52ch}
-.clh-cta{margin-top:18px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
+/* The words above the globe are longer than they were (first-screen option A). The line
+   under the headline is wide enough to stay on two lines and the gaps are a little
+   tighter, so the block still ends clear of the row of stage labels the globe draws. */
+.clh-sub{margin:10px auto 0;color:var(--sec);font-size:clamp(14px,1.7vw,16.5px);font-weight:500;max-width:72ch}
+.clh-cta{margin-top:12px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
 .clh-quiet{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;font-weight:600;font-size:15px;color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(31,107,58,.45)}
 .clh-quiet:hover{text-decoration-color:currentColor}
-.clh-terms{margin:8px auto 0;font-size:13px;color:var(--sec)}
+.clh-terms{margin:2px auto 0;font-size:13px;color:var(--sec)}
 @media(max-width:640px){
   .clh-hero{height:auto;min-height:0;padding:84px 0 24px}
   .clh-head{position:static;padding:0 18px}
