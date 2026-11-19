@@ -13,6 +13,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import BrandMotion from '@/components/brand-motion'
 
 const APP_URL = 'https://app.knowcap.ai'
 
@@ -20,9 +21,9 @@ const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 .cl-root{
-  --cream:#FBFAF8; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
-  --ink:#18181B; --ink-soft:#2A2A2F; --sec:#4A4F5A;
-  --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#7ED39B;
+  --cream:#F5F7FA; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
+  --ink:#191F2E; --ink-soft:rgba(25,31,46,.88); --sec:#4A4F5A;
+  --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#34D399;
   --amber:#B07C28;
   --disp:'Space Grotesk',system-ui,sans-serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -37,8 +38,9 @@ const CSS = `
 .cl-root :where(h1,h2,h3){font-family:var(--disp);color:var(--ink);margin:0;text-wrap:balance}
 .cl-root :where(p,blockquote,figure,figcaption,pre,ul,ol){margin:0;text-wrap:pretty}
 .cl-root :where(a){color:inherit;text-decoration:none}
-.cl-root a:focus-visible,.cl-root summary:focus-visible,.cl-root button:focus-visible{
-  outline:2px solid var(--green);outline-offset:3px;border-radius:4px}
+.cl-root :where(a,button,summary,input,textarea,select,[tabindex]):focus-visible{
+  outline:2px solid var(--green);outline-offset:2px;border-radius:8px}
+.cl-root .cl-btn:focus-visible{border-radius:999px}
 .cl-footer a:focus-visible{outline-color:var(--green-dark)}
 .cl-wrap{max-width:1180px;margin:0 auto;padding:0 40px;width:100%}
 @media(max-width:720px){.cl-wrap{padding:0 22px}}
@@ -51,8 +53,8 @@ const CSS = `
 /* header — light editorial masthead */
 .cl-header{position:fixed;inset:0 0 auto 0;z-index:50;border-top:3px solid var(--ink);
   background:transparent;transition:background-color .25s,border-color .25s}
-.cl-header[data-scrolled="true"]{background:rgba(251,250,248,.92);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--border)}
+.cl-header[data-scrolled="true"]{background:rgba(245,247,250,.86);backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(31,107,58,.16)}
 .cl-nav{display:flex;align-items:center;justify-content:space-between;height:64px}
 .cl-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;
   font-size:19px;letter-spacing:-.01em;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--ink)}
@@ -67,16 +69,25 @@ const CSS = `
 .cl-login:hover{color:var(--ink)}
 
 /* buttons */
-.cl-btn{display:inline-block;font-family:var(--body);font-size:15px;font-weight:600;
-  letter-spacing:.01em;padding:14px 28px;border-radius:3px;cursor:pointer;
-  transition:background-color .18s ease,color .18s ease,border-color .18s ease,
-    transform .18s ease,box-shadow .18s ease}
-.cl-btn--solid{background:var(--green);color:#fff;border:1px solid var(--green)}
-.cl-btn--solid:hover{background:var(--green-deep);border-color:var(--green-deep);
-  transform:translateY(-1px);box-shadow:0 6px 18px rgba(31,107,58,.22)}
-.cl-btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
-.cl-btn--ghost:hover{background:var(--ink);color:var(--cream);transform:translateY(-1px)}
-.cl-btn--sm{padding:9px 18px;font-size:13.5px}
+.cl-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;
+  font-family:var(--body);font-size:14.5px;font-weight:600;letter-spacing:.01em;padding:0 24px;
+  border-radius:999px;cursor:pointer;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease,
+    transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease,translate .25s cubic-bezier(.2,.7,.2,1)}
+.cl-btn:active{transform:scale(.98)}
+.cl-btn--solid{background:linear-gradient(120deg,rgba(25,31,46,.92),#1F6B3A);color:#fff;
+  border:1px solid rgba(31,107,58,.5);
+  box-shadow:0 10px 30px rgba(31,107,58,.24),inset 0 1px 0 rgba(255,255,255,.16)}
+.cl-btn--solid::before{content:'';flex:none;width:7px;height:7px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,#E8EEF9 65%);box-shadow:0 0 8px rgba(255,255,255,.7)}
+.cl-btn--solid:hover{transform:translateY(-2px);
+  box-shadow:0 16px 40px rgba(31,107,58,.36),inset 0 1px 0 rgba(255,255,255,.16)}
+.cl-btn--ghost{background:rgba(255,255,255,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  color:var(--ink);border:1px solid rgba(31,107,58,.34);
+  box-shadow:0 8px 26px rgba(31,107,58,.12),inset 0 1px 0 rgba(236,244,255,.5)}
+.cl-btn--ghost:hover{border-color:#1F6B3A;transform:translateY(-2px);
+  box-shadow:0 14px 34px rgba(31,107,58,.2),inset 0 1px 0 rgba(236,244,255,.5)}
+.cl-btn--sm{padding:0 18px;font-size:13.5px;min-height:44px;box-sizing:border-box}
 
 /* subpage hero */
 .cl-page-main{flex:1}
@@ -100,22 +111,23 @@ const CSS = `
 .cl-prose strong{color:var(--ink)}
 
 /* cards + form fields on editorial paper */
-.cl-card{background:var(--white);border:1px solid var(--border);border-radius:10px}
+.cl-card{background:var(--white);border:1px solid rgba(31,107,58,.28);border-radius:22px;
+  box-shadow:0 18px 44px rgba(31,107,58,.12),inset 0 1px 0 rgba(255,255,255,.55)}
 .cl-input{width:100%;font-family:var(--body);font-size:15px;color:var(--ink);
-  background:var(--white);border:1px solid var(--border-2);border-radius:6px;
+  background:var(--white);border:1px solid var(--border-2);border-radius:12px;
   padding:12px 14px;outline:none;transition:border-color .15s,box-shadow .15s}
 .cl-input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-tint)}
 .cl-label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
 
 /* footer — dark, 4-column sitemap */
-.cl-footer{background:var(--ink);color:rgba(251,250,248,.65);padding:56px 0 44px;font-size:13.5px}
+.cl-footer{background:linear-gradient(135deg,#191F2E,#1B3C6C);color:rgba(232,238,249,.65);padding:56px 0 44px;font-size:13.5px}
 .cl-footer-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-  gap:14px 28px;padding-bottom:30px;margin-bottom:32px;border-bottom:1px solid rgba(251,250,248,.12)}
+  gap:14px 28px;padding-bottom:30px;margin-bottom:32px;border-bottom:1px solid rgba(232,238,249,.12)}
 .cl-footer-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);
   font-weight:600;font-size:16px;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--cream)}
 .cl-footer-brand img{border-radius:5px}
 .cl-footer-line{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
-  color:rgba(251,250,248,.65)}
+  color:rgba(232,238,249,.65)}
 .cl-footer-line .cl-fl-ink{color:var(--cream)}
 .cl-footer-line .cl-fl-green{color:var(--green-dark)}
 .cl-footer-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 36px}
@@ -123,15 +135,15 @@ const CSS = `
 .cl-fcol{display:flex;flex-direction:column;gap:9px}
 .cl-fcol-h{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.12em;
   text-transform:uppercase;color:var(--green-dark);margin-bottom:3px}
-.cl-fcol a{color:rgba(251,250,248,.65);transition:color .15s;font-size:13px}
+.cl-fcol a{color:rgba(232,238,249,.65);transition:color .15s;font-size:13px}
 .cl-fcol a:hover{color:var(--cream)}
-.cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
+.cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(232,238,249,.12)}
 .cl-footer-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 24px}
-.cl-footer-fam{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 16px;font-size:13px;color:rgba(251,250,248,.5)}
-.cl-footer-fam a{display:inline-flex;align-items:center;min-height:44px;color:rgba(251,250,248,.65);transition:color .15s}
+.cl-footer-fam{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 16px;font-size:13px;color:rgba(232,238,249,.72)}
+.cl-footer-fam a{display:inline-flex;align-items:center;min-height:44px;color:rgba(232,238,249,.65);transition:color .15s}
 .cl-footer-fam a:hover{color:var(--cream)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
-  color:rgba(251,250,248,.55)}
+  color:rgba(232,238,249,.72)}
 `
 
 export function EditorialHeader({ registerHref }: { registerHref?: string } = {}) {
@@ -266,6 +278,7 @@ export default function EditorialShell({
   return (
     <div className="cl-root">
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
+      <BrandMotion />
       <EditorialHeader registerHref={registerHref} />
       <main className="cl-page-main">{children}</main>
       <EditorialFooter registerHref={registerHref} />

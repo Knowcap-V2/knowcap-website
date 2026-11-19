@@ -91,7 +91,7 @@ export default function RootLayout({
             NEXT_PUBLIC_META_PIXEL_ID is set — see components/meta-pixel.tsx. */}
         <MetaPixel />
       </head>
-      <body className={`${inter.className} bg-[#F5F4F1] text-[#1a1a1a] antialiased`}>
+      <body className={`${inter.className} bg-[#F5F7FA] text-[#191F2E] antialiased`}>
         <PostHogProvider />
         {children}
         <Toaster />

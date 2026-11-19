@@ -18,6 +18,7 @@ import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import ABTracker from '@/components/ab-tracker'
 import IngestionGlobe from '@/components/ingestion-globe'
+import BrandMotion from '@/components/brand-motion'
 
 /* ---------------------------------------------------------------- styles */
 
@@ -26,9 +27,9 @@ const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 .cl-root{
-  --cream:#FBFAF8; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
-  --ink:#18181B; --ink-soft:#2A2A2F; --sec:#4A4F5A;
-  --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#7ED39B;
+  --cream:#F5F7FA; --white:#FFFFFF; --border:#E7E4DD; --border-2:#DCD7CB;
+  --ink:#191F2E; --ink-soft:rgba(25,31,46,.88); --sec:#4A4F5A;
+  --green:#1F6B3A; --green-deep:#17522C; --green-tint:#E8F5ED; --green-dark:#34D399;
   --amber:#B07C28;
   --disp:'Space Grotesk',system-ui,sans-serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -42,8 +43,9 @@ const CSS = `
 .cl-root :where(h1,h2,h3){font-family:var(--disp);color:var(--ink);margin:0;text-wrap:balance}
 .cl-root :where(p,blockquote,figure,figcaption,pre){margin:0;text-wrap:pretty}
 .cl-root :where(a){color:inherit;text-decoration:none}
-.cl-root a:focus-visible,.cl-root summary:focus-visible,.cl-root button:focus-visible{
-  outline:2px solid var(--green);outline-offset:3px;border-radius:4px}
+.cl-root :where(a,button,summary,input,textarea,select,[tabindex]):focus-visible{
+  outline:2px solid var(--green);outline-offset:2px;border-radius:8px}
+.cl-root .cl-btn:focus-visible{border-radius:999px}
 .cl-closer a:focus-visible,.cl-footer a:focus-visible{outline-color:var(--green-dark)}
 .cl-wrap{max-width:1180px;margin:0 auto;padding:0 40px}
 @media(max-width:720px){.cl-wrap{padding:0 22px}}
@@ -55,28 +57,28 @@ const CSS = `
 .cl-kicker .cl-kdot{color:var(--green)}
 
 /* reveal — opacity/transform only */
-.cl-reveal{opacity:0;transform:translateY(18px);
-  transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
-.cl-reveal.is-in{opacity:1;transform:none}
-/* staggered children (claim cards, problem cols, loop steps, proof items) */
-.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:0;transform:translateY(12px);
-  transition:opacity .55s cubic-bezier(.21,.6,.35,1),transform .55s cubic-bezier(.21,.6,.35,1)}
-.cl-reveal.is-in :where(.cl-claim,.cl-step,.cl-pcol,.cl-proof-item){opacity:1;transform:none}
+.cl-reveal{opacity:0;transform:perspective(900px) translateY(60px) scale(.94) rotateX(8deg);transform-origin:50% 100%;filter:blur(8px);
+  transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1),filter .9s cubic-bezier(.2,.7,.2,1)}
+.cl-reveal.is-in{opacity:1;transform:none;filter:none}
+/* staggered children (claim cards, problem cols, loop steps, proof items), 90ms apart */
+.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:0;transform:perspective(900px) translateY(60px) scale(.94) rotateX(8deg);filter:blur(6px);
+  transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1),filter .9s cubic-bezier(.2,.7,.2,1)}
+.cl-reveal.is-in :where(.cl-claim,.cl-step,.cl-pcol,.cl-proof-item){opacity:1;transform:none;filter:none}
 .cl-reveal.is-in .cl-claim:nth-of-type(1){transition-delay:.35s}
-.cl-reveal.is-in .cl-claim:nth-of-type(2){transition-delay:.51s}
-.cl-reveal.is-in .cl-claim:nth-of-type(3){transition-delay:.67s}
-.cl-reveal.is-in :where(.cl-step,.cl-pcol,.cl-proof-item):nth-child(2){transition-delay:.12s}
-.cl-reveal.is-in :where(.cl-step,.cl-pcol,.cl-proof-item):nth-child(3){transition-delay:.24s}
-.cl-reveal.is-in .cl-step:nth-child(4){transition-delay:.36s}
+.cl-reveal.is-in .cl-claim:nth-of-type(2){transition-delay:.44s}
+.cl-reveal.is-in .cl-claim:nth-of-type(3){transition-delay:.53s}
+.cl-reveal.is-in :where(.cl-step,.cl-pcol,.cl-proof-item):nth-child(2){transition-delay:.09s}
+.cl-reveal.is-in :where(.cl-step,.cl-pcol,.cl-proof-item):nth-child(3){transition-delay:.18s}
+.cl-reveal.is-in .cl-step:nth-child(4){transition-delay:.27s}
 @media(prefers-reduced-motion:reduce){
-  .cl-reveal,.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:1;transform:none;transition:none}
+  .cl-reveal,.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:1;transform:none;filter:none;transition:none}
 }
 
 /* header — light editorial masthead */
 .cl-header{position:fixed;inset:0 0 auto 0;z-index:50;border-top:3px solid var(--ink);
   background:transparent;transition:background-color .25s,border-color .25s}
-.cl-header[data-scrolled="true"]{background:rgba(251,250,248,.92);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--border)}
+.cl-header[data-scrolled="true"]{background:rgba(245,247,250,.86);backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(31,107,58,.16)}
 .cl-nav{display:flex;align-items:center;justify-content:space-between;height:64px}
 .cl-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;
   font-size:19px;letter-spacing:-.01em;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--ink)}
@@ -115,17 +117,25 @@ const CSS = `
 .cl-mobile-auth .cl-btn--sm{width:100%;text-align:center}
 
 /* buttons */
-.cl-btn{display:inline-block;font-family:var(--body);font-size:15px;font-weight:600;
-  letter-spacing:.01em;padding:14px 28px;border-radius:3px;cursor:pointer;
-  transition:background-color .18s ease,color .18s ease,border-color .18s ease,
-    transform .18s ease,box-shadow .18s ease}
-.cl-btn--solid{background:var(--green);color:#fff;border:1px solid var(--green)}
-.cl-btn--solid:hover{background:var(--green-deep);border-color:var(--green-deep);
-  transform:translateY(-1px);box-shadow:0 6px 18px rgba(31,107,58,.22)}
-.cl-btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
-.cl-btn--ghost:hover{background:var(--ink);color:var(--cream);transform:translateY(-1px)}
-.cl-btn--sm{padding:12px 20px;font-size:13.5px;min-height:44px;box-sizing:border-box;
-  display:inline-flex;align-items:center;justify-content:center}
+.cl-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;
+  font-family:var(--body);font-size:14.5px;font-weight:600;letter-spacing:.01em;padding:0 24px;
+  border-radius:999px;cursor:pointer;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease,
+    transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease,translate .25s cubic-bezier(.2,.7,.2,1)}
+.cl-btn:active{transform:scale(.98)}
+.cl-btn--solid{background:linear-gradient(120deg,rgba(25,31,46,.92),#1F6B3A);color:#fff;
+  border:1px solid rgba(31,107,58,.5);
+  box-shadow:0 10px 30px rgba(31,107,58,.24),inset 0 1px 0 rgba(255,255,255,.16)}
+.cl-btn--solid::before{content:'';flex:none;width:7px;height:7px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,#E8EEF9 65%);box-shadow:0 0 8px rgba(255,255,255,.7)}
+.cl-btn--solid:hover{transform:translateY(-2px);
+  box-shadow:0 16px 40px rgba(31,107,58,.36),inset 0 1px 0 rgba(255,255,255,.16)}
+.cl-btn--ghost{background:rgba(255,255,255,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  color:var(--ink);border:1px solid rgba(31,107,58,.34);
+  box-shadow:0 8px 26px rgba(31,107,58,.12),inset 0 1px 0 rgba(236,244,255,.5)}
+.cl-btn--ghost:hover{border-color:#1F6B3A;transform:translateY(-2px);
+  box-shadow:0 14px 34px rgba(31,107,58,.2),inset 0 1px 0 rgba(236,244,255,.5)}
+.cl-btn--sm{padding:0 18px;font-size:13.5px;min-height:44px;box-sizing:border-box}
 .cl-cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:42px}
 
 /* section register marginalia — V6b mono kicker style */
@@ -187,7 +197,23 @@ const CSS = `
   background:var(--white);padding:28px 0}
 .cl-works-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
   gap:16px 30px}
-.cl-works-grp{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.cl-works-grp{display:flex;align-items:center;gap:10px 18px;flex:1 1 420px;min-width:0}
+.cl-works-lbl{flex:none}
+/* the moving line (Brand System): a slow endless row, faded at both edges, paused while pointed at */
+.cl-marq{flex:1;min-width:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.cl-marq-track{display:flex;align-items:center;gap:18px;width:max-content;animation:cl-marq 40s linear infinite}
+.cl-marq:hover .cl-marq-track{animation-play-state:paused}
+.cl-marq-set{display:flex;align-items:center;gap:18px;flex:none}
+@keyframes cl-marq{to{transform:translateX(calc(-50% - 9px))}}
+.cl-marq-star{flex:none;width:9px;height:9px;background:var(--green);opacity:.55;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+@media(prefers-reduced-motion:reduce){
+  .cl-marq-track{animation:none;flex-wrap:wrap;width:auto}
+  .cl-marq{-webkit-mask-image:none;mask-image:none}
+  .cl-marq-set[aria-hidden="true"]{display:none}
+}
 .cl-works-lbl{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.16em;
   text-transform:uppercase;color:var(--green)}
 .cl-works-item{font-family:var(--body);font-size:14.5px;font-weight:600;color:var(--ink-soft);
@@ -209,8 +235,8 @@ const CSS = `
   mask-image:radial-gradient(ellipse 70% 75% at 50% 38%,rgba(0,0,0,.7) 0%,transparent 78%);
   pointer-events:none}
 .cl-appwin{position:relative;z-index:1;max-width:1040px;margin:0 auto;background:var(--white);
-  border:1px solid var(--border);border-radius:12px;overflow:hidden;text-align:left;
-  box-shadow:0 1px 2px rgba(24,24,27,.04),0 10px 28px rgba(24,24,27,.06),0 30px 72px rgba(24,24,27,.09)}
+  border:1px solid rgba(31,107,58,.28);border-radius:22px;overflow:hidden;text-align:left;
+  box-shadow:0 18px 44px rgba(31,107,58,.12),inset 0 1px 0 rgba(255,255,255,.55)}
 .cl-chrome{display:flex;align-items:center;gap:16px;height:44px;padding:0 16px;
   background:#F7F5F0;border-bottom:1px solid var(--border)}
 .cl-traffic{display:flex;gap:8px;flex-shrink:0}
@@ -342,10 +368,11 @@ const CSS = `
 .cl-step::before{content:'';position:absolute;top:-1px;left:0;height:2px;width:0;
   background:var(--green);transition:width .35s cubic-bezier(.22,1,.36,1)}
 .cl-step:hover::before{width:100%}
-.cl-step-num{font-family:var(--disp);font-weight:320;font-variation-settings:'SOFT' 40,'WONK' 0;
-  font-size:clamp(3rem,5vw,4.2rem);line-height:1;letter-spacing:-.03em;color:var(--border);
-  transition:color .3s ease}
-.cl-step:hover .cl-step-num{color:var(--green)}
+.cl-step-num{display:flex;align-items:center;justify-content:center;width:48px;height:48px;
+  border-radius:50%;background:linear-gradient(135deg,#191F2E,#1F6B3A);color:#fff;
+  font-family:var(--disp);font-weight:600;font-size:17px;line-height:1;letter-spacing:0;
+  box-shadow:0 8px 22px rgba(31,107,58,.24);transition:box-shadow .3s ease}
+.cl-step:hover .cl-step-num{box-shadow:0 12px 30px rgba(31,107,58,.36)}
 .cl-step h3{font-weight:560;font-variation-settings:'SOFT' 55,'WONK' 0;font-size:21px;
   letter-spacing:-.01em;margin-top:22px;display:inline-block;position:relative}
 .cl-step h3::after{content:'';position:absolute;left:0;bottom:-4px;height:1.5px;width:0;
@@ -368,14 +395,14 @@ const CSS = `
 .cl-story-caption{margin-top:26px;padding:16px 20px;border-left:2px solid var(--green);
   background:var(--green-tint);border-radius:0 4px 4px 0;font-size:14px;line-height:1.65;
   color:var(--green-deep)}
-.cl-story-shot{position:relative;border:1px solid var(--border);border-radius:12px;
+.cl-story-shot{position:relative;border:1px solid rgba(31,107,58,.28);border-radius:22px;
   overflow:hidden;background:var(--white);
-  box-shadow:0 1px 2px rgba(24,24,27,.04),0 10px 28px rgba(24,24,27,.06),0 30px 72px rgba(24,24,27,.09)}
+  box-shadow:0 18px 44px rgba(31,107,58,.12),inset 0 1px 0 rgba(255,255,255,.55)}
 .cl-story-shot img{display:block;width:100%;height:auto}
 .cl-stamp{position:absolute;top:18px;right:18px;transform:rotate(6deg);
   font-family:var(--mono);font-size:11px;letter-spacing:.18em;font-weight:500;
   color:var(--green);border:2px solid var(--green);border-radius:4px;padding:6px 12px;
-  background:rgba(251,250,248,.9)}
+  background:rgba(245,247,250,.9)}
 
 /* failed tools */
 .cl-failed{border-top:1px solid var(--border)}
@@ -398,13 +425,13 @@ const CSS = `
 .cl-bullet{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--sec)}
 .cl-bullet svg{flex:none;margin-top:4px}
 .cl-mcp-grid .cl-cta-row{margin-top:34px}
-.cl-code{background:var(--ink);color:rgba(251,250,248,.82);border-radius:4px;
+.cl-code{background:var(--ink);color:rgba(232,238,249,.82);border-radius:22px;
   padding:30px 32px;font-family:var(--mono);font-size:12.5px;line-height:1.85;overflow-x:auto;
-  box-shadow:0 24px 60px rgba(24,24,27,.18)}
-.cl-c-comment{color:rgba(251,250,248,.55)}
+  box-shadow:0 18px 44px rgba(31,107,58,.2),inset 0 1px 0 rgba(255,255,255,.12)}
+.cl-c-comment{color:rgba(232,238,249,.55)}
 .cl-c-key{color:#79B8FF}
 .cl-c-str{color:var(--green-dark)}
-.cl-c-plain{color:rgba(251,250,248,.82)}
+.cl-c-plain{color:rgba(232,238,249,.82)}
 
 /* FAQ — editorial rules */
 .cl-faq{max-width:760px;margin-top:56px;border-top:1px solid var(--border)}
@@ -422,9 +449,10 @@ const CSS = `
 .cl-latest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
 @media(max-width:860px){.cl-latest-grid{grid-template-columns:1fr}}
 .cl-latest-card{display:flex;flex-direction:column;gap:10px;background:var(--white);
-  border:1px solid var(--border);border-radius:12px;padding:24px;text-decoration:none;
-  transition:border-color .15s,box-shadow .15s,transform .15s}
-.cl-latest-card:hover{border-color:var(--border-2);box-shadow:0 2px 14px rgba(24,24,27,.06);transform:translateY(-2px)}
+  border:1px solid rgba(31,107,58,.28);border-radius:22px;padding:24px;text-decoration:none;
+  box-shadow:0 18px 44px rgba(31,107,58,.12),inset 0 1px 0 rgba(255,255,255,.55);
+  transition:border-color .2s,box-shadow .3s,transform .3s cubic-bezier(.2,.7,.2,1)}
+.cl-latest-card:hover{border-color:rgba(31,107,58,.5);box-shadow:0 24px 54px rgba(31,107,58,.2),inset 0 1px 0 rgba(255,255,255,.55);transform:translateY(-3px)}
 .cl-latest-date{font-family:var(--mono);font-size:11px;color:var(--sec)}
 .cl-latest-card h3{font-weight:520;font-variation-settings:'SOFT' 55,'WONK' 0;font-size:17px;
   line-height:1.3;letter-spacing:-.01em;color:var(--ink)}
@@ -435,7 +463,8 @@ const CSS = `
 /* closer — compact dark ink band */
 .cl-closer-wrap{padding:110px 0}
 @media(max-width:860px){.cl-closer-wrap{padding:72px 0}}
-.cl-closer{background:var(--ink);color:var(--cream);border-radius:4px;padding:72px 64px;
+.cl-closer{background:linear-gradient(135deg,#191F2E,#1B3C6C);color:#E8EEF9;border-radius:28px;
+  box-shadow:0 30px 80px rgba(31,107,58,.28);padding:72px 64px;
   display:grid;grid-template-columns:repeat(12,1fr);column-gap:48px;align-items:center}
 @media(max-width:860px){.cl-closer{grid-template-columns:1fr;row-gap:40px;padding:56px 32px}}
 .cl-closer-text{grid-column:1/span 8}
@@ -444,7 +473,7 @@ const CSS = `
   .cl-closer-text,.cl-closer-ctas{grid-column:1/-1}
   .cl-closer-ctas{flex-direction:row;flex-wrap:wrap}
 }
-.cl-closer .cl-kicker{color:rgba(251,250,248,.6)}
+.cl-closer .cl-kicker{color:rgba(232,238,249,.72)}
 .cl-closer .cl-kdot{color:var(--green-dark)}
 .cl-closer h2{font-weight:440;font-variation-settings:'SOFT' 55,'WONK' 0;
   font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;letter-spacing:-.02em;color:var(--cream);
@@ -452,23 +481,28 @@ const CSS = `
 .cl-closer h2 em{font-style:italic;font-variation-settings:'SOFT' 70,'WONK' 1;
   color:var(--green-dark)}
 .cl-closer-sub{margin-top:22px;font-size:16.5px;line-height:1.65;
-  color:rgba(251,250,248,.72);max-width:44ch}
+  color:rgba(232,238,249,.72);max-width:44ch}
 .cl-closer .cl-cta-row{margin-top:0}
 .cl-closer .cl-btn{text-align:center}
-.cl-closer .cl-btn--solid:hover{background:var(--green-dark);border-color:var(--green-dark);
-  color:var(--ink);box-shadow:0 6px 22px rgba(126,211,155,.25)}
-.cl-closer .cl-btn--ghost{color:var(--cream);border-color:rgba(251,250,248,.45)}
-.cl-closer .cl-btn--ghost:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.cl-closer .cl-btn--solid{background:#fff;color:var(--ink);border-color:#fff;
+  box-shadow:0 10px 30px rgba(31,107,58,.24)}
+.cl-closer .cl-btn--solid::before{background:radial-gradient(circle at 35% 35%,#34D399,#1F6B3A);
+  box-shadow:0 0 8px rgba(52,211,153,.6)}
+.cl-closer .cl-btn--solid:hover{box-shadow:0 16px 40px rgba(31,107,58,.36)}
+.cl-closer .cl-btn--ghost{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;
+  color:var(--cream);border-color:rgba(232,238,249,.45);box-shadow:none}
+.cl-closer .cl-btn--ghost:hover{background:rgba(232,238,249,.1);color:#fff;border-color:var(--green-dark);
+  box-shadow:0 10px 30px rgba(31,107,58,.24)}
 
 /* footer — dark, 4-column sitemap */
-.cl-footer{background:var(--ink);color:rgba(251,250,248,.65);padding:56px 0 44px;font-size:13.5px}
+.cl-footer{background:linear-gradient(135deg,#191F2E,#1B3C6C);color:rgba(232,238,249,.65);padding:56px 0 44px;font-size:13.5px}
 .cl-footer-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
-  gap:14px 28px;padding-bottom:30px;margin-bottom:32px;border-bottom:1px solid rgba(251,250,248,.12)}
+  gap:14px 28px;padding-bottom:30px;margin-bottom:32px;border-bottom:1px solid rgba(232,238,249,.12)}
 .cl-footer-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);
   font-weight:600;font-size:16px;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--cream)}
 .cl-footer-brand img{border-radius:5px}
 .cl-footer-line{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
-  color:rgba(251,250,248,.65)}
+  color:rgba(232,238,249,.65)}
 .cl-footer-line .cl-fl-ink{color:var(--cream)}
 .cl-footer-line .cl-fl-green{color:var(--green-dark)}
 .cl-footer-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 36px}
@@ -476,16 +510,16 @@ const CSS = `
 .cl-fcol{display:flex;flex-direction:column;gap:2px}
 .cl-fcol-h{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.12em;
   text-transform:uppercase;color:var(--green-dark);margin-bottom:3px}
-.cl-fcol a{color:rgba(251,250,248,.65);transition:color .15s;font-size:13px;
+.cl-fcol a{color:rgba(232,238,249,.65);transition:color .15s;font-size:13px;
   display:flex;align-items:center;min-height:44px}
 .cl-fcol a:hover{color:var(--cream)}
-.cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(251,250,248,.12)}
+.cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(232,238,249,.12)}
 .cl-footer-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 24px}
-.cl-footer-fam{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 16px;font-size:13px;color:rgba(251,250,248,.5)}
-.cl-footer-fam a{display:inline-flex;align-items:center;min-height:44px;color:rgba(251,250,248,.65);transition:color .15s}
+.cl-footer-fam{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 16px;font-size:13px;color:rgba(232,238,249,.72)}
+.cl-footer-fam a{display:inline-flex;align-items:center;min-height:44px;color:rgba(232,238,249,.65);transition:color .15s}
 .cl-footer-fam a:hover{color:var(--cream)}
 .cl-footer-copy{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;
-  color:rgba(251,250,248,.55)}
+  color:rgba(232,238,249,.72)}
 
 /* ===== globe hero — faithful port of globe-prototype.html (headline overlay) ===== */
 .cl-header{border-top:0 !important}
@@ -496,12 +530,18 @@ const CSS = `
   background:radial-gradient(circle at 50% 58%,#fff 0%,var(--cream) 78%)}
 .clh-head{position:absolute;left:0;right:0;top:84px;z-index:4;text-align:center;padding:0 20px;pointer-events:none}
 .clh-eye{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--green);margin-bottom:10px}
+  text-transform:uppercase;color:var(--green);margin-bottom:8px}
 .clh-h1{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em;line-height:1.04;
   font-size:clamp(28px,4.2vw,46px);color:var(--ink);margin:0}
 .clh-h1 .clh-em{color:var(--green)}
-.clh-sub{margin:12px auto 0;color:var(--sec);font-size:clamp(14px,1.7vw,16.5px);font-weight:500;max-width:52ch}
-.clh-cta{margin-top:18px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center}
+/* The words above the globe are longer than they were (first-screen option A). The line
+   under the headline is wide enough to stay on two lines and the gaps are a little
+   tighter, so the block still ends clear of the row of stage labels the globe draws. */
+.clh-sub{margin:10px auto 0;color:var(--sec);font-size:clamp(14px,1.7vw,16.5px);font-weight:500;max-width:72ch}
+.clh-cta{margin-top:12px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
+.clh-quiet{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;font-weight:600;font-size:15px;color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(31,107,58,.45)}
+.clh-quiet:hover{text-decoration-color:currentColor}
+.clh-terms{margin:2px auto 0;font-size:13px;color:var(--sec)}
 @media(max-width:640px){
   .clh-hero{height:auto;min-height:0;padding:84px 0 24px}
   .clh-head{position:static;padding:0 18px}
@@ -616,7 +656,7 @@ function Header() {
         </nav>
         <div className="cl-navauth">
           <a className="cl-login" href={loginHref}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join Beta</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join the beta</a>
           <button
             type="button"
             className="cl-navtoggle"
@@ -660,7 +700,7 @@ function Header() {
         <Link className="cl-mobile-link" href="/contact-us" onClick={closeMobile}>Contact</Link>
         <div className="cl-mobile-auth">
           <a className="cl-login" href={loginHref} onClick={closeMobile}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta" onClick={closeMobile}>Join Beta</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta" onClick={closeMobile}>Join the beta</a>
         </div>
       </nav>
     </header>
@@ -825,23 +865,27 @@ function Hero() {
     <section className="clh-hero">
       <div className="clh-head">
         <Reveal>
-          <p className="clh-eye">Verified memory for your AI agents</p>
+          {/* First-screen words, option A (Hassan's pick, 19 Nov 2026, from the copy audit).
+              Every phrase is already said lower on this page or on /beta: the audience line
+              was in the works-with band, the headline was the problem section's heading. */}
+          <p className="clh-eye">Built for Odoo partners · regulated teams · AI power-users</p>
           <h1 className="clh-h1">
-            Your company says a lot.<br />
-            Knowcap remembers <span className="clh-em">what matters</span>.
+            The deadline slipped because the promise{' '}
+            <span className="clh-em">never lived anywhere</span>.
           </h1>
         </Reveal>
         <Reveal delay={120}>
           <p className="clh-sub">
-            Not another note-taker. The verified memory your agents &mdash; and your
-            clients &mdash; can actually trust.
+            Knowcap listens to your meetings and pulls out every promise and decision. You
+            confirm each one with one tap, and your AI agents act only on what you confirmed.
           </p>
         </Reveal>
         <Reveal delay={200}>
           <div className="clh-cta">
-            <a className="cl-btn cl-btn--solid" href="/beta">Get Started Free</a>
-            <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
+            <a className="cl-btn cl-btn--solid" href="/beta">Join the beta</a>
+            <Link className="clh-quiet" href="/contact-us">Talk to us</Link>
           </div>
+          <p className="clh-terms">Invite-only for now. Applying takes 30 seconds.</p>
         </Reveal>
       </div>
       <IngestionGlobe />
@@ -859,16 +903,23 @@ function WorksWith() {
       <div className="cl-wrap cl-works-inner">
         <div className="cl-works-grp">
           <span className="cl-works-lbl">Works with</span>
-          {WORKS_WITH.map((name, idx) => (
-            <span key={name} style={{ display: 'inline-flex', alignItems: 'center', gap: 18 }}>
-              {idx > 0 && <span className="cl-works-dot" aria-hidden="true">·</span>}
-              <span className="cl-works-item">{name}</span>
-            </span>
-          ))}
+          <div className="cl-marq">
+            <div className="cl-marq-track">
+              {[0, 1].map((copy) => (
+                <div className="cl-marq-set" key={copy} aria-hidden={copy === 1 ? 'true' : undefined}>
+                  {WORKS_WITH.map((name) => (
+                    <span key={name} style={{ display: 'inline-flex', alignItems: 'center', gap: 18 }}>
+                      <span className="cl-works-item">{name}</span>
+                      <span className="cl-marq-star" aria-hidden="true" />
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <span className="cl-works-aud">
-          Built for <b>Odoo partners</b> · <b>regulated teams</b> · <b>AI power-users</b>
-        </span>
+        {/* The "Built for …" line moved up to the first screen (19 Nov 2026); it is not
+            repeated here. */}
       </div>
     </section>
   )
@@ -883,11 +934,13 @@ function Problem() {
         <div className="cl-section-head">
           <Reveal>
             <Reg no="§01" label="What dies in the conversation" />
-            <h2 className="cl-h2">The deadline slipped because the promise never lived anywhere.</h2>
+            {/* Its old heading is now the page's headline, so the section opens with what
+                was the first sentence of its paragraph (19 Nov 2026). */}
+            <h2 className="cl-h2">A company makes hundreds of promises a week.</h2>
           </Reveal>
           <Reveal delay={120}>
             <p className="cl-lead">
-              A company makes hundreds of promises a week. To clients. To employees. To suppliers.
+              To clients. To employees. To suppliers.
               None of them live in your project tool. They live in calls, messages, and chat
               threads. When one breaks, you find out last.
             </p>
@@ -1236,7 +1289,7 @@ function Closer() {
               <p className="cl-closer-sub">Capture. Confirm. Let your agents act on verified facts.</p>
             </div>
             <div className="cl-closer-ctas">
-              <a className="cl-btn cl-btn--solid" href="/beta">Join Beta</a>
+              <a className="cl-btn cl-btn--solid" href="/beta">Join the beta</a>
               <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
             </div>
           </div>
@@ -1289,7 +1342,7 @@ function Footer() {
           </div>
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
-            <a href="/beta">Join Beta</a>
+            <a href="/beta">Join the beta</a>
             <a href={loginHref}>Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
@@ -1319,6 +1372,7 @@ export default function HomeCommitment({ recentPosts = [] }: { recentPosts?: Pos
         <style>{`.cl-reveal,.cl-claim,.cl-step,.cl-pcol,.cl-proof-item{opacity:1 !important;transform:none !important}`}</style>
       </noscript>
       <ABTracker variant="e" />
+      <BrandMotion />
       <Header />
       <Hero />
       <WorksWith />
