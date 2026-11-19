@@ -535,7 +535,10 @@ const CSS = `
   font-size:clamp(28px,4.2vw,46px);color:var(--ink);margin:0}
 .clh-h1 .clh-em{color:var(--green)}
 .clh-sub{margin:12px auto 0;color:var(--sec);font-size:clamp(14px,1.7vw,16.5px);font-weight:500;max-width:52ch}
-.clh-cta{margin-top:18px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.clh-cta{margin-top:18px;pointer-events:auto;display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
+.clh-quiet{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;font-weight:600;font-size:15px;color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(31,107,58,.45)}
+.clh-quiet:hover{text-decoration-color:currentColor}
+.clh-terms{margin:8px auto 0;font-size:13px;color:var(--sec)}
 @media(max-width:640px){
   .clh-hero{height:auto;min-height:0;padding:84px 0 24px}
   .clh-head{position:static;padding:0 18px}
@@ -650,7 +653,7 @@ function Header() {
         </nav>
         <div className="cl-navauth">
           <a className="cl-login" href={loginHref}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join Beta</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join the beta</a>
           <button
             type="button"
             className="cl-navtoggle"
@@ -694,7 +697,7 @@ function Header() {
         <Link className="cl-mobile-link" href="/contact-us" onClick={closeMobile}>Contact</Link>
         <div className="cl-mobile-auth">
           <a className="cl-login" href={loginHref} onClick={closeMobile}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta" onClick={closeMobile}>Join Beta</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta" onClick={closeMobile}>Join the beta</a>
         </div>
       </nav>
     </header>
@@ -859,23 +862,27 @@ function Hero() {
     <section className="clh-hero">
       <div className="clh-head">
         <Reveal>
-          <p className="clh-eye">Verified memory for your AI agents</p>
+          {/* First-screen words, option A (Hassan's pick, 19 Nov 2026, from the copy audit).
+              Every phrase is already said lower on this page or on /beta: the audience line
+              was in the works-with band, the headline was the problem section's heading. */}
+          <p className="clh-eye">Built for Odoo partners · regulated teams · AI power-users</p>
           <h1 className="clh-h1">
-            Your company says a lot.<br />
-            Knowcap remembers <span className="clh-em">what matters</span>.
+            The deadline slipped because the promise{' '}
+            <span className="clh-em">never lived anywhere</span>.
           </h1>
         </Reveal>
         <Reveal delay={120}>
           <p className="clh-sub">
-            Not another note-taker. The verified memory your agents &mdash; and your
-            clients &mdash; can actually trust.
+            Knowcap listens to your meetings and pulls out every promise and decision. You
+            confirm each one with one tap, and your AI agents act only on what you confirmed.
           </p>
         </Reveal>
         <Reveal delay={200}>
           <div className="clh-cta">
-            <a className="cl-btn cl-btn--solid" href="/beta">Get Started Free</a>
-            <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
+            <a className="cl-btn cl-btn--solid" href="/beta">Join the beta</a>
+            <Link className="clh-quiet" href="/contact-us">Talk to us</Link>
           </div>
+          <p className="clh-terms">Invite-only for now. Applying takes 30 seconds.</p>
         </Reveal>
       </div>
       <IngestionGlobe />
@@ -908,9 +915,8 @@ function WorksWith() {
             </div>
           </div>
         </div>
-        <span className="cl-works-aud">
-          Built for <b>Odoo partners</b> · <b>regulated teams</b> · <b>AI power-users</b>
-        </span>
+        {/* The "Built for …" line moved up to the first screen (19 Nov 2026); it is not
+            repeated here. */}
       </div>
     </section>
   )
@@ -925,11 +931,13 @@ function Problem() {
         <div className="cl-section-head">
           <Reveal>
             <Reg no="§01" label="What dies in the conversation" />
-            <h2 className="cl-h2">The deadline slipped because the promise never lived anywhere.</h2>
+            {/* Its old heading is now the page's headline, so the section opens with what
+                was the first sentence of its paragraph (19 Nov 2026). */}
+            <h2 className="cl-h2">A company makes hundreds of promises a week.</h2>
           </Reveal>
           <Reveal delay={120}>
             <p className="cl-lead">
-              A company makes hundreds of promises a week. To clients. To employees. To suppliers.
+              To clients. To employees. To suppliers.
               None of them live in your project tool. They live in calls, messages, and chat
               threads. When one breaks, you find out last.
             </p>
@@ -1278,7 +1286,7 @@ function Closer() {
               <p className="cl-closer-sub">Capture. Confirm. Let your agents act on verified facts.</p>
             </div>
             <div className="cl-closer-ctas">
-              <a className="cl-btn cl-btn--solid" href="/beta">Join Beta</a>
+              <a className="cl-btn cl-btn--solid" href="/beta">Join the beta</a>
               <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
             </div>
           </div>
@@ -1331,7 +1339,7 @@ function Footer() {
           </div>
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
-            <a href="/beta">Join Beta</a>
+            <a href="/beta">Join the beta</a>
             <a href={loginHref}>Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
