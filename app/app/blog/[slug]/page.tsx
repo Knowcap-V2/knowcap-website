@@ -54,9 +54,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 // without a fresh decision; this is a one-page test, not a new site-wide pattern.
 const POST_DOWNLOAD_OFFERS: Record<string, PostDownloadOffer> = {
   'namuthaj-mahdar-ijtimaa-ar': {
-    headline: 'النموذج جاهز... فهل تريد كتابة المحضر بنفسك أيضاً؟',
-    body: 'سجّل اجتماعك مع Knowcap ليُعدّ لك محضراً مكتوباً بالعربية بقراراته ومهامه، وكل بند يؤكّده صاحبه بالاسم.',
-    ctaLabel: 'أنشئ محضرك الأول مجاناً',
+    headline: 'حمّلت النموذج؟ جرّب ألا تكتب المحضر القادم بيدك',
+    body: 'شغّل Knowcap في اجتماعك القادم، وسيكتب المحضر بالعربية: القرارات، والمهام، ومن المسؤول عن كل بند.',
+    ctaLabel: 'جرّب على اجتماعك القادم - مجاناً',
     ctaHref:
       'https://app.knowcap.ai/register?utm_source=blog_namuthaj-mahdar-ijtimaa-ar&utm_medium=post_download_offer&utm_campaign=blog_conversion_test',
   },
