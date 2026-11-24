@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { extractFaqs } from './extractFaqs'
 
 /**
  * Blog content lib — reads markdown posts from content/blog/ at build time.
@@ -228,22 +229,6 @@ export function renderMarkdown(md: string): string {
   }
   flushPara(); flushList()
   return out.join('\n')
-}
-
-/** Extract FAQ q/a pairs (### headings under a "## FAQ" / Arabic section) for FAQPage JSON-LD. */
-function extractFaqs(md: string): { q: string; a: string }[] {
-  const faqMatch = md.match(/^##\s+(?:FAQ|الأسئلة الشائعة)\s*$/m)
-  if (!faqMatch || faqMatch.index === undefined) return []
-  const after = md.slice(faqMatch.index)
-  const section = after.split(/\r?\n##\s+(?!#)/)[0]
-  const faqs: { q: string; a: string }[] = []
-  const parts = section.split(/^###\s+/m).slice(1)
-  for (const part of parts) {
-    const [qLine, ...rest] = part.split(/\r?\n/)
-    const a = rest.join(' ').replace(/\s+/g, ' ').trim()
-    if (qLine && a) faqs.push({ q: qLine.trim(), a })
-  }
-  return faqs
 }
 
 /**
