@@ -605,18 +605,12 @@ function Reg({ no, label }: { no: string; label: string }) {
 
 /* --------------------------------------------------------------- header */
 
-// Route the "Log in" link: returning visitors (who have logged into the app
-// before, flagged by the kc_returning cookie the app sets on .knowcap.ai) go to
-// the app login; brand-new visitors go to the /beta waitlist. Defaults to /beta
-// (the common case) until the cookie is read on mount.
+// Signup and login doors (Hassan, 26 Nov 2026: sign-up is free for everyone, the beta is over).
+// Every button sends people to the real app pages, never to the /beta waitlist.
+const REGISTER_URL = 'https://app.knowcap.ai/register'
+const LOGIN_URL = 'https://app.knowcap.ai/login'
 function useLoginHref() {
-  const [href, setHref] = useState('/beta')
-  useEffect(() => {
-    if (typeof document !== 'undefined' && /(?:^|;\s*)kc_returning=1(?:;|$)/.test(document.cookie)) {
-      setHref('https://app.knowcap.ai/login')
-    }
-  }, [])
-  return href
+  return LOGIN_URL
 }
 
 function Header() {
@@ -656,7 +650,7 @@ function Header() {
         </nav>
         <div className="cl-navauth">
           <a className="cl-login" href={loginHref}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta">Join the beta</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href={REGISTER_URL}>Create your free account</a>
           <button
             type="button"
             className="cl-navtoggle"
@@ -700,7 +694,7 @@ function Header() {
         <Link className="cl-mobile-link" href="/contact-us" onClick={closeMobile}>Contact</Link>
         <div className="cl-mobile-auth">
           <a className="cl-login" href={loginHref} onClick={closeMobile}>Log in</a>
-          <a className="cl-btn cl-btn--solid cl-btn--sm" href="/beta" onClick={closeMobile}>Join the beta</a>
+          <a className="cl-btn cl-btn--solid cl-btn--sm" href={REGISTER_URL} onClick={closeMobile}>Create your free account</a>
         </div>
       </nav>
     </header>
@@ -866,7 +860,7 @@ function Hero() {
       <div className="clh-head">
         <Reveal>
           {/* First-screen words, option A (Hassan's pick, 19 Nov 2026, from the copy audit).
-              Every phrase is already said lower on this page or on /beta: the audience line
+              Every phrase is already said lower on this page or on the signup page: the audience line
               was in the works-with band, the headline was the problem section's heading. */}
           <p className="clh-eye">Built for Odoo partners · regulated teams · AI power-users</p>
           <h1 className="clh-h1">
@@ -882,7 +876,7 @@ function Hero() {
         </Reveal>
         <Reveal delay={200}>
           <div className="clh-cta">
-            <a className="cl-btn cl-btn--solid" href="/beta">Join the beta</a>
+            <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Create your free account</a>
             <Link className="clh-quiet" href="/contact-us">Talk to us</Link>
           </div>
           <p className="clh-terms">Invite-only for now. Applying takes 30 seconds.</p>
@@ -1167,7 +1161,7 @@ function Mcp() {
                 <a className="cl-btn cl-btn--solid" href="https://docs.knowcap.ai/#mcp-overview">
                   Connect Your Claude <span aria-hidden="true">→</span>
                 </a>
-                <a className="cl-btn cl-btn--ghost" href="/beta">
+                <a className="cl-btn cl-btn--ghost" href={REGISTER_URL}>
                   Get your API key
                 </a>
               </div>
@@ -1289,7 +1283,7 @@ function Closer() {
               <p className="cl-closer-sub">Capture. Confirm. Let your agents act on verified facts.</p>
             </div>
             <div className="cl-closer-ctas">
-              <a className="cl-btn cl-btn--solid" href="/beta">Join the beta</a>
+              <a className="cl-btn cl-btn--solid" href={REGISTER_URL}>Create your free account</a>
               <Link className="cl-btn cl-btn--ghost" href="/contact-us">Talk to us</Link>
             </div>
           </div>
@@ -1342,7 +1336,7 @@ function Footer() {
           </div>
           <div className="cl-fcol">
             <div className="cl-fcol-h">Get started</div>
-            <a href="/beta">Join the beta</a>
+            <a href={REGISTER_URL}>Create your free account</a>
             <a href={loginHref}>Log in</a>
             <Link href="/policy">Privacy</Link>
             <Link href="/terms">Terms</Link>
