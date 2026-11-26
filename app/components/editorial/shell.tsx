@@ -59,6 +59,7 @@ const CSS = `
 .cl-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;
   font-size:19px;letter-spacing:-.01em;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--ink)}
 .cl-brand img{border-radius:6px}
+.cl-brand{min-height:44px}
 .cl-brand-cap{color:var(--green)}
 .cl-navlinks{display:flex;gap:26px}
 @media(max-width:760px){.cl-navlinks{display:none}}
@@ -132,10 +133,11 @@ const CSS = `
 .cl-footer-line .cl-fl-green{color:var(--green-dark)}
 .cl-footer-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 36px}
 @media(max-width:720px){.cl-footer-cols{grid-template-columns:repeat(2,1fr);gap:28px 24px}}
-.cl-fcol{display:flex;flex-direction:column;gap:9px}
+.cl-fcol{display:flex;flex-direction:column;gap:2px}
 .cl-fcol-h{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.12em;
   text-transform:uppercase;color:var(--green-dark);margin-bottom:3px}
-.cl-fcol a{color:rgba(232,238,249,.65);transition:color .15s;font-size:13px}
+.cl-fcol a{color:rgba(232,238,249,.65);transition:color .15s;font-size:13px;
+  display:flex;align-items:center;min-height:44px}
 .cl-fcol a:hover{color:var(--cream)}
 .cl-footer-bottom{margin-top:34px;padding-top:18px;border-top:1px solid rgba(232,238,249,.12)}
 .cl-footer-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 24px}

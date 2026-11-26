@@ -5,7 +5,7 @@
  * Injected as a <style> string (same pattern the compare pages use).
  */
 export const BLOG_CSS = `
-.kb-root{--bg:#F5F7FA;--surface:#FFFFFF;--bg-muted:rgba(25,31,46,.05);--border:#E7E4DD;--ink:#191F2E;--ink-2:#4A4F5A;--ink-3:#8A8F99;--accent:#1F6B3A;--accent-light:#E8F5ED;
+.kb-root{--bg:#F5F7FA;--surface:#FFFFFF;--bg-muted:rgba(25,31,46,.05);--border:#E7E4DD;--ink:#191F2E;--ink-2:#4A4F5A;--ink-3:#4A4F5A;--accent:#1F6B3A;--accent-light:#E8F5ED;
   background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.6}
 .kb-grotesk{font-family:var(--font-space-grotesk),sans-serif}
 .kb-mono{font-family:var(--font-mono),monospace}
