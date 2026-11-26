@@ -46,9 +46,9 @@ html {
 /* Pitch Deck Styles — used by /mvp, /pitch, /offer, /meet-us, /contact-us pages */
 
 :root {
-  --primary-blue: #005EFF;
-  --primary-dark: #0046bd;
-  --primary-light: rgba(0, 94, 255, 0.08);
+  --primary-blue: #1F6B3A;
+  --primary-dark: #17522C;
+  --primary-light: rgba(31, 107, 58, 0.08);
   --dark-bg: #191F2E;
   --gray-text: #414651;
   --bg-light-pitch: #F5F7FA;
@@ -92,7 +92,7 @@ html {
 }
 
 .pitch-container .gradient-text {
-  background: linear-gradient(135deg, #005EFF 0%, #00C6FF 100%);
+  background: linear-gradient(135deg, #1F6B3A 0%, #34D399 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

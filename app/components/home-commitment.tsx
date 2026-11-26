@@ -83,6 +83,7 @@ const CSS = `
 .cl-brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;
   font-size:19px;letter-spacing:-.01em;font-variation-settings:'SOFT' 40,'WONK' 0;color:var(--ink)}
 .cl-brand img{border-radius:6px}
+.cl-brand{min-height:44px}
 .cl-brand-cap{color:var(--green)}
 .cl-navlinks{display:flex;gap:26px}
 @media(max-width:760px){.cl-navlinks{display:none}}
